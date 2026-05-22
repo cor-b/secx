@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Notes — CompTIA SecurityX</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --paper: #fbf8f1;
+    --ink: #1a1a1a;
+    --muted: #5b5b5b;
+    --accent: #b8431f;
+    --accent-soft: #e8d5b7;
+    --tag: #2d4a2b;
+    --tag-bg: #d9e3d0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 840px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 60px 70px 80px;
+    border: 1px solid var(--ink);
+    box-shadow: 12px 12px 0 var(--ink);
+    position: relative;
+  }
+
+  /* Header bar */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Hero */
+  .hero { margin-bottom: 50px; padding-bottom: 30px; border-bottom: 1px solid var(--ink); }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 72px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+  }
+  h1.title .em { font-style: italic; font-weight: 400; color: var(--accent); }
+
+  .tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 560px;
+  }
+
+  .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meta span::before { content: "// "; color: var(--accent); }
+
+  /* Section heading */
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    margin: 50px 0 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  h2 .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* Module list */
+  .modules { list-style: none; padding: 0; margin: 0; }
+
+  .module {
+    display: block;
+    padding: 24px 0;
+    border-bottom: 1px dashed var(--ink);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .module:hover {
+    padding-left: 16px;
+    background: var(--accent-soft);
+  }
+  .module:hover .arrow { transform: translateX(6px); color: var(--accent); }
+  .module:last-child { border-bottom: none; }
+
+  .module-row {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .module-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    min-width: 38px;
+  }
+  .module-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.2;
+    flex-grow: 1;
+  }
+  .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    color: var(--muted);
+  }
+  .module-desc {
+    margin-top: 6px;
+    margin-left: 58px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .module-tags {
+    margin-top: 8px;
+    margin-left: 58px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag);
+    padding: 2px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  /* Empty state for upcoming */
+  .upcoming {
+    margin-top: 50px;
+    padding: 30px 36px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .upcoming h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    margin: 0 0 12px;
+    font-size: 20px;
+    color: var(--paper);
+  }
+  .upcoming p { margin: 0; color: #c8c0b0; font-size: 14px; line-height: 1.6; }
+  .upcoming strong { color: var(--accent-soft); }
+
+  /* Footer */
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 12px; }
+    .page { padding: 32px 22px 50px; box-shadow: 6px 6px 0 var(--ink); }
+    h1.title { font-size: 44px; }
+    h2 { font-size: 22px; }
+    .module-desc, .module-tags { margin-left: 0; }
+    .module-row { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <div class="topbar">
+    <span>Personal Study Library</span>
+    <span>v1.0</span>
+  </div>
+
+  <header class="hero">
+    <h1 class="title">Study <span class="em">Notes</span></h1>
+    <p class="tagline">A growing collection of structured notes for CompTIA SecurityX and related certifications.</p>
+    <div class="meta">
+      <span>Updated regularly</span>
+      <span>Maintained by cor-b</span>
+    </div>
+  </header>
+
+  <h2><span class="num">01</span> Modules</h2>
+
+  <ul class="modules">
+
+    <li>
+      <a class="module" href="change_configuration_management_study_guide.html">
+        <div class="module-row">
+          <span class="module-num">01</span>
+          <span class="module-title">Change &amp; Configuration Management</span>
+          <span class="arrow">→</span>
+        </div>
+        <p class="module-desc">Structured processes for managing system modifications — inventory, asset lifecycle, and the CMDB.</p>
+        <div class="module-tags">
+          <span class="tag">IT Operations</span>
+          <span class="tag">CMDB</span>
+          <span class="tag">Lifecycle</span>
+        </div>
+      </a>
+    </li>
+
+    <!--
+      To add a new study guide, copy the <li>...</li> block above and update:
+        - the href to point to your new HTML file
+        - the module number
+        - the title, description, and tags
+    -->
+
+  </ul>
+
+  <div class="upcoming">
+    <h3>More modules coming soon</h3>
+    <p>This library grows as I work through the course. Each module is a self-contained study guide with key concepts, examples, and exam tips. <strong>Bookmark this page</strong> to come back as new ones are added.</p>
+  </div>
+
+  <div class="footer">
+    <span>Study Notes // cor-b</span>
+    <span>Hosted on GitHub Pages</span>
+  </div>
+
+</article>
+
+</body>
+</html>
