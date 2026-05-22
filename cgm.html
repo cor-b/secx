@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change &amp; Configuration Management — Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --paper: #fbf8f1;
+    --ink: #1a1a1a;
+    --muted: #5b5b5b;
+    --accent: #b8431f;
+    --accent-soft: #e8d5b7;
+    --rule: #1a1a1a;
+    --tag: #2d4a2b;
+    --tag-bg: #d9e3d0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    padding: 40px 20px;
+  }
+
+  .page {
+    max-width: 840px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 60px 70px 80px;
+    border: 1px solid var(--rule);
+    box-shadow: 12px 12px 0 var(--ink);
+    position: relative;
+  }
+
+  /* Header */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+  h1.title .amp {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* Section headings */
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.01em;
+    margin: 50px 0 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  h2 .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 28px 0 10px;
+    color: var(--ink);
+  }
+
+  h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 22px 0 8px;
+  }
+
+  p { margin: 0 0 14px; }
+
+  ul, ol {
+    margin: 6px 0 18px;
+    padding-left: 22px;
+  }
+  li { margin-bottom: 6px; }
+  ul li::marker { color: var(--accent); }
+  ol li::marker {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  strong { font-weight: 600; }
+
+  /* Overview callout */
+  .overview {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 22px 26px;
+    margin: 24px 0 40px;
+  }
+  .overview p { margin: 0; font-size: 17px; }
+
+  /* Three elements box */
+  .three-elements {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 30px 0 40px;
+  }
+  .elem-card {
+    border: 1px solid var(--ink);
+    padding: 18px 16px;
+    background: var(--paper);
+    position: relative;
+  }
+  .elem-card .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .elem-card .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  /* Tool badge */
+  .tool-badge {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag);
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border-radius: 3px;
+    margin-left: 6px;
+  }
+
+  /* Lifecycle phases */
+  .phases {
+    counter-reset: phase;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 30px;
+  }
+  .phases li {
+    counter-increment: phase;
+    border-bottom: 1px dashed var(--ink);
+    padding: 14px 0 14px 50px;
+    position: relative;
+  }
+  .phases li:last-child { border-bottom: none; }
+  .phases li::before {
+    content: counter(phase, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .phases .phase-name {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .phases .phase-desc {
+    color: var(--muted);
+    font-size: 15px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Cheat sheet table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 30px;
+    font-size: 15px;
+  }
+  th {
+    text-align: left;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--ink);
+    vertical-align: top;
+  }
+  td:first-child { font-weight: 600; width: 50%; }
+  td:last-child { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); }
+
+  /* Exam tips */
+  .exam-tips {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 30px 36px;
+    margin-top: 50px;
+  }
+  .exam-tips h2 {
+    color: var(--paper);
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .exam-tips h2 .num { color: var(--accent-soft); }
+  .exam-tips ul {
+    list-style: none;
+    padding: 0;
+  }
+  .exam-tips li {
+    padding: 12px 0;
+    border-bottom: 1px solid #444;
+    margin: 0;
+  }
+  .exam-tips li:last-child { border-bottom: none; }
+  .exam-tips li::before {
+    content: "→ ";
+    color: var(--accent-soft);
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 8px;
+  }
+  .exam-tips strong { color: var(--accent-soft); }
+
+  /* Decision rules */
+  .decision {
+    background: #fff;
+    border: 1px solid var(--ink);
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    display: inline-block;
+    margin: 2px 0;
+  }
+  .decision .arrow { color: var(--accent); font-weight: 600; }
+
+  /* Definition list for examples */
+  dl.def {
+    margin: 16px 0;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--ink);
+  }
+  dl.def dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  dl.def dd {
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 12px; }
+    .page { padding: 32px 22px 50px; box-shadow: 6px 6px 0 var(--ink); }
+    h1.title { font-size: 38px; }
+    h2 { font-size: 24px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <div class="topbar">
+    <span>Study Guide</span>
+    <span>IT Operations · Module Notes</span>
+  </div>
+
+  <h1 class="title">Change <span class="amp">&amp;</span> Configuration Management</h1>
+  <div class="subtitle">Structured processes for managing system modifications</div>
+
+  <!-- OVERVIEW -->
+  <div class="overview">
+    <p>Structured processes used to manage system modifications — ensuring changes are <strong>carried out efficiently</strong>, <strong>approved</strong>, and <strong>tracked accurately</strong>.</p>
+  </div>
+
+  <h4>The Three Critical Elements</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Inventory</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Asset Management Lifecycle</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Configuration Management Database (CMDB)</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: INVENTORY -->
+  <h2><span class="num">01</span> Inventory</h2>
+
+  <h3>Purpose</h3>
+  <p>Provides a complete and accurate record of all hardware, software, and other assets in the organization, including:</p>
+  <ul>
+    <li>What assets are in use</li>
+    <li>Where they're located</li>
+    <li>Their current configuration</li>
+  </ul>
+
+  <h3>Why It Matters</h3>
+  <ul>
+    <li>Lets IT teams assess the <strong>impact of proposed changes</strong></li>
+    <li>Prevents disruptions during updates and maintenance</li>
+    <li>Ensures no critical systems are overlooked during upgrades</li>
+    <li>Helps with troubleshooting — quickly isolate issues to specific assets</li>
+  </ul>
+
+  <dl class="def">
+    <dt>Example Tool</dt>
+    <dd>Microsoft SCCM <span class="tool-badge">System Center Configuration Manager</span></dd>
+  </dl>
+  <ul>
+    <li>Tracks hardware specs, configurations, and locations</li>
+    <li>Monitors installed software, versions, and licensing</li>
+    <li>Pushes updates, patches, and new software across devices</li>
+  </ul>
+
+  <!-- SECTION 2: LIFECYCLE -->
+  <h2><span class="num">02</span> Asset Management Lifecycle</h2>
+
+  <h3>The Five Phases</h3>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Planning &amp; Procurement</span>
+      <span class="phase-desc">Acquire assets that align with organizational needs.</span>
+    </li>
+    <li>
+      <span class="phase-name">Deployment</span>
+      <span class="phase-desc">Integrate assets into the environment; ensure they work with existing systems.</span>
+    </li>
+    <li>
+      <span class="phase-name">Utilization &amp; Maintenance</span>
+      <span class="phase-desc">Apply regular updates and patches to keep assets functional and secure.</span>
+    </li>
+    <li>
+      <span class="phase-name">Asset Tracking</span>
+      <span class="phase-desc">Document changes and manage assets throughout their use.</span>
+    </li>
+    <li>
+      <span class="phase-name">Decommissioning &amp; Disposal</span>
+      <span class="phase-desc">Retire outdated assets in a controlled, secure manner.</span>
+    </li>
+  </ol>
+
+  <dl class="def">
+    <dt>Example Tool</dt>
+    <dd>ServiceNow IT Asset Management</dd>
+  </dl>
+
+  <!-- SECTION 3: CMDB -->
+  <h2><span class="num">03</span> Configuration Management Database (CMDB)</h2>
+
+  <h3>What It Is</h3>
+  <p>A <strong>centralized database</strong> that tracks all Configuration Items (CIs) in the organization.</p>
+
+  <h3>Configuration Items (CIs)</h3>
+  <p>Any asset, component, or service that must be managed to deliver IT services. Examples include:</p>
+  <ul>
+    <li>Servers</li>
+    <li>Desktops</li>
+    <li>Mobile phones</li>
+    <li>Software</li>
+    <li>Databases</li>
+    <li>Facility infrastructure</li>
+  </ul>
+
+  <h3>What the CMDB Tracks</h3>
+  <ul>
+    <li>How each CI is set up, connected, or used at a specific point in time</li>
+    <li><strong>Relationships between CIs</strong> — how one CI connects to or depends on others</li>
+    <li>How each CI connects to specific services</li>
+  </ul>
+
+  <h3>Why Relationships Matter</h3>
+  <ul>
+    <li>Lets IT teams <strong>predict the impact of changes</strong> — if you change CI A, what happens to CI B and the services that depend on it?</li>
+    <li>Helps manage interdependencies and risk</li>
+    <li>Critical for network stability</li>
+  </ul>
+
+  <h3>When the CMDB Must Be Updated</h3>
+  <p>Anytime a CI's configuration changes:</p>
+  <ul>
+    <li>Software update</li>
+    <li>Hardware replacement</li>
+    <li>Network modification</li>
+  </ul>
+
+  <dl class="def">
+    <dt>Example Tool</dt>
+    <dd>ServiceNow CMDB</dd>
+  </dl>
+
+  <!-- CHEAT SHEET -->
+  <h2><span class="num">04</span> Tool-to-Element Cheat Sheet</h2>
+  <table>
+    <thead>
+      <tr><th>Element</th><th>Example Tool</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Inventory</td><td>Microsoft SCCM</td></tr>
+      <tr><td>Asset Management Lifecycle</td><td>ServiceNow IT Asset Management</td></tr>
+      <tr><td>Configuration Management Database</td><td>ServiceNow CMDB</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <h2><span class="num">★</span> Exam Tips</h2>
+    <ul>
+      <li><strong>Inventory</strong> = what assets you have (and where).</li>
+      <li><strong>Asset Management Lifecycle</strong> = managing assets from cradle to grave (5 phases: plan → deploy → use → track → dispose).</li>
+      <li><strong>CMDB</strong> = central database of CIs and their relationships to each other and to services.</li>
+      <li><strong>Configuration Item (CI)</strong> = any managed asset, component, or service.</li>
+      <li>The CMDB's biggest value: showing <strong>interdependencies</strong> so you can predict the impact of a change.</li>
+    </ul>
+
+    <h4 style="color: var(--accent-soft); margin-top: 24px;">Quick decision rules</h4>
+    <ul style="list-style: none; padding: 0;">
+      <li style="border:none; padding: 6px 0;">Question about <strong>impact of changes between systems</strong> <span class="arrow" style="color:var(--accent-soft);">→</span> <strong>CMDB</strong></li>
+      <li style="border:none; padding: 6px 0;">Question about <strong>tracking what you own</strong> <span class="arrow" style="color:var(--accent-soft);">→</span> <strong>Inventory</strong></li>
+      <li style="border:none; padding: 6px 0;">Question about <strong>an asset's lifespan from procurement to disposal</strong> <span class="arrow" style="color:var(--accent-soft);">→</span> <strong>Asset Management Lifecycle</strong></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>End of Notes</span>
+    <span>Change &amp; Config Mgmt</span>
+  </div>
+
+</article>
+
+</body>
+</html>
