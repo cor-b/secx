@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>05_security_program_doc — study.notes</title>
+<title>05_security_program_doc / study.notes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -20,7 +20,7 @@
     font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
-  /* prose body text — sans for legibility */
+  /* prose body text: sans for legibility */
   .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
   dl.def dd .detail {
     font-family: var(--font-sans);
@@ -123,11 +123,11 @@
 
   <span class="module-tag">lesson 05 / governance / Security Program Documentation</span>
   <h1 class="module-title">Security Program Documentation</h1>
-  <p class="subtitle">Four administrative controls that define what behavior is expected, how to carry it out, and to what standard — the backbone of a consistent security program.</p>
+  <p class="subtitle">Four administrative controls that define what behavior is expected, how to carry it out, and to what standard. The backbone of a consistent security program.</p>
 
   <div class="overview">
     <span class="overview-label">overview</span>
-    <p>Policies, procedures, standards, and guidelines are all <strong>administrative controls</strong> — they regulate employee behavior and manage human and operational risk. Together they ensure consistent security practices aligned with business objectives and regulations.</p>
+    <p>Policies, procedures, standards, and guidelines are all <strong>administrative controls</strong>; they regulate employee behavior and manage human and operational risk. Together they ensure consistent security practices aligned with business objectives and regulations.</p>
   </div>
 
   <h4>the four document types</h4>
@@ -135,12 +135,12 @@
     <div class="elem-card">
       <span class="n">01</span>
       <span class="name">Policies</span>
-      <span class="card-desc">High-level principles — mandatory, with consequences for violations. Define the "what."</span>
+      <span class="card-desc">High-level principles, mandatory with consequences for violations. Define the "what."</span>
     </div>
     <div class="elem-card">
       <span class="n">02</span>
       <span class="name">Procedures</span>
-      <span class="card-desc">Step-by-step instructions for implementing policies — required to be followed. Define the "how."</span>
+      <span class="card-desc">Step-by-step instructions for implementing policies, required to be followed. Define the "how."</span>
     </div>
     <div class="elem-card">
       <span class="n">03</span>
@@ -156,7 +156,7 @@
 
   <!-- SECTION 1 -->
   <h2>Policies</h2>
-  <p>High-level, <strong>mandatory</strong> principles that set expectations and define what is allowed. Violations carry consequences. Think of policies as the speed limits of security — you must follow them.</p>
+  <p>High-level, <strong>mandatory</strong> principles that set expectations and define what is allowed. Violations carry consequences. Think of policies as the speed limits of security: you must follow them.</p>
 
   <h3>Key policy types to know</h3>
 
@@ -168,9 +168,9 @@
   </ul>
 
   <h4>split knowledge</h4>
-  <p>A variant of separation of duties — two individuals each hold half the information needed to complete a task.</p>
+  <p>A variant of separation of duties: two individuals each hold half the information needed to complete a task.</p>
   <ul>
-    <li>Example: a cryptographic key split between two administrators — neither can act alone</li>
+    <li>Example: a cryptographic key split between two administrators, neither can act alone</li>
   </ul>
 
   <h4>job rotation</h4>
@@ -189,7 +189,7 @@
 
   <!-- SECTION 2 -->
   <h2>Procedures</h2>
-  <p>Detailed, <strong>step-by-step</strong> instructions for carrying out policies — required to be followed exactly. They eliminate ambiguity and reduce errors during critical moments.</p>
+  <p>Detailed, <strong>step-by-step</strong> instructions for carrying out policies, required to be followed exactly. They eliminate ambiguity and reduce errors during critical moments.</p>
 
   <h3>Examples</h3>
 
@@ -200,7 +200,7 @@
 
   <dl class="def">
     <dt>Backup and recovery procedure</dt>
-    <dd>Exact steps for performing backups and restoring data — who does what, in what order, using which tools</dd>
+    <dd>Exact steps for performing backups and restoring data: who does what, in what order, using which tools</dd>
   </dl>
 
   <!-- SECTION 3 -->
@@ -212,14 +212,14 @@
   <dl class="def">
     <dt>PCI-DSS</dt>
     <dd>Payment Card Industry Data Security Standard
-      <span class="detail">Contractual agreement — mandatory for any org handling credit card data. Noncompliance means losing the ability to process credit card transactions. Not a law, but enforced through contracts with card networks.</span>
+      <span class="detail">Contractual agreement, mandatory for any org handling credit card data. Noncompliance means losing the ability to process credit card transactions. Not a law, but enforced through contracts with card networks.</span>
     </dd>
   </dl>
 
   <dl class="def">
     <dt>ISO 27000 series</dt>
     <dd>International Organization for Standardization
-      <span class="detail">60+ standards covering information system security management — IT networks, policies, and controls. Best practices, not legally binding.</span>
+      <span class="detail">60+ standards covering information system security management: IT networks, policies, and controls. Best practices, not legally binding.</span>
     </dd>
   </dl>
 
@@ -233,19 +233,19 @@
   <dl class="def">
     <dt>NIST 800 series</dt>
     <dd>National Institute of Standards and Technology
-      <span class="detail">1,300+ standards across industries. NIST SP 800-53 = security and privacy controls for federal information systems — 800+ controls across 18 control areas for risk management. Best practices for most orgs; mandatory for federal agencies.</span>
+      <span class="detail">1,300+ standards across industries. NIST SP 800-53 = security and privacy controls for federal information systems: 800+ controls across 18 control areas for risk management. Best practices for most orgs; mandatory for federal agencies.</span>
     </dd>
   </dl>
 
   <!-- SECTION 4 -->
   <h2>Guidelines</h2>
-  <p>Recommended best practices — <strong>not required</strong>, flexible. Help organizations align with policies and standards on their own terms.</p>
+  <p>Recommended best practices, <strong>not required</strong>, flexible. Help organizations align with policies and standards on their own terms.</p>
 
   <h3>Examples</h3>
   <ul>
     <li>Recommended firewall rule configurations</li>
     <li>Suggested encryption protocols</li>
-    <li>Password management advice — recommend MFA and complexity rules even when policy doesn't mandate them</li>
+    <li>Password management advice: recommend MFA and complexity rules even when policy doesn't mandate them</li>
   </ul>
 
   <!-- CHEAT SHEET -->
@@ -255,10 +255,10 @@
       <tr><th>Type</th><th>Required?</th><th>Defines</th><th>Example</th></tr>
     </thead>
     <tbody>
-      <tr><td>Policy</td><td>Yes — mandatory</td><td>High-level rules / what</td><td>Separation of duties</td></tr>
-      <tr><td>Procedure</td><td>Yes — mandatory</td><td>Step-by-step / how</td><td>Incident response steps</td></tr>
+      <tr><td>Policy</td><td>Yes, mandatory</td><td>High-level rules / what</td><td>Separation of duties</td></tr>
+      <tr><td>Procedure</td><td>Yes, mandatory</td><td>Step-by-step / how</td><td>Incident response steps</td></tr>
       <tr><td>Standard</td><td>Depends</td><td>Specific requirements</td><td>PCI-DSS, NIST 800-53</td></tr>
-      <tr><td>Guideline</td><td>No — recommended</td><td>Best practice suggestions</td><td>MFA recommendation</td></tr>
+      <tr><td>Guideline</td><td>No, recommended</td><td>Best practice suggestions</td><td>MFA recommendation</td></tr>
     </tbody>
   </table>
 
@@ -267,10 +267,10 @@
     <span class="exam-tips-label">exam tips</span>
     <h2>Key Takeaways</h2>
     <ul>
-      <li><strong>Policies and procedures</strong> are mandatory — violations have consequences.</li>
-      <li><strong>Guidelines</strong> are never mandatory — always recommended.</li>
-      <li><strong>Standards</strong> go either way — PCI-DSS has real penalties; ISO, NIST, and CMMI are best practices.</li>
-      <li><strong>PCI-DSS</strong> is contractual (not a law) — noncompliance means losing credit card processing ability.</li>
+      <li><strong>Policies and procedures</strong> are mandatory; violations have consequences.</li>
+      <li><strong>Guidelines</strong> are never mandatory; always recommended.</li>
+      <li><strong>Standards</strong> go either way: PCI-DSS has real penalties; ISO, NIST, and CMMI are best practices.</li>
+      <li><strong>PCI-DSS</strong> is contractual (not a law); noncompliance means losing credit card processing ability.</li>
       <li>Memorize the four policy examples: <strong>separation of duties, split knowledge, job rotation, mandatory vacation</strong>.</li>
       <li>Driving analogy: Policy = speed limit, Procedure = turn-by-turn directions, Standard = stop signs, Guideline = Google Maps suggestion.</li>
     </ul>
@@ -289,7 +289,7 @@
 
   <div class="footer">
     <span>study.notes / cor</span>
-    <span>lesson 05 — eof</span>
+    <span>lesson 05 / eof</span>
   </div>
 
 </div>
