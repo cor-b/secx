@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06_awareness_training — study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a18; --panel: #14101f; --rule: #2a2440; --rule-soft: #1f1a30;
+    --ink: #d8d4e8; --ink-dim: #7a7396; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    font-size: 14px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 14px; margin: 0 0 50px; line-height: 1.6; max-width: 580px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 10px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; align-items: baseline; gap: 16px; font-weight: 500; letter-spacing: -0.01em; }
+  h2 .num { color: var(--magenta); font-size: 12px; letter-spacing: 0.1em; font-weight: 400; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin: 24px 0 10px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .phases { counter-reset: phase; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 44px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 14px; display: block; }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 13px; display: block; margin-top: 4px; line-height: 1.6; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 12px; font-weight: 400; margin-top: 4px; }
+  .tool-badge { display: inline-block; color: var(--amber); border: 1px solid var(--rule); padding: 2px 10px; font-size: 10px; letter-spacing: 0.08em; margin-left: 8px; border-radius: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); width: 30%; font-weight: 500; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); position: relative; }
+  .exam-tips-label { position: absolute; top: -8px; left: 24px; background: var(--bg); color: var(--magenta); font-size: 10px; padding: 0 10px; letter-spacing: 0.18em; }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 12px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/governance/awareness_training</span>
+  </div>
+
+  <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
+
+  <span class="module-tag">lesson 06 / governance · obj. 1.1</span>
+  <h1 class="module-title">Awareness &amp; Training</h1>
+  <p class="subtitle">Educating employees about security risks through initial and recurring training — building situational awareness and promoting operational security across the organization.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The human layer is consistently the most exploited attack surface. Awareness and training programs address <strong>phishing, social engineering, physical security, and OPSEC</strong> — turning employees from a liability into a first line of defense. Simulations like the Social-Engineer Toolkit (SET) make training realistic and measurable.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2><span class="num">01</span>Key Terms</h2>
+
+  <dl class="def">
+    <dt>Operational Security (OPSEC)</dt>
+    <dd>Protecting sensitive information from inadvertent exposure
+      <span class="detail">Focuses on identifying critical data and controlling its dissemination. Asks: "What could an adversary learn from what we reveal?"</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Physical Security</dt>
+    <dd>Protecting assets, facilities, and personnel from unauthorized access
+      <span class="detail">Measures include surveillance, access control systems, and secure entry points. Employees must be trained to identify and respond to physical threats — tailgating, piggybacking, unauthorized visitors.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Privacy</dt>
+    <dd>Safeguarding personal and sensitive information from unauthorized access
+      <span class="detail">Includes legal and regulatory compliance (GDPR, HIPAA, etc.). Distinct from OPSEC — OPSEC protects org-sensitive data from exposure; privacy protects individuals' personal data.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Social Engineering</dt>
+    <dd>Manipulation tactics used to trick individuals into divulging confidential information
+      <span class="detail">Exploits human psychology, not technical vulnerabilities. Broad category — phishing is one specific form.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Phishing</dt>
+    <dd>Fraudulent communications (typically email) designed to trick recipients
+      <span class="detail">Goal: get the target to click a malicious link or reveal credentials. A specific, common form of social engineering.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Situational Awareness</dt>
+    <dd>Clear understanding of the current threat landscape
+      <span class="detail">Constant vigilance to detect and respond to incidents as they arise. Not a technical control — it's a mental posture reinforced through training.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2><span class="num">02</span>Social-Engineer Toolkit (SET)</h2>
+
+  <p>An open-source tool used to <strong>simulate social engineering attacks</strong> for security awareness training. SET exposes employees to realistic attack scenarios, demonstrating how easily credentials can be harvested.</p>
+
+  <h3>What SET can simulate</h3>
+  <ul>
+    <li>Phishing campaigns</li>
+    <li>Credential harvesting via cloned websites</li>
+    <li>Spearphishing (targeted) attack vectors</li>
+    <li>Mass mailer attacks</li>
+    <li>Website-based attack vectors</li>
+  </ul>
+
+  <h3>Credential harvester demo flow</h3>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Launch SET</span>
+      <span class="phase-desc">Run <code>sudo setoolkit</code> — opens the menu-driven interface.</span>
+    </li>
+    <li>
+      <span class="phase-name">Select attack type</span>
+      <span class="phase-desc">Choose "Social Engineering Attacks" from the main menu.</span>
+    </li>
+    <li>
+      <span class="phase-name">Choose vector</span>
+      <span class="phase-desc">Select "Website Attack Vectors."</span>
+    </li>
+    <li>
+      <span class="phase-name">Select method</span>
+      <span class="phase-desc">Choose "Credential Harvester Attack Method."</span>
+    </li>
+    <li>
+      <span class="phase-name">Pick a template</span>
+      <span class="phase-desc">Select a web template — Google, Twitter, or Java — to clone.</span>
+    </li>
+    <li>
+      <span class="phase-name">Host the fake site</span>
+      <span class="phase-desc">SET serves the cloned page from the attacker's IP address.</span>
+    </li>
+    <li>
+      <span class="phase-name">Victim enters credentials</span>
+      <span class="phase-desc">Credentials are captured in the attacker's terminal in real time.</span>
+    </li>
+    <li>
+      <span class="phase-name">Redirect to real site</span>
+      <span class="phase-desc">Victim is silently forwarded to the legitimate site — they assume a failed login and try again. Attack is invisible.</span>
+    </li>
+  </ol>
+
+  <!-- SECTION 3 -->
+  <h2><span class="num">03</span>Why Training Matters</h2>
+
+  <table>
+    <thead>
+      <tr><th>Risk addressed</th><th>How training helps</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Phishing</td><td>Recognize fraudulent emails and suspicious links before clicking</td></tr>
+      <tr><td>Social engineering</td><td>Spot manipulation tactics — urgency, authority, pretexting</td></tr>
+      <tr><td>Physical security</td><td>Identify unauthorized access attempts, tailgating, suspicious behavior</td></tr>
+      <tr><td>Privacy</td><td>Handle personal and sensitive data appropriately, know reporting obligations</td></tr>
+      <tr><td>OPSEC</td><td>Stay vigilant about what information is revealed and where credentials are entered</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2><span class="num">★</span>Key Takeaways</h2>
+    <ul>
+      <li><strong>Social engineering</strong> = broad category of human manipulation. <strong>Phishing</strong> = a specific, email-based form of social engineering.</li>
+      <li><strong>OPSEC</strong> = protect sensitive org data from inadvertent disclosure. <strong>Privacy</strong> = protect individuals' personal data from unauthorized access. Related but distinct.</li>
+      <li><strong>SET is a training and simulation tool</strong> — on the exam, recognize it as used for security awareness, not just as an attack tool.</li>
+      <li><strong>Situational awareness</strong> = vigilance and recognition — a posture, not a technical control.</li>
+      <li>The credential harvester attack is invisible to the victim — they see what looks like a failed login then a redirect. This is the key teaching moment in SET demos.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Human manipulation, no technical exploit</strong> <span class="arrow">→</span> Social engineering</li>
+        <li><strong>Fraudulent email with malicious link</strong> <span class="arrow">→</span> Phishing</li>
+        <li><strong>Controlling what sensitive info gets out</strong> <span class="arrow">→</span> OPSEC</li>
+        <li><strong>Protecting personal data per regulations</strong> <span class="arrow">→</span> Privacy</li>
+        <li><strong>Simulating phishing to train employees</strong> <span class="arrow">→</span> SET (Social-Engineer Toolkit)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 06 — eof</span>
+  </div>
+
+</div>
+</body>
+</html>

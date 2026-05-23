@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09_management_involvement — study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a18; --panel: #14101f; --rule: #2a2440; --rule-soft: #1f1a30;
+    --ink: #d8d4e8; --ink-dim: #7a7396; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace; font-size: 14px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 14px; margin: 0 0 50px; line-height: 1.6; max-width: 580px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 10px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; align-items: baseline; gap: 16px; font-weight: 500; letter-spacing: -0.01em; }
+  h2 .num { color: var(--magenta); font-size: 12px; letter-spacing: 0.1em; font-weight: 400; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin: 24px 0 10px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .four-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 18px; color: var(--magenta); letter-spacing: 0.05em; display: block; margin-bottom: 8px; font-weight: 500; }
+  .elem-card .name { color: var(--ink); font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 12px; font-weight: 400; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 20%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); position: relative; }
+  .exam-tips-label { position: absolute; top: -8px; left: 24px; background: var(--bg); color: var(--magenta); font-size: 10px; padding: 0 10px; letter-spacing: 0.18em; }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 12px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .four-elements { grid-template-columns: 1fr; } .exam-tips { padding: 24px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/governance/management_involvement</span>
+  </div>
+
+  <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
+
+  <span class="module-tag">lesson 09 / governance · obj. 1.1</span>
+  <h1 class="module-title">Management Involvement</h1>
+  <p class="subtitle">Effective governance requires leadership's active participation — and the RACI matrix is the primary tool for clarifying exactly who does what.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Without management engagement, key decisions get delayed, resources become insufficient, and projects lose alignment with business goals. The <strong>RACI matrix</strong> ensures every task has a clear owner, executor, advisor, and audience — eliminating ambiguity across governance structures.</p>
+  </div>
+
+  <h4>the four RACI roles</h4>
+  <div class="four-elements">
+    <div class="elem-card">
+      <span class="n">R</span>
+      <span class="name">Responsible</span>
+      <span class="card-desc">Does the actual work. Executes the task. Can be multiple people.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">A</span>
+      <span class="name">Accountable</span>
+      <span class="card-desc">Owns the outcome. Final authority. Only ONE person per task.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">C</span>
+      <span class="name">Consulted</span>
+      <span class="card-desc">Provides expert input before decisions. Advisory — does not execute.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">I</span>
+      <span class="name">Informed</span>
+      <span class="card-desc">Kept up to date on progress. Receives updates only — no input given.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2><span class="num">01</span>The RACI Matrix</h2>
+
+  <p>A table mapping tasks to roles — every intersection is labeled R, A, C, or I. Rows = tasks or deliverables. Columns = roles or individuals.</p>
+
+  <h3>Responsible — R</h3>
+  <ul>
+    <li>The person or team <strong>doing the actual work</strong></li>
+    <li>Executes plans, meets deadlines, drives the task forward day-to-day</li>
+    <li>Can be multiple people on a single task</li>
+  </ul>
+
+  <h3>Accountable — A</h3>
+  <ul>
+    <li>Has <strong>final authority</strong> over the task's outcome — the buck stops here</li>
+    <li>Ensures goals are met, but may not personally do the work</li>
+    <li><strong>Only ONE person per task</strong> — this is the most important rule</li>
+    <li>Multiple accountable people = no clear ownership = confusion</li>
+  </ul>
+
+  <h3>Consulted — C</h3>
+  <ul>
+    <li>Stakeholders or experts whose <strong>input is sought before decisions</strong></li>
+    <li>Advisory role — provides guidance and expertise</li>
+    <li>Does not execute; influences direction</li>
+    <li>Often subject matter experts outside the core team</li>
+  </ul>
+
+  <h3>Informed — I</h3>
+  <ul>
+    <li>Kept <strong>up to date on progress and outcomes</strong></li>
+    <li>Not involved in execution or decision-making</li>
+    <li>Receives updates only — provides no input</li>
+    <li>Ensures transparency and visibility across the organization</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2><span class="num">02</span>Quick Reference</h2>
+
+  <table>
+    <thead>
+      <tr><th>Letter</th><th>Does the work?</th><th>Final say?</th><th>Gives input?</th><th>Gets updates?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>R — Responsible</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>A — Accountable</td><td>Not necessarily</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>C — Consulted</td><td>No</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>I — Informed</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <h2><span class="num">03</span>Example — Company-Wide Software Rollout</h2>
+
+  <table>
+    <thead>
+      <tr><th>Role</th><th>RACI label</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>IT Department</td><td>R — Responsible</td><td>Handles the technical setup and deployment</td></tr>
+      <tr><td>CIO</td><td>A — Accountable</td><td>Has final authority over the project's success</td></tr>
+      <tr><td>HR Department</td><td>C — Consulted</td><td>Ensures the system meets employee management needs</td></tr>
+      <tr><td>Senior Leadership</td><td>I — Informed</td><td>Receives progress updates; no day-to-day involvement</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 4 -->
+  <h2><span class="num">04</span>Why Management Commitment Matters</h2>
+
+  <h3>Without it</h3>
+  <ul>
+    <li>Key decisions get delayed — no one with authority is engaged</li>
+    <li>Resources may be insufficient — no executive sponsorship to unlock budget</li>
+    <li>Alignment with business goals becomes unclear</li>
+    <li>Projects risk delay, misalignment, and failure</li>
+  </ul>
+
+  <h3>With it</h3>
+  <ul>
+    <li>Roles are properly assigned and understood</li>
+    <li>Accountability is enforced at the right level</li>
+    <li>Projects receive the support and oversight they need</li>
+    <li>Governance structures are actually implemented, not just documented</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2><span class="num">★</span>Key Takeaways</h2>
+    <ul>
+      <li><strong>Only ONE accountable person per task</strong> — this is the most common trap question.</li>
+      <li>R = doer, A = owner of the outcome, C = advisor, I = update recipient.</li>
+      <li>Multiple people can share the R role — only A is strictly one person.</li>
+      <li>The RACI matrix is one tool — others exist, but RACI is the CompTIA example.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>"Approves" or "has final say"</strong> <span class="arrow">→</span> Accountable (A)</li>
+        <li><strong>"Performs" or "executes"</strong> <span class="arrow">→</span> Responsible (R)</li>
+        <li><strong>"Provides expert input or feedback"</strong> <span class="arrow">→</span> Consulted (C)</li>
+        <li><strong>"Is notified" or "kept aware"</strong> <span class="arrow">→</span> Informed (I)</li>
+        <li><strong>Who can there only be one of?</strong> <span class="arrow">→</span> Accountable (A)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 09 — eof</span>
+  </div>
+
+</div>
+</body>
+</html>

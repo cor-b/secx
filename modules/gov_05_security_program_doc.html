@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05_security_program_doc — study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a18; --panel: #14101f; --rule: #2a2440; --rule-soft: #1f1a30;
+    --ink: #d8d4e8; --ink-dim: #7a7396; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    font-size: 14px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px;
+    font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em;
+  }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link {
+    display: inline-block; color: var(--ink-dim); font-size: 12px;
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 14px; margin: 0 0 50px; line-height: 1.6; max-width: 580px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 10px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 {
+    font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px;
+    border-top: 1px solid var(--rule); display: flex; align-items: baseline;
+    gap: 16px; font-weight: 500; letter-spacing: -0.01em;
+  }
+  h2 .num { color: var(--magenta); font-size: 12px; letter-spacing: 0.1em; font-weight: 400; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin: 24px 0 10px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .four-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
+  .tool-badge { display: inline-block; color: var(--amber); border: 1px solid var(--rule); padding: 2px 10px; font-size: 10px; letter-spacing: 0.08em; margin-left: 8px; border-radius: 2px; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 12px; font-weight: 400; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { color: var(--ink-dim); width: 20%; }
+  td:nth-child(3) { width: 30%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); position: relative; }
+  .exam-tips-label { position: absolute; top: -8px; left: 24px; background: var(--bg); color: var(--magenta); font-size: 10px; padding: 0 10px; letter-spacing: 0.18em; }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 12px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .four-elements { grid-template-columns: 1fr; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/governance/security_program_doc</span>
+  </div>
+
+  <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
+
+  <span class="module-tag">lesson 05 / governance · obj. 1.1</span>
+  <h1 class="module-title">Security Program Documentation</h1>
+  <p class="subtitle">Four administrative controls that define what behavior is expected, how to carry it out, and to what standard — the backbone of a consistent security program.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Policies, procedures, standards, and guidelines are all <strong>administrative controls</strong> — they regulate employee behavior and manage human and operational risk. Together they ensure consistent security practices aligned with business objectives and regulations.</p>
+  </div>
+
+  <h4>the four document types</h4>
+  <div class="four-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Policies</span>
+      <span class="card-desc">High-level principles — mandatory, with consequences for violations. Define the "what."</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Procedures</span>
+      <span class="card-desc">Step-by-step instructions for implementing policies — required to be followed. Define the "how."</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Standards</span>
+      <span class="card-desc">Specific requirements that must be met. Some carry penalties, others are best practices.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">04</span>
+      <span class="name">Guidelines</span>
+      <span class="card-desc">Recommended but not required. Flexible best practices organizations can tailor.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2><span class="num">01</span>Policies</h2>
+  <p>High-level, <strong>mandatory</strong> principles that set expectations and define what is allowed. Violations carry consequences. Think of policies as the speed limits of security — you must follow them.</p>
+
+  <h3>Key policy types to know</h3>
+
+  <h4>separation of duties</h4>
+  <p>No single person controls all aspects of a critical process. Reduces fraud risk by requiring multiple people for sensitive actions.</p>
+  <ul>
+    <li>Accounting: one person requests payment, a different person approves it</li>
+    <li>Security: one admin handles backups, another handles restoration</li>
+  </ul>
+
+  <h4>split knowledge</h4>
+  <p>A variant of separation of duties — two individuals each hold half the information needed to complete a task.</p>
+  <ul>
+    <li>Example: a cryptographic key split between two administrators — neither can act alone</li>
+  </ul>
+
+  <h4>job rotation</h4>
+  <p>Multiple employees are trained on the same tasks and periodically swap roles.</p>
+  <ul>
+    <li>Helps detect fraud (patterns become visible when someone new takes over)</li>
+    <li>Provides backup coverage and cross-training</li>
+  </ul>
+
+  <h4>mandatory vacation</h4>
+  <p>Employees are required to take time off; duties are temporarily reassigned.</p>
+  <ul>
+    <li>Can surface fraud or suspicious activity hidden by the absent employee</li>
+    <li>Also builds cross-training and backup readiness</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2><span class="num">02</span>Procedures</h2>
+  <p>Detailed, <strong>step-by-step</strong> instructions for carrying out policies — required to be followed exactly. They eliminate ambiguity and reduce errors during critical moments.</p>
+
+  <h3>Examples</h3>
+
+  <dl class="def">
+    <dt>Incident response procedure</dt>
+    <dd>Notify the IR team → document the breach → follow the communication plan → isolate affected systems → contact authorities</dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Backup and recovery procedure</dt>
+    <dd>Exact steps for performing backups and restoring data — who does what, in what order, using which tools</dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2><span class="num">03</span>Standards</h2>
+  <p>Define specific requirements that should be met. Some are <strong>contractually or legally mandatory</strong>; others are industry best practices without direct penalties.</p>
+
+  <h3>Key standards to know</h3>
+
+  <dl class="def">
+    <dt>PCI-DSS</dt>
+    <dd>Payment Card Industry Data Security Standard
+      <span class="detail">Contractual agreement — mandatory for any org handling credit card data. Noncompliance means losing the ability to process credit card transactions. Not a law, but enforced through contracts with card networks.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>ISO 27000 series</dt>
+    <dd>International Organization for Standardization
+      <span class="detail">60+ standards covering information system security management — IT networks, policies, and controls. Best practices, not legally binding.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>CMMI (levels 1–5)</dt>
+    <dd>Capability Maturity Model Integration
+      <span class="detail">Process improvement model for software, products, and services. Higher level = more refined and optimized processes. Government contracts often require level 3, 4, or 5. Best practices, not legally binding.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>NIST 800 series</dt>
+    <dd>National Institute of Standards and Technology
+      <span class="detail">1,300+ standards across industries. NIST SP 800-53 = security and privacy controls for federal information systems — 800+ controls across 18 control areas for risk management. Best practices for most orgs; mandatory for federal agencies.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2><span class="num">04</span>Guidelines</h2>
+  <p>Recommended best practices — <strong>not required</strong>, flexible. Help organizations align with policies and standards on their own terms.</p>
+
+  <h3>Examples</h3>
+  <ul>
+    <li>Recommended firewall rule configurations</li>
+    <li>Suggested encryption protocols</li>
+    <li>Password management advice — recommend MFA and complexity rules even when policy doesn't mandate them</li>
+  </ul>
+
+  <!-- CHEAT SHEET -->
+  <h2><span class="num">05</span>Quick Comparison</h2>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Required?</th><th>Defines</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Policy</td><td>Yes — mandatory</td><td>High-level rules / what</td><td>Separation of duties</td></tr>
+      <tr><td>Procedure</td><td>Yes — mandatory</td><td>Step-by-step / how</td><td>Incident response steps</td></tr>
+      <tr><td>Standard</td><td>Depends</td><td>Specific requirements</td><td>PCI-DSS, NIST 800-53</td></tr>
+      <tr><td>Guideline</td><td>No — recommended</td><td>Best practice suggestions</td><td>MFA recommendation</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2><span class="num">★</span>Key Takeaways</h2>
+    <ul>
+      <li><strong>Policies and procedures</strong> are mandatory — violations have consequences.</li>
+      <li><strong>Guidelines</strong> are never mandatory — always recommended.</li>
+      <li><strong>Standards</strong> go either way — PCI-DSS has real penalties; ISO, NIST, and CMMI are best practices.</li>
+      <li><strong>PCI-DSS</strong> is contractual (not a law) — noncompliance means losing credit card processing ability.</li>
+      <li>Memorize the four policy examples: <strong>separation of duties, split knowledge, job rotation, mandatory vacation</strong>.</li>
+      <li>Driving analogy: Policy = speed limit, Procedure = turn-by-turn directions, Standard = stop signs, Guideline = Google Maps suggestion.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Mandatory with consequences</strong> <span class="arrow">→</span> Policy or Procedure</li>
+        <li><strong>Step-by-step "how to"</strong> <span class="arrow">→</span> Procedure</li>
+        <li><strong>Contractually enforced security requirement</strong> <span class="arrow">→</span> Standard (PCI-DSS)</li>
+        <li><strong>Voluntary best practice</strong> <span class="arrow">→</span> Guideline</li>
+        <li><strong>No single person approves their own request</strong> <span class="arrow">→</span> Separation of duties</li>
+        <li><strong>Each person holds half the key</strong> <span class="arrow">→</span> Split knowledge</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 05 — eof</span>
+  </div>
+
+</div>
+</body>
+</html>
