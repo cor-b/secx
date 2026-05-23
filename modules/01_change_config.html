@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>00_exam_strategy — study.notes</title>
+<title>01_change_config — study.notes</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -400,129 +400,179 @@
 
   <div class="meta-bar">
     <span class="left">cor@studynotes</span>
-    <span class="right">~/securityx/00_exam_strategy</span>
+    <span class="right">~/securityx/01_change_config</span>
   </div>
 
   <a class="back-link" href="../index.html"><span class="arrow">←</span>back to /securityx</a>
 
-  <span class="module-tag">module 00 / prologue</span>
-  <h1 class="module-title">Exam Tips &amp; Strategy</h1>
-  <p class="subtitle">How to approach the SecurityX exam — distractors, key qualifier words, "best answer" logic, and what makes this cert different from earlier CompTIA exams.</p>
+  <span class="module-tag">module 01 / it operations</span>
+  <h1 class="module-title">Change &amp; Configuration Management</h1>
+  <p class="subtitle">Structured processes for managing system modifications — ensuring changes are carried out efficiently, approved, and tracked accurately.</p>
 
   <div class="overview">
     <span class="overview-label">overview</span>
-    <p>Every question is precisely worded and matches the study material — <strong>no trick questions</strong>. Read carefully, watch for distractors, and answer with the <strong>book answer</strong>, not your workplace experience. SecurityX leans heavily on <strong>scenario-based, hands-on</strong> application, not just identification.</p>
+    <p>Change and configuration management ensures system modifications are <strong>carried out efficiently</strong>, <strong>approved</strong>, and <strong>tracked accurately</strong>. Built on three critical elements.</p>
   </div>
 
-  <h4>the five strategy pillars</h4>
-  <div class="three-elements" style="grid-template-columns: repeat(2, 1fr);">
+  <h4>the three critical elements</h4>
+  <div class="three-elements">
     <div class="elem-card">
       <span class="n">01</span>
-      <span class="name">Read carefully — answer what's asked</span>
+      <span class="name">Inventory</span>
     </div>
     <div class="elem-card">
       <span class="n">02</span>
-      <span class="name">Eliminate the distractor</span>
+      <span class="name">Asset Management Lifecycle</span>
     </div>
     <div class="elem-card">
       <span class="n">03</span>
-      <span class="name">Watch the qualifier words</span>
-    </div>
-    <div class="elem-card">
-      <span class="n">04</span>
-      <span class="name">Pick the most-right answer</span>
+      <span class="name">Configuration Management Database</span>
     </div>
   </div>
 
   <!-- SECTION 1 -->
-  <h2><span class="num">01</span>General Approach</h2>
+  <h2><span class="num">01</span>Inventory</h2>
+
+  <h3>Purpose</h3>
+  <p>Provides a complete and accurate record of all hardware, software, and other assets in the organization, including:</p>
   <ul>
-    <li><strong>No trick questions.</strong> Every question is precisely worded to match the study material.</li>
-    <li>Read each question <strong>multiple times</strong> to make sure you understand what's actually being asked.</li>
-    <li>Answer based on <strong>CompTIA SecurityX knowledge</strong> — not your personal workplace or school experience.</li>
-    <li>When in doubt, go with the <strong>book answer</strong> — that's what test writers use.</li>
+    <li>What assets are in use</li>
+    <li>Where they're located</li>
+    <li>Their current configuration</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li>Lets IT teams assess the <strong>impact of proposed changes</strong></li>
+    <li>Prevents disruptions during updates and maintenance</li>
+    <li>Ensures no critical systems are overlooked during upgrades</li>
+    <li>Helps with troubleshooting — quickly isolate issues to specific assets</li>
+  </ul>
+
+  <dl class="def">
+    <dt>Example tool</dt>
+    <dd>Microsoft SCCM <span class="tool-badge">System Center Configuration Manager</span></dd>
+  </dl>
+  <ul>
+    <li>Tracks hardware specs, configurations, and locations</li>
+    <li>Monitors installed software, versions, and licensing</li>
+    <li>Pushes updates, patches, and new software across devices</li>
   </ul>
 
   <!-- SECTION 2 -->
-  <h2><span class="num">02</span>Watch for Distractors</h2>
-  <ul>
-    <li>At least one of the four answer choices is usually a <strong>distractor / red herring</strong>.</li>
-    <li>Identifying and eliminating it dramatically improves your odds on the rest.</li>
-    <li>Treat elimination as a primary tool — narrow before you commit.</li>
-  </ul>
+  <h2><span class="num">02</span>Asset Management Lifecycle</h2>
 
-  <!-- SECTION 3 -->
-  <h2><span class="num">03</span>Qualifier Words</h2>
-  <p>Pay extra attention to words shown in <strong>bold</strong>, <em>italics</em>, or ALL CAPS — these signal critical qualifiers that change the answer.</p>
-
-  <h3>Common qualifiers to watch</h3>
-  <ul>
-    <li><strong>all, and, or, not</strong></li>
-    <li><strong>best</strong></li>
-    <li><strong>select two, select three</strong></li>
-    <li>Other emphasis words with similar weight</li>
-  </ul>
-
-  <!-- SECTION 4 -->
-  <h2><span class="num">04</span>Choosing the Best Answer</h2>
-  <ul>
-    <li>Multiple answers may be technically correct — pick the <strong>most right</strong> (true most often, in most cases).</li>
-    <li>Don't overthink and pick a fringe-case answer.</li>
-    <li>Choose the answer correct in the <strong>highest number of situations</strong>.</li>
-    <li>If one option is <strong>specific</strong> and another is the <strong>generic category</strong> containing it → pick the <strong>specific</strong> one.</li>
-  </ul>
-
-  <!-- SECTION 5 -->
-  <h2><span class="num">05</span>Don't Fight the Exam</h2>
-  <ul>
-    <li>Identify the <strong>key concept</strong> being tested — don't argue with the question.</li>
-    <li>You don't need to memorize definitions <strong>word-for-word</strong>.</li>
-    <li>You just need to <strong>recognize</strong> correct answers, not regurgitate them.</li>
-    <li><strong>Format:</strong> multiple-choice / multiple-select only — no fill-in-the-blank, no essays.</li>
-  </ul>
-
-  <!-- SECTION 6 -->
-  <h2><span class="num">06</span>What Makes SecurityX Different</h2>
+  <h3>The five phases</h3>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Planning &amp; Procurement</span>
+      <span class="phase-desc">Acquire assets that align with organizational needs.</span>
+    </li>
+    <li>
+      <span class="phase-name">Deployment</span>
+      <span class="phase-desc">Integrate assets into the environment; ensure they work with existing systems.</span>
+    </li>
+    <li>
+      <span class="phase-name">Utilization &amp; Maintenance</span>
+      <span class="phase-desc">Apply regular updates and patches to keep assets functional and secure.</span>
+    </li>
+    <li>
+      <span class="phase-name">Asset Tracking</span>
+      <span class="phase-desc">Document changes and manage assets throughout their use.</span>
+    </li>
+    <li>
+      <span class="phase-name">Decommissioning &amp; Disposal</span>
+      <span class="phase-desc">Retire outdated assets in a controlled, secure manner.</span>
+    </li>
+  </ol>
 
   <dl class="def">
-    <dt>Scenario weight</dt>
-    <dd>17 of 23 objectives (74%) are scenario-based</dd>
+    <dt>Example tool</dt>
+    <dd>ServiceNow IT Asset Management</dd>
   </dl>
 
+  <!-- SECTION 3 -->
+  <h2><span class="num">03</span>Configuration Management Database</h2>
+
+  <h3>What it is</h3>
+  <p>A <strong>centralized database</strong> that tracks all Configuration Items (CIs) in the organization.</p>
+
+  <h3>Configuration Items (CIs)</h3>
+  <p>Any asset, component, or service that must be managed to deliver IT services. Examples include:</p>
   <ul>
-    <li>Heavy emphasis on the <strong>hands-on implementation</strong> of tools and concepts.</li>
-    <li>More <strong>operational / practical</strong> than A+, Network+, or Security+.</li>
-    <li>Expect to <strong>apply</strong> concepts with tools — not just identify use cases for them.</li>
+    <li>Servers</li>
+    <li>Desktops</li>
+    <li>Mobile phones</li>
+    <li>Software</li>
+    <li>Databases</li>
+    <li>Facility infrastructure</li>
   </ul>
+
+  <h3>What the CMDB tracks</h3>
+  <ul>
+    <li>How each CI is set up, connected, or used at a specific point in time</li>
+    <li><strong>Relationships between CIs</strong> — how one CI connects to or depends on others</li>
+    <li>How each CI connects to specific services</li>
+  </ul>
+
+  <h3>Why relationships matter</h3>
+  <ul>
+    <li>Lets IT teams <strong>predict the impact of changes</strong> — if you change CI A, what happens to CI B?</li>
+    <li>Helps manage interdependencies and risk</li>
+    <li>Critical for network stability</li>
+  </ul>
+
+  <h3>When the CMDB must be updated</h3>
+  <p>Anytime a CI's configuration changes:</p>
+  <ul>
+    <li>Software update</li>
+    <li>Hardware replacement</li>
+    <li>Network modification</li>
+  </ul>
+
+  <dl class="def">
+    <dt>Example tool</dt>
+    <dd>ServiceNow CMDB</dd>
+  </dl>
+
+  <!-- CHEAT SHEET -->
+  <h2><span class="num">04</span>Cheat Sheet</h2>
+  <table>
+    <thead>
+      <tr><th>Element</th><th>Example Tool</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Inventory</td><td>Microsoft SCCM</td></tr>
+      <tr><td>Asset Management Lifecycle</td><td>ServiceNow IT Asset Management</td></tr>
+      <tr><td>Configuration Management Database</td><td>ServiceNow CMDB</td></tr>
+    </tbody>
+  </table>
 
   <!-- EXAM TIPS -->
   <div class="exam-tips">
     <span class="exam-tips-label">exam tips</span>
     <h2><span class="num">★</span>Key Takeaways</h2>
     <ul>
-      <li>Read each question <strong>multiple times</strong> — the answer is in the wording.</li>
-      <li>Always look for and eliminate the <strong>distractor</strong> first.</li>
-      <li>Words like <strong>best, not, all, select two</strong> change the answer entirely — never skim them.</li>
-      <li>When two answers seem right, pick the one that's true <strong>most often</strong>, not the fringe case.</li>
-      <li>Trust the <strong>book answer</strong> over what your workplace does in practice.</li>
-      <li>You're being tested on <strong>recognition</strong>, not memorization or recitation.</li>
+      <li><strong>Inventory</strong> = what assets you have (and where).</li>
+      <li><strong>Asset Management Lifecycle</strong> = managing assets from cradle to grave (5 phases: plan → deploy → use → track → dispose).</li>
+      <li><strong>CMDB</strong> = central database of CIs and their relationships to each other and to services.</li>
+      <li><strong>Configuration Item (CI)</strong> = any managed asset, component, or service.</li>
+      <li>The CMDB's biggest value: showing <strong>interdependencies</strong> so you can predict the impact of a change.</li>
     </ul>
 
     <div class="decision-rules">
       <div class="decision-rules-title">quick decision rules</div>
       <ul>
-        <li><strong>Two answers both look right</strong> <span class="arrow">→</span> pick the most common / most-often-true one</li>
-        <li><strong>One specific, one generic category</strong> <span class="arrow">→</span> pick the specific one</li>
-        <li><strong>Workplace says X, book says Y</strong> <span class="arrow">→</span> pick Y</li>
-        <li><strong>Question has bold / italic / ALL CAPS word</strong> <span class="arrow">→</span> re-read it; that word is a qualifier</li>
-        <li><strong>"Select two" or "select three"</strong> <span class="arrow">→</span> partial credit doesn't apply — get the exact count right</li>
+        <li><strong>Impact of changes between systems</strong> <span class="arrow">→</span> CMDB</li>
+        <li><strong>Tracking what you own</strong> <span class="arrow">→</span> Inventory</li>
+        <li><strong>Asset's lifespan from procurement to disposal</strong> <span class="arrow">→</span> Asset Management Lifecycle</li>
       </ul>
     </div>
   </div>
 
   <div class="footer">
     <span>study.notes / cor</span>
-    <span>module 00 — eof</span>
+    <span>module 01 — eof</span>
   </div>
 
 </div>
