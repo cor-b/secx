@@ -45,7 +45,7 @@
   h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
   .subtitle { color: var(--ink-dim); font-size: 14px; margin: 0 0 50px; line-height: 1.6; max-width: 580px; }
   .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
-  .overview-label { display: block; color: var(--magenta); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 10px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
   .overview p { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.7; }
   .overview strong { color: var(--cyan); font-weight: 500; }
   h2 {
@@ -55,7 +55,7 @@
   }
   h2 .num { color: var(--magenta); font-size: 12px; letter-spacing: 0.1em; font-weight: 400; }
   h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
-  h4 { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin: 24px 0 10px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
   p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
   strong { color: var(--cyan); font-weight: 500; }
   ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
@@ -72,7 +72,7 @@
   .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
   .tool-badge { display: inline-block; color: var(--amber); border: 1px solid var(--rule); padding: 2px 10px; font-size: 10px; letter-spacing: 0.08em; margin-left: 8px; border-radius: 2px; }
   dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
-  dl.def dt { color: var(--amber); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
   dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
   dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 12px; font-weight: 400; margin-top: 4px; }
   table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
@@ -82,15 +82,15 @@
   td:nth-child(2) { color: var(--ink-dim); width: 20%; }
   td:nth-child(3) { width: 30%; }
   td:last-child { color: var(--ink-dim); font-size: 13px; }
-  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); position: relative; }
-  .exam-tips-label { position: absolute; top: -8px; left: 24px; background: var(--bg); color: var(--magenta); font-size: 10px; padding: 0 10px; letter-spacing: 0.18em; }
+  .exam-tips { margin-top: 70px; padding: 48px 30px 30px; border: 1px solid var(--rule); background: var(--panel); position: relative; }
+  .exam-tips-label { position: absolute; top: -10px; left: 24px; background: var(--bg); color: var(--magenta); font-size: 12px; padding: 0 12px; letter-spacing: 0.16em; }
   .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
   .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
   .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
   .exam-tips ul li:last-child { border-bottom: none; }
   .exam-tips strong { color: var(--amber); }
   .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
-  .decision-rules-title { color: var(--cyan); font-size: 10px; letter-spacing: 0.18em; margin-bottom: 12px; }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
   .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
   .decision-rules ul li::before { content: ''; }
   .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
@@ -114,7 +114,7 @@
 
   <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
 
-  <span class="module-tag">lesson 05 / governance · obj. 1.1</span>
+  <span class="module-tag">lesson 05 / governance / Security Program Documentation</span>
   <h1 class="module-title">Security Program Documentation</h1>
   <p class="subtitle">Four administrative controls that define what behavior is expected, how to carry it out, and to what standard — the backbone of a consistent security program.</p>
 
@@ -148,7 +148,7 @@
   </div>
 
   <!-- SECTION 1 -->
-  <h2><span class="num">01</span>Policies</h2>
+  <h2>Policies</h2>
   <p>High-level, <strong>mandatory</strong> principles that set expectations and define what is allowed. Violations carry consequences. Think of policies as the speed limits of security — you must follow them.</p>
 
   <h3>Key policy types to know</h3>
@@ -181,7 +181,7 @@
   </ul>
 
   <!-- SECTION 2 -->
-  <h2><span class="num">02</span>Procedures</h2>
+  <h2>Procedures</h2>
   <p>Detailed, <strong>step-by-step</strong> instructions for carrying out policies — required to be followed exactly. They eliminate ambiguity and reduce errors during critical moments.</p>
 
   <h3>Examples</h3>
@@ -197,7 +197,7 @@
   </dl>
 
   <!-- SECTION 3 -->
-  <h2><span class="num">03</span>Standards</h2>
+  <h2>Standards</h2>
   <p>Define specific requirements that should be met. Some are <strong>contractually or legally mandatory</strong>; others are industry best practices without direct penalties.</p>
 
   <h3>Key standards to know</h3>
@@ -231,7 +231,7 @@
   </dl>
 
   <!-- SECTION 4 -->
-  <h2><span class="num">04</span>Guidelines</h2>
+  <h2>Guidelines</h2>
   <p>Recommended best practices — <strong>not required</strong>, flexible. Help organizations align with policies and standards on their own terms.</p>
 
   <h3>Examples</h3>
@@ -242,7 +242,7 @@
   </ul>
 
   <!-- CHEAT SHEET -->
-  <h2><span class="num">05</span>Quick Comparison</h2>
+  <h2>Quick Comparison</h2>
   <table>
     <thead>
       <tr><th>Type</th><th>Required?</th><th>Defines</th><th>Example</th></tr>
@@ -258,7 +258,7 @@
   <!-- EXAM TIPS -->
   <div class="exam-tips">
     <span class="exam-tips-label">exam tips</span>
-    <h2><span class="num">★</span>Key Takeaways</h2>
+    <h2>Key Takeaways</h2>
     <ul>
       <li><strong>Policies and procedures</strong> are mandatory — violations have consequences.</li>
       <li><strong>Guidelines</strong> are never mandatory — always recommended.</li>
