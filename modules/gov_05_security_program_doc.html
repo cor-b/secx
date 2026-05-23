@@ -4,20 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>05_security_program_doc — study.notes</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0a18; --panel: #14101f; --rule: #2a2440; --rule-soft: #1f1a30;
-    --ink: #d8d4e8; --ink-dim: #7a7396; --ink-faint: #4a4566;
+    --bg: #13102a; --panel: #1c1738; --rule: #2a2440; --rule-soft: #1f1a30;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
     --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
-    font-size: 14px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
+  /* prose body text — sans for legibility */
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
+  dl.def dd .detail {
+    font-family: var(--font-sans);
+  }
+  /* keep list markers mono for alignment */
+  ul li::before, ol li::before { font-family: var(--font-mono); }
   .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
   .meta-bar {
     display: flex; justify-content: space-between; align-items: baseline;
