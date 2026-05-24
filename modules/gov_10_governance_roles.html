@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10_governance_roles / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc, dl.def dd .detail { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 15px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(167,138,212,0.12); color: var(--violet); padding: 2px 7px; border-radius: 3px; letter-spacing: 0; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 15px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .three-elements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 11px; color: var(--magenta); letter-spacing: 0.12em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 14px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  .callout { margin: 24px 0; padding: 20px 22px; border-left: 2px solid var(--amber); background: rgba(212,169,106,0.04); }
+  .callout-label { display: block; color: var(--amber); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; text-transform: uppercase; font-family: var(--font-mono); }
+  .callout p { font-family: var(--font-sans); margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--amber); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 24%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; font-family: var(--font-mono); }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 14px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; font-family: var(--font-mono); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .three-elements { grid-template-columns: 1fr; } .exam-tips { padding: 24px 20px; } .exam-tips-label { margin: -24px -20px 24px; padding: 12px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/governance/governance_roles</span>
+  </div>
+
+  <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
+
+  <span class="module-tag">lesson 10 / governance / Governance Roles &amp; Responsibilities</span>
+  <h1 class="module-title">Governance Roles &amp; Responsibilities</h1>
+  <p class="subtitle">Named roles that establish clear accountability for data, security, and compliance. Distinct from RACI (which assigns tasks). These define who plays what role across the organization.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Beyond task-level RACI assignments, governance depends on named roles with defined authorities. The exam tests three categories: <strong>data roles</strong> (owner, custodian, steward), <strong>privacy/GDPR roles</strong> (controller, processor, subject), and <strong>organizational security roles</strong> (CISO, DPO, system owner). Confusing them is a common trap.</p>
+  </div>
+
+  <h4>three role categories</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">DATA</span>
+      <span class="name">Owner / Custodian / Steward</span>
+      <span class="card-desc">Internal organizational roles for managing data through its lifecycle.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">PRIVACY</span>
+      <span class="name">Controller / Processor / Subject</span>
+      <span class="card-desc">Legal roles defined by GDPR and most modern privacy laws.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">SECURITY</span>
+      <span class="name">CISO / DPO / System Owner</span>
+      <span class="card-desc">Organizational positions accountable for security and privacy programs.</span>
+    </div>
+  </div>
+
+  <h2>Data Roles</h2>
+
+  <p>Three internal organizational roles that together cover the full responsibility for data. The exam loves to test the distinction.</p>
+
+  <dl class="def">
+    <dt>Data Owner</dt>
+    <dd>Accountable for the data.
+      <span class="detail">Makes decisions about classification, access policy, and risk acceptance. Usually a business leader (the VP of Marketing owns customer marketing data; the CFO owns financial data). Has authority but does not implement controls themselves.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Data Custodian</dt>
+    <dd>Responsible for technical implementation and day-to-day protection.
+      <span class="detail">Operates the storage systems, applies backups, enforces access controls, maintains encryption. Typically IT operations or database administrators. Executes the owner's decisions; does not set policy.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Data Steward</dt>
+    <dd>Responsible for data quality, meaning, and definitions.
+      <span class="detail">Ensures data is accurate, consistent, and usable. Defines what "active customer" means or how a duplicate record gets reconciled. Often a subject matter expert from the business side, working alongside both owner and custodian.</span>
+    </dd>
+  </dl>
+
+  <h3>Quick comparison</h3>
+  <table>
+    <thead>
+      <tr><th>Role</th><th>Accountable for</th><th>Typically...</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Data Owner</td><td>Decisions about data (policy, classification)</td><td>Business leader (VP, department head)</td></tr>
+      <tr><td>Data Custodian</td><td>Technical controls protecting data</td><td>IT admin, DBA, security engineer</td></tr>
+      <tr><td>Data Steward</td><td>Data quality and meaning</td><td>Subject matter expert, data analyst</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="callout-label">the most common trap</span>
+    <p>If a question asks who is <strong>accountable</strong> for a data-related decision (classify this dataset, approve access, accept risk), the answer is <strong>Data Owner</strong>, not the custodian. Custodians execute; owners decide.</p>
+  </div>
+
+  <h2>Privacy &amp; GDPR Roles</h2>
+
+  <p>GDPR (and most modern privacy laws like CCPA, LGPD) define three legal roles. These describe legal relationships, not job titles.</p>
+
+  <dl class="def">
+    <dt>Data Controller</dt>
+    <dd>Decides why and how personal data is processed.
+      <span class="detail">Bears primary legal responsibility under GDPR. Most companies are controllers for their own employee and customer data. The controller chooses the purpose, the scope, and the means of processing.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Data Processor</dt>
+    <dd>Processes personal data on behalf of the controller.
+      <span class="detail">Has fewer legal obligations than the controller, but must follow the controller's documented instructions. Cloud providers, payroll services, and analytics platforms are typical processors. Processors need a Data Processing Agreement (DPA) with each controller.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Data Subject</dt>
+    <dd>The individual whose personal data is being processed.
+      <span class="detail">Has legal rights: access, rectification, erasure ("right to be forgotten"), portability, restriction of processing, objection. The data subject can exercise these rights against the controller, who must respond within defined timeframes (typically 30 days under GDPR).</span>
+    </dd>
+  </dl>
+
+  <h2>Organizational Security Roles</h2>
+
+  <p>Named positions accountable for portions of the security and privacy program. Some are required by law (DPO under GDPR for certain orgs); others are best practice.</p>
+
+  <dl class="def">
+    <dt>CISO: Chief Information Security Officer</dt>
+    <dd>Sets enterprise security strategy.
+      <span class="detail">Owns the security program end to end: strategy, budget, risk appetite, incident response, board reporting. Reports to the CEO, CIO, or directly to the board in mature organizations. The single point of accountability for security.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>DPO: Data Protection Officer</dt>
+    <dd>Mandatory under GDPR for certain organizations.
+      <span class="detail">Required for public authorities, organizations whose core activities involve large-scale processing of special category data, or large-scale monitoring of data subjects. The DPO must be <strong>independent</strong>, report to the highest level of management, and cannot be told what conclusions to reach. Cannot be the CISO or CIO (conflict of interest).</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Privacy Officer</dt>
+    <dd>Owns the privacy program; typically the US-style equivalent of a DPO.
+      <span class="detail">Not legally mandated in the same way as a DPO, but standard practice for organizations handling significant personal data. Often a single person handles both roles in mid-size organizations.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>System Owner</dt>
+    <dd>Accountable for a specific system's operation, security, and lifecycle.
+      <span class="detail">A narrower scope than the Data Owner. The System Owner is responsible for the system (the application, the server, the platform); the Data Owner is responsible for the data the system handles. The same person may hold both roles for some systems.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>ISSO: Information Systems Security Officer</dt>
+    <dd>Federal and military equivalent of a security officer at the system level.
+      <span class="detail">Common in NIST 800-53 / FISMA / RMF contexts. Each system in a federal environment typically has a named ISSO accountable for that system's security posture.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Internal Auditor</dt>
+    <dd>Independent assessment of controls inside the organization.
+      <span class="detail">Reports to the audit committee of the board, not to the CISO or CIO, to preserve independence. Tests controls against policy and external requirements. Findings feed remediation plans.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>External Auditor</dt>
+    <dd>Independent third-party assessment.
+      <span class="detail">Required for certifications (ISO 27001, SOC 2), regulatory compliance (SOX, PCI-DSS), and many contracts. Provides credibility that internal teams alone cannot.</span>
+    </dd>
+  </dl>
+
+  <h2>Quick Reference: Who Does What</h2>
+
+  <table>
+    <thead>
+      <tr><th>Role</th><th>Owns / Decides</th><th>Reports to / Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Data Owner</td><td>Data classification and policy</td><td>Business leader; the accountable party</td></tr>
+      <tr><td>Data Custodian</td><td>Technical implementation</td><td>IT operations; executes the owner's decisions</td></tr>
+      <tr><td>Data Steward</td><td>Data quality, meaning</td><td>Subject matter expert; not the owner or custodian</td></tr>
+      <tr><td>Data Controller</td><td>Purpose and means of processing personal data</td><td>Primary legal responsibility under GDPR</td></tr>
+      <tr><td>Data Processor</td><td>Processing on controller's instructions</td><td>Cloud / SaaS / payroll vendors typically</td></tr>
+      <tr><td>Data Subject</td><td>Has rights over their own data</td><td>The individual; not an organizational role</td></tr>
+      <tr><td>CISO</td><td>Security strategy and program</td><td>CEO, CIO, or board</td></tr>
+      <tr><td>DPO</td><td>Privacy compliance (GDPR)</td><td>Highest management; must be independent</td></tr>
+      <tr><td>System Owner</td><td>A specific system's operation</td><td>Narrower than Data Owner</td></tr>
+      <tr><td>Internal Auditor</td><td>Control testing</td><td>Audit committee, not CISO</td></tr>
+      <tr><td>External Auditor</td><td>Third-party attestation</td><td>Required for ISO 27001, SOC 2, SOX, etc.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li><strong>Data Owner = decides; Data Custodian = executes; Data Steward = data quality.</strong> The most-tested distinction in this lesson.</li>
+      <li>The Data Owner is a <strong>business leader</strong>, not someone in IT. IT operates as the custodian.</li>
+      <li><strong>GDPR Controller decides why and how; Processor does the work.</strong> Controller bears primary legal responsibility.</li>
+      <li><strong>Data Subjects</strong> have specific rights under GDPR: access, rectification, erasure, portability, restriction, objection.</li>
+      <li><strong>DPO must be independent</strong> and report to highest management. Cannot be the CISO or CIO (conflict of interest).</li>
+      <li>DPO is <strong>mandatory under GDPR</strong> for public authorities and orgs doing large-scale processing of personal/special data.</li>
+      <li><strong>Internal Auditor reports to the board's audit committee</strong>, not to security or IT, to preserve independence.</li>
+      <li>System Owner = a specific system; Data Owner = the data within (potentially many) systems. Different scopes.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>"Decides how data is classified"</strong> <span class="arrow">→</span> Data Owner</li>
+        <li><strong>"Implements encryption / backups / access controls"</strong> <span class="arrow">→</span> Data Custodian</li>
+        <li><strong>"Ensures data definitions are accurate"</strong> <span class="arrow">→</span> Data Steward</li>
+        <li><strong>"Decides purpose of personal data processing"</strong> <span class="arrow">→</span> Data Controller (GDPR)</li>
+        <li><strong>"Processes data on instructions from another company"</strong> <span class="arrow">→</span> Data Processor (GDPR)</li>
+        <li><strong>"Has the right to request erasure"</strong> <span class="arrow">→</span> Data Subject (GDPR)</li>
+        <li><strong>"Owns overall security strategy"</strong> <span class="arrow">→</span> CISO</li>
+        <li><strong>"Required by GDPR for certain orgs, must be independent"</strong> <span class="arrow">→</span> DPO</li>
+        <li><strong>"Independent assessment of internal controls"</strong> <span class="arrow">→</span> Internal Auditor</li>
+        <li><strong>"Third-party attestation for ISO 27001 / SOC 2"</strong> <span class="arrow">→</span> External Auditor</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 10 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

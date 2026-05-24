@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09_vendor_risk_management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc, dl.def dd .detail { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 15px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(167,138,212,0.12); color: var(--violet); padding: 2px 7px; border-radius: 3px; letter-spacing: 0; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 15px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .phases { counter-reset: phase; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 44px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 15px; display: block; }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  .callout { margin: 24px 0; padding: 20px 22px; border-left: 2px solid var(--amber); background: rgba(212,169,106,0.04); }
+  .callout-label { display: block; color: var(--amber); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; text-transform: uppercase; font-family: var(--font-mono); }
+  .callout p { font-family: var(--font-sans); margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--amber); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 18%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; font-family: var(--font-mono); }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 14px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; font-family: var(--font-mono); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .exam-tips { padding: 24px 20px; } .exam-tips-label { margin: -24px -20px 24px; padding: 12px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/governance/vendor_risk_management</span>
+  </div>
+
+  <a class="back-link" href="governance.html"><span class="arrow">←</span>back to /governance</a>
+
+  <span class="module-tag">lesson 09 / governance / Vendor &amp; Third-Party Risk Management</span>
+  <h1 class="module-title">Vendor &amp; Third-Party Risk Management</h1>
+  <p class="subtitle">Managing risk from vendors, suppliers, and service providers. The agreements that govern these relationships, the assessments that vet them, and the supply chain realities behind today's biggest breaches.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Most organizations depend on dozens or hundreds of third parties. Recent breaches like <strong>SolarWinds (2020)</strong> and <strong>Log4j (2021)</strong> made supply chain risk a top governance concern. Effective third-party risk management combines clear agreements, ongoing assessment, and explicit ownership of the trust boundary.</p>
+  </div>
+
+  <h2>Vendor Agreement Types</h2>
+
+  <p>Each agreement type serves a different governance purpose. The exam tests both the acronyms and the situations where each applies.</p>
+
+  <dl class="def">
+    <dt>SLA: Service Level Agreement</dt>
+    <dd>Defines specific service levels the vendor must meet.
+      <span class="detail">Includes uptime guarantees (e.g. 99.9% availability), response times, support tiers, penalties for non-compliance. The "what you'll get and when" document.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>MSA: Master Service Agreement</dt>
+    <dd>Overarching contract covering the general terms of the relationship.
+      <span class="detail">Sets liability, IP ownership, confidentiality, dispute resolution. Individual statements of work (SOWs) hang off the MSA without renegotiating the whole contract each time.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>MOU / MOA: Memorandum of Understanding / Agreement</dt>
+    <dd>Non-binding statement of intent between two parties.
+      <span class="detail">Documents that both sides agree on goals or expectations, but does not create legal obligations. Often used between government agencies or partner organizations before formal contracts.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>NDA: Non-Disclosure Agreement</dt>
+    <dd>Confidentiality obligations between parties.
+      <span class="detail">Binds the vendor (and often their employees) to not disclose sensitive information. Can be one-way (vendor protects your data) or mutual (both parties protect each other's data).</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>BPA: Business Partner Agreement</dt>
+    <dd>Governs a strategic business partnership.
+      <span class="detail">Used for joint ventures, revenue-sharing deals, or co-marketing arrangements. Defines roles, contributions, profit splits, and exit conditions. Broader than an SLA.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>ISA: Interconnection Security Agreement</dt>
+    <dd>Technical and security requirements for connecting two networks.
+      <span class="detail">Specifies authentication, encryption, logging, allowed traffic, and incident notification when one organization's network connects to another. Common between federal agencies and contractors.</span>
+    </dd>
+  </dl>
+
+  <h2>Vendor Risk Assessment</h2>
+
+  <h3>Common assessment methods</h3>
+  <ul>
+    <li><strong>Vendor security questionnaires</strong> like SIG (Standardized Information Gathering) or CAIQ (Consensus Assessment Initiative Questionnaire from CSA) standardize what you ask vendors</li>
+    <li><strong>SOC 2 reports</strong> from an independent auditor demonstrating the vendor's control environment</li>
+    <li><strong>Penetration test results</strong> if the vendor will share them under NDA</li>
+    <li><strong>Right to audit</strong> clauses in the contract let you verify controls directly</li>
+    <li><strong>Continuous monitoring</strong> via security ratings services (BitSight, SecurityScorecard) for ongoing visibility</li>
+  </ul>
+
+  <h3>SOC 2 Type I vs Type II</h3>
+  <dl class="def">
+    <dt>SOC 2 Type I</dt>
+    <dd>Point-in-time snapshot.
+      <span class="detail">Auditor confirms the controls are designed appropriately as of a specific date. Quicker to obtain but less rigorous; says nothing about whether controls actually operate over time.</span>
+    </dd>
+  </dl>
+  <dl class="def">
+    <dt>SOC 2 Type II</dt>
+    <dd>Period-of-time evaluation (typically 6-12 months).
+      <span class="detail">Auditor tests whether controls operated effectively throughout the period. The stronger, more trusted report. If a vendor offers Type I only, ask when Type II will be available.</span>
+    </dd>
+  </dl>
+
+  <h3>Risk tiering</h3>
+  <p>Not every vendor needs the same scrutiny. Tier vendors by impact:</p>
+  <ul>
+    <li><strong>Critical:</strong> handles sensitive data or core operations (e.g. cloud hosting, payment processor). Annual deep assessment, contractual security requirements, continuous monitoring.</li>
+    <li><strong>High:</strong> meaningful access or data exposure. Annual questionnaire, SOC 2 review.</li>
+    <li><strong>Medium:</strong> limited access. Questionnaire on onboarding, periodic review.</li>
+    <li><strong>Low:</strong> minimal risk (e.g. marketing newsletter tool). Light or no formal assessment.</li>
+  </ul>
+
+  <h2>Vendor Lifecycle</h2>
+
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Onboarding &amp; Due Diligence</span>
+      <span class="phase-desc">Risk assessment before signing. Review questionnaires, SOC 2, financial stability, legal/compliance history. Negotiate security and audit clauses into the contract.</span>
+    </li>
+    <li>
+      <span class="phase-name">Contracting</span>
+      <span class="phase-desc">Execute MSA, SLA, NDA, ISA, and any other applicable agreements. Document the trust boundary and incident notification requirements.</span>
+    </li>
+    <li>
+      <span class="phase-name">Operations &amp; Monitoring</span>
+      <span class="phase-desc">Track SLA performance, monitor security ratings, conduct periodic reassessments (annual for critical vendors), watch for breaches affecting the vendor.</span>
+    </li>
+    <li>
+      <span class="phase-name">Offboarding</span>
+      <span class="phase-desc">Return or destroy data, revoke access credentials and API keys, obtain certificate of destruction for any media. Document the end of the relationship.</span>
+    </li>
+  </ol>
+
+  <h2>Supply Chain Risk</h2>
+
+  <p>Vendor risk management covers the contractual relationship. Supply chain risk covers the deeper question: what's <em>inside</em> the products and services you depend on?</p>
+
+  <h3>Software supply chain</h3>
+  <ul>
+    <li>Modern software is mostly third-party components. A breach in any component cascades downstream.</li>
+    <li><strong>SBOM (Software Bill of Materials)</strong> lists all components in a piece of software. Required for federal contractors via <strong>Executive Order 14028</strong>.</li>
+    <li>Watch for transitive dependencies (your vendor's vendors' vendors).</li>
+    <li>Examples: <strong>SolarWinds</strong> (compromised build pipeline pushed malicious updates to ~18,000 customers), <strong>Log4j</strong> (a vulnerability in a ubiquitous logging library exposed thousands of products at once).</li>
+  </ul>
+
+  <h3>Hardware supply chain</h3>
+  <ul>
+    <li><strong>Counterfeit components</strong> in network equipment, especially common in the gray market</li>
+    <li><strong>Tampering</strong> during manufacturing or shipping (interdiction attacks)</li>
+    <li>Country-of-origin restrictions (e.g. US bans on Huawei, ZTE for critical infrastructure)</li>
+    <li>Mitigations: buy from authorized distributors, validate firmware signatures, tamper-evident packaging</li>
+  </ul>
+
+  <h3>Cloud and SaaS dependencies</h3>
+  <ul>
+    <li><strong>4th-party risk:</strong> your vendor's vendors. If your SaaS provider uses AWS and AWS has an outage, you're affected too.</li>
+    <li><strong>Shared responsibility models</strong> define what the cloud provider secures vs what the customer secures. Misunderstanding this boundary causes most cloud breaches.</li>
+    <li>Concentration risk: if too many vendors depend on the same upstream provider, a single incident can affect a whole industry.</li>
+  </ul>
+
+  <div class="callout">
+    <span class="callout-label">why SolarWinds &amp; Log4j matter</span>
+    <p><strong>SolarWinds (2020):</strong> attackers compromised the Orion software build pipeline. Trusted, signed updates carried a backdoor (SUNBURST) to ~18,000 customers including federal agencies and Fortune 500 companies. Demonstrated that the vendor's <strong>build environment</strong> is a target, not just their product.</p>
+    <p><strong>Log4j / Log4Shell (2021):</strong> a critical RCE vulnerability (CVE-2021-44228) in a Java logging library used by tens of thousands of products. Most orgs didn't even know they had it (deep transitive dependency). Drove widespread adoption of <strong>SBOM</strong> requirements.</p>
+  </div>
+
+  <h2>Quick Reference: Agreement Types</h2>
+
+  <table>
+    <thead>
+      <tr><th>Acronym</th><th>Full name</th><th>Use case</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SLA</td><td>Service Level Agreement</td><td>Defines uptime, response time, performance metrics</td></tr>
+      <tr><td>MSA</td><td>Master Service Agreement</td><td>Overarching contract terms; SOWs hang off it</td></tr>
+      <tr><td>MOU / MOA</td><td>Memorandum of Understanding / Agreement</td><td>Non-binding intent between parties</td></tr>
+      <tr><td>NDA</td><td>Non-Disclosure Agreement</td><td>Confidentiality obligations</td></tr>
+      <tr><td>BPA</td><td>Business Partner Agreement</td><td>Strategic partnership terms (joint ventures, etc.)</td></tr>
+      <tr><td>ISA</td><td>Interconnection Security Agreement</td><td>Technical security for connecting networks</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li>Know all six agreement acronyms: <strong>SLA, MSA, MOU, NDA, BPA, ISA</strong>. Each maps to a distinct situation.</li>
+      <li><strong>SOC 2 Type II is stronger than Type I.</strong> Type I is point-in-time; Type II is period-of-time (typically 6-12 months).</li>
+      <li><strong>SBOM</strong> (Software Bill of Materials) is required for federal contractors via Executive Order 14028.</li>
+      <li><strong>Shared responsibility models</strong> in cloud define what the provider secures vs what the customer secures. Misunderstanding this is the #1 source of cloud breaches.</li>
+      <li><strong>Right to audit</strong> clauses in vendor contracts let you verify controls; SOC 2 reports are the common alternative when audits aren't practical.</li>
+      <li><strong>SolarWinds</strong> = supply chain attack via compromised build pipeline. <strong>Log4j</strong> = vulnerability in a deeply embedded open-source library. Both are go-to exam examples.</li>
+      <li>Tier vendors by risk: not every vendor needs the same scrutiny.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Uptime guarantee, response time</strong> <span class="arrow">→</span> SLA</li>
+        <li><strong>Overarching contract terms</strong> <span class="arrow">→</span> MSA</li>
+        <li><strong>Non-binding statement of intent</strong> <span class="arrow">→</span> MOU / MOA</li>
+        <li><strong>Confidentiality only</strong> <span class="arrow">→</span> NDA</li>
+        <li><strong>Strategic partnership, joint venture</strong> <span class="arrow">→</span> BPA</li>
+        <li><strong>Connecting two networks securely</strong> <span class="arrow">→</span> ISA</li>
+        <li><strong>Point-in-time vendor control review</strong> <span class="arrow">→</span> SOC 2 Type I</li>
+        <li><strong>Period-of-time vendor control review</strong> <span class="arrow">→</span> SOC 2 Type II</li>
+        <li><strong>Inventory of software components</strong> <span class="arrow">→</span> SBOM</li>
+        <li><strong>Cloud provider vs customer security responsibility</strong> <span class="arrow">→</span> Shared responsibility model</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 09 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
