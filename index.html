@@ -152,6 +152,19 @@
     font-size: 14px;
   }
 
+  /* ls -l header row */
+  .ls-header {
+    display: grid;
+    grid-template-columns: 100px 60px 110px 1fr auto;
+    gap: 24px;
+    padding: 6px 0 10px;
+    color: var(--ink-faint);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
   /* Status line */
   .status-line {
     margin-top: 24px;
@@ -161,6 +174,47 @@
     letter-spacing: 0.05em;
   }
   .status-line .val { color: var(--ink-dim); }
+  .status-line .sep { color: var(--rule); margin: 0 10px; }
+
+  /* Activity log */
+  .activity {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .activity .prompt {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--ink-dim);
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .activity-log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .activity-log li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 18px;
+    padding: 6px 0;
+    font-size: 13px;
+    color: var(--ink);
+    align-items: baseline;
+  }
+  .activity-log .ts {
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .activity-log .msg { color: var(--ink-dim); }
+  .activity-log .msg .tag {
+    color: var(--magenta);
+    font-size: 11px;
+    margin-right: 6px;
+    letter-spacing: 0.06em;
+  }
 
   /* Note panel */
   .note {
@@ -196,6 +250,13 @@
     letter-spacing: 0.12em;
   }
   .footer span:last-child { color: var(--ink-faint); }
+  .footer a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .footer a:hover { color: var(--cyan); }
+  .footer a .hint { color: var(--magenta); margin-right: 4px; }
 
   @media (max-width: 640px) {
     .container { padding: 40px 22px 80px; }
@@ -206,6 +267,13 @@
     }
     .ls-item .perms { font-size: 10px; }
     .ls-item .size, .ls-item .date { display: none; }
+    .ls-header {
+      grid-template-columns: 80px 1fr auto;
+      gap: 14px;
+    }
+    .ls-header > span:nth-child(2),
+    .ls-header > span:nth-child(3) { display: none; }
+    .activity-log li { grid-template-columns: 90px 1fr; gap: 12px; }
     .meta-bar { font-size: 10px; }
   }
 </style>
@@ -223,18 +291,26 @@
   <p class="tagline">A personal study archive for CompTIA SecurityX.</p>
 
   <div class="prompt">
-    <span class="user">cor</span>:<span class="path">~/securityx</span>$ <span class="cmd">ls modules/</span>
+    <span class="user">cor</span>:<span class="path">~/securityx</span>$ <span class="cmd">ls -l modules/</span>
+  </div>
+
+  <div class="ls-header">
+    <span>perms</span>
+    <span>size</span>
+    <span>date</span>
+    <span>name</span>
+    <span></span>
   </div>
 
   <ul class="ls-list">
 
     <li>
-      <a class="ls-item" href="modules/00_exam_tips.html">
+      <a class="ls-item" href="modules/exam_tips.html">
         <span class="perms">-r--r--r--</span>
         <span class="size">14K</span>
         <span class="date">2026-05-24</span>
         <span class="filename-wrap">
-          <span class="filename">00_exam_tips<span class="ext">.module</span></span>
+          <span class="filename">exam_tips<span class="ext">.module</span></span>
           <span class="desc">Distractors, qualifiers, best-answer logic, what makes SecurityX different</span>
         </span>
         <span class="arrow">→</span>
@@ -262,12 +338,40 @@
   </ul>
 
   <div class="status-line">
-    total <span class="val">2 entries</span>
+    total <span class="val">2 entries</span><span class="sep">·</span><span class="val">11 lessons</span><span class="sep">·</span><span class="val">1 section</span>
+  </div>
+
+  <div class="activity">
+    <div class="prompt">
+      <span class="user">cor</span>:<span class="path">~/securityx</span>$ <span class="cmd">git log --oneline -5</span>
+    </div>
+    <ul class="activity-log">
+      <li>
+        <span class="ts">2026-05-24</span>
+        <span class="msg"><span class="tag">polish</span>index page: header row, activity log, richer stats</span>
+      </li>
+      <li>
+        <span class="ts">2026-05-24</span>
+        <span class="msg"><span class="tag">add</span>lesson 09 (vendor risk) + lesson 10 (governance roles)</span>
+      </li>
+      <li>
+        <span class="ts">2026-05-24</span>
+        <span class="msg"><span class="tag">add</span>NIST CSF to lesson 03 (governance frameworks)</span>
+      </li>
+      <li>
+        <span class="ts">2026-05-24</span>
+        <span class="msg"><span class="tag">refactor</span>section-local lesson numbering (01-08)</span>
+      </li>
+      <li>
+        <span class="ts">2026-05-23</span>
+        <span class="msg"><span class="tag">init</span>governance section: hub + 8 course lessons</span>
+      </li>
+    </ul>
   </div>
 
   <div class="footer">
     <span>study.notes / cor</span>
-    <span>gh-pages</span>
+    <span><a href="https://github.com/cor-b/secx" target="_blank" rel="noopener"><span class="hint">$</span>man study.notes</a></span>
   </div>
 
 </div>
