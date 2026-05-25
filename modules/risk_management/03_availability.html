@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03_availability / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc, dl.def dd .detail { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 15px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(167,138,212,0.12); color: var(--violet); padding: 2px 7px; border-radius: 3px; letter-spacing: 0; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 15px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .three-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 14px; line-height: 1.3; font-weight: 500; display: block; margin-bottom: 6px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  .scenario { margin: 24px 0; padding: 24px 26px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.04); }
+  .scenario-label { display: block; color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; text-transform: uppercase; font-family: var(--font-mono); }
+  .scenario p { font-family: var(--font-sans); margin: 0 0 12px; font-size: 14px; line-height: 1.65; }
+  .scenario p:last-child { margin-bottom: 0; }
+  .scenario strong { color: var(--cyan); }
+  .callout { margin: 24px 0; padding: 20px 22px; border-left: 2px solid var(--amber); background: rgba(212,169,106,0.04); }
+  .callout-label { display: block; color: var(--amber); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; text-transform: uppercase; font-family: var(--font-mono); }
+  .callout p { font-family: var(--font-sans); margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--amber); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 18%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; font-family: var(--font-mono); }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 14px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; font-family: var(--font-mono); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .three-elements { grid-template-columns: 1fr; } .exam-tips { padding: 24px 20px; } .exam-tips-label { margin: -24px -20px 24px; padding: 12px 20px; } .scenario { padding: 20px 22px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/availability</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 03 / risk management / Availability Risk Considerations</span>
+  <h1 class="module-title">Availability Risk Considerations</h1>
+  <p class="subtitle">Ensuring critical systems and data remain accessible during and after disruptive events. Plan it, back it up two different ways, and test it.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Availability depends on four pieces working together: <strong>BC/DR planning</strong> to identify what must keep running, <strong>connected backups</strong> for fast failover, <strong>disconnected backups</strong> for ransomware resistance, and regular <strong>testing</strong> to verify it all actually works under pressure.</p>
+  </div>
+
+  <h4>the four considerations</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">BC/DR Planning</span>
+      <span class="card-desc">Identify mission-essential functions and the critical assets that support them. Map disaster scenarios to recovery strategies.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Connected Backups</span>
+      <span class="card-desc">Network-attached mirrors. Synchronous for hot sites, asynchronous for warm sites.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Disconnected Backups</span>
+      <span class="card-desc">Off-network copies that survive ransomware. The 3-2-1 rule lives here.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">04</span>
+      <span class="name">BC/DR Testing</span>
+      <span class="card-desc">Simulate disruptions to validate the plan and surface gaps before they matter.</span>
+    </div>
+  </div>
+
+  <h2>Scenario: EverTrust Financial</h2>
+
+  <div class="scenario">
+    <span class="scenario-label">running example</span>
+    <p><strong>EverTrust Financial</strong> is a global financial services company processing billions of dollars in daily transactions. Downtime costs them revenue, regulatory exposure, and customer trust.</p>
+    <p>Their <strong>BC/DR plans</strong> include alternate operation sites, recovery workflows for critical services, and data restoration procedures for natural disasters or system failures.</p>
+    <p>Day to day, they use <strong>connected backups</strong> that mirror real-time transaction data to multiple data centers. If one location goes down, transactions continue at another.</p>
+    <p>But because connected backups can be reached by ransomware, EverTrust also keeps <strong>disconnected backups</strong> offline. If production systems are compromised, the offline copies restore clean, unaltered data.</p>
+    <p>Finally, they run regular <strong>BC/DR testing</strong> through real-world simulations. Gaps in the plan get found in drills, not in disasters.</p>
+  </div>
+
+  <h2>BC/DR Planning</h2>
+  <p>Business Continuity and Disaster Recovery planning starts with understanding what would happen if the business couldn't perform its core work, then builds the strategies that prevent that situation.</p>
+
+  <h3>The planning chain</h3>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Business Impact Analysis (BIA)</span>
+      <span class="phase-desc">A process that identifies and evaluates the effects of an organization not being able to maintain its Mission-Essential Functions. The BIA is the starting point of all BC/DR planning.</span>
+    </li>
+    <li>
+      <span class="phase-name">Mission-Essential Functions (MEFs)</span>
+      <span class="phase-desc">The business's core activities, necessary to fulfill its strategic mission. For EverTrust, processing transactions is an MEF. For a hospital, providing patient care.</span>
+    </li>
+    <li>
+      <span class="phase-name">Critical assets</span>
+      <span class="phase-desc">The systems, data, and processes that each MEF relies on. These must remain operational (or be quickly restored) during a disruption.</span>
+    </li>
+    <li>
+      <span class="phase-name">Recovery strategies</span>
+      <span class="phase-desc">Tactical plans to protect and maintain critical assets. Backup sites, redundant systems, failover procedures, alternate communication channels.</span>
+    </li>
+  </ol>
+
+  <h3>Disasters typically planned for</h3>
+  <ul>
+    <li><strong>Natural disasters</strong>: hurricanes, earthquakes, floods, wildfires</li>
+    <li><strong>Cyberattacks</strong>: ransomware, DDoS, destructive malware</li>
+    <li><strong>Power outages</strong>: grid failures, regional blackouts</li>
+    <li><strong>Pandemics</strong>: workforce unavailability, remote work scaling</li>
+  </ul>
+
+  <h3>Backup site types</h3>
+  <p>A key planning output is identifying <strong>backup sites</strong> where systems can be restored if the primary location goes down. Four types, ordered by readiness and cost:</p>
+
+  <dl class="def">
+    <dt>Hot Site</dt>
+    <dd>Fully operational real-time backup location.
+      <span class="detail">Critical systems and production data are continuously mirrored. Immediate failover if the primary site fails. Most expensive option. Used where there is zero tolerance for downtime, e.g. financial trading floors or military operations supporting national infrastructure.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Warm Site</dt>
+    <dd>Technical infrastructure in place, but requires data restoration to become fully operational.
+      <span class="detail">A warm site and a hot site might look identical physically. The difference: a warm site doesn't have an up-to-date copy of production data. Cheaper than hot, faster than cold. Recovery in hours to a day.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Cold Site</dt>
+    <dd>Bare facility, may offer only basic infrastructure like power and cooling.
+      <span class="detail">A designated location to rebuild. May be nothing more than a lease for space where the organization can stand up new equipment after a disaster. Cheapest, but longest recovery time, often days to weeks.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Cloud Site</dt>
+    <dd>Cloud-based services that host data and applications.
+      <span class="detail">Flexibility and scalability are the draw. Cloud sites often combine elements of hot and warm sites because cloud infrastructure provides high availability and on-demand provisioning. Increasingly the default choice for new BC/DR plans.</span>
+    </dd>
+  </dl>
+
+  <h2>Connected Backups</h2>
+  <p>Backups that are continuously attached to the production network. Fast for recovery, vulnerable to attacks that target the production environment.</p>
+
+  <h3>Synchronous</h3>
+  <dl class="def">
+    <dt>Synchronous backup</dt>
+    <dd>Copies data in real time. Every change on the primary system is instantly mirrored to the backup.
+      <span class="detail">Zero data loss in a failover (or near-zero). Ideal for supporting <strong>hot sites</strong>. Requires high-speed, low-latency network links between primary and backup, which makes synchronous backup the most expensive option.</span>
+    </dd>
+  </dl>
+
+  <h3>Asynchronous</h3>
+  <dl class="def">
+    <dt>Asynchronous backup</dt>
+    <dd>Transmits backup data with a slight delay, allowing changes to accumulate before being sent.
+      <span class="detail">Some data loss is possible (whatever changed since the last sync). Useful for supporting <strong>warm sites</strong> where real-time updates aren't required but timely recovery still matters. Cheaper bandwidth requirements than synchronous.</span>
+    </dd>
+  </dl>
+
+  <h2>Disconnected Backups</h2>
+  <p>Backups that are <strong>not continuously connected</strong> to the production network. Sometimes called "air-gapped" or "offline" backups. Their isolation is the whole point: an attack that reaches the production network can't reach them.</p>
+
+  <h3>Why disconnected matters</h3>
+  <ul>
+    <li><strong>Ransomware resistance</strong>: modern ransomware actively hunts and encrypts connected backups. Offline copies are out of reach.</li>
+    <li>Insider threat resistance: even a malicious admin with full production access can't tamper with a backup that's physically disconnected.</li>
+    <li>Confidence in clean restore: when production is compromised, you need a known-good source. Disconnected backups provide that.</li>
+  </ul>
+
+  <div class="callout">
+    <span class="callout-label">the 3-2-1 rule</span>
+    <p>A widely cited backup strategy that includes a disconnected component:</p>
+    <p><strong>3 copies</strong> of the data, on <strong>2 different storage media types</strong>, with <strong>1 copy stored off-site</strong>.</p>
+    <p>The off-site copy is typically the disconnected backup. Even if local systems fail or are compromised, a clean and untouched copy of the data remains accessible. Common exam answer.</p>
+  </div>
+
+  <h2>BC/DR Testing</h2>
+  <p>Recovery plans that haven't been tested don't work. Testing validates that the strategies on paper can actually be executed under real conditions.</p>
+
+  <h3>What testing covers</h3>
+  <ul>
+    <li>Shifting operations to a backup data center or alternate office</li>
+    <li>Recovering critical systems within target time objectives</li>
+    <li>Restoring data from backups (connected and disconnected)</li>
+    <li>Communications during disruption (when normal channels are down)</li>
+    <li>Employee role clarity: who does what during a crisis</li>
+  </ul>
+
+  <h3>What testing surfaces</h3>
+  <ul>
+    <li><strong>Communication breakdowns</strong> when the usual systems are unavailable</li>
+    <li><strong>Equipment issues</strong> at backup sites (hardware that didn't actually work)</li>
+    <li><strong>Resource shortages</strong>: not enough staff, capacity, or vendor support</li>
+    <li><strong>Plan drift</strong>: documented procedures that no longer match the current environment</li>
+    <li><strong>Skill gaps</strong>: people who don't know what their role requires</li>
+  </ul>
+
+  <h3>Why it's mandatory, not optional</h3>
+  <p>If a plan is never tested, the first time it runs in earnest is during a real disaster. That is the worst possible moment to discover that the backup site's network drops cost more bandwidth than provisioned or that nobody knows the door code to the cold site.</p>
+
+  <h2>Cheat Sheet</h2>
+
+  <h3>Backup sites</h3>
+  <table>
+    <thead>
+      <tr><th>Site</th><th>Readiness</th><th>Recovery time</th><th>Cost</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Hot</td><td>Fully operational, real-time mirrored</td><td>Immediate failover</td><td>Highest</td></tr>
+      <tr><td>Warm</td><td>Infrastructure ready, no current data</td><td>Hours to a day</td><td>Medium</td></tr>
+      <tr><td>Cold</td><td>Bare facility, power and cooling only</td><td>Days to weeks</td><td>Lowest</td></tr>
+      <tr><td>Cloud</td><td>Cloud-hosted, flexible and scalable</td><td>Variable (often hot/warm equivalent)</td><td>Pay-as-you-go</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Backup types</h3>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Network status</th><th>Use case</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Synchronous (connected)</td><td>Real-time on production network</td><td>Hot sites, zero data loss tolerance</td></tr>
+      <tr><td>Asynchronous (connected)</td><td>Delayed on production network</td><td>Warm sites, some data loss acceptable</td></tr>
+      <tr><td>Disconnected</td><td>Off-network, often offline</td><td>Ransomware resistance, clean restore source</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li>The planning chain: <strong>BIA → MEFs → critical assets → recovery strategies</strong>. Each step depends on the one before it.</li>
+      <li><strong>Hot site = real-time and ready.</strong> Warm = infrastructure ready, no data. Cold = bare facility. Cloud = flexible, usually hot/warm equivalent.</li>
+      <li><strong>Synchronous backup pairs with hot sites</strong> (real-time, expensive). <strong>Asynchronous pairs with warm sites</strong> (delayed, cheaper).</li>
+      <li><strong>Connected backups are vulnerable to ransomware</strong>; disconnected backups are the safety net.</li>
+      <li><strong>3-2-1 rule:</strong> 3 copies, 2 different media types, 1 off-site. Memorize the numbers.</li>
+      <li>A BIA evaluates the impact of <strong>not being able to maintain MEFs</strong>. It's the starting point of BC/DR planning.</li>
+      <li>If you don't test the plan, it doesn't work. Testing is mandatory, not optional.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Zero downtime tolerance, real-time failover</strong> <span class="arrow">→</span> Hot site (with synchronous backup)</li>
+        <li><strong>Infrastructure ready but data must be restored</strong> <span class="arrow">→</span> Warm site (with asynchronous backup)</li>
+        <li><strong>Bare facility, longest recovery</strong> <span class="arrow">→</span> Cold site</li>
+        <li><strong>Flexible, scalable, often cloud-native</strong> <span class="arrow">→</span> Cloud site</li>
+        <li><strong>Survive a ransomware attack</strong> <span class="arrow">→</span> Disconnected backup</li>
+        <li><strong>3 copies / 2 media / 1 off-site</strong> <span class="arrow">→</span> 3-2-1 rule</li>
+        <li><strong>"Effects of not being able to maintain MEFs"</strong> <span class="arrow">→</span> Business Impact Analysis (BIA)</li>
+        <li><strong>"Core activities necessary to fulfill the mission"</strong> <span class="arrow">→</span> Mission-Essential Functions (MEFs)</li>
+        <li><strong>Validate that the plan actually works</strong> <span class="arrow">→</span> BC/DR Testing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 03 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
