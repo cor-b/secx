@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01_resilient_system_design / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .phases { counter-reset: phase; list-style: none; margin: 0 0 50px; padding: 0; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--rule-soft); margin: 0; position: relative; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; font-family: var(--font-mono); }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 14px; display: block; font-family: var(--font-mono); }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; font-family: var(--font-sans); }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 28%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/resilient_system_design</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 01 / security architecture / Resilient System Design</span>
+  <h1 class="module-title">Resilient System Design</h1>
+  <p class="subtitle">An overview of the security architecture techniques used to design systems that withstand disruption, detect threats efficiently, and recover quickly.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Resilient system design covers Domain 2: Security Architecture. The core requirement is the ability to <strong>analyze requirements and design systems that remain operational under adverse conditions</strong>, including attacks, failures, and surges in demand.</p>
+    <p>This section covers six areas: security devices (the layered defense stack), monitoring and detection (observing the network), network traffic management (directing and optimizing flow), application layer security (protecting Layer 7), availability and scaling (handling load), and deployment and recovery strategies (geographic placement and restoration).</p>
+  </div>
+
+  <h4>six topic areas</h4>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Security Devices</span>
+      <span class="phase-desc">Firewalls, IDS, IPS, VPNs, and NAC form the layered defense that filters traffic, detects threats, encrypts communication, and controls access.</span>
+    </li>
+    <li>
+      <span class="phase-name">Monitoring and Detection</span>
+      <span class="phase-desc">TAPs, collectors, and vulnerability scanners provide continuous visibility into network activity and identify weaknesses before they can be exploited.</span>
+    </li>
+    <li>
+      <span class="phase-name">Network Traffic Management</span>
+      <span class="phase-desc">Forward proxies, reverse proxies, and CDNs control and optimize data flow across the network, applying policies and reducing latency at scale.</span>
+    </li>
+    <li>
+      <span class="phase-name">Application Layer Security</span>
+      <span class="phase-desc">API gateways and WAFs protect applications at Layer 7 (OSI application layer) against API abuse, SQL injection, and cross-site scripting.</span>
+    </li>
+    <li>
+      <span class="phase-name">Availability and Scaling</span>
+      <span class="phase-desc">Load balancing with persistent or non-persistent affinity keeps systems accessible. Vertical and horizontal scaling ensure capacity meets demand.</span>
+    </li>
+    <li>
+      <span class="phase-name">Deployment and Recovery Strategies</span>
+      <span class="phase-desc">Geographical deployment distributes infrastructure to reduce latency and improve redundancy. Backups and failover mechanisms restore operations after disruption.</span>
+    </li>
+  </ol>
+
+  <!-- SECTION 1 -->
+  <h2>security devices</h2>
+  <p>Security devices form a layered defense. Each device plays a distinct role, and they are designed to complement one another rather than serve as standalone solutions.</p>
+
+  <table>
+    <thead>
+      <tr><th>Device</th><th>Role</th><th>Key detail</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Firewall</td>
+        <td>Filters traffic via Access Control Lists (ACLs)</td>
+        <td>Establishes the network perimeter; controls what can enter and leave</td>
+      </tr>
+      <tr>
+        <td>IDS</td>
+        <td>Detects and alerts on malicious activity</td>
+        <td>Passive only — does not block traffic. Monitors and generates alerts.</td>
+      </tr>
+      <tr>
+        <td>IPS</td>
+        <td>Detects, alerts, and actively blocks threats</td>
+        <td>Active — extends IDS by mitigating detected threats in real time</td>
+      </tr>
+      <tr>
+        <td>VPN</td>
+        <td>Encrypts data across untrusted networks</td>
+        <td>Secures remote and site-to-site communication</td>
+      </tr>
+      <tr>
+        <td>NAC</td>
+        <td>Enforces device health and security policies</td>
+        <td>Checks compliance before granting network access; prevents non-compliant devices from connecting</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2 -->
+  <h2>monitoring and detection</h2>
+  <p>Monitoring and detection provides continuous visibility into network activity so that threats can be identified and addressed before they cause damage.</p>
+
+  <dl class="def">
+    <dt>TAPs (Test Access Points)</dt>
+    <dd>Hardware or software devices that capture all network traffic in real time.
+      <span class="detail">TAPs operate passively — they copy traffic without interfering with normal network operations, making them suitable for high-fidelity capture in production environments.</span>
+    </dd>
+    <dt>Collectors</dt>
+    <dd>Systems that aggregate and process data captured by TAPs and other sources.
+      <span class="detail">Collectors centralize data for further analysis, enabling identification of patterns, anomalies, and indicators of compromise across large volumes of traffic.</span>
+    </dd>
+    <dt>Vulnerability Scanners</dt>
+    <dd>Tools that proactively identify known technical weaknesses in systems and applications.
+      <span class="detail">Scanners allow organizations to address security gaps before they can be exploited, rather than discovering vulnerabilities only after an incident.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2>network traffic management</h2>
+  <p>Network traffic management tools control, direct, and optimize data flow. Proxies mediate connections between clients and servers; CDNs solve the problem of delivering content efficiently at global scale.</p>
+
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Position</th><th>Direction and purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Forward proxy</td>
+        <td>Internal gateway (LAN side)</td>
+        <td>Applies control policies to outbound internal requests before forwarding them to external destination servers</td>
+      </tr>
+      <tr>
+        <td>Reverse proxy</td>
+        <td>Public interface (internet-facing)</td>
+        <td>Receives inbound external requests, applies policies, and forwards them to the appropriate internal resources</td>
+      </tr>
+      <tr>
+        <td>CDN</td>
+        <td>Globally distributed edge nodes</td>
+        <td>Caches content at locations close to end users, reducing latency and improving load times worldwide. Built on distributed reverse proxies.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 4 -->
+  <h2>application layer security</h2>
+  <p>Application layer security operates at Layer 7 of the OSI model, the application layer itself. It protects APIs and web applications using device-specific, granular rule sets not possible at lower layers.</p>
+
+  <dl class="def">
+    <dt>API Gateway</dt>
+    <dd>Manages and secures API requests, handling authentication, rate limiting, and controlled data delivery to backend services.
+      <span class="detail">An API gateway acts as the front door to internal services exposed via APIs, enforcing access controls and preventing abuse before requests reach the backend.</span>
+    </dd>
+    <dt>WAF (Web Application Firewall)</dt>
+    <dd>Filters and monitors web application traffic to protect against common attacks such as SQL injection and cross-site scripting (XSS).
+      <span class="detail">Because a WAF is implemented at the application itself, it can apply highly specific rule sets tailored to the application's exact traffic patterns and known attack vectors.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 5 -->
+  <h2>availability and scaling</h2>
+
+  <h3>load balancing and affinity</h3>
+  <p>Load balancing distributes incoming network traffic across multiple servers so that no single server becomes a bottleneck. Affinity controls how sessions are routed within that distribution.</p>
+  <ul>
+    <li><strong>Persistent affinity (session affinity):</strong> routes a user's session consistently to the same server, maintaining session state. Required when the application stores state locally on the server.</li>
+    <li><strong>Non-persistent:</strong> any available server can handle each request, promoting better load distribution. Complicates state management but enables more flexible scaling.</li>
+    <li><strong>Interoperability:</strong> diverse systems and applications communicate and function together seamlessly within the load-balanced environment, maintaining high availability.</li>
+  </ul>
+
+  <h3>scaling</h3>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Also called</th><th>Method</th><th>Adds</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Vertical scaling</td>
+        <td>Scale up</td>
+        <td>Increase capacity of an existing machine</td>
+        <td>More CPU, RAM, or storage to one server</td>
+      </tr>
+      <tr>
+        <td>Horizontal scaling</td>
+        <td>Scale out</td>
+        <td>Add additional machines to the pool</td>
+        <td>More servers to distribute the load</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 6 -->
+  <h2>deployment and recovery strategies</h2>
+
+  <h3>recovery</h3>
+  <p>Recovery strategies ensure systems can be restored to operational status quickly after disruption.</p>
+  <ul>
+    <li><strong>Backups:</strong> regular copies of data that can be restored in the event of corruption or loss</li>
+    <li><strong>Failover:</strong> standby systems that automatically take over if the primary system fails, minimizing downtime and maintaining continuity</li>
+  </ul>
+
+  <h3>geographical deployment</h3>
+  <p>Placing infrastructure across multiple physical locations reduces latency, improves redundancy, and optimizes performance by serving users from nearby nodes.</p>
+  <ul>
+    <li>Distributes load and eliminates single points of geographic failure</li>
+    <li>Introduces compliance complexity: infrastructure in each location is subject to the local laws and regulations of that jurisdiction, which dictate how data may be stored and processed</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>IDS vs IPS: passive vs active.</strong> IDS detects and alerts only. IPS detects, alerts, and actively blocks. This distinction appears on nearly every exam that covers security devices.</li>
+      <li><strong>Forward proxy = outbound; reverse proxy = inbound.</strong> Forward proxy sits inside the LAN and controls outgoing traffic. Reverse proxy sits on the public interface and controls incoming traffic.</li>
+      <li><strong>CDNs are built on distributed reverse proxies.</strong> They solve the latency problem by caching content at edge nodes globally.</li>
+      <li><strong>WAFs operate at Layer 7</strong> and use application-specific rule sets. This allows them to block SQL injection and XSS in ways that a standard firewall cannot.</li>
+      <li><strong>Vertical scaling = scale up (bigger machine); horizontal scaling = scale out (more machines).</strong> Know both terms and their synonyms.</li>
+      <li><strong>Persistent affinity routes to the same server; non-persistent allows any server.</strong> Persistent is required for stateful applications; non-persistent suits stateless workloads.</li>
+      <li><strong>Geographical deployment introduces jurisdictional compliance complexity.</strong> Each location's local laws govern how data in that facility can be stored and processed.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Detects and alerts, no blocking</strong> <span class="arrow">→</span> IDS</li>
+        <li><strong>Detects, alerts, and blocks</strong> <span class="arrow">→</span> IPS</li>
+        <li><strong>Controls outbound internal traffic</strong> <span class="arrow">→</span> Forward proxy</li>
+        <li><strong>Controls inbound external traffic</strong> <span class="arrow">→</span> Reverse proxy</li>
+        <li><strong>Protects APIs (auth, rate limiting)</strong> <span class="arrow">→</span> API gateway</li>
+        <li><strong>Protects web apps (SQL injection, XSS, Layer 7)</strong> <span class="arrow">→</span> WAF</li>
+        <li><strong>Add capacity to existing machine</strong> <span class="arrow">→</span> Vertical scaling (scale up)</li>
+        <li><strong>Add more machines to pool</strong> <span class="arrow">→</span> Horizontal scaling (scale out)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 01 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
