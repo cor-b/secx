@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01_compliance_overview / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
+  dl.def dd .detail, .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px;
+    font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em;
+  }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link {
+    display: inline-block; color: var(--ink-dim); font-size: 12px;
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 {
+    font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px;
+    border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em;
+  }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code {
+    font-family: var(--font-mono); font-size: 0.9em;
+    background: rgba(167, 138, 212, 0.12); color: var(--violet);
+    padding: 2px 7px; border-radius: 3px; letter-spacing: 0;
+  }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .three-elements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 18%; font-weight: 500; }
+  td:nth-child(2) { width: 16%; color: var(--ink-dim); }
+  td:nth-child(3) { width: 20%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .three-elements { grid-template-columns: 1fr; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/compliance/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /compliance</a>
+
+  <span class="module-tag">lesson 01 / compliance / Compliance Overview</span>
+  <h1 class="module-title">Compliance Overview</h1>
+  <p class="subtitle">How regulatory requirements, security frameworks, and privacy laws shape an organization's information security strategy. An intro to the key standards, frameworks, and obligations covered in this section.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Compliance is not just about avoiding penalties. It builds <strong>trust</strong>, ensures security controls are actually in place, and protects sensitive data. Organizations must navigate a layered compliance landscape: industry-specific regulations, cross-industry security frameworks, and privacy laws that vary by geography.</p>
+    <p>This section covers the full compliance picture: what industries are regulated and how, which frameworks provide the blueprints, how privacy laws differ across jurisdictions, what security reviews look like in practice, and how cross-border compliance obligations work.</p>
+  </div>
+
+  <h4>three pillars of compliance</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Industry Compliance and Standards</span>
+      <span class="card-desc">Sector-specific laws and established standards like PCI DSS and ISO 27000 that set the baseline for each industry.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Security Frameworks</span>
+      <span class="card-desc">Structured best-practice models (SOC2, NIST CSF, CSA) that guide how organizations build and validate security controls.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Privacy, Reviews, and Jurisdiction</span>
+      <span class="card-desc">Privacy regulations (GDPR, CCPA, COPPA, LGPD), security review types, and cross-border compliance obligations.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>industry compliance</h2>
+  <p>Different sectors face different regulatory environments. Compliance requirements are shaped by the sensitivity of the data each industry handles and the public consequences of a failure.</p>
+
+  <h3>sectors and their focus</h3>
+  <ul>
+    <li><strong>Government</strong> - protecting sensitive national and citizen data; data security and privacy regulations apply at federal and state levels</li>
+    <li><strong>Healthcare</strong> - safeguarding patient data; regulations focus on privacy and the integrity of medical records</li>
+    <li><strong>Financial</strong> - protecting customer financial information and preventing fraud; compliance is heavily audited</li>
+    <li><strong>Utilities</strong> - securing critical infrastructure against disruption and cyber attacks that could affect public safety and service continuity</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>industry standards</h2>
+  <p>Standards are established guidelines developed by industry bodies or regulators that serve as benchmarks organizations are expected to meet.</p>
+
+  <dl class="def">
+    <dt>PCI DSS</dt>
+    <dd>Payment Card Industry Data Security Standard
+      <span class="detail">Mandatory for any organization that processes credit card transactions. Contractual requirement enforced by card networks, not a law. Non-compliance results in losing the ability to process card payments.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>ISO 27000 series</dt>
+    <dd>Information security management systems
+      <span class="detail">60+ international standards covering how to establish, implement, maintain, and continuously improve an information security management system (ISMS). Best practices; not legally binding for most organizations.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Digital Markets Act</dt>
+    <dd>EU regulation for large digital platforms
+      <span class="detail">Primarily focused on fair competition, but intersects with security standards by imposing data protection and security obligations on large digital platforms operating in the EU. Overlaps with GDPR and PCI DSS requirements.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2>security frameworks</h2>
+  <p>Security frameworks provide structured, reusable approaches to managing cyber risk. They are not laws but are widely adopted as blueprints for building a security program.</p>
+
+  <h3>foundational concepts</h3>
+  <ul>
+    <li><strong>Foundational best practices</strong> - core principles that guide how security controls are designed and implemented across the organization</li>
+    <li><strong>Benchmarks</strong> - specific, measurable standards derived from those best practices, used to evaluate whether controls meet a minimum bar</li>
+    <li><strong>CIS benchmarks</strong> - published by the Center for Internet Security; actionable, prescriptive guidance for hardening specific systems, operating systems, and applications</li>
+  </ul>
+
+  <h3>SOC2</h3>
+  <p>Systems and Organization Controls 2. An auditing framework that evaluates whether a service organization's controls adequately protect customer data. Reports cover either a point in time (Type I) or a 6-12 month period (Type II).</p>
+  <p>SOC2 is organized around five <strong>trust service principles</strong>: security, availability, processing integrity, confidentiality, and privacy.</p>
+
+  <h3>NIST CSF</h3>
+  <p>The NIST Cybersecurity Framework provides a flexible, risk-based approach to managing cyber threats. Designed to work across industries and organization sizes.</p>
+  <p>Organized into five core functions: <strong>identify, protect, detect, respond, recover</strong>. These map the full lifecycle of cyber risk management from asset inventory to post-incident restoration.</p>
+
+  <h3>Cloud Security Alliance</h3>
+  <p>The CSA framework provides guidelines for securing cloud computing environments, covering data protection, security management, and compliance in cloud contexts.</p>
+  <ul>
+    <li><strong>STAR program</strong> (Security Trust Assurance and Risk) - CSA's certification process for cloud service providers; validates security practices and provides transparency about a provider's compliance posture</li>
+  </ul>
+
+  <!-- SECTION 4 -->
+  <h2>privacy regulations</h2>
+  <p>Privacy regulations govern how organizations collect, store, use, and share personal data. Requirements vary significantly by geography, requiring organizations to track which laws apply based on where their users or data reside.</p>
+
+  <ul>
+    <li><strong>GDPR</strong> - General Data Protection Regulation; EU-wide, the most comprehensive; extraterritorial reach (applies to any org processing EU residents' data)</li>
+    <li><strong>CCPA</strong> - California Consumer Privacy Act; grants California residents rights over their personal data including access, deletion, and opt-out of sale</li>
+    <li><strong>COPPA</strong> - Children's Online Privacy Protection Act; US federal law protecting children under 13 from data collection without parental consent</li>
+    <li><strong>LGPD</strong> - Lei Geral de Proteção de Dados; Brazil's data protection law, modeled closely on GDPR</li>
+  </ul>
+
+  <!-- SECTION 5 -->
+  <h2>security reviews</h2>
+  <p>Security reviews evaluate whether an organization's controls are effective and aligned with regulatory requirements. They can be run internally or by an independent third party.</p>
+
+  <h3>review types</h3>
+
+  <dl class="def">
+    <dt>Audits</dt>
+    <dd>Formal evaluations, typically conducted by an external party
+      <span class="detail">Provide an objective, independent assessment of compliance and control effectiveness. Internal audit teams can also conduct them. Results are often required for certifications or regulatory filings.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Assessments</dt>
+    <dd>Internal or external reviews that identify vulnerabilities, risks, and gaps
+      <span class="detail">Less formal than audits. Goal is to understand the current security posture and surface weaknesses before they are exploited or flagged by regulators. Can inform remediation priorities.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Certifications</dt>
+    <dd>Formal validation that an organization meets specific security standards
+      <span class="detail">The output of a successful audit or assessment process. Examples include SOC2 Type II reports, ISO 27001 certification, and CSA STAR. Certifications provide third-party assurance to customers and partners.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 6 -->
+  <h2>cross-jurisdictional compliance</h2>
+  <p>Organizations operating across regions must comply with all applicable local, national, and international laws simultaneously. Several recurring obligations appear in cross-border compliance work.</p>
+
+  <dl class="def">
+    <dt>Due Diligence</dt>
+    <dd>Proactive investigation before entering agreements or business activities
+      <span class="detail">Assess compliance risks before signing contracts, onboarding vendors, or expanding into a new jurisdiction. Identify legal requirements before exposure, not after.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Due Care</dt>
+    <dd>Ongoing responsibility to maintain and manage compliance effectively
+      <span class="detail">Continuous obligation after entering a relationship or jurisdiction. Monitoring, updating controls, and responding to regulatory changes all fall under due care.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Contractual Obligations</dt>
+    <dd>Legal and business compliance provisions embedded in contracts
+      <span class="detail">Includes legal holds (preserving data for potential future litigation) and e-discovery (identifying, collecting, and analyzing electronic data for legal proceedings). Organizations must be able to fulfill these obligations on demand.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Export Controls</dt>
+    <dd>Regulations governing the transfer of sensitive technology and data across borders
+      <span class="detail">Intersect with due diligence and contractual obligations by adding compliance requirements to international transactions. Organizations must ensure sensitive technology or data is not transferred to restricted parties or countries.</span>
+    </dd>
+  </dl>
+
+  <!-- CHEAT SHEET -->
+  <h2>key frameworks and regulations at a glance</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Type</th><th>Scope</th><th>Primary Focus</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PCI DSS</td><td>Standard</td><td>Payment card industry</td><td>Cardholder data protection</td></tr>
+      <tr><td>ISO 27000</td><td>Standard</td><td>General / all industries</td><td>Information security management</td></tr>
+      <tr><td>CIS Benchmarks</td><td>Framework</td><td>General / system-level</td><td>Prescriptive hardening guidance</td></tr>
+      <tr><td>SOC2</td><td>Audit framework</td><td>Service organizations</td><td>5 trust service principles</td></tr>
+      <tr><td>NIST CSF</td><td>Framework</td><td>General / all industries</td><td>Identify-protect-detect-respond-recover</td></tr>
+      <tr><td>CSA / STAR</td><td>Framework / cert</td><td>Cloud providers</td><td>Cloud security assurance</td></tr>
+      <tr><td>GDPR</td><td>Regulation</td><td>EU (extraterritorial)</td><td>Data protection and privacy rights</td></tr>
+      <tr><td>CCPA</td><td>Regulation</td><td>California</td><td>Consumer privacy rights</td></tr>
+      <tr><td>COPPA</td><td>Regulation</td><td>US (children under 13)</td><td>Children's online privacy</td></tr>
+      <tr><td>LGPD</td><td>Regulation</td><td>Brazil</td><td>Data protection (modeled on GDPR)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>SOC2 trust service principles (5):</strong> security, availability, processing integrity, confidentiality, privacy. Memorize all five.</li>
+      <li><strong>NIST CSF core functions (5):</strong> identify, protect, detect, respond, recover. These appear frequently in scenario questions.</li>
+      <li><strong>Due diligence = before. Due care = ongoing.</strong> This distinction applies in both vendor risk management and cross-jurisdictional compliance.</li>
+      <li><strong>Audits vs. assessments vs. certifications:</strong> audit = formal evaluation, assessment = gap/vulnerability analysis, certification = formal validated outcome of passing.</li>
+      <li><strong>GDPR</strong> has extraterritorial reach: it applies to any organization processing EU residents' data, regardless of where the org is based.</li>
+      <li><strong>COPPA</strong> is US-only and focuses specifically on children under 13. <strong>LGPD</strong> is Brazil's equivalent of GDPR.</li>
+      <li><strong>CSA STAR</strong> is specifically a cloud provider certification. If a question involves cloud security assurance and a third-party cert, this is the answer.</li>
+      <li><strong>PCI DSS</strong> is contractual, not a law. Noncompliance means losing card processing ability, not criminal liability.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Cloud provider security certification</strong> <span class="arrow">→</span> CSA STAR</li>
+        <li><strong>Service org demonstrating data protection over time</strong> <span class="arrow">→</span> SOC2 Type II</li>
+        <li><strong>Five-function cyber risk lifecycle</strong> <span class="arrow">→</span> NIST CSF</li>
+        <li><strong>EU data protection, broad scope</strong> <span class="arrow">→</span> GDPR</li>
+        <li><strong>US children's data protection</strong> <span class="arrow">→</span> COPPA</li>
+        <li><strong>Brazil data protection</strong> <span class="arrow">→</span> LGPD</li>
+        <li><strong>Credit card data security, contractual</strong> <span class="arrow">→</span> PCI DSS</li>
+        <li><strong>Preserving data for potential litigation</strong> <span class="arrow">→</span> Legal hold</li>
+        <li><strong>Collecting electronic data for legal proceedings</strong> <span class="arrow">→</span> E-discovery</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 01 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
