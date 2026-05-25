@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09_deployment_strategies / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/deployment_strategies</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 09 / security architecture / Deployment Strategies</span>
+  <h1 class="module-title">Deployment Strategies</h1>
+  <p class="subtitle">Geographical placement of infrastructure drives three outcomes that must be balanced: performance for users, redundancy against failures, and compliance with local data laws.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Where you put your infrastructure matters. Placing servers strategically across regions <strong>reduces latency</strong> for end users, <strong>improves resilience</strong> by eliminating single geographic points of failure, and <strong>raises compliance complexity</strong> because each jurisdiction imposes its own rules on how data may be stored and processed.</p>
+    <p>The three geographical considerations are performance optimization, network redundancy, and compliance. Each requires different tooling and trade-offs.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>performance optimization</h2>
+  <p>The goal is to reduce latency and ensure applications respond quickly for users regardless of where they are located. A combination of regional distribution, load balancing, auto-scaling, and caching achieves this.</p>
+
+  <table>
+    <thead>
+      <tr><th>Technique</th><th>What it does</th><th>Example tools</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Regional server placement</td>
+        <td>Deploys servers in multiple geographic regions so users connect to the nearest one, reducing round-trip latency</td>
+        <td>Any cloud region deployment (AWS, Azure, GCP regions)</td>
+      </tr>
+      <tr>
+        <td>CDN</td>
+        <td>Caches content at edge nodes close to users, speeding up static and dynamic content delivery globally</td>
+        <td>Cloudflare, AWS CloudFront, Akamai</td>
+      </tr>
+      <tr>
+        <td>Load balancing</td>
+        <td>Distributes traffic evenly across servers in a region, preventing any single server from becoming a bottleneck</td>
+        <td>AWS Elastic Load Balancing, NGINX</td>
+      </tr>
+      <tr>
+        <td>Auto-scaling</td>
+        <td>Automatically adjusts the number of active servers based on current demand, absorbing traffic spikes without manual intervention</td>
+        <td>AWS Auto Scaling, Azure VMSS</td>
+      </tr>
+      <tr>
+        <td>Caching</td>
+        <td>Stores frequently accessed data in fast memory so repeated requests are served without hitting the database</td>
+        <td>Redis, Memcached</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2 -->
+  <h2>network redundancy</h2>
+  <p>Redundancy ensures services remain available even if a server, data center, or entire region goes down. The principle is the same as having a backup route to work: if one path is blocked, another gets you there.</p>
+  <ul>
+    <li>Deploying infrastructure in multiple physical locations means a failure in one does not bring down the entire service</li>
+    <li><strong>AWS Route 53</strong> and <strong>Azure Traffic Manager</strong> monitor endpoint health and automatically reroute traffic to available servers when a failure is detected</li>
+    <li><strong>Multi-region failover</strong> systems switch to a fully operational backup region when the primary region becomes unavailable, maintaining continuity with minimal disruption</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>compliance</h2>
+  <p>Laws governing how data may be stored, processed, and protected vary significantly from country to country. A global infrastructure means operating under multiple legal regimes simultaneously.</p>
+
+  <h3>data residency</h3>
+  <p>Some jurisdictions require certain categories of data (financial records, health data) to remain physically stored within the country where they were collected. This is called <strong>data residency</strong> or data localization. Multi-region deployments must account for which data can live where.</p>
+
+  <h3>compliance tooling</h3>
+  <ul>
+    <li><strong>AWS Compliance Center</strong> and <strong>Azure Policy</strong> let organizations define rules about where data is stored and how it is handled, enforcing those rules consistently across regions</li>
+    <li>These tools can restrict storage to specific regions to meet local regulatory requirements automatically</li>
+    <li>Example: GDPR in Europe imposes strict rules on personal data handling, including storage location and data subject rights. Infrastructure serving EU users must comply regardless of where the company is headquartered.</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Geographical deployment has three trade-offs: performance, redundancy, and compliance.</strong> Questions often present a scenario and ask which consideration is being addressed.</li>
+      <li><strong>Auto-scaling adjusts server count dynamically</strong> based on traffic. It is distinct from CDN (content delivery) and load balancing (traffic distribution within a region).</li>
+      <li><strong>Redis and Memcached are in-memory caches</strong> that reduce database load by serving frequently accessed data faster. Know them by name.</li>
+      <li><strong>Route 53 (AWS) and Azure Traffic Manager</strong> handle DNS-level traffic routing and health-based failover across regions. Know these as the tools for multi-region redundancy.</li>
+      <li><strong>Data residency requirements</strong> force certain data types to stay within specific geographic boundaries. This directly constrains where infrastructure can be placed for compliant deployments.</li>
+      <li><strong>GDPR applies to EU user data</strong> regardless of where the company is based. Infrastructure serving EU users must comply, making it a compliance constraint on deployment location choices.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Reducing latency for global users, nearest-server routing</strong> <span class="arrow">→</span> Performance optimization (CDN, regional deployment)</li>
+        <li><strong>Automatic server count adjustment during traffic spikes</strong> <span class="arrow">→</span> Auto-scaling</li>
+        <li><strong>In-memory data store for repeated queries</strong> <span class="arrow">→</span> Caching (Redis, Memcached)</li>
+        <li><strong>Rerouting traffic when a region fails</strong> <span class="arrow">→</span> Network redundancy (Route 53, Azure Traffic Manager)</li>
+        <li><strong>Data must stay within a specific country's borders</strong> <span class="arrow">→</span> Data residency (compliance constraint)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 09 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

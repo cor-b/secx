@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06_availability_considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 32%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/availability_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 06 / security architecture / Availability Considerations</span>
+  <h1 class="module-title">Availability Considerations</h1>
+  <p class="subtitle">Load balancing, session persistence, and interoperability are the three techniques that keep systems accessible under high demand, failures, and disruption.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Availability is about ensuring users can access services even when things go wrong. <strong>Load balancing</strong> distributes demand so no single server breaks under pressure. <strong>Persistence</strong> controls whether sessions stay tied to one server or float freely. <strong>Interoperability</strong> ensures that diverse systems can cooperate to handle requests rather than creating bottlenecks at integration points.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>load balancing</h2>
+  <p>A load balancer sits in front of a pool of backend servers and distributes incoming requests across them so that no single server becomes overwhelmed. If traffic spikes or a server fails, the remaining servers absorb the load and the service stays available.</p>
+
+  <h3>load balancing algorithms</h3>
+  <table>
+    <thead>
+      <tr><th>Algorithm</th><th>How it works</th><th>Key note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Round Robin</td>
+        <td>Rotates requests sequentially through all available servers</td>
+        <td>Simplest method. No consideration for current server load — each server gets the next request in line regardless of how busy it is.</td>
+      </tr>
+      <tr>
+        <td>Least connections</td>
+        <td>Routes each new request to the server with the fewest active connections</td>
+        <td>Better suited for workloads with variable request duration where some requests take much longer than others.</td>
+      </tr>
+      <tr>
+        <td>IP hashing</td>
+        <td>Hashes the client's IP address and maps it to a specific server</td>
+        <td>Ensures the same user is always routed to the same server. Effectively creates session affinity at the algorithm level.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>load balancing as a DDoS defense</h3>
+  <p>A load balancer can mitigate DDoS attacks by distributing the flood of requests across multiple servers rather than letting them converge on one. If incoming traffic exceeds the capacity of all servers, the load balancer can drop additional requests, preventing total system collapse.</p>
+
+  <!-- SECTION 2 -->
+  <h2>persistence and non-persistence</h2>
+  <p>Persistence controls whether a user's session stays tied to a specific server or can be handled by any server in the pool.</p>
+
+  <dl class="def">
+    <dt>Persistent (session affinity)</dt>
+    <dd>Once a user connects to a server, all subsequent requests in that session are routed to the same server.
+      <span class="detail">Required when the server stores session-specific state such as shopping cart contents or user preferences. Guarantees data integrity for the duration of the session, but limits load distribution flexibility.</span>
+    </dd>
+    <dt>Non-persistent</dt>
+    <dd>Each request may be handled by any available server in the pool, regardless of where previous requests went.
+      <span class="detail">More efficient for stateless workloads where requests are independent of each other. The load balancer can send each request to whichever server is currently least busy, maximizing throughput during high traffic.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2>interoperability</h2>
+  <p>Interoperability is the ability of different systems, applications, and devices to work together seamlessly, exchanging and using information without barriers. In the context of availability, it means that the failure or limitation of one component does not create a hard wall that makes the whole service unavailable.</p>
+  <ul>
+    <li>When systems are interoperable, they can share resources and hand off requests between each other, reducing individual bottlenecks</li>
+    <li>Interoperable systems recover more gracefully from partial failures: other components absorb the load rather than cascading into a full outage</li>
+    <li>Example: banking systems from different institutions that interoperate allow customers to transfer funds, use ATMs, and transact online regardless of which bank they belong to</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Round Robin ignores server load</strong> — requests rotate in order regardless of how busy each server is. Least connections routes to the least-loaded server.</li>
+      <li><strong>IP hashing creates implicit session affinity</strong> because the same client IP always maps to the same server. Know this as an alternative to application-level persistence.</li>
+      <li><strong>Persistent = session affinity = same server for the session.</strong> Required for stateful applications. Non-persistent = any server = better load distribution, requires stateless design.</li>
+      <li><strong>Load balancers can defend against DDoS</strong> by distributing attack traffic and dropping excess requests when all servers are saturated.</li>
+      <li><strong>Interoperability supports availability</strong> by allowing diverse systems to share load and continue functioning when one component is degraded.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Distribute requests evenly with no load awareness</strong> <span class="arrow">→</span> Round Robin</li>
+        <li><strong>Route to the least-busy server</strong> <span class="arrow">→</span> Least connections</li>
+        <li><strong>Always send the same user to the same server</strong> <span class="arrow">→</span> IP hashing (or persistent affinity)</li>
+        <li><strong>Shopping cart, user preferences, stateful session</strong> <span class="arrow">→</span> Persistent (session affinity)</li>
+        <li><strong>Independent requests, no state needed, max throughput</strong> <span class="arrow">→</span> Non-persistent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 06 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

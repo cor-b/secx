@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02_security_devices / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 24%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/security_devices</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 02 / security architecture / Security Devices</span>
+  <h1 class="module-title">Security Devices</h1>
+  <p class="subtitle">A deep dive into the hardware and software tools that protect networks through traffic filtering, threat detection, encrypted tunneling, and access control enforcement.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Security devices form a layered defense. Firewalls filter traffic using ACLs. IDS and IPS detect threats, with IPS adding active blocking. VPNs create encrypted tunnels for secure remote access. NAC enforces device health checks before granting access to the network.</p>
+    <p>Each device type has variants with meaningful differences. For the exam, knowing the <strong>specific capability of each variant</strong> (packet-filtering vs stateful vs NGFW, IDS vs IPS, persistent vs agentless NAC) is more important than memorizing brand names.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>firewalls</h2>
+  <p>Firewalls use <strong>Access Control Lists (ACLs)</strong> to permit or block traffic based on rules that define traffic type, source, destination, and the action to take. While routers can implement basic ACLs, dedicated hardware and software firewalls are far more effective at managing access control at scale.</p>
+
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Inspection approach</th><th>Key limitation or capability</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Packet-filtering</td>
+        <td>Header only (IP address, port)</td>
+        <td>Fastest and simplest, but cannot detect IP spoofing or session hijacking since it does not look beyond the header</td>
+      </tr>
+      <tr>
+        <td>Stateful</td>
+        <td>Tracks active connection state</td>
+        <td>Allows expected return traffic, blocks unsolicited traffic. More secure than packet-filtering.</td>
+      </tr>
+      <tr>
+        <td>Proxy (circuit-level)</td>
+        <td>Session layer (L5)</td>
+        <td>Acts as intermediary at the session layer; less inspection depth than application-level proxy</td>
+      </tr>
+      <tr>
+        <td>Proxy (application-level)</td>
+        <td>Application layer (L7)</td>
+        <td>Deepest inspection, most precise filtering; performance cost due to in-depth analysis</td>
+      </tr>
+      <tr>
+        <td>Proxy (kernel)</td>
+        <td>Multiple OSI layers</td>
+        <td>Filters across layers with minimal delay; balances security and performance. Less common.</td>
+      </tr>
+      <tr>
+        <td>Next-generation (NGFW)</td>
+        <td>Application-aware, deep packet inspection</td>
+        <td>Identifies and controls specific applications, not just ports; integrates IPS capabilities</td>
+      </tr>
+      <tr>
+        <td>WAF</td>
+        <td>Web application traffic (HTTP)</td>
+        <td>Targets SQL injection and XSS; can be inline (active blocking) or out-of-band (detection only)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2 -->
+  <h2>IDS and IPS</h2>
+  <p>Both IDS and IPS monitor traffic for suspicious activity. The critical difference is their response: an IDS only observes and alerts, while an IPS observes, alerts, and actively blocks.</p>
+
+  <dl class="def">
+    <dt>IDS (Intrusion Detection System)</dt>
+    <dd><strong>Passive.</strong> Detects, logs, and alerts on malicious activity. Does not take any action to stop it.
+      <span class="detail">An IDS is sometimes described as a burglar alarm: it tells you something is wrong but does not stop the intruder. Because it is passive, it does not add latency to traffic.</span>
+    </dd>
+    <dt>IPS (Intrusion Prevention System)</dt>
+    <dd><strong>Active.</strong> Detects, logs, alerts, and blocks or mitigates the threat in real time.
+      <span class="detail">An IPS is placed inline with traffic, meaning all traffic passes through it. This allows it to drop malicious packets, but it also means a misconfigured IPS can block legitimate traffic.</span>
+    </dd>
+  </dl>
+
+  <h3>deployment variants</h3>
+  <table>
+    <thead>
+      <tr><th>Variant</th><th>Placement</th><th>Responds?</th><th>Focuses on</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Network IDS (NIDS)</td>
+        <td>Mirrored/SPAN port</td>
+        <td>No</td>
+        <td>Network-wide traffic: port scans, malicious payloads</td>
+      </tr>
+      <tr>
+        <td>Host-based IDS (HIDS)</td>
+        <td>Individual endpoint</td>
+        <td>No</td>
+        <td>Suspicious traffic or file access on that specific system</td>
+      </tr>
+      <tr>
+        <td>Wireless IDS (WIDS)</td>
+        <td>Wireless network</td>
+        <td>No</td>
+        <td>Wireless threats: DoS attacks, deauthentication attempts</td>
+      </tr>
+      <tr>
+        <td>Network IPS</td>
+        <td>Inline, near perimeter</td>
+        <td>Yes</td>
+        <td>Real-time blocking of attacks traversing the network</td>
+      </tr>
+      <tr>
+        <td>Host-based IPS</td>
+        <td>Individual endpoint</td>
+        <td>Yes</td>
+        <td>Blocks unauthorized application changes on the endpoint</td>
+      </tr>
+      <tr>
+        <td>Wireless IPS</td>
+        <td>Wireless network</td>
+        <td>Yes</td>
+        <td>Blocks wireless attacks in real time</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>detection methods</h3>
+  <ul>
+    <li><strong>Signature-based:</strong> recognizes known attack patterns. Highly accurate for known threats, but cannot detect novel attacks that have no signature yet.</li>
+    <li><strong>Anomaly-based:</strong> establishes a baseline of normal behavior and flags deviations. Can catch new, unknown threats but tends to produce more false positives.</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>VPN</h2>
+  <p>A VPN creates an <strong>encrypted tunnel</strong> over an untrusted network such as the internet, allowing users and sites to communicate securely. The tunnel uses strong encryption (AES-256) between the user's device and the VPN concentrator at the receiving end.</p>
+
+  <dl class="def">
+    <dt>Remote Access VPN (client-to-site)</dt>
+    <dd>Connects an individual remote user to the enterprise network.
+      <span class="detail">Ideal for remote workers and traveling employees who need access to internal resources like file servers. Can be strengthened with multi-factor authentication in addition to a username and password.</span>
+    </dd>
+    <dt>Site-to-site VPN</dt>
+    <dd>Connects two office locations to each other over the internet.
+      <span class="detail">A cost-effective alternative to dedicated leased lines between offices. Routers on both ends use encryption keys to keep all traffic secured in transit across the untrusted internet.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2>NAC</h2>
+  <p>Network Access Control prevents unauthorized or non-compliant devices from joining the network. When a device attempts to connect, the NAC system performs a health check (antivirus status, patch level) before granting access. This applies to both on-premises and VPN-connected remote devices.</p>
+  <ul>
+    <li>Device passes health check: granted full network access</li>
+    <li>Device fails health check: quarantined to a remediation area where it can receive updates but cannot reach the production network</li>
+    <li>VPNs and NAC are often combined: the VPN checks device compliance before granting full internal access</li>
+  </ul>
+
+  <h3>NAC agent types</h3>
+  <dl class="def">
+    <dt>Persistent agent</dt>
+    <dd>Software permanently installed on the device.
+      <span class="detail">Provides deep, reliable scanning. Best suited for corporate environments where the organization controls the hardware and can enforce agent installation policy.</span>
+    </dd>
+    <dt>Non-persistent agent</dt>
+    <dd>Temporarily installed when the device connects, deleted automatically once the health scan is complete.
+      <span class="detail">Common in environments with many guest or unmanaged devices, such as college campuses. Provides a scan without requiring permanent software on the device.</span>
+    </dd>
+    <dt>Agentless</dt>
+    <dd>No software installed on the individual device. Scanning is performed from a domain controller.
+      <span class="detail">Ideal for BYOD (Bring Your Own Device) environments where the organization cannot mandate software installation. Scans are less deep than agent-based solutions, but agentless capabilities continue to improve.</span>
+    </dd>
+  </dl>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>IDS = passive (detect and alert only); IPS = active (detect, alert, and block).</strong> This is the most tested distinction in this topic area. Do not confuse them.</li>
+      <li><strong>Packet-filtering firewalls inspect headers only</strong> and cannot stop IP spoofing or session hijacking. Stateful firewalls track connection state and are more secure.</li>
+      <li><strong>NGFWs are application-aware.</strong> They go beyond port and protocol to identify specific applications and integrate IPS functionality with deep packet inspection.</li>
+      <li><strong>WAF = web traffic specifically.</strong> It targets SQL injection and XSS. Can be inline (blocks) or out-of-band (detects only).</li>
+      <li><strong>Signature-based detection = known threats only; anomaly-based = can catch new threats but more false positives.</strong> Both methods are used together in practice.</li>
+      <li><strong>NAC quarantines non-compliant devices</strong> to a remediation area rather than simply blocking them. Persistent agents suit corporate hardware; agentless suits BYOD.</li>
+      <li><strong>AES-256 is the encryption standard used in VPN tunnels.</strong> Know that client-to-site = remote access; site-to-site = office-to-office.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Detects and alerts, no blocking</strong> <span class="arrow">→</span> IDS</li>
+        <li><strong>Detects, alerts, and blocks</strong> <span class="arrow">→</span> IPS</li>
+        <li><strong>Most basic firewall, header inspection only</strong> <span class="arrow">→</span> Packet-filtering</li>
+        <li><strong>Tracks connection state, allows expected return traffic</strong> <span class="arrow">→</span> Stateful firewall</li>
+        <li><strong>Application-aware, deep packet inspection, integrates IPS</strong> <span class="arrow">→</span> NGFW</li>
+        <li><strong>SQL injection, XSS, HTTP traffic</strong> <span class="arrow">→</span> WAF</li>
+        <li><strong>Remote worker connecting to enterprise network</strong> <span class="arrow">→</span> Remote access VPN (client-to-site)</li>
+        <li><strong>Connecting two office locations</strong> <span class="arrow">→</span> Site-to-site VPN</li>
+        <li><strong>BYOD, no software on device</strong> <span class="arrow">→</span> Agentless NAC</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 02 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

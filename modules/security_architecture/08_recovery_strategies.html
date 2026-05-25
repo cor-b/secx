@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08_recovery_strategies / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .phases { counter-reset: phase; list-style: none; margin: 0 0 50px; padding: 0; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--rule-soft); margin: 0; position: relative; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; font-family: var(--font-mono); }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 14px; display: block; font-family: var(--font-mono); }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; font-family: var(--font-sans); }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/recovery_strategies</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 08 / security architecture / Recovery Strategies</span>
+  <h1 class="module-title">Recovery Strategies</h1>
+  <p class="subtitle">Disaster recovery planning, backup types, failover mechanisms, and DR testing methods that restore operations after disruption.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>Recoverability</strong> is the organization's ability to restore normal operations as quickly and effectively as possible after an incident. It is built on three pillars: a documented disaster recovery plan (with RTO and RPO objectives), a solid backup strategy (with the right backup type for each scenario), and failover mechanisms (so systems stay online when components fail).</p>
+    <p>Regular DR testing validates that the plan works before it is needed in a real incident.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>disaster recovery planning</h2>
+  <p>A disaster recovery plan documents the step-by-step procedures for restoring systems, applications, and data after an incident. It must include clear roles and responsibilities and two key objectives that define what "recovered" means.</p>
+
+  <dl class="def">
+    <dt>RTO (Recovery Time Objective)</dt>
+    <dd>The maximum acceptable length of time that a system can be down after a disaster.
+      <span class="detail">RTO defines how quickly systems must be back online. A shorter RTO requires more investment in standby infrastructure and faster failover mechanisms.</span>
+    </dd>
+    <dt>RPO (Recovery Point Objective)</dt>
+    <dd>The maximum acceptable amount of data loss, measured in time.
+      <span class="detail">RPO defines how far back in time a restore is acceptable. An RPO of 4 hours means the organization can tolerate losing up to 4 hours of data. The RPO directly determines how frequently backups must be taken.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2>backup types</h2>
+  <p>Different backup strategies balance storage cost, backup speed, and restore complexity. Choosing the right type depends on the RPO and how quickly data needs to be restored.</p>
+
+  <table>
+    <thead>
+      <tr><th>Type</th><th>What it captures</th><th>Restore process</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Full</td>
+        <td>Complete copy of all data</td>
+        <td>Simple: restore from a single backup. Slowest to create and uses the most storage.</td>
+      </tr>
+      <tr>
+        <td>Incremental</td>
+        <td>Changes since the last full or incremental backup</td>
+        <td>Complex: must restore the last full backup plus every incremental in sequence. Fast to create, low storage per backup.</td>
+      </tr>
+      <tr>
+        <td>Differential</td>
+        <td>All changes since the last full backup</td>
+        <td>Simpler: restore the last full backup plus only the most recent differential. Grows larger over time between full backups.</td>
+      </tr>
+      <tr>
+        <td>Synthetic full</td>
+        <td>Administratively merged full + incremental/differential</td>
+        <td>Simple: produces a single complete backup without re-copying all data from source. Saves time and storage while retaining full-restore simplicity.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <h2>failover mechanisms</h2>
+  <p>Failover mechanisms keep services available when a primary system fails by automatically transferring operations to a backup system.</p>
+
+  <dl class="def">
+    <dt>Active-active</dt>
+    <dd>Both the primary and backup systems are running and handling traffic simultaneously.
+      <span class="detail">If one fails, the other continues without interruption. No switchover delay. More expensive since both systems must be fully provisioned and operational at all times.</span>
+    </dd>
+    <dt>Active-standby</dt>
+    <dd>One system handles all traffic while the standby sits idle, ready to activate if the primary fails.
+      <span class="detail">Less expensive than active-active since the standby does not need to handle production load until needed. There is a brief activation delay when the standby takes over.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2>DR testing methods</h2>
+  <p>Regular testing validates that the disaster recovery plan actually works. Tests range from low-impact discussions to full production disruptions, in increasing order of realism and risk.</p>
+
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Tabletop testing</span>
+      <span class="phase-desc">Key team members walk through the disaster recovery plan step-by-step in a discussion format. No systems are touched. Identifies gaps in the plan and clarifies roles before any real action is needed.</span>
+    </li>
+    <li>
+      <span class="phase-name">Parallel testing</span>
+      <span class="phase-desc">Backup systems are activated and run alongside production systems simultaneously. Verifies that backup systems work correctly without risking production downtime.</span>
+    </li>
+    <li>
+      <span class="phase-name">Simulation testing</span>
+      <span class="phase-desc">A mock disaster scenario is staged to test how the team responds in real time. More realistic than tabletop but still does not shut down the production environment.</span>
+    </li>
+    <li>
+      <span class="phase-name">Full interruption testing</span>
+      <span class="phase-desc">Production systems are actually taken offline and backup systems must take over completely. The most realistic test, as it replicates an actual disaster. Carries real operational risk and requires careful planning and communication.</span>
+    </li>
+  </ol>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>RTO = how fast you restore; RPO = how much data loss is acceptable.</strong> RTO drives failover speed requirements. RPO drives backup frequency requirements.</li>
+      <li><strong>Differential vs incremental restore complexity:</strong> incremental requires every backup in the chain; differential only needs the last full plus the most recent differential. Differential restores are simpler.</li>
+      <li><strong>Active-active = both systems running simultaneously = no switchover delay.</strong> Active-standby = one idle backup = brief delay when activating, but cheaper.</li>
+      <li><strong>Full interruption testing is the most realistic and most disruptive.</strong> Production goes offline. Tabletop is the least disruptive (discussion only, no systems affected).</li>
+      <li><strong>Synthetic full backups</strong> combine full and incremental/differential data without re-copying from source, saving time and storage while keeping restore simple.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>How quickly systems must be restored</strong> <span class="arrow">→</span> RTO</li>
+        <li><strong>How much data loss is acceptable</strong> <span class="arrow">→</span> RPO</li>
+        <li><strong>Complete copy, simplest restore, most storage</strong> <span class="arrow">→</span> Full backup</li>
+        <li><strong>Changes since last backup, fast to create, complex restore</strong> <span class="arrow">→</span> Incremental</li>
+        <li><strong>Changes since last full, simpler restore than incremental</strong> <span class="arrow">→</span> Differential</li>
+        <li><strong>Both systems running, immediate failover</strong> <span class="arrow">→</span> Active-active</li>
+        <li><strong>One system idle until needed</strong> <span class="arrow">→</span> Active-standby</li>
+        <li><strong>Discussion only, no systems touched</strong> <span class="arrow">→</span> Tabletop test</li>
+        <li><strong>Production taken offline, backups take over</strong> <span class="arrow">→</span> Full interruption test</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 08 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

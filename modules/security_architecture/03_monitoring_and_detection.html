@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03_monitoring_and_detection / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 18%; font-weight: 500; }
+  td:nth-child(2) { width: 24%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/monitoring_and_detection</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 03 / security architecture / Monitoring and Detection</span>
+  <h1 class="module-title">Monitoring and Detection</h1>
+  <p class="subtitle">TAPs, collectors, and vulnerability scanners give security teams continuous visibility into network activity and a way to find weaknesses before attackers exploit them.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Monitoring and detection involves <strong>continuously observing network activities</strong> to identify security incidents, anomalies, and vulnerabilities. The three tool categories are TAPs (traffic capture), collectors (aggregation and analysis), and vulnerability scanners (proactive weakness identification).</p>
+    <p>The chain is: TAPs capture raw traffic without disrupting it, collectors aggregate that data alongside logs from other sources, and vulnerability scanners independently probe systems for known weaknesses before an incident occurs.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>TAPs (test access points)</h2>
+  <p>A TAP copies data traveling between two network points and sends that copy to a monitoring device in real time, without interrupting normal traffic flow. A hardware TAP has three ports: two connecting network segments (e.g. modem and router) and one connecting to the monitoring device.</p>
+
+  <dl class="def">
+    <dt>Passive TAP</dt>
+    <dd>Splits the signal and sends a copy to the monitoring device. Requires no power.
+      <span class="detail">Simple, reliable, and adds no latency. However, if the connection fails, a passive TAP cannot capture data. It also forwards malformed or damaged packets as-is to the monitoring device, since it performs no processing.</span>
+    </dd>
+    <dt>Active TAP</dt>
+    <dd>Physically interrupts the signal, regenerates it, then sends it to both the next network node and the monitoring device. Requires its own power supply.
+      <span class="detail">Can maintain data capture during network link issues if a backup power supply is present. Adds a small amount of latency. Without backup power, an active TAP becomes a single point of failure in the network.</span>
+    </dd>
+  </dl>
+
+  <h3>TAP vs SPAN port vs cloud</h3>
+  <ul>
+    <li><strong>Permanent installations</strong> (e.g. deploying a NIDS): TAPs are preferred because they provide full-fidelity capture of all traffic at all times</li>
+    <li><strong>Temporary troubleshooting:</strong> a mirrored or SPAN port on a switch is more convenient than installing a physical TAP</li>
+    <li><strong>Cloud environments:</strong> physical TAPs do not work in virtualized infrastructure; monitoring requires a virtual private cloud solution instead</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>collectors</h2>
+  <p>Collectors gather network traffic and log data from multiple sources (servers, endpoints, firewalls) and forward it to monitoring tools for analysis. They form the backbone of an effective monitoring strategy by centralizing data from across the environment.</p>
+
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Type</th><th>What it collects and does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Wireshark</td>
+        <td>Protocol analyzer</td>
+        <td>Captures and analyzes raw network packets in real time; useful for deep packet-level inspection and troubleshooting</td>
+      </tr>
+      <tr>
+        <td>Splunk</td>
+        <td>Log aggregator / SIEM</td>
+        <td>Collects log data from diverse systems and devices; provides real-time insights and anomaly detection across the environment</td>
+      </tr>
+      <tr>
+        <td>SolarWinds NPM</td>
+        <td>Network performance monitor</td>
+        <td>Monitors network traffic and performance metrics; alerts administrators to unusual activity such as bandwidth spikes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <h2>vulnerability scanners</h2>
+  <p>Vulnerability scanners proactively probe systems and applications to identify known weaknesses before they can be exploited. They produce detailed reports that help administrators prioritize remediation by risk level.</p>
+
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Type</th><th>Key characteristics</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OpenVAS</td>
+        <td>Open-source</td>
+        <td>Greenbone's scanner; originally forked from Nessus before Nessus went commercial. Organized around NVT families. Supports custom scan configurations.</td>
+      </tr>
+      <tr>
+        <td>Nessus</td>
+        <td>Commercial (Tenable)</td>
+        <td>Extensive plugin library, easy to use, widely deployed. Covers outdated software, misconfigurations, and known CVEs with actionable recommendations.</td>
+      </tr>
+      <tr>
+        <td>Qualys</td>
+        <td>Cloud-based</td>
+        <td>Integrates with many security tools; offers vulnerability scanning, compliance checking, and continuous monitoring. Scales well for large, complex environments.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>OpenVAS NVT families</h3>
+  <p>OpenVAS organizes its tests into <strong>NVT families</strong> (Network Vulnerability Test families): groups of individual tests that focus on a specific category of risk, such as web servers, denial-of-service, or databases.</p>
+  <ul>
+    <li>Each NVT family contains multiple individual tests targeting vulnerabilities within that category</li>
+    <li>Custom scan configurations let administrators target specific families (e.g. web servers only) to make scans more efficient and reduce noise</li>
+    <li>Individual NVTs within a family can be enabled or disabled, giving fine-grained control over what gets tested</li>
+    <li>Each NVT displays a <strong>CVSS score</strong>: a standardized risk rating that indicates how critical the vulnerability is, helping teams prioritize what to fix first</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>TAPs copy traffic without interfering with it.</strong> Passive TAPs need no power and add no latency. Active TAPs regenerate the signal and can handle link failures, but can become a single point of failure without backup power.</li>
+      <li><strong>TAPs for permanent monitoring; SPAN ports for temporary troubleshooting.</strong> Physical TAPs do not work in cloud environments.</li>
+      <li><strong>Collectors centralize data</strong> from multiple sources. Splunk is the SIEM/log aggregator example; Wireshark is the packet-level capture tool.</li>
+      <li><strong>OpenVAS was forked from Nessus</strong> when Nessus went commercial. OpenVAS is open-source; Nessus is commercial; Qualys is cloud-based.</li>
+      <li><strong>CVSS score = risk level / criticality rating.</strong> Vulnerability scanners use it to help prioritize remediation.</li>
+      <li><strong>NVT families in OpenVAS</strong> group tests by category (web servers, DoS, databases). Custom scan configs let you target specific families to reduce scan time.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Captures traffic without disrupting the network</strong> <span class="arrow">→</span> TAP</li>
+        <li><strong>No power, no latency, but loses data on link failure</strong> <span class="arrow">→</span> Passive TAP</li>
+        <li><strong>Handles link failures, but adds latency and needs power</strong> <span class="arrow">→</span> Active TAP</li>
+        <li><strong>Temporary traffic capture without hardware</strong> <span class="arrow">→</span> SPAN / mirrored port</li>
+        <li><strong>Log aggregation, SIEM, anomaly detection</strong> <span class="arrow">→</span> Splunk (collector)</li>
+        <li><strong>Packet-level capture and analysis</strong> <span class="arrow">→</span> Wireshark (collector)</li>
+        <li><strong>Open-source vulnerability scanner, NVT families</strong> <span class="arrow">→</span> OpenVAS</li>
+        <li><strong>Cloud-based scanner, compliance checking, enterprise scale</strong> <span class="arrow">→</span> Qualys</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 03 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

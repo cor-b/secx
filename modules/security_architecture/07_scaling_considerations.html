@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07_scaling_considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 24%; font-weight: 500; }
+  td:nth-child(2) { width: 36%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/scaling_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 07 / security architecture / Scaling Considerations</span>
+  <h1 class="module-title">Scaling Considerations</h1>
+  <p class="subtitle">Vertical scaling adds capacity to a single machine; horizontal scaling adds more machines. Each approach has distinct limits, costs, and application design requirements.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Scalability is the ability of a system to handle increasing demand. The limits come from processing capacity, memory, or available bandwidth. When a system hits those limits, it must either grow <strong>upward</strong> (more powerful machine) or grow <strong>outward</strong> (more machines). The choice shapes application architecture and long-term cost.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>vertical scaling (scale up)</h2>
+  <p>Vertical scaling means adding more resources to an existing machine: more CPU, more RAM, more storage, or more bandwidth. The machine gets bigger, not more numerous.</p>
+  <ul>
+    <li>Simple to implement: often just a configuration or plan upgrade, no architectural change required</li>
+    <li>Works with any application, including stateful ones that store session data on the server</li>
+    <li>Popular in traditional on-premises systems and straightforward to do in cloud environments (e.g. upgrading an AWS Lightsail plan from 1 GB RAM to 4 GB RAM with a button click)</li>
+    <li><strong>Has a ceiling:</strong> every machine or plan has a maximum. Once you hit it, vertical scaling is no longer an option.</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>horizontal scaling (scale out)</h2>
+  <p>Horizontal scaling means adding more machines to share the workload rather than making one machine larger. Requests are distributed across many servers, each handling a portion of the total load.</p>
+  <ul>
+    <li>Better for long-term growth: adding a machine is cheaper per unit than continuously upgrading a single machine</li>
+    <li>Virtually limitless: there is no hard ceiling — machines can be added indefinitely to meet demand</li>
+    <li>In cloud environments: resources become elastically scalable with per-use cost, built-in redundancy, and easy resizing</li>
+    <li><strong>Requires up-front architectural work:</strong> workloads must be broken into smaller, independent pieces that can run in parallel across many servers</li>
+  </ul>
+
+  <h3>stateless application design</h3>
+  <p>Horizontal scaling requires applications to be <strong>stateless</strong>: each request must be handled independently, with no reliance on data stored from previous requests on the same server.</p>
+  <ul>
+    <li>No session data is stored on the server itself</li>
+    <li>Any necessary session data (user state, preferences) is stored externally in a shared database or cache that any server in the pool can access</li>
+    <li>This design means any server can handle any request, making it trivial to add or remove machines without disrupting users</li>
+    <li>Example: a blog's articles partitioned across multiple servers by year — a request for a 2022 article routes to the 2022 server; no single server needs to know everything</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>comparison</h2>
+  <table>
+    <thead>
+      <tr><th></th><th>Vertical (scale up)</th><th>Horizontal (scale out)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Method</td>
+        <td>Add resources to one machine</td>
+        <td>Add more machines to the pool</td>
+      </tr>
+      <tr>
+        <td>Also called</td>
+        <td>Scale up</td>
+        <td>Scale out</td>
+      </tr>
+      <tr>
+        <td>Limit</td>
+        <td>Hard ceiling (max plan or hardware)</td>
+        <td>Virtually limitless</td>
+      </tr>
+      <tr>
+        <td>Long-term cost</td>
+        <td>Increasingly expensive per increment</td>
+        <td>Cheaper per unit; pay-per-use in cloud</td>
+      </tr>
+      <tr>
+        <td>App design required</td>
+        <td>None — works with any application</td>
+        <td>Stateless design required</td>
+      </tr>
+      <tr>
+        <td>Redundancy</td>
+        <td>Single point of failure remains</td>
+        <td>Built-in redundancy across multiple machines</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Vertical = scale up = bigger machine; horizontal = scale out = more machines.</strong> Know both terms and both synonyms — the exam uses all four interchangeably.</li>
+      <li><strong>Vertical scaling has a limit; horizontal does not.</strong> When a scenario describes a system that has hit the maximum resources for a single machine, the answer is to re-architect for horizontal scaling.</li>
+      <li><strong>Horizontal scaling requires stateless application design.</strong> Stateless means no session data on the server; state is stored externally in a shared database or cache.</li>
+      <li><strong>Horizontal scaling provides built-in redundancy</strong> because the workload is distributed across many machines. Vertical scaling leaves a single point of failure.</li>
+      <li><strong>Horizontal is better long-term</strong> because adding inexpensive machines is cheaper per unit than repeatedly upgrading a single expensive machine.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Add CPU, RAM, or storage to an existing server</strong> <span class="arrow">→</span> Vertical scaling (scale up)</li>
+        <li><strong>Add more servers to share the load</strong> <span class="arrow">→</span> Horizontal scaling (scale out)</li>
+        <li><strong>Hit the maximum plan or hardware limit</strong> <span class="arrow">→</span> Re-architect for horizontal scaling</li>
+        <li><strong>Application stores no session state on the server</strong> <span class="arrow">→</span> Stateless design, required for horizontal scaling</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 07 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

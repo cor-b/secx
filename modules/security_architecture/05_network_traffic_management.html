@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05_network_traffic_management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 26%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/network_traffic_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 05 / security architecture / Network Traffic Management</span>
+  <h1 class="module-title">Network Traffic Management</h1>
+  <p class="subtitle">Forward proxies, reverse proxies, and CDNs control and optimize how traffic flows across a network, each solving a distinct part of the security and performance problem.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>All three tools in this lesson act as intermediaries between clients and servers. The key distinction is <strong>direction</strong>: forward proxies manage outbound traffic (internal clients going out), reverse proxies manage inbound traffic (external clients coming in). CDNs extend the reverse proxy model globally to solve the content delivery latency problem at scale.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>forward proxy</h2>
+  <p>A forward proxy (also called a transparent proxy) is positioned at the edge of the corporate network on the internal side. It mediates outbound requests from internal clients to external servers, applying the organization's acceptable use policies before forwarding traffic to the internet.</p>
+
+  <h3>benefits</h3>
+  <ul>
+    <li><strong>Web caching:</strong> stores local copies of requested websites. Subsequent requests for the same content are served from the cache rather than the remote server, saving bandwidth and reducing latency. Most effective for static content; less effective for dynamic Web 2.0 sites (Facebook, Reddit) where content is personalized per user.</li>
+    <li><strong>Content filtering:</strong> blocks access to sites deemed inappropriate or harmful by the organization's policy (e.g. gambling, malware-hosting sites). Acts as the enforcement point for acceptable use policies.</li>
+    <li><strong>Auditing:</strong> logs every outbound request made by users, enabling administrators to track access to restricted sites and monitor time spent on specific destinations.</li>
+  </ul>
+
+  <h3>additional security properties</h3>
+  <ul>
+    <li>Hides the <strong>client's IP address</strong> from external servers</li>
+    <li>Can block malicious traffic sent back in response to a client's outbound request</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>reverse proxy</h2>
+  <p>A reverse proxy is positioned on the public-facing edge of the network, acting as the endpoint for external users. It receives inbound connections, completes the TCP three-way handshake, and then forwards the request to the appropriate internal server. External clients only ever communicate with the proxy; the internal servers remain hidden.</p>
+
+  <h4>four key benefits</h4>
+  <ul>
+    <li><strong>Content caching:</strong> reverse proxies deployed in multiple geographic locations cache content locally, serving users from the nearest node. This is the foundation of a CDN (more below).</li>
+    <li><strong>Traffic scrubbing:</strong> absorbs and filters malicious traffic before it reaches backend servers. Effective against DDoS attacks since the proxies bear the load. Works alongside a WAF to filter application-layer threats.</li>
+    <li><strong>IP masking:</strong> hides the IP addresses of internal application servers from external clients. Clients only see the proxy's address, keeping backend infrastructure private.</li>
+    <li><strong>Load balancing:</strong> distributes incoming requests across multiple backend servers, preventing any single server from becoming a bottleneck and improving performance and availability.</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>CDN (content delivery network)</h2>
+  <p>A CDN distributes copies of content to servers located in multiple geographic regions, then delivers that content from the server closest to the requesting user. While a single reverse proxy improves inbound traffic handling, a CDN solves the problem of <strong>global content delivery at scale</strong>.</p>
+  <ul>
+    <li>When content is updated at the origin server, the changes are compressed and propagated to all edge nodes automatically</li>
+    <li>Requests are automatically routed to the most efficient server based on geographic proximity and current network conditions</li>
+    <li><strong>Dynamic content acceleration:</strong> optimizes delivery of both static and dynamic content by routing traffic through the most efficient paths, reducing congestion even during traffic spikes</li>
+    <li>Built-in <strong>DDoS protection</strong>: the globally distributed nature of a CDN means attacks are absorbed across many nodes rather than concentrated on a single server</li>
+  </ul>
+
+  <!-- SECTION 4 -->
+  <h2>comparison</h2>
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Position</th><th>Direction</th><th>Primary benefits</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Forward proxy</td>
+        <td>Internal network edge</td>
+        <td>Internal → External</td>
+        <td>Content filtering, caching, auditing, hides client IP</td>
+      </tr>
+      <tr>
+        <td>Reverse proxy</td>
+        <td>Public-facing edge</td>
+        <td>External → Internal</td>
+        <td>Load balancing, traffic scrubbing, caching, hides server IP</td>
+      </tr>
+      <tr>
+        <td>CDN</td>
+        <td>Globally distributed edge nodes</td>
+        <td>External → Nearest edge node</td>
+        <td>Global content delivery, reduced latency, DDoS absorption, dynamic acceleration</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Forward proxy = outbound; reverse proxy = inbound.</strong> This direction distinction is the most tested point. Forward sits inside the LAN; reverse sits on the public interface.</li>
+      <li><strong>Forward proxy hides the client IP; reverse proxy hides the server IP.</strong> Each conceals the party it is protecting.</li>
+      <li><strong>Reverse proxy benefits: caching, scrubbing, IP masking, load balancing.</strong> Know all four for the exam.</li>
+      <li><strong>Web caching is less effective for dynamic sites</strong> like social media because content is personalized per user and cannot be reused across requests.</li>
+      <li><strong>CDNs extend the reverse proxy model globally</strong> and add dynamic content acceleration and built-in DDoS protection. They solve what a single proxy cannot: global-scale content delivery.</li>
+      <li><strong>Reverse proxies can absorb DDoS attacks</strong> because they sit in front of backend servers and can be combined with traffic scrubbing. CDNs further distribute that load across many nodes globally.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Filtering outbound traffic, blocking inappropriate sites, logging user activity</strong> <span class="arrow">→</span> Forward proxy</li>
+        <li><strong>Receiving inbound traffic, hiding server IPs, load balancing</strong> <span class="arrow">→</span> Reverse proxy</li>
+        <li><strong>Global content delivery, nearest-node routing, DDoS absorption at scale</strong> <span class="arrow">→</span> CDN</li>
+        <li><strong>Hides client IP from external servers</strong> <span class="arrow">→</span> Forward proxy</li>
+        <li><strong>Hides server IP from external clients</strong> <span class="arrow">→</span> Reverse proxy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 05 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

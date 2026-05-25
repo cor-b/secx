@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04_application_layer_security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_architecture/application_layer_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_architecture</a>
+
+  <span class="module-tag">lesson 04 / security architecture / Application Layer Security</span>
+  <h1 class="module-title">Application Layer Security</h1>
+  <p class="subtitle">API gateways and WAFs protect applications and their data at Layer 7 of the OSI model, where traffic has the most context and the most specific rule sets can be applied.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Application layer security operates at the <strong>highest layer of the OSI model</strong>. Unlike lower-layer defenses that inspect packets by port or protocol, Layer 7 tools can understand what an application is actually doing and apply fine-grained policy to it.</p>
+    <p>The two key components are <strong>API gateways</strong> (which manage and secure traffic between clients and backend services) and <strong>WAFs</strong> (which filter HTTP traffic against specific web attack patterns). Together they create a layered defense at the application level.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>API gateways</h2>
+  <p>An API gateway sits between clients and backend services, accepting all incoming API calls and enforcing security policy before any request reaches the backend. It acts primarily as a <strong>reverse proxy</strong>, routing requests to the appropriate internal service based on the nature of the request.</p>
+  <p>Think of it like a toll booth: only requests that meet the gateway's conditions (authentication, rate limits, valid format) are allowed through. Everything else is stopped before it can reach or overload the backend.</p>
+
+  <h4>key capabilities</h4>
+  <dl class="def">
+    <dt>Reverse proxy and request routing</dt>
+    <dd>Accepts all API calls entering the network and routes each to the appropriate backend service.
+      <span class="detail">A request for account details goes to the account service; a payment request goes to the payment service. This ensures the right resource handles each specific type of request.</span>
+    </dd>
+    <dt>Authentication and authorization</dt>
+    <dd>Verifies that the requester has valid credentials and the correct permissions before allowing access to protected data or services.</dd>
+    <dt>Rate limiting and throttling</dt>
+    <dd>Prevents any single client from overwhelming backend services by capping how many requests they can send in a given time window.
+      <span class="detail">This protects against both accidental overload and deliberate abuse such as credential stuffing or scraping attacks.</span>
+    </dd>
+    <dt>Traffic filtering and security</dt>
+    <dd>Blocks unauthorized requests and controls the flow of data, preventing unauthorized access and reducing the attack surface exposed to the internet.</dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2>WAF (web application firewall)</h2>
+  <p>A WAF is a specialized firewall that <strong>inspects and filters HTTP traffic</strong> to protect web applications from common attack patterns. It applies rule sets that identify and block harmful requests before they reach the web server.</p>
+  <p>Because a WAF operates at the application layer it has context that a standard network firewall lacks. It can detect malicious SQL inside a form field or recognize a cross-site scripting payload in a URL parameter.</p>
+
+  <h3>deployment modes</h3>
+  <table>
+    <thead>
+      <tr><th>Mode</th><th>How it works</th><th>Trade-off</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Inline</td>
+        <td>Sits directly between the network firewall and the web server; actively blocks live attack traffic</td>
+        <td>Can slow traffic slightly and may occasionally block legitimate requests (false positives)</td>
+      </tr>
+      <tr>
+        <td>Out-of-band</td>
+        <td>Receives a copy of traffic and analyzes it passively; does not interrupt live connections</td>
+        <td>Unintrusive and does not affect performance, but functions as detection only, not prevention</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>installation options</h3>
+  <ul>
+    <li><strong>Separate appliance:</strong> the WAF operates as an independent device within the network infrastructure, outside the web server itself</li>
+    <li><strong>Software plugin:</strong> the WAF integrates directly with the web server, running as a module alongside the application it protects</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>API gateway = reverse proxy + authentication + rate limiting + routing.</strong> It is not just a firewall. Its job is to manage, secure, and intelligently route API traffic.</li>
+      <li><strong>WAF targets web application traffic specifically.</strong> SQL injection and XSS are the canonical attack types a WAF defends against. Standard firewalls cannot do this at the application layer.</li>
+      <li><strong>Inline WAF = active blocking; out-of-band WAF = detection only.</strong> A question describing a WAF that does not interfere with live traffic is describing out-of-band deployment.</li>
+      <li><strong>Both components operate at OSI Layer 7.</strong> This is the distinguishing feature that separates them from network-layer tools like packet-filtering firewalls.</li>
+      <li><strong>API gateways are always deployed inline</strong> since their purpose is to manage and route live traffic. WAFs have a choice of inline or out-of-band.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Managing API traffic, auth, rate limiting, routing to backend services</strong> <span class="arrow">→</span> API gateway</li>
+        <li><strong>SQL injection, XSS, HTTP traffic filtering</strong> <span class="arrow">→</span> WAF</li>
+        <li><strong>WAF actively blocks live attacks</strong> <span class="arrow">→</span> Inline deployment</li>
+        <li><strong>WAF detects but does not interrupt traffic</strong> <span class="arrow">→</span> Out-of-band deployment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 04 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
