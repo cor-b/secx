@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08_impact_analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
+  dl.def dd .detail, .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px;
+    font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em;
+  }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link {
+    display: inline-block; color: var(--ink-dim); font-size: 12px;
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 {
+    font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px;
+    border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em;
+  }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code {
+    font-family: var(--font-mono); font-size: 0.9em;
+    background: rgba(167, 138, 212, 0.12); color: var(--violet);
+    padding: 2px 7px; border-radius: 3px; letter-spacing: 0;
+  }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .phases { counter-reset: phase; list-style: none; margin: 0 0 50px; padding: 0; }
+  .phases li { counter-increment: phase; padding: 18px 0 18px 52px; border-bottom: 1px solid var(--rule-soft); margin: 0; position: relative; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 20px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; font-family: var(--font-mono); }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 15px; display: block; font-family: var(--font-mono); }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; font-family: var(--font-sans); }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; font-family: var(--font-sans); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-family: var(--font-mono); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 37%; color: var(--ink-dim); }
+  td:last-child { width: 37%; color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/impact_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 08 / risk management / Impact Analysis</span>
+  <h1 class="module-title">Impact Analysis</h1>
+  <p class="subtitle">Evaluating the potential consequences of identified risks on operations, assets, and objectives using extreme but plausible scenarios to drive prioritization and mitigation planning.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Impact analysis goes beyond identifying risks: it quantifies what happens if they occur. The focus is on <strong>extreme but plausible</strong> scenarios, not far-fetched disasters. Two canonical examples appear throughout this lesson: a ransomware attack and a hurricane destroying the main data center.</p>
+    <p>The process moves through five steps, from identifying worst-case scenarios all the way to recommending specific mitigations. In practice, this work is done by a cross-functional team examining the problem from multiple angles.</p>
+  </div>
+
+  <h4>the five-step process</h4>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Identify and analyze extreme scenarios</span>
+      <span class="phase-desc">Select events that are realistic, severe, and could disrupt operations for an extended period. Not theoretical edge cases — plausible threats with a real chance of occurring.</span>
+    </li>
+    <li>
+      <span class="phase-name">Evaluate impact on key assets and processes</span>
+      <span class="phase-desc">Determine which business assets or processes each scenario would affect. Consider data, systems, people, facilities, and supply chains.</span>
+    </li>
+    <li>
+      <span class="phase-name">Develop realistic scenarios</span>
+      <span class="phase-desc">Build detailed narratives of how the threat unfolds: the attack vector, propagation path, and initial impact. Makes the abstract concrete for planning purposes.</span>
+    </li>
+    <li>
+      <span class="phase-name">Assess outcomes and ripple effects</span>
+      <span class="phase-desc">Trace the downstream consequences: operational downtime, financial losses, regulatory exposure, reputational damage, and customer trust erosion.</span>
+    </li>
+    <li>
+      <span class="phase-name">Implement mitigation strategies</span>
+      <span class="phase-desc">Recommend specific controls and recovery plans to reduce the likelihood or impact of each scenario. Output feeds directly into the risk response process.</span>
+    </li>
+  </ol>
+
+  <!-- SECTION 1 -->
+  <h2>scenario: ransomware attack</h2>
+  <p>A threat actor infiltrates the organization through a phishing email, gains access to the internal network, and encrypts critical data across all connected systems. The organization faces a binary choice: pay the ransom or lose access to the data indefinitely.</p>
+
+  <h3>assets at risk</h3>
+  <ul>
+    <li>Organizational data and databases</li>
+    <li>Customer information and records</li>
+    <li>Operational systems supporting billing, order fulfillment, and customer service</li>
+  </ul>
+
+  <h3>immediate outcomes</h3>
+  <ul>
+    <li>Inability to access critical data halts day-to-day operations</li>
+    <li>Revenue-generating processes stop: billing cannot run, orders cannot be fulfilled</li>
+    <li>Customer-facing services go dark, eroding trust</li>
+    <li>Regulatory fines may follow if compliance standards (breach notification deadlines, data handling requirements) are not met</li>
+  </ul>
+
+  <h3>ripple effects</h3>
+  <ul>
+    <li>Prolonged downtime compounds financial losses with each passing hour</li>
+    <li>If ransom is paid, there is no guarantee data will be restored or not re-encrypted</li>
+    <li>Reputational damage may outlast the technical recovery by months</li>
+    <li>Regulatory investigations triggered by the breach add legal costs</li>
+  </ul>
+
+  <h3>mitigation strategies</h3>
+  <ul>
+    <li>Implement and test offline backup protocols so systems can be restored without paying the ransom</li>
+    <li>Regular employee phishing training to cut off the most common attack vector at the source</li>
+    <li>Deploy advanced threat detection software to catch lateral movement before encryption begins</li>
+    <li>Network segmentation to limit how far encryption can spread if an infection does occur</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>scenario: natural disaster</h2>
+  <p>A hurricane causes severe flooding at the organization's primary data center. Essential hardware, including servers and backup systems, is physically destroyed or rendered inoperable. The entire organization loses access to critical applications and data.</p>
+
+  <h3>assets at risk</h3>
+  <ul>
+    <li>Physical hardware in the data center (servers, storage, networking equipment)</li>
+    <li>On-site backup systems that were the recovery lifeline</li>
+    <li>All applications and data hosted exclusively at that location</li>
+  </ul>
+
+  <h3>immediate outcomes</h3>
+  <ul>
+    <li>Widespread hardware failure takes down all locally hosted services</li>
+    <li>On-site backups are also damaged, removing the standard recovery path</li>
+    <li>Restoration timeline extends significantly because physical infrastructure must be rebuilt before data can be recovered</li>
+  </ul>
+
+  <h3>ripple effects</h3>
+  <ul>
+    <li>Missed deadlines and SLA violations as operations remain offline</li>
+    <li>Costly hardware replacement and emergency procurement</li>
+    <li>Significant expense to relocate operations to a temporary or alternate site</li>
+    <li>Loss of customer confidence from prolonged unavailability</li>
+    <li>Staff displacement if the primary work location is also affected</li>
+  </ul>
+
+  <h3>mitigation strategies</h3>
+  <ul>
+    <li>Establish an offsite backup data center in a geographically distant region, outside hurricane-prone zones</li>
+    <li>Implement cloud-based data access and redundancy so operations can continue even if the physical site is lost</li>
+    <li>Develop and regularly test a disaster recovery plan with clear RTO and RPO targets</li>
+    <li>Ensure backup systems are geographically separated from the primary data center</li>
+  </ul>
+
+  <!-- COMPARISON TABLE -->
+  <h2>scenario comparison</h2>
+  <table>
+    <thead>
+      <tr><th>Dimension</th><th>Ransomware Attack</th><th>Natural Disaster</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary asset at risk</td>
+        <td>Data and operational systems</td>
+        <td>Physical hardware and on-site backups</td>
+      </tr>
+      <tr>
+        <td>Attack vector</td>
+        <td>Phishing email, human error</td>
+        <td>Environmental, unpreventable</td>
+      </tr>
+      <tr>
+        <td>Immediate impact</td>
+        <td>Data encrypted, operations halt</td>
+        <td>Hardware destroyed, access lost</td>
+      </tr>
+      <tr>
+        <td>Ripple effects</td>
+        <td>Downtime, fines, reputational damage</td>
+        <td>Missed deadlines, hardware costs, relocation</td>
+      </tr>
+      <tr>
+        <td>Key mitigation</td>
+        <td>Offline backups, phishing training</td>
+        <td>Offsite DR site, cloud redundancy</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Extreme but plausible</strong> is the key phrase. Impact analysis does not model theoretical edge cases; it models realistic worst-case scenarios that could actually occur.</li>
+      <li><strong>Ripple effects</strong> matter as much as immediate impact. Expect questions that trace consequences beyond the first-order effect (downtime leads to lost revenue leads to regulatory exposure).</li>
+      <li>Impact analysis feeds directly into <strong>risk prioritization and remediation planning</strong>. It is the "assess outcomes" step that determines which risks warrant the most resources.</li>
+      <li>The two canonical scenarios are <strong>ransomware</strong> (data/system risk, human vector) and <strong>natural disaster</strong> (physical infrastructure risk, environmental). Know the distinct mitigations for each.</li>
+      <li>Ransomware mitigation centers on <strong>offline backups and phishing training</strong>. Natural disaster mitigation centers on <strong>geographic separation and cloud redundancy</strong>.</li>
+      <li>Impact analysis is a team effort. No single security professional can model all ripple effects; cross-functional input from operations, legal, finance, and IT is required.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Question asks about planning for extreme events</strong> <span class="arrow">→</span> Impact analysis</li>
+        <li><strong>Downstream consequences traced beyond initial failure</strong> <span class="arrow">→</span> Ripple effect assessment (step 4)</li>
+        <li><strong>Ransomware recovery without paying ransom</strong> <span class="arrow">→</span> Offline / disconnected backups</li>
+        <li><strong>Data center destroyed, need continuity</strong> <span class="arrow">→</span> Offsite DR site and cloud redundancy</li>
+        <li><strong>Regulatory fines after a ransomware attack</strong> <span class="arrow">→</span> Compliance consequence, a ripple effect of operational downtime</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 08 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

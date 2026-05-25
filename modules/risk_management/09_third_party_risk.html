@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09_third_party_risk / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
+  dl.def dd .detail, .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px;
+    font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em;
+  }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link {
+    display: inline-block; color: var(--ink-dim); font-size: 12px;
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 {
+    font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px;
+    border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em;
+  }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code {
+    font-family: var(--font-mono); font-size: 0.9em;
+    background: rgba(167, 138, 212, 0.12); color: var(--violet);
+    padding: 2px 7px; border-radius: 3px; letter-spacing: 0;
+  }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .three-elements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 24%; font-weight: 500; }
+  td:nth-child(2) { width: 38%; color: var(--ink-dim); }
+  td:last-child { width: 38%; color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .three-elements { grid-template-columns: 1fr; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/third_party_risk</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 09 / risk management / Third-Party Risk Management</span>
+  <h1 class="module-title">Third-Party Risk Management</h1>
+  <p class="subtitle">Assessing and mitigating risks from external parties that provide products or services. Covers vendor risk, subprocessor risk, and supply chain risk across the full external dependency chain.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Your security posture extends beyond your own perimeter. Every vendor, subprocessor, and component supplier introduces risk that can compromise your operations even when the breach or failure occurs entirely outside your organization.</p>
+    <p>Managing third-party risk means applying <strong>due diligence</strong> before onboarding and <strong>due care</strong> throughout the relationship, while also verifying that everyone further down the chain meets the same standards you require of your direct partners.</p>
+  </div>
+
+  <h4>three risk domains</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Vendor Risk</span>
+      <span class="card-desc">Risk from direct suppliers: security posture, support lifecycle, and ongoing reliability of organizations you directly contract with.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Subprocessor Risk</span>
+      <span class="card-desc">Risk from parties your vendors outsource to. You never contracted with them, but their failures still affect you.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Supply Chain Risk</span>
+      <span class="card-desc">Risk from tampering or compromise at any stage of the hardware or software supply chain, including counterfeit or modified components.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>vendor risk</h2>
+  <p>Vendors are organizations you directly contract with for products or services. Their security posture, reliability, and longevity all affect your operations. A vendor breach can expose your data even though the attack never touched your own systems.</p>
+
+  <h3>due diligence vs. due care</h3>
+
+  <dl class="def">
+    <dt>Due Diligence</dt>
+    <dd>Thorough evaluation of a vendor before entering a partnership
+      <span class="detail">Performed once, before onboarding. Assesses the vendor's security practices, financial stability, compliance posture, and reliability. The goal is to establish whether the vendor is trustworthy enough to integrate into your environment.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Due Care</dt>
+    <dd>Ongoing reasonable steps to prevent harm and mitigate risk after onboarding
+      <span class="detail">A continuous obligation. Once the vendor is integrated, due care means monitoring their security posture, reviewing compliance certifications periodically, and taking action if their risk profile changes. Not a one-time check.</span>
+    </dd>
+  </dl>
+
+  <h3>product support lifecycle</h3>
+  <p>Vendor longevity and support commitment directly affect your long-term risk exposure. A vendor that stops patching their software leaves your organization with accumulating vulnerabilities over time.</p>
+  <ul>
+    <li>Established vendors (e.g., Microsoft) offer long-term security patches and defined end-of-life timelines</li>
+    <li>Smaller or newer vendors may lack the resources to maintain sustained support</li>
+    <li>Purchasing software without a clear support lifecycle creates orphaned dependencies that are expensive to replace later</li>
+    <li>Vendor stability should be assessed during due diligence, not discovered after a surprise end-of-life announcement</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>subprocessor risk</h2>
+  <p>A <strong>subprocessor</strong> is a third-party entity that your vendor has outsourced specific functions to. You have no direct contract with them, but their failures flow upstream to you through your vendor relationship.</p>
+
+  <h3>how subprocessor risk arises</h3>
+  <p>A cloud service provider might use a separate company to manage their data centers or handle customer data storage. If that subprocessor has a breach or misconfiguration, the cloud provider's customers are exposed even though the vulnerability was in a company they never directly engaged.</p>
+  <ul>
+    <li>Common subprocessed functions: data center operations, data storage, customer support, software components</li>
+    <li>The subprocessor chain can extend multiple levels deep</li>
+    <li>GDPR and similar regulations explicitly require disclosure of subprocessors handling personal data</li>
+  </ul>
+
+  <h3>managing subprocessor risk</h3>
+  <ol>
+    <li>Require vendors to disclose all subprocessors and the functions they perform</li>
+    <li>Verify that subprocessors comply with the same security standards you require of your direct vendors</li>
+    <li>Include subprocessor obligations in your vendor contracts (right to audit, change notification requirements)</li>
+    <li>Review the subprocessor list periodically; vendors add and change subprocessors over time</li>
+  </ol>
+
+  <!-- SECTION 3 -->
+  <h2>supply chain risk</h2>
+  <p>Supply chain risk covers the entire path a product takes from raw components to your environment. Hardware or software can be tampered with at any stage before it reaches you, and the compromise may be invisible at the point of delivery.</p>
+
+  <h3>hardware supply chain</h3>
+  <p>When you purchase physical equipment like a router or server, its components may have passed through multiple manufacturers, distributors, and resellers. Any of those stages is a potential point of tampering.</p>
+  <ul>
+    <li>Malware or backdoors embedded in firmware can persist through factory resets and go undetected for extended periods</li>
+    <li>Counterfeit components may underperform or contain intentional vulnerabilities</li>
+    <li>A supply chain assessment maps where components originate and establishes whether those sources are trustworthy</li>
+  </ul>
+
+  <h3>source authenticity</h3>
+  <p>Purchasing directly from trusted, authorized vendors is the primary control against counterfeit or compromised hardware.</p>
+  <ul>
+    <li>Buy network equipment directly from the manufacturer or an authorized reseller (e.g., Cisco-certified channels), not from secondary markets</li>
+    <li>Secondhand or unauthorized sources carry significantly higher risk of modified or counterfeit devices</li>
+    <li>Verify hardware integrity on receipt where possible: check firmware versions, serial numbers, and packaging tamper indicators</li>
+  </ul>
+
+  <h3>software supply chain</h3>
+  <ul>
+    <li>Third-party libraries and open-source components introduce code you did not write and may not fully vet</li>
+    <li>Compromised build pipelines can inject malicious code into otherwise legitimate software packages</li>
+    <li>Software composition analysis (SCA) tools help identify vulnerable or tampered dependencies</li>
+  </ul>
+
+  <!-- COMPARISON TABLE -->
+  <h2>risk type comparison</h2>
+  <table>
+    <thead>
+      <tr><th>Risk Type</th><th>Relationship</th><th>Key Control</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Vendor risk</td>
+        <td>Direct contract; you chose them</td>
+        <td>Due diligence before onboarding, due care ongoing</td>
+      </tr>
+      <tr>
+        <td>Subprocessor risk</td>
+        <td>Indirect; vendor's vendor</td>
+        <td>Require disclosure, verify they meet your standards</td>
+      </tr>
+      <tr>
+        <td>Supply chain risk</td>
+        <td>Indirect; any stage of the product's path to you</td>
+        <td>Buy from authorized sources, assess component origins</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Due diligence</strong> is done before the relationship. <strong>Due care</strong> is the ongoing obligation after onboarding. These terms are tested directly.</li>
+      <li>A <strong>subprocessor</strong> is a vendor's vendor. You have no contract with them, but their failures still reach you. Know this definition cold.</li>
+      <li><strong>Supply chain risk</strong> is broader than vendor and subprocessor risk: it covers every stage a product passes through before it reaches your environment, including physical hardware components.</li>
+      <li>Firmware-level malware from a compromised supply chain can persist undetected for a long time: this is the key threat distinguishing supply chain risk from ordinary vendor risk.</li>
+      <li>The fix for supply chain hardware risk is <strong>buying from authorized sources</strong>, not from secondary or gray markets.</li>
+      <li>Product support lifecycle is a vendor risk factor: a vendor that stops patching leaves you exposed. Assess this during due diligence.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Evaluating a vendor before signing a contract</strong> <span class="arrow">→</span> Due diligence</li>
+        <li><strong>Monitoring a vendor after they are integrated</strong> <span class="arrow">→</span> Due care</li>
+        <li><strong>Breach at a company you never contracted with affects you</strong> <span class="arrow">→</span> Subprocessor risk</li>
+        <li><strong>Tampered firmware in a router you purchased</strong> <span class="arrow">→</span> Supply chain risk</li>
+        <li><strong>Counterfeit network device bought off a secondary market</strong> <span class="arrow">→</span> Supply chain risk, source authenticity failure</li>
+        <li><strong>Vendor stops releasing security patches</strong> <span class="arrow">→</span> Vendor risk, product support lifecycle concern</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 09 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

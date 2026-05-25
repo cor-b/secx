@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06_risk_assessment / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc,
+  dl.def dd .detail, .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px;
+    font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em;
+  }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link {
+    display: inline-block; color: var(--ink-dim); font-size: 12px;
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 {
+    font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px;
+    border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em;
+  }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code {
+    font-family: var(--font-mono); font-size: 0.9em;
+    background: rgba(167, 138, 212, 0.12); color: var(--violet);
+    padding: 2px 7px; border-radius: 3px; letter-spacing: 0;
+  }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .four-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 13px; font-weight: 500; display: block; margin-bottom: 4px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 12px; line-height: 1.5; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { color: var(--ink-dim); width: 20%; }
+  td:nth-child(3) { width: 30%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .four-elements { grid-template-columns: 1fr; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/risk_assessment</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 06 / risk management / Risk Assessment</span>
+  <h1 class="module-title">Risk Assessment</h1>
+  <p class="subtitle">Identifying, analyzing, and evaluating potential threats to guide mitigation. Covers the risk lifecycle, qualitative and quantitative analysis, risk prioritization, and how appetite differs from tolerance.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Risk assessment is the engine of risk management: it transforms a raw list of threats into a prioritized, actionable plan. The process moves through a four-step lifecycle and draws on both <strong>quantitative</strong> (numbers and money) and <strong>qualitative</strong> (judgment and categories) methods.</p>
+    <p>Understanding risk appetite and tolerance tells you how much risk an organization is willing to carry before it has to act. These concepts appear directly in OBJ. 1.2 exam questions.</p>
+  </div>
+
+  <h4>four key concepts</h4>
+  <div class="four-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Risk Management Lifecycle</span>
+      <span class="card-desc">Identify, assess, control, and review. A continuous loop, not a one-time activity.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Qualitative Analysis</span>
+      <span class="card-desc">Non-numeric values (low/medium/high/critical) based on experience, judgment, and expert consensus.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Quantitative Analysis</span>
+      <span class="card-desc">Numeric and monetary values assigned to assets, threats, and impacts. Produces cost-per-risk figures.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">04</span>
+      <span class="name">Appetite vs. Tolerance</span>
+      <span class="card-desc">Appetite is the big-picture boundary. Tolerance is the day-to-day variation allowed before action is required.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>risk management lifecycle</h2>
+  <p>The lifecycle is a four-step loop that organizations run continuously. Risk never fully goes away; it gets assessed, controlled, and re-evaluated as conditions change.</p>
+
+  <ol>
+    <li><strong>Identification</strong> - catalog all risks relevant to the organization</li>
+    <li><strong>Assessment</strong> - analyze likelihood and impact, choose a response strategy</li>
+    <li><strong>Control</strong> - implement the chosen response (mitigate, accept, avoid, or transfer)</li>
+    <li><strong>Review</strong> - monitor residual risk and reassess when circumstances change</li>
+  </ol>
+
+  <h3>risk responses</h3>
+
+  <h4>mitigation</h4>
+  <p>Put controls in place to reduce the risk to an acceptable level. The most common response. Mitigations might include technical controls, training, or procedural changes.</p>
+  <ul>
+    <li>Example: getting a driver's license, wearing a seatbelt, and staying rested before driving</li>
+    <li>Even after mitigation, some residual risk always remains</li>
+  </ul>
+
+  <h4>acceptance</h4>
+  <p>Acknowledge the risk and decide not to act on it, typically because mitigation is too costly or the activity is too critical to stop. <strong>Risk acceptance is not risk ignorance</strong>: the risk is documented and actively monitored.</p>
+  <ul>
+    <li>The organization continues the risky behavior knowingly</li>
+    <li>Monitoring continues; if the risk grows, acceptance may be revisited</li>
+  </ul>
+
+  <h4>avoidance</h4>
+  <p>Stop the risky activity altogether. Used when the risk is too high and no feasible mitigation exists.</p>
+  <ul>
+    <li>Example: deciding not to drive at all and finding alternatives (remote work, relocating)</li>
+    <li>Avoidance means the organization no longer engages in that behavior</li>
+  </ul>
+
+  <h4>residual risk</h4>
+  <p>The risk that remains after all controls have been applied. No mitigation eliminates 100% of risk. Residual risk must be accepted or the activity must be avoided entirely.</p>
+
+  <!-- SECTION 2 -->
+  <h2>qualitative risk analysis</h2>
+  <p>Uses <strong>non-numeric values</strong> to categorize risk based on experience, expert judgment, and intuition. Results describe how risky something is relative to other risks, not in dollar terms.</p>
+
+  <h3>common rating scales</h3>
+  <ul>
+    <li>Critical / High / Medium / Low</li>
+    <li>Red / Amber / Green (RAG status)</li>
+    <li>Any descriptive categorization the organization chooses</li>
+  </ul>
+
+  <h3>elicitation methods</h3>
+
+  <dl class="def">
+    <dt>Delphi Method</dt>
+    <dd>Multiple rounds of expert questioning to reach consensus
+      <span class="detail">A panel of experts answers questions independently, reviews anonymized group responses, then answers again. Rounds continue until consensus emerges. Reduces groupthink and anchoring bias.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Other Methods</dt>
+    <dd>Brainstorming sessions, focus groups, surveys, interviews, estimation exercises</dd>
+  </dl>
+
+  <h3>strengths and weaknesses</h3>
+  <ul>
+    <li>Fast to perform, especially when historical data is limited</li>
+    <li>Relies heavily on expertise; different experts may produce different results</li>
+    <li>No dollar values produced, which hinders cost-benefit analysis and budget forecasting</li>
+    <li>Good for ranking risks against each other, not for calculating financial exposure</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>quantitative risk analysis</h2>
+  <p>Uses <strong>numeric and monetary values</strong> for every component of the analysis. Turns risk assessment into a math problem with defined equations for total risk, residual risk, and asset value.</p>
+
+  <h3>key inputs</h3>
+  <ul>
+    <li>Asset value (AV): what the asset is worth</li>
+    <li>Exposure factor (EF): percentage of asset value lost if the threat occurs</li>
+    <li>Annualized rate of occurrence (ARO): how often the threat is expected per year</li>
+    <li>Single loss expectancy (SLE): AV x EF</li>
+    <li>Annualized loss expectancy (ALE): SLE x ARO</li>
+  </ul>
+
+  <h3>strengths and weaknesses</h3>
+  <ul>
+    <li>Produces a cost directly associated with each risk, ideal for budget justification</li>
+    <li>Removes much of the guesswork and subjectivity</li>
+    <li>Requires accurate historical data, which is often incomplete or unavailable</li>
+    <li>Data gaps force some qualitative estimation anyway</li>
+  </ul>
+
+  <h3>hybrid approach</h3>
+  <p>In practice, <strong>most real-world risk analysis combines both methods</strong>. Pure quantitative analysis is rarely achievable because sufficient data almost never exists. Organizations pair hard numbers where data allows with qualitative judgment to fill the gaps. This combination is the most common approach on actual assessments.</p>
+
+  <!-- SECTION 4 -->
+  <h2>risk prioritization</h2>
+  <p>Both analysis methods produce a result that feeds into prioritization: a ranked list of risks ordered by the threat they pose to the organization.</p>
+
+  <ul>
+    <li>Quantitative result: "this risk costs the organization $X per year"</li>
+    <li>Qualitative result: "this risk feels critical / high / medium / low"</li>
+    <li>Prioritization combines both to create a to-do list: highest likelihood and impact go to the top</li>
+    <li>Helps allocate limited security resources effectively</li>
+    <li>Low likelihood + low impact risks are addressed last, or accepted</li>
+  </ul>
+
+  <!-- SECTION 5 -->
+  <h2>risk appetite and tolerance</h2>
+  <p>Two closely related concepts that define how much risk an organization is willing to carry. They are often confused on the exam.</p>
+
+  <dl class="def">
+    <dt>Risk Appetite</dt>
+    <dd>The overall amount of risk an organization is comfortable taking to achieve its goals
+      <span class="detail">Big-picture boundary. Set by leadership and the board. Answers the question: "how adventurous are we willing to be in pursuing opportunities?" It defines the outer limit of acceptable risk exposure across the organization.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>Risk Tolerance</dt>
+    <dd>The level of variation an organization is willing to handle within the risk appetite boundary
+      <span class="detail">Operational, day-to-day measure. Answers: "how much can things drift before we need to step in?" If a metric exceeds the tolerance threshold, corrective action is triggered. Tolerance is a subset of appetite, it operates inside the boundary appetite sets.</span>
+    </dd>
+  </dl>
+
+  <p>Think of it this way: risk appetite is how far off course you're willing to let the ship drift in total. Risk tolerance is the smaller fluctuation you're willing to absorb before you touch the helm.</p>
+
+  <!-- CHEAT SHEET -->
+  <h2>qualitative vs. quantitative</h2>
+  <table>
+    <thead>
+      <tr><th>Attribute</th><th>Qualitative</th><th>Quantitative</th><th>Hybrid</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Output</td><td>Low/Medium/High/Critical</td><td>Dollar figures, ALE</td><td>Both</td></tr>
+      <tr><td>Data needed</td><td>Expert judgment</td><td>Historical data, asset values</td><td>Whatever is available</td></tr>
+      <tr><td>Speed</td><td>Faster</td><td>Slower</td><td>Moderate</td></tr>
+      <tr><td>Budget use</td><td>Not directly</td><td>Yes, cost per risk</td><td>Partial</td></tr>
+      <tr><td>Real-world use</td><td>When data is sparse</td><td>When data is rich</td><td>Most common</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Risk acceptance</strong> is not ignoring the risk. It means the organization knows about it and keeps monitoring it.</li>
+      <li><strong>Residual risk</strong> always exists after mitigation. If a question describes leftover risk after controls, that's residual risk.</li>
+      <li><strong>Qualitative</strong> = feelings and categories. No dollar values. Uses Delphi method, brainstorming, surveys.</li>
+      <li><strong>Quantitative</strong> = numbers and money. Uses AV, EF, ARO, SLE, ALE equations. Produces cost-per-risk figures.</li>
+      <li><strong>Hybrid</strong> is what real organizations actually do, most quantitative assessments need some qualitative judgment to fill data gaps.</li>
+      <li><strong>Risk appetite</strong> is the big-picture boundary set by leadership. <strong>Risk tolerance</strong> is the operational day-to-day variation threshold.</li>
+      <li>The Delphi method is specifically associated with qualitative analysis. It uses multiple expert rounds to reach consensus.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Organization knows about the risk but does nothing</strong> <span class="arrow">→</span> Risk acceptance (not ignorance)</li>
+        <li><strong>Risk left over after controls are applied</strong> <span class="arrow">→</span> Residual risk</li>
+        <li><strong>Results are low/medium/high, no dollar figure</strong> <span class="arrow">→</span> Qualitative analysis</li>
+        <li><strong>Results include ALE, SLE, or cost figures</strong> <span class="arrow">→</span> Quantitative analysis</li>
+        <li><strong>How much risk can we take overall?</strong> <span class="arrow">→</span> Risk appetite</li>
+        <li><strong>How much variation before corrective action?</strong> <span class="arrow">→</span> Risk tolerance</li>
+        <li><strong>Expert panel, multiple rounds, consensus</strong> <span class="arrow">→</span> Delphi method</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 06 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
