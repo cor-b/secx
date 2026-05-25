@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08_privacy_regulations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .elem-card .card-desc,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .three-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0 40px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 20px; }
+  .card-tag { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .card-name { color: var(--cyan); font-size: 14px; font-weight: 500; display: block; margin-bottom: 8px; }
+  .card-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.6; display: block; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 14%; font-weight: 500; }
+  td:nth-child(2) { width: 18%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .three-elements { grid-template-columns: 1fr; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/compliance/privacy_regulations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /compliance</a>
+
+  <span class="module-tag">lesson 08 / compliance / Privacy Regulations</span>
+  <h1 class="module-title">Privacy Regulations</h1>
+  <p class="subtitle">Four major privacy laws that shape how organizations collect, store, and use personal data across different jurisdictions.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Privacy regulations apply based on <strong>where your users are located</strong>, not where your business is headquartered. A US company serving EU residents must comply with GDPR. A non-Brazilian company processing data from Brazilian customers must comply with LGPD. Location of the data subject is the trigger, not the location of the business.</p>
+    <p>The four key regulations are COPPA (US, children under 13), LGPD (Brazil), CCPA (California), and GDPR (EU). Know each by its jurisdiction, its key threshold or trigger, and the rights it grants individuals.</p>
+  </div>
+
+  <h4>the four regulations</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-tag">US FEDERAL</span>
+      <span class="card-name">COPPA</span>
+      <span class="card-desc">Children's Online Privacy Protection Act. Protects children under 13. Applies to any site that knowingly collects data from under-13s, even if children lied about their age to gain access. Enforced by the FTC.</span>
+    </div>
+    <div class="elem-card">
+      <span class="card-tag">BRAZIL</span>
+      <span class="card-name">LGPD</span>
+      <span class="card-desc">General Data Protection Law. Applies to any company processing personal data from Brazilian residents, regardless of where the company is located. Extraterritorial scope modeled on GDPR principles.</span>
+    </div>
+    <div class="elem-card">
+      <span class="card-tag">US — CALIFORNIA</span>
+      <span class="card-name">CCPA</span>
+      <span class="card-desc">California Consumer Privacy Act. Applies to businesses that meet specific revenue or data volume thresholds. Gives California residents the right to know, delete, and opt out of the sale of their personal data.</span>
+    </div>
+    <div class="elem-card">
+      <span class="card-tag">EUROPEAN UNION</span>
+      <span class="card-name">GDPR</span>
+      <span class="card-desc">General Data Protection Regulation. Strongest privacy protections globally. Requires informed consent for data collection and gives EU residents the right to access, amend, or erase their data (right to be forgotten).</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>regulation details</h2>
+
+  <h3>COPPA</h3>
+  <p>COPPA sets requirements for website operators and online services that collect personal information from children under 13. It applies to any site that knowingly collects such data, even if the site is not specifically targeting children and even if children lied about their age to gain access.</p>
+  <ul>
+    <li>Parental consent must be obtained before collecting personal information from children under 13</li>
+    <li>Enforced by the Federal Trade Commission (FTC)</li>
+    <li>Fines up to <strong>$40,000 per violation</strong>, which can accumulate rapidly across individual incidents</li>
+    <li>Large companies (Facebook, Google) feel less financial impact than small businesses, making COPPA enforcement debated in practice</li>
+  </ul>
+
+  <h3>LGPD</h3>
+  <p>Brazil's LGPD sets requirements for how organizations handle personal data belonging to individuals in Brazil. Location of the data subject is the trigger: even a company with no Brazilian presence must comply if it processes data from Brazilian residents.</p>
+  <ul>
+    <li>Explicit consent required before collecting user data</li>
+    <li>Users have the right to access, correct, or delete their data</li>
+    <li>Fines up to <strong>2% of company revenue in Brazil</strong>, capped at 50 million reals per violation</li>
+  </ul>
+
+  <h3>CCPA</h3>
+  <p>CCPA gives California residents control over the personal data companies collect about them. It applies to businesses that meet at least one of two thresholds, regardless of where the business is located.</p>
+  <ul>
+    <li>Applies to businesses earning over <strong>$25 million in annual revenue</strong>, or those handling personal information of 50,000 or more California customers</li>
+    <li>Individual rights: right to know what data is collected, right to request deletion, right to opt out of the sale of data to third parties</li>
+    <li>Fines up to <strong>$7,500 per intentional violation</strong></li>
+  </ul>
+
+  <h3>GDPR</h3>
+  <p>The EU's General Data Protection Regulation is the most comprehensive consumer privacy law in force. It is enforced by data protection authorities in each EU member state and applies to any organization processing personal data from EU residents.</p>
+  <ul>
+    <li><strong>Informed consent</strong>: data may only be collected and used for the specific purpose clearly disclosed at the time of collection, in plain language. Repurposing data (such as adding a marketing list) requires separate, explicit consent</li>
+    <li>Right to withdraw consent at any time</li>
+    <li>Right to inspect, amend, or erase data held about them, commonly called the <strong>right to be forgotten</strong></li>
+    <li>GDPR protections apply to EU residents only. Non-EU individuals (such as Americans) are not legally protected and companies are not obligated to honor the same deletion rights for them</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>quick reference</h2>
+  <table>
+    <thead>
+      <tr><th>Regulation</th><th>Jurisdiction</th><th>Applies when</th><th>Max fine</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>COPPA</td>
+        <td>US federal</td>
+        <td>Site collects data from users under 13</td>
+        <td>$40,000 per violation (FTC)</td>
+      </tr>
+      <tr>
+        <td>LGPD</td>
+        <td>Brazil</td>
+        <td>Processing personal data of Brazilian residents</td>
+        <td>2% of Brazil revenue or R$50M/violation</td>
+      </tr>
+      <tr>
+        <td>CCPA</td>
+        <td>California, US</td>
+        <td>$25M+ revenue or 50,000+ California customers</td>
+        <td>$7,500 per intentional violation</td>
+      </tr>
+      <tr>
+        <td>GDPR</td>
+        <td>EU</td>
+        <td>Processing personal data of EU residents</td>
+        <td>Enforced by EU member state authorities</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>All four regulations apply extraterritorially.</strong> Jurisdiction follows the data subject, not the company's headquarters. A US company with EU users must comply with GDPR.</li>
+      <li><strong>COPPA applies even when children lie about their age.</strong> If a platform knows children under 13 are using it, COPPA requirements apply regardless of how those users registered.</li>
+      <li><strong>GDPR = informed consent + right to be forgotten.</strong> These are the two most testable GDPR concepts. Informed consent means data is used only for the specific purpose disclosed at collection, in plain language.</li>
+      <li><strong>CCPA threshold:</strong> $25 million annual revenue or 50,000+ California customers. Below both thresholds, CCPA does not apply.</li>
+      <li><strong>LGPD is Brazil's GDPR equivalent.</strong> For the exam, treat LGPD as Brazil's extraterritorial data protection framework with similar individual rights.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick identification</div>
+      <ul>
+        <li><strong>Children under 13, US, parental consent, FTC</strong> <span class="arrow">→</span> COPPA</li>
+        <li><strong>Brazil, any company processing Brazilian resident data</strong> <span class="arrow">→</span> LGPD</li>
+        <li><strong>California residents, $25M+ revenue threshold</strong> <span class="arrow">→</span> CCPA</li>
+        <li><strong>EU residents, informed consent, right to be forgotten</strong> <span class="arrow">→</span> GDPR</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 08 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

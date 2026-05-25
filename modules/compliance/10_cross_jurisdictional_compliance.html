@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10_cross_jurisdictional_compliance / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 0 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/compliance/cross_jurisdictional</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /compliance</a>
+
+  <span class="module-tag">lesson 10 / compliance / Cross-Jurisdictional Compliance</span>
+  <h1 class="module-title">Cross-Jurisdictional Compliance</h1>
+  <p class="subtitle">Managing legal and regulatory obligations that span multiple countries, covering due diligence, due care, contractual requirements, legal holds, and export controls.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cross-jurisdictional compliance requires organizations to align their practices with multiple legal systems at once. The key principle: obligations are triggered by <strong>where your data goes and who your users are</strong>, not by where your headquarters is located.</p>
+    <p>Key areas: <strong>due diligence</strong> (investigation before action), <strong>due care</strong> (ongoing maintenance after action), <strong>contractual obligations</strong> (cross-border legal requirements), <strong>legal hold and e-discovery</strong> (evidence preservation), and <strong>export controls</strong> (dual-use technology restrictions).</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>due diligence and due care</h2>
+  <p>Due diligence and due care are frequently tested together. The distinction is timing: diligence happens before an action, care happens continuously after it.</p>
+
+  <dl class="def">
+    <dt>Due Diligence</dt>
+    <dd>All the preparation and investigation a company does before taking a significant action, such as adopting new software, onboarding a vendor, or launching a new service.
+      <span class="detail">Due diligence surfaces potential risks early so appropriate controls can be built in from the start. Analogy: researching a car before buying it by reading reviews, checking history, and comparing prices.</span>
+    </dd>
+    <dt>Due Care</dt>
+    <dd>The ongoing actions taken to maintain and protect against risks after the initial action is taken.
+      <span class="detail">Once a system is deployed, due care means actively keeping it secure: regular patching, continuous monitoring, and maintaining active controls. Analogy: regular oil changes and tire rotations after buying the car. You identified the risks before purchase; now you maintain the vehicle to prevent breakdowns.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2>contractual obligations</h2>
+  <p>Contracts that span multiple jurisdictions must explicitly address varying legal requirements. Legal and regulatory standards differ widely across countries, and a single contract may need to satisfy obligations in several systems simultaneously.</p>
+  <ul>
+    <li>A US company handling data for EU clients must comply with US regulations and GDPR simultaneously</li>
+    <li>Contracts should name which party is responsible for ensuring compliance with local law in each region where the contract operates</li>
+    <li>Failure to track varying privacy laws and data protection standards across jurisdictions creates significant legal exposure</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>legal hold and e-discovery</h2>
+
+  <h3>legal hold</h3>
+  <p>A legal hold requires an organization to <strong>preserve</strong> certain information that may be relevant to legal proceedings. During a legal hold, data cannot be deleted or altered, even if it would normally be purged under a standard retention policy.</p>
+  <ul>
+    <li>The preserved information may or may not ultimately be used in court</li>
+    <li>The case may not go to trial, or legal counsel may choose not to use the preserved evidence</li>
+    <li>Goal: retain everything potentially relevant for as long as the hold is active</li>
+  </ul>
+
+  <h3>e-discovery</h3>
+  <p>E-discovery is the process of searching through preserved data (emails, documents, saved files) to identify what is relevant to a specific legal case. It follows a legal hold: first preserve, then search.</p>
+  <ul>
+    <li>Conducted by legal teams (lawyers and paralegals), IT professionals, and sometimes specialized third-party e-discovery vendors</li>
+    <li>The scope of the search is defined by what is relevant to the particular case</li>
+  </ul>
+
+  <!-- SECTION 4 -->
+  <h2>export controls</h2>
+  <p>Export controls regulate the international transfer of <strong>dual-use technologies</strong>: products and tools that have both civilian and military applications. Strong encryption is a classic example.</p>
+
+  <h3>Wassenaar Arrangement</h3>
+  <p>An international agreement among participating countries that controls the export of dual-use technologies, including many cybersecurity tools. Organizations must determine whether their software falls under this arrangement before transferring it internationally.</p>
+  <ul>
+    <li>Strong encryption used in VPNs and firewalls qualifies as dual-use technology</li>
+    <li>Example: Check Point's Firewall and VPN software uses strong encryption, making it subject to the Wassenaar Arrangement</li>
+    <li>Exporting such software to certain countries may require an export license, especially to countries under restrictions or sanctions</li>
+    <li>Non-compliance can result in significant fines and legal penalties</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Due diligence = before; due care = ongoing.</strong> This distinction is directly testable. Diligence identifies risks ahead of time. Care maintains controls continuously after action is taken.</li>
+      <li><strong>Wassenaar Arrangement = export controls for dual-use technologies.</strong> Strong encryption (VPNs, firewalls) qualifies as dual-use. Know the arrangement's name and its connection to cybersecurity tools.</li>
+      <li><strong>Legal hold = preserve; e-discovery = search.</strong> A legal hold stops deletion. E-discovery is the subsequent process of finding relevant data within what was preserved.</li>
+      <li><strong>Cross-jurisdictional compliance follows the data, not the headquarters.</strong> If your users or data are in a jurisdiction, that jurisdiction's laws may apply to you regardless of where your business is registered.</li>
+      <li><strong>Contractual obligations must explicitly address cross-border compliance.</strong> Contracts should name who bears responsibility for meeting local laws in each region the contract covers.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Research and investigation before taking action</strong> <span class="arrow">→</span> Due diligence</li>
+        <li><strong>Ongoing patching, monitoring, maintenance</strong> <span class="arrow">→</span> Due care</li>
+        <li><strong>Preserving data that might be evidence</strong> <span class="arrow">→</span> Legal hold</li>
+        <li><strong>Searching preserved data for court relevance</strong> <span class="arrow">→</span> E-discovery</li>
+        <li><strong>International transfer of encryption or security tools</strong> <span class="arrow">→</span> Export controls (Wassenaar Arrangement)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 10 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
