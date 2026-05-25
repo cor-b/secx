@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04_privacy / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc, dl.def dd .detail { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 15px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(167,138,212,0.12); color: var(--violet); padding: 2px 7px; border-radius: 3px; letter-spacing: 0; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 15px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .three-elements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 14px; line-height: 1.3; font-weight: 500; display: block; margin-bottom: 6px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  .scenario { margin: 24px 0; padding: 24px 26px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.04); }
+  .scenario-label { display: block; color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; text-transform: uppercase; font-family: var(--font-mono); }
+  .scenario p { font-family: var(--font-sans); margin: 0 0 12px; font-size: 14px; line-height: 1.65; }
+  .scenario p:last-child { margin-bottom: 0; }
+  .scenario strong { color: var(--cyan); }
+  .callout { margin: 24px 0; padding: 20px 22px; border-left: 2px solid var(--amber); background: rgba(212,169,106,0.04); }
+  .callout-label { display: block; color: var(--amber); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; text-transform: uppercase; font-family: var(--font-mono); }
+  .callout p { font-family: var(--font-sans); margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--amber); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 22%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; font-family: var(--font-mono); }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 14px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; font-family: var(--font-mono); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .three-elements { grid-template-columns: 1fr; } .exam-tips { padding: 24px 20px; } .exam-tips-label { margin: -24px -20px 24px; padding: 12px 20px; } .scenario { padding: 20px 22px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/privacy</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 04 / risk management / Privacy Risk Considerations</span>
+  <h1 class="module-title">Privacy Risk Considerations</h1>
+  <p class="subtitle">Managing the potential for unauthorized access, disclosure, or misuse of personal and sensitive information. Three angles: biometrics, the legal rights of data subjects, and the jurisdictional reach of data law.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Privacy risk is the potential for unauthorized access, disclosure, or misuse of personal data. Three considerations cover the surface area: the unique risks of <strong>biometric data</strong> (permanent, can't be reissued), the legal <strong>rights of data subjects</strong> under modern privacy laws, and <strong>data sovereignty</strong>, the principle that data follows the laws of the country where it's collected or stored.</p>
+  </div>
+
+  <h4>the three considerations</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Biometrics</span>
+      <span class="card-desc">Fingerprint, face, iris, voice. Sensitive and permanent. Tuned via FAR, FRR, and the Crossover Error Rate.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Data Subject Rights</span>
+      <span class="card-desc">Legal protections that let individuals access, correct, delete, and transfer their data. GDPR, CCPA, SHIELD.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Data Sovereignty</span>
+      <span class="card-desc">Data is subject to the laws of the country where it's collected or stored. Cross-border data creates compliance overlap.</span>
+    </div>
+  </div>
+
+  <h2>Scenario: BioStar 2 (2019)</h2>
+
+  <div class="scenario">
+    <span class="scenario-label">case study</span>
+    <p>The <strong>BioStar 2</strong> data breach exposed over <strong>27.8 million biometric records</strong> including fingerprints and facial recognition data. Because biometric data is a permanent identifier (you can't reissue your face), exposure poses serious long-term risks.</p>
+    <p>Under <strong>GDPR</strong>, biometric data is classified as a "special category of data" requiring stronger safeguards. The breach raised questions about whether Suprema (the company behind BioStar 2) had complied with GDPR.</p>
+    <p>One of Suprema's clients was the UK's <strong>Metropolitan Police</strong>, and at the time of the breach the UK was still part of the EU. Because data was exposed across multiple countries, the privacy laws of several jurisdictions were simultaneously in effect, a textbook data sovereignty problem.</p>
+    <p>The case touches all three considerations in this lesson: <strong>biometric data</strong> (permanent and sensitive), <strong>data subject rights</strong> (millions of affected individuals across jurisdictions), and <strong>data sovereignty</strong> (overlapping legal frameworks).</p>
+  </div>
+
+  <h2>Biometrics</h2>
+  <p>Biometric verification uses unique physical or behavioral traits as identity proof. Common modalities:</p>
+  <ul>
+    <li><strong>Fingerprint scans</strong></li>
+    <li><strong>Facial recognition</strong></li>
+    <li><strong>Iris scans</strong></li>
+    <li><strong>Voice recognition</strong></li>
+  </ul>
+
+  <p>Biometrics play an important role in identity verification but introduce privacy risks because the data is <strong>highly sensitive and permanent</strong>. Compromised passwords can be changed; compromised fingerprints cannot.</p>
+
+  <h3>The two key metrics</h3>
+  <dl class="def">
+    <dt>FAR: False Acceptance Rate</dt>
+    <dd>How often unauthorized individuals are mistakenly identified as legitimate users.
+      <span class="detail">High FAR = security problem. Unauthorized users slip through. This is the metric that matters most in adversarial contexts.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>FRR: False Rejection Rate</dt>
+    <dd>How often legitimate users are wrongly denied access.
+      <span class="detail">High FRR = usability problem. Authorized users get locked out, frustrated, and start looking for workarounds (which themselves create security holes).</span>
+    </dd>
+  </dl>
+
+  <h3>Sensitivity adjustment</h3>
+  <p>FAR and FRR move in <strong>opposite directions</strong> as sensitivity changes. Tightening the system to catch unauthorized users also rejects more legitimate ones:</p>
+
+  <table>
+    <thead>
+      <tr><th>Sensitivity</th><th>FRR (rejections)</th><th>FAR (false accepts)</th><th>Effect</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Higher (stricter)</td><td>↑ rises</td><td>↓ falls</td><td>More secure, less usable</td></tr>
+      <tr><td>Lower (lenient)</td><td>↓ falls</td><td>↑ rises</td><td>More usable, less secure</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Crossover Error Rate (CER)</h3>
+  <div class="callout">
+    <span class="callout-label">the sweet spot</span>
+    <p>The <strong>Crossover Error Rate</strong> is the point where the FAR and FRR are <strong>equal</strong>. On a graph of sensitivity vs error rate, it's where the two curves intersect.</p>
+    <p>Tuning sensitivity near the CER minimizes both errors simultaneously, balancing security and user convenience. A lower CER means a better biometric system: fewer total errors at the optimal sensitivity.</p>
+  </div>
+
+  <h2>Data Subject Rights</h2>
+  <p><strong>Data subject rights</strong> are legal protections that give individuals control over their personal information. The "data subject" is the person whose data is being processed. Three notable laws define these rights:</p>
+
+  <dl class="def">
+    <dt>GDPR (General Data Protection Regulation)</dt>
+    <dd>EU law applying to EU residents' data, anywhere in the world.
+      <span class="detail">Subjects can <strong>access, correct, delete, and transfer</strong> their personal data (the "right to be forgotten" and data portability). Organizations must inform subjects how their data will be used <strong>before collection</strong>. Biometric data is classified as a "special category" requiring stronger safeguards.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>CCPA (California Consumer Privacy Act)</dt>
+    <dd>California state law applying to California residents.
+      <span class="detail">Subjects have the right to <strong>know what data is being collected</strong>, request <strong>deletion</strong> of their data, and <strong>opt out of any sale</strong> of their data. Narrower than GDPR but covers similar core ground.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>SHIELD Act (Stop Hacks and Improve Electronic Data Security)</dt>
+    <dd>New York state law focused on data security.
+      <span class="detail">Requires organizations to take <strong>reasonable steps to protect personal data</strong> and <strong>notify individuals</strong> in the event of a breach. Less about subject rights to access/delete and more about the organization's protective duties.</span>
+    </dd>
+  </dl>
+
+  <h2>Data Sovereignty</h2>
+  <p><strong>Data sovereignty</strong> is the principle that data is subject to the laws and regulations of the country in which it is collected and/or stored. Data doesn't escape its jurisdiction just by moving servers.</p>
+
+  <h3>Why it gets complicated</h3>
+  <ul>
+    <li>Organizations must comply with the laws of both the country where data <strong>originates</strong> and where it is <strong>stored or processed</strong></li>
+    <li>For multinational companies, this means tracking multiple legal frameworks per dataset</li>
+    <li>GDPR is the most famous example: personal data of EU residents must comply with GDPR <strong>even if stored outside the EU</strong></li>
+  </ul>
+
+  <h3>Worked example</h3>
+  <p>An American company collects personal data from European customers and stores it on US-based servers. Because the data subjects are EU residents, GDPR still applies. The American company is bound by:</p>
+  <ul>
+    <li>US laws governing data stored on US servers</li>
+    <li>GDPR, because the data originated from EU residents</li>
+    <li>Any state-level privacy laws (e.g. CCPA if California residents are involved)</li>
+  </ul>
+
+  <p>Cross-border data adds compliance overhead and the possibility of conflicting requirements. Data sovereignty is why "where is your data" is now a board-level question, not just an IT one.</p>
+
+  <h2>Cheat Sheet</h2>
+
+  <h3>Privacy considerations</h3>
+  <table>
+    <thead>
+      <tr><th>Consideration</th><th>Key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Biometrics</td><td>FAR, FRR, sensitivity, CER. Permanent identifiers, special category under GDPR.</td></tr>
+      <tr><td>Data Subject Rights</td><td>Access, correct, delete, transfer, opt-out. Defined by GDPR, CCPA, SHIELD Act.</td></tr>
+      <tr><td>Data Sovereignty</td><td>Data follows the laws of where it's collected AND where it's stored.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Privacy regulations</h3>
+  <table>
+    <thead>
+      <tr><th>Law</th><th>Jurisdiction</th><th>Core focus</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GDPR</td><td>EU (applies extraterritorially)</td><td>Comprehensive subject rights, special data categories, lawful basis for processing</td></tr>
+      <tr><td>CCPA</td><td>California</td><td>Right to know, delete, and opt out of data sale</td></tr>
+      <tr><td>SHIELD Act</td><td>New York</td><td>Reasonable security measures and breach notification</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Biometric metrics</h3>
+  <table>
+    <thead>
+      <tr><th>Term</th><th>What it measures</th><th>What it means</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>FAR</td><td>Unauthorized users accepted</td><td>Security risk indicator</td></tr>
+      <tr><td>FRR</td><td>Legitimate users denied</td><td>Usability risk indicator</td></tr>
+      <tr><td>CER</td><td>Where FAR = FRR</td><td>Optimal sensitivity setting</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li><strong>FAR = unauthorized users accepted</strong> (security problem). <strong>FRR = legitimate users denied</strong> (usability problem). Mix these up at your peril.</li>
+      <li><strong>CER (Crossover Error Rate)</strong> is where FAR and FRR are equal. That's the optimal sensitivity setting. Lower CER = better system.</li>
+      <li>Higher sensitivity = <strong>FRR ↑, FAR ↓</strong> (more secure, less usable). Lower sensitivity = <strong>FRR ↓, FAR ↑</strong>. They always move oppositely.</li>
+      <li>Biometric data is <strong>permanent</strong>: compromise can't be undone by reissuing. GDPR classifies it as a <strong>"special category"</strong> requiring stronger safeguards.</li>
+      <li><strong>GDPR</strong> covers EU residents anywhere. <strong>CCPA</strong> covers California residents. <strong>SHIELD Act</strong> is New York, security and breach notification focused.</li>
+      <li><strong>"Right to be forgotten"</strong> = GDPR data subject right (deletion).</li>
+      <li><strong>Data sovereignty</strong>: data follows the laws of where it's collected AND where it's stored. GDPR applies to EU resident data even if stored on a US server.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Unauthorized user gets through biometric check</strong> <span class="arrow">→</span> False Acceptance Rate (FAR)</li>
+        <li><strong>Legitimate user denied access</strong> <span class="arrow">→</span> False Rejection Rate (FRR)</li>
+        <li><strong>Optimal biometric sensitivity tuning</strong> <span class="arrow">→</span> Crossover Error Rate (CER)</li>
+        <li><strong>"Right to be forgotten" / deletion right</strong> <span class="arrow">→</span> GDPR</li>
+        <li><strong>Right to opt out of data sale</strong> <span class="arrow">→</span> CCPA</li>
+        <li><strong>Reasonable security + breach notification (NY)</strong> <span class="arrow">→</span> SHIELD Act</li>
+        <li><strong>Biometric data classified as "special category"</strong> <span class="arrow">→</span> GDPR</li>
+        <li><strong>EU resident data on a US server</strong> <span class="arrow">→</span> GDPR still applies (data sovereignty)</li>
+        <li><strong>"Data follows the laws of where it's collected/stored"</strong> <span class="arrow">→</span> Data sovereignty</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 04 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
