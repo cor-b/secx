@@ -1,0 +1,9 @@
+# Local tooling and config — not synced
+.claude/
+CLAUDE.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
