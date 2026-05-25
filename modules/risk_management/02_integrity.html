@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02_integrity / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .subtitle, .overview p, p, li, .phase-desc, .elem-card .card-desc, dl.def dd .detail { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 15px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; background: rgba(167,138,212,0.12); color: var(--violet); padding: 2px 7px; border-radius: 3px; letter-spacing: 0; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 15px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .three-elements { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 24px 0 40px; }
+  .elem-card { border: 1px solid var(--rule); padding: 18px; transition: border-color 0.2s ease; }
+  .elem-card:hover { border-color: var(--cyan); }
+  .elem-card .n { font-size: 10px; color: var(--magenta); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+  .elem-card .name { color: var(--ink); font-size: 14px; line-height: 1.3; font-weight: 500; display: block; margin-bottom: 6px; }
+  .elem-card .card-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+  .phases { counter-reset: phase; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 44px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 15px; display: block; }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; }
+  dl.def { margin: 18px 0; padding: 18px 22px; border: 1px solid var(--rule); background: var(--panel); }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 15px; font-weight: 500; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; font-weight: 400; margin-top: 6px; line-height: 1.6; }
+  .callout { margin: 24px 0; padding: 20px 22px; border-left: 2px solid var(--amber); background: rgba(212,169,106,0.04); }
+  .callout-label { display: block; color: var(--amber); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; text-transform: uppercase; font-family: var(--font-mono); }
+  .callout p { font-family: var(--font-sans); margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--amber); }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); }
+  td:first-child { color: var(--cyan); font-weight: 500; width: 22%; }
+  td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; font-family: var(--font-mono); }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 14px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; font-family: var(--font-mono); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) { .container { padding: 30px 22px 80px; } h1.module-title { font-size: 28px; } h2 { font-size: 18px; } .three-elements { grid-template-columns: 1fr; } .exam-tips { padding: 24px 20px; } .exam-tips-label { margin: -24px -20px 24px; padding: 12px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/risk_management/integrity</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /risk_management</a>
+
+  <span class="module-tag">lesson 02 / risk management / Integrity Risk Considerations</span>
+  <h1 class="module-title">Integrity Risk Considerations</h1>
+  <p class="subtitle">Protecting data and systems from unauthorized modifications that could compromise accuracy and trustworthiness. Detection matters as much as prevention.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Integrity is the assurance that data <strong>remains accurate, unaltered, and that any unauthorized changes are detectable</strong>. Four considerations work together: detecting and preventing interference, using hashing to fingerprint and verify data, remotely journaling transaction logs for forensic reconstruction, and applying anti-tampering measures across hardware and software.</p>
+  </div>
+
+  <h4>the four considerations</h4>
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="n">01</span>
+      <span class="name">Interference</span>
+      <span class="card-desc">Unauthorized modification or disruption of data or systems. Malicious, accidental, or system errors.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">02</span>
+      <span class="name">Hashing</span>
+      <span class="card-desc">One-way cryptographic fingerprint. Any change to the input produces a different hash.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">03</span>
+      <span class="name">Remote Journaling</span>
+      <span class="card-desc">Continuous transmission of transaction logs to a remote location for forensic reconstruction.</span>
+    </div>
+    <div class="elem-card">
+      <span class="n">04</span>
+      <span class="name">Anti-Tampering</span>
+      <span class="card-desc">Physical and software measures to detect or prevent unauthorized modifications.</span>
+    </div>
+  </div>
+
+  <h2>Interference</h2>
+  <p>Any unauthorized modification or disruption of data or systems that compromises accuracy and integrity. Interference is a broad category covering three sources:</p>
+  <ul>
+    <li><strong>Malicious attacks</strong>: an attacker deliberately altering records, configurations, or system state</li>
+    <li><strong>Accidental changes</strong>: a user or admin mistake that corrupts data or breaks a system</li>
+    <li><strong>System errors</strong>: bugs, hardware failures, or race conditions that produce incorrect state</li>
+  </ul>
+
+  <h3>Mitigations</h3>
+  <ul>
+    <li><strong>Strict access controls</strong> so only authorized users can modify data</li>
+    <li><strong>User authentication protocols</strong> (MFA, strong identity verification)</li>
+    <li><strong>System monitoring</strong> to detect unauthorized changes as they happen</li>
+    <li><strong>Backup systems and failover strategies</strong> to recover and restore to an unaltered state</li>
+  </ul>
+
+  <h2>Hashing</h2>
+  <p>A cryptographic technique that creates a <strong>fixed-size fingerprint</strong> (hash value) from an input of any size. Hashing is the primary tool for verifying data integrity: store the hash of a known-good file, recompute later, compare. Any difference means the file changed.</p>
+
+  <h3>Trap-door (one-way) functions</h3>
+  <p>Hashing algorithms are <strong>one-way</strong>: easy to compute the hash from input, computationally infeasible to reverse from hash back to input. The "trap door" metaphor: once you fall through, you can't climb back up.</p>
+
+  <h3>Common algorithms</h3>
+  <dl class="def">
+    <dt>MD5</dt>
+    <dd>128-bit hash. Deprecated for integrity.
+      <span class="detail">Once widely used, but practical collisions have been demonstrated since 2004. Still appears in legacy systems and non-security uses (file checksums, deduplication) but should not be used to verify integrity against an attacker.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>SHA-1</dt>
+    <dd>160-bit hash. Deprecated for integrity.
+      <span class="detail">Considered broken since the SHAttered attack (2017) demonstrated a practical collision. Most major browsers and CAs no longer accept SHA-1 certificates.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>SHA-256</dt>
+    <dd>Part of the SHA-2 family. Current standard for integrity.
+      <span class="detail">Produces a 256-bit hash. No practical collisions known. Used widely in TLS certificates, blockchain (including Bitcoin), code signing, and file integrity monitoring.</span>
+    </dd>
+  </dl>
+
+  <dl class="def">
+    <dt>SHA-3</dt>
+    <dd>Newer family, different internal design than SHA-2. Also current.
+      <span class="detail">Standardized by NIST in 2015. Offers a backup option if SHA-2 is ever broken. Same security goals as SHA-256, different mathematical construction (Keccak-based sponge function).</span>
+    </dd>
+  </dl>
+
+  <h3>Hash collisions</h3>
+  <p>A <strong>collision</strong> occurs when two different inputs produce the same hash output. When collisions are practical, the integrity guarantee breaks: an attacker can substitute a malicious file that hashes to the same value as a trusted one.</p>
+  <ul>
+    <li>MD5 and SHA-1 have practical collisions: <strong>do not use them for integrity</strong></li>
+    <li>SHA-256 and SHA-3 are collision-resistant in practice</li>
+    <li>A collision-resistant hash makes any unauthorized change detectable, no matter how small</li>
+  </ul>
+
+  <h2>Hashing in Practice</h2>
+  <p>A short walkthrough on Kali Linux: detecting a single-character change across a folder of files using SHA-256 hashing.</p>
+
+  <h3>The demo</h3>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Set up</span>
+      <span class="phase-desc">An <code>Integrity_Monitoring</code> folder contains four files (<code>SimpleFile_1</code> through <code>SimpleFile_4</code>), each holding five paragraphs of Lorem Ipsum text.</span>
+    </li>
+    <li>
+      <span class="phase-name">Generate Monday's baseline hash</span>
+      <span class="phase-desc">Run SHA-256 over each file, combine the per-file hashes, then hash the combination to produce a single fingerprint for the whole folder. Save to <code>Hash_Monday.txt</code>.</span>
+    </li>
+    <li>
+      <span class="phase-name">Verify on Tuesday (no changes)</span>
+      <span class="phase-desc">Re-run the same hash pipeline, save to <code>Hash_Tuesday.txt</code>. Compare with <code>diff Hash_Monday.txt Hash_Tuesday.txt</code>. Output is empty: files are identical.</span>
+    </li>
+    <li>
+      <span class="phase-name">Simulate a Wednesday compromise</span>
+      <span class="phase-desc">Open <code>SimpleFile_2</code> and delete the first character. Save. The change is one byte out of thousands.</span>
+    </li>
+    <li>
+      <span class="phase-name">Re-hash and compare</span>
+      <span class="phase-desc">Run hash + diff in one command, chained with <code>&amp;&amp;</code>. The diff now reports a difference: the Wednesday hash does not match Tuesday's.</span>
+    </li>
+    <li>
+      <span class="phase-name">Result</span>
+      <span class="phase-desc">A single-character change anywhere in any monitored file produces a completely different hash. The compromise is detected, even though we never opened the files to inspect them.</span>
+    </li>
+  </ol>
+
+  <div class="callout">
+    <span class="callout-label">why this matters</span>
+    <p>File integrity monitoring (FIM) is the production version of this demo. Tools like <strong>Tripwire</strong>, <strong>AIDE</strong>, and OS-level FIM in EDR products run this loop continuously, alerting when a monitored file's hash drifts from baseline.</p>
+    <p>The technique is also how software supply chain protections work: signed package hashes catch tampered binaries, <code>Subresource Integrity</code> (SRI) catches tampered JavaScript loaded from a CDN, and Git commits chain hashes to detect history rewrites.</p>
+  </div>
+
+  <h2>Remote Journaling</h2>
+  <p>Continuous transmission of <strong>transaction logs</strong> to a remote location, ensuring a secure off-site record of system activity in real time.</p>
+
+  <h3>Remote journaling vs backups</h3>
+  <ul>
+    <li><strong>Backups</strong> copy entire data sets at scheduled intervals. Goal: restore lost data.</li>
+    <li><strong>Remote journaling</strong> copies individual logs of system changes, transactions, or critical events as they happen. Goal: preserve the record of what happened, not the data itself.</li>
+  </ul>
+
+  <h3>Why it matters for integrity</h3>
+  <ul>
+    <li>After a system failure, security breach, or disaster, remotely stored logs allow reconstruction of recent system activities</li>
+    <li>If an attacker tampers with local logs to hide their tracks, the remote copy preserves the unaltered record</li>
+    <li>Provides forensic evidence and supports root-cause analysis</li>
+    <li>Does <em>not</em> restore lost data; backups still required for that</li>
+  </ul>
+
+  <h2>Anti-Tampering</h2>
+  <p>Measures designed to <strong>detect or prevent</strong> unauthorized modifications to hardware or software. Covers both physical and digital surfaces.</p>
+
+  <h3>Physical anti-tampering</h3>
+  <ul>
+    <li>Tamper-evident seals on hardware enclosures (breaking the seal is visible evidence)</li>
+    <li>Locks on server cabinets, USB port blockers, secure boot chips</li>
+    <li>Tamper-resistant hardware modules (HSMs) that zeroize keys if physical intrusion is detected</li>
+  </ul>
+
+  <h3>Software anti-tampering</h3>
+  <ul>
+    <li><strong>Checksums and hashes</strong> on critical files (firmware, configurations, binaries)</li>
+    <li><strong>Tamper-evident logs</strong>: append-only logging that records and alerts on attempts to alter system files or configurations</li>
+    <li>Code signing to detect modified executables</li>
+    <li>Secure boot to verify the OS hasn't been tampered with at startup</li>
+  </ul>
+
+  <h2>Cheat Sheet</h2>
+
+  <h3>Considerations</h3>
+  <table>
+    <thead>
+      <tr><th>Consideration</th><th>Purpose</th><th>Typical control</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Interference</td><td>Prevent and detect unauthorized changes</td><td>Access control, monitoring, failover</td></tr>
+      <tr><td>Hashing</td><td>Fingerprint data to detect any change</td><td>SHA-256, SHA-3; file integrity monitoring</td></tr>
+      <tr><td>Remote Journaling</td><td>Off-site logs for forensic reconstruction</td><td>Continuous log transmission to a remote system</td></tr>
+      <tr><td>Anti-Tampering</td><td>Detect or prevent hardware/software modification</td><td>Seals, secure boot, tamper-evident logs</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hashing algorithms</h3>
+  <table>
+    <thead>
+      <tr><th>Algorithm</th><th>Status</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>MD5</td><td>Deprecated</td><td>128-bit; practical collisions since 2004</td></tr>
+      <tr><td>SHA-1</td><td>Deprecated</td><td>160-bit; practical collisions since 2017 (SHAttered)</td></tr>
+      <tr><td>SHA-256</td><td>Current</td><td>256-bit; widely used standard</td></tr>
+      <tr><td>SHA-3</td><td>Current</td><td>Different construction from SHA-2; backup option</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li><strong>Hashing is one-way (trap-door).</strong> Easy to compute, infeasible to reverse from hash back to input.</li>
+      <li><strong>MD5 and SHA-1 are deprecated for integrity</strong> due to practical collisions. Use SHA-256 or SHA-3.</li>
+      <li>A <strong>hash collision</strong> is when two different inputs produce the same hash, breaking the integrity guarantee.</li>
+      <li><strong>Remote journaling is not a backup.</strong> Journaling preserves logs of changes; backups preserve the data itself.</li>
+      <li><strong>Interference</strong> can be malicious, accidental, or a system error. Don't assume malicious.</li>
+      <li><strong>Anti-tampering covers both physical and software</strong>: seals and locks on the hardware side, checksums and tamper-evident logs on the software side.</li>
+      <li>Even a <strong>single-byte change</strong> produces a completely different hash. That's the whole point.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Verify a file hasn't been changed</strong> <span class="arrow">→</span> Hashing (SHA-256 or SHA-3)</li>
+        <li><strong>Reconstruct recent system activity after a crash or breach</strong> <span class="arrow">→</span> Remote journaling</li>
+        <li><strong>Detect a hardware enclosure being opened</strong> <span class="arrow">→</span> Anti-tampering (physical seals)</li>
+        <li><strong>Detect configuration file changes</strong> <span class="arrow">→</span> Anti-tampering (tamper-evident logs) or file hashing</li>
+        <li><strong>Two different files produce the same hash</strong> <span class="arrow">→</span> Collision (integrity guarantee broken)</li>
+        <li><strong>Recommended hash for integrity today</strong> <span class="arrow">→</span> SHA-256 or SHA-3 (never MD5 or SHA-1)</li>
+        <li><strong>Restore lost data after a failure</strong> <span class="arrow">→</span> Backup (NOT remote journaling)</li>
+        <li><strong>Attacker tries to hide tracks by editing local logs</strong> <span class="arrow">→</span> Remote journaling preserves the original</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 02 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
