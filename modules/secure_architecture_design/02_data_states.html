@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02_data_states / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 34%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/data_states</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 02 / secure architecture design / Data States</span>
+  <h1 class="module-title">Data States</h1>
+  <p class="subtitle">Data exists in three states: at rest, in transit, and in use. The risks differ in each state, so the protection methods must too.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The same piece of data can pass through all three states during normal operations: stored in a database (at rest), sent across a network (in transit), and loaded into an application for processing (in use). Choosing the wrong protection method for a given state leaves the data exposed even if other controls are in place.</p>
+  </div>
+
+  <h4>quick reference</h4>
+  <table>
+    <thead>
+      <tr><th>State</th><th>Definition</th><th>Primary protection tools</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>At rest</td>
+        <td>Stored on a server, hard drive, or cloud storage; not actively accessed</td>
+        <td>AES-256, BitLocker, FileVault, TDE, access control, MFA</td>
+      </tr>
+      <tr>
+        <td>In transit</td>
+        <td>Moving over a network between systems or to the cloud</td>
+        <td>TLS (HTTPS), IPsec (VPN), SSH / SFTP</td>
+      </tr>
+      <tr>
+        <td>In use</td>
+        <td>Actively being accessed or processed by a user or application</td>
+        <td>Memory encryption, RBAC / ABAC, data masking, secure enclaves</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 1 -->
+  <h2>data at rest</h2>
+  <p>Data at rest is stored and not currently being accessed. Even though it is not moving, it is vulnerable to unauthorized access if physical media is stolen or storage systems are compromised. The primary defense is encryption: encrypted data on a stolen drive is unreadable without the key.</p>
+
+  <h3>encryption tools</h3>
+  <dl class="def">
+    <dt>BitLocker</dt>
+    <dd>Full-disk encryption built into Windows.
+      <span class="detail">Encrypts the entire drive so that data is unreadable if the device is lost or stolen. Requires authentication (PIN, password, or TPM chip) to decrypt at boot.</span>
+    </dd>
+    <dt>FileVault</dt>
+    <dd>Full-disk encryption built into macOS.
+      <span class="detail">Operates the same way as BitLocker but for Apple devices. The disk is encrypted at rest and requires user credentials to unlock.</span>
+    </dd>
+    <dt>AES-256</dt>
+    <dd>Advanced Encryption Standard with a 256-bit key length.
+      <span class="detail">The symmetric encryption standard most widely used to protect stored data. AES-256 is considered extremely difficult to break with current computing power and is the baseline for most data-at-rest encryption requirements.</span>
+    </dd>
+    <dt>TDE (Transparent Data Encryption)</dt>
+    <dd>Encrypts data automatically at the storage level within databases.
+      <span class="detail">TDE is transparent to applications because encryption and decryption happen at the database engine layer. No application code changes are required. Commonly used in SQL Server, Oracle, and PostgreSQL to protect database files and backups.</span>
+    </dd>
+  </dl>
+
+  <h3>access controls</h3>
+  <p>Encryption alone is not sufficient. Strict access control policies and multifactor authentication (MFA) ensure that only authorized users can unlock and read the data, even when they have physical or logical access to the storage system.</p>
+
+  <!-- SECTION 2 -->
+  <h2>data in transit</h2>
+  <p>Data in transit is moving across a network and is particularly vulnerable to interception or tampering by anyone with access to the network path. Encryption protocols protect data by making it unreadable to anyone who intercepts it in transit.</p>
+
+  <dl class="def">
+    <dt>TLS (Transport Layer Security)</dt>
+    <dd>Encrypts data as it moves over the internet.
+      <span class="detail">TLS is the protocol behind HTTPS. When a browser connects to a site using HTTPS (HTTP over TLS), TLS negotiates a secure session and encrypts all data exchanged. This prevents eavesdropping even on public networks.</span>
+    </dd>
+    <dt>IPsec (Internet Protocol Security)</dt>
+    <dd>Encrypts and authenticates IP traffic at the network layer.
+      <span class="detail">IPsec is commonly used to secure VPN tunnels, encrypting all traffic between two endpoints over an untrusted network. Unlike TLS, which operates at the application layer, IPsec protects all traffic at the network layer regardless of the protocol above it.</span>
+    </dd>
+    <dt>SSH / SFTP</dt>
+    <dd>Secure Shell for encrypted remote access; SFTP (File Transfer Protocol over SSH) for encrypted file transfers.
+      <span class="detail">SSH encrypts the connection between a client and a remote system, protecting commands and responses from interception. SFTP extends this to file transfer operations, replacing unencrypted FTP.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2>data in use</h2>
+  <p>Data in use is actively being processed by an application or user. This is the most exposed state because data must be decrypted and loaded into memory to be worked with. Protection focuses on limiting who can interact with the data and how, and isolating it from the rest of the system during processing.</p>
+
+  <h3>memory encryption</h3>
+  <p>Data loaded into RAM for processing can be encrypted while it sits in memory. This protects against attacks that target a system's memory directly, such as cold-boot attacks or memory scraping.</p>
+
+  <h3>access controls</h3>
+  <ul>
+    <li><strong>RBAC (Role-Based Access Control):</strong> users can only access data their role permits. A payroll clerk can access salary records; a developer cannot.</li>
+    <li><strong>ABAC (Attribute-Based Access Control):</strong> access decisions use additional context attributes beyond just role, such as time of day, device type, or location.</li>
+  </ul>
+
+  <h3>data masking</h3>
+  <p>Data masking shows users a partial or obfuscated version of sensitive data rather than the full value. A database administrator viewing customer records might see only the last four digits of a Social Security number. The user can perform their task without seeing the full sensitive value, limiting exposure without blocking access entirely.</p>
+
+  <h3>secure enclaves</h3>
+  <p>Secure enclaves create isolated processing environments within a processor where sensitive data can be handled without being exposed to the broader operating system or other applications. Even if the host system is compromised, data inside the enclave remains protected.</p>
+  <ul>
+    <li><strong>Intel SGX (Software Guard Extensions)</strong> is the most widely known implementation, creating isolated memory regions that the OS cannot read</li>
+    <li>Used in scenarios where data must be processed by third parties or in untrusted environments</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Know each state, its definition, and its primary controls.</strong> At rest: encryption (AES-256, BitLocker, TDE) + access control. In transit: TLS, IPsec, SSH/SFTP. In use: memory encryption, RBAC/ABAC, data masking, secure enclaves. The exam gives you a scenario and asks which control applies.</li>
+      <li><strong>TDE is a database-level at-rest encryption tool.</strong> It encrypts data at the storage layer automatically without requiring changes to applications. Know it by name and function.</li>
+      <li><strong>TLS protects web traffic; IPsec protects VPN traffic.</strong> Both are in-transit encryption protocols but operate at different layers. TLS is application-layer; IPsec is network-layer.</li>
+      <li><strong>Data masking is a data-in-use protection technique.</strong> Showing partial data (last 4 SSN digits, masked credit card number) limits exposure while the data is actively being used.</li>
+      <li><strong>Secure enclaves (Intel SGX) isolate sensitive data during processing.</strong> Even a compromised OS cannot read data inside an enclave. This is the primary tool for protecting data in use in untrusted environments.</li>
+      <li><strong>RBAC restricts by role; ABAC restricts by attributes.</strong> ABAC is more flexible and context-aware (can factor in location, time, device) but more complex to configure.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Encrypting a hard drive or database file</strong> <span class="arrow">→</span> At rest (AES-256, BitLocker, FileVault, TDE)</li>
+        <li><strong>Encrypting a database automatically at the storage layer</strong> <span class="arrow">→</span> TDE</li>
+        <li><strong>Securing web traffic (HTTPS)</strong> <span class="arrow">→</span> TLS (in transit)</li>
+        <li><strong>Encrypting VPN traffic between sites</strong> <span class="arrow">→</span> IPsec (in transit)</li>
+        <li><strong>Encrypted remote login or file transfer</strong> <span class="arrow">→</span> SSH / SFTP (in transit)</li>
+        <li><strong>Showing only last 4 digits of an SSN</strong> <span class="arrow">→</span> Data masking (in use)</li>
+        <li><strong>Isolated processing environment safe from a compromised OS</strong> <span class="arrow">→</span> Secure enclave / Intel SGX (in use)</li>
+        <li><strong>Access based on job function</strong> <span class="arrow">→</span> RBAC (in use)</li>
+        <li><strong>Access based on role plus context (time, location, device)</strong> <span class="arrow">→</span> ABAC (in use)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 02 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>09_control_effectiveness / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 24%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/control_effectiveness</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 09 / secure architecture design / Control Effectiveness</span>
+  <h1 class="module-title">Control Effectiveness</h1>
+  <p class="subtitle">Security controls are only valuable if they actually work. Metrics measure performance, scanning detects weaknesses, and assessments verify that controls function as intended.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Control effectiveness is the degree to which security controls mitigate risks and protect assets. Three mechanisms provide evidence: <strong>metrics</strong> (quantitative data on how controls are performing), <strong>scanning</strong> (automated detection of vulnerabilities and misconfigurations), and <strong>assessments</strong> (structured evaluations through audits, penetration testing, and compliance checks).</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>metrics</h2>
+  <p>Metrics provide measurable data that shows how well security controls are performing over time. They turn security posture into numbers that can be tracked, trended, and acted on.</p>
+
+  <h4>key metrics to know</h4>
+  <ul>
+    <li><strong>Incident response time:</strong> time from when a threat is detected to when it is resolved. A shorter response time indicates the organization is well prepared. A lengthening trend signals a problem with detection or remediation capacity.</li>
+    <li><strong>Vulnerabilities mitigated:</strong> count of vulnerabilities addressed within a period. A high number suggests the scanning and patching process is working. A low or stagnant number signals gaps in detection or remediation.</li>
+    <li><strong>Patch compliance rate:</strong> percentage of systems patched within a required timeframe after a vulnerability is disclosed. Reveals whether the patching process keeps pace with the threat landscape.</li>
+    <li><strong>False positive rate:</strong> frequency with which security controls flag non-existent threats. A high false positive rate indicates that controls need tuning — excessive false positives create alert fatigue and cause real threats to be missed.</li>
+    <li><strong>Frequency of security incidents:</strong> overall count of incidents over time. An upward trend despite active controls may indicate the controls are insufficient or incorrectly configured.</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>scanning</h2>
+  <p>Scanning detects vulnerabilities and misconfigurations before attackers can exploit them. Different scanner types focus on specific layers or components of the infrastructure — using only one type leaves gaps.</p>
+
+  <table>
+    <thead>
+      <tr><th>Scanner type</th><th>Finds</th><th>Tools / examples</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Network scanner</td>
+        <td>Open ports, weak firewall rules, outdated protocols, missing patches across the network</td>
+        <td>OpenVAS, Nessus (Tenable), Qualys</td>
+      </tr>
+      <tr>
+        <td>Web application scanner</td>
+        <td>SQL injection, XSS, broken authentication, application-specific vulnerabilities</td>
+        <td>Nikto</td>
+      </tr>
+      <tr>
+        <td>Database scanner</td>
+        <td>Misconfigurations, excessive permissions, unpatched database engines</td>
+        <td>Various database-specific tools</td>
+      </tr>
+      <tr>
+        <td>Cloud security scanner</td>
+        <td>Misconfigured cloud resources, overly permissive IAM policies, exposed storage buckets</td>
+        <td>Provider-native tools (AWS Security Hub, Azure Defender)</td>
+      </tr>
+      <tr>
+        <td>Container scanner</td>
+        <td>Vulnerable base images, insecure container configurations</td>
+        <td>Trivy, Anchore</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Best practice is to combine scanner types. A network scanner catches broad infrastructure issues; a web application scanner catches application-layer vulnerabilities. Neither alone provides complete coverage.</p>
+
+  <!-- SECTION 3 -->
+  <h2>assessments</h2>
+  <p>Assessments evaluate whether security controls are functioning as intended — not just deployed, but actually effective. They take three forms.</p>
+
+  <dl class="def">
+    <dt>Audits</dt>
+    <dd>Formal reviews of security controls, policies, and procedures against a defined standard.
+      <span class="detail">Audits verify that documented controls are real and operating as described. They produce a written record of findings useful for internal governance and external reporting. Audit results can identify controls that exist on paper but are not consistently applied in practice.</span>
+    </dd>
+    <dt>Penetration Testing</dt>
+    <dd>A simulated attack conducted by security professionals to test how well defenses hold up under real-world conditions.
+      <span class="detail">Penetration tests go beyond automated scanning by having skilled humans actively attempt to exploit discovered vulnerabilities. Key metrics measured include: time-to-detect (how quickly the security team identifies the attack) and time-to-respond (how quickly they contain it). These directly measure the human and procedural side of control effectiveness, not just the technical.</span>
+    </dd>
+    <dt>Compliance Checks</dt>
+    <dd>Verification that the organization meets the specific requirements of applicable regulatory frameworks.
+      <span class="detail">Examples: a compliance check for HIPAA verifies that PHI is handled according to required controls; a PCI DSS compliance check ensures payment card data is protected as mandated. Compliance checks measure the number of violations — gaps that must be addressed to meet legal or industry obligations. Automated tools like SCAP checkers can perform compliance checks continuously.</span>
+    </dd>
+  </dl>
+
+  <h3>metrics collected during assessments</h3>
+  <ul>
+    <li>Number of compliance violations identified — each is a gap against regulatory or industry requirements</li>
+    <li>Time to detect and respond during a penetration test — shows how prepared the team is against realistic threats</li>
+    <li>Percentage of controls fully implemented and operational — a snapshot of overall security readiness</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Metrics measure, scanning detects, assessments validate.</strong> These three answer different questions. Metrics: are controls improving over time? Scanning: what weaknesses exist right now? Assessments: are controls working as intended?</li>
+      <li><strong>Metrics are always quantitative.</strong> Numbers, percentages, durations. If a scenario describes qualitative evaluation, it is an assessment, not a metric.</li>
+      <li><strong>High false positive rate means controls need tuning.</strong> False positives create alert fatigue, causing real threats to be overlooked. A high false positive rate is a metric that signals a configuration problem, not just noise.</li>
+      <li><strong>Network scanners (Nessus, OpenVAS, Qualys) cover broad network issues; web app scanners (Nikto) cover application-layer vulnerabilities.</strong> Know these tools by name and what layer they target. One type of scanner alone leaves gaps.</li>
+      <li><strong>Penetration testing measures time-to-detect and time-to-respond.</strong> These metrics come from assessments, not automated scanning. They evaluate the human and procedural response alongside the technical controls.</li>
+      <li><strong>Compliance checks verify alignment with specific regulations (HIPAA, PCI DSS).</strong> They count violations — gaps that must be closed to meet legal requirements. Distinct from a security audit, which evaluates internal standards.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Quantitative measure of control performance (time, count, percentage)</strong> <span class="arrow">→</span> Metric</li>
+        <li><strong>How long from threat detection to resolution</strong> <span class="arrow">→</span> Incident response time (metric)</li>
+        <li><strong>How quickly patches are applied after vulnerabilities are disclosed</strong> <span class="arrow">→</span> Patch compliance rate (metric)</li>
+        <li><strong>Security device flags too many non-existent threats</strong> <span class="arrow">→</span> High false positive rate — tuning needed</li>
+        <li><strong>Scanning open ports and outdated protocols across the network</strong> <span class="arrow">→</span> Network scanner (Nessus, OpenVAS, Qualys)</li>
+        <li><strong>Scanning for SQL injection and XSS in a web application</strong> <span class="arrow">→</span> Web application scanner (Nikto)</li>
+        <li><strong>Simulated attack to measure time-to-detect and time-to-respond</strong> <span class="arrow">→</span> Penetration testing (assessment)</li>
+        <li><strong>Verifying HIPAA or PCI DSS requirements are met</strong> <span class="arrow">→</span> Compliance check (assessment)</li>
+        <li><strong>Formal review of whether controls match documented policy</strong> <span class="arrow">→</span> Audit (assessment)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 09 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03_data_classification / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 28%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/data_classification</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 03 / secure architecture design / Data Classification</span>
+  <h1 class="module-title">Data Classification</h1>
+  <p class="subtitle">Classification assigns a sensitivity tier to data at the moment of creation. The tier determines what controls apply and how the data must be handled throughout its lifecycle.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data classification is the process of <strong>categorizing information based on its sensitivity, value, or regulatory requirements</strong>. Classification happens at the data creation stage of the data lifecycle and is the foundation for labeling, tagging, and DLP policies. Two primary models are used: the government or military model and the commercial or business model.</p>
+    <p>Each model uses different tier names and enforces controls differently. The government model physically separates networks by classification level. The commercial model typically relies on logical isolation within a shared network.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>government / military model</h2>
+  <p>The government and military classification model uses four levels, progressing from no restrictions to the highest sensitivity. Each level carries strict rules about who may access the data and which systems may process it.</p>
+
+  <table>
+    <thead>
+      <tr><th>Level</th><th>Access restriction</th><th>Risk if disclosed</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Unclassified</td>
+        <td>None — anyone may access</td>
+        <td>No risk to the organization</td>
+        <td>Army field manuals (publicly downloadable)</td>
+      </tr>
+      <tr>
+        <td>Confidential</td>
+        <td>Authorized personnel only; NDA may be required</td>
+        <td>Limited damage</td>
+        <td>Position of a navy ship at sea</td>
+      </tr>
+      <tr>
+        <td>Secret</td>
+        <td>Authorized personnel on authorized networks only</td>
+        <td>Serious damage</td>
+        <td>Data processed on SIPRNet</td>
+      </tr>
+      <tr>
+        <td>Top Secret</td>
+        <td>Strict need-to-know; separate high-security network</td>
+        <td>Grave danger to the organization</td>
+        <td>Intelligence sources and methods used to locate a target</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>physical separation</h3>
+  <p>The government model enforces classification through physical network separation rather than logical controls. Users who work across multiple classification levels typically have a separate computer for each level at their desk: one for unclassified, one for secret, one for top secret.</p>
+  <ul>
+    <li><strong>SIPRNet (Secret Internet Protocol Router Network)</strong> is the dedicated U.S. military network for secret-level data. It is not connected to the public internet, which is considered unclassified and untrusted.</li>
+    <li>Secret and top secret networks use higher encryption standards and additional physical security controls to justify their significantly higher operating cost.</li>
+  </ul>
+
+  <h3>need-to-know principle</h3>
+  <p>Access is granted based on both clearance level and a demonstrated need to know. A person can hold a top secret clearance and still be denied access to specific top secret data if they have no operational reason to see it.</p>
+  <p>Example: the sources and methods used to locate a target remain top secret. The target's GPS coordinates are downgraded to secret so soldiers who need to act on the location can receive them without being exposed to how the target was found.</p>
+
+  <!-- SECTION 2 -->
+  <h2>commercial / business model</h2>
+  <p>Commercial and business organizations typically use a simpler model that reflects the reality that most businesses run a single shared network rather than physically separate systems per classification level. Controls are enforced logically through access rights and encryption tiers.</p>
+
+  <h4>common classification levels</h4>
+  <ul>
+    <li><strong>Public:</strong> safe for external distribution, no restrictions</li>
+    <li><strong>Private / Internal:</strong> for employees only, not intended for external audiences</li>
+    <li><strong>Restricted:</strong> limited to specific teams or roles within the organization</li>
+    <li><strong>Confidential:</strong> highest sensitivity, significant risk if disclosed, strictest access and encryption</li>
+  </ul>
+
+  <h3>logical rather than physical separation</h3>
+  <p>Because most businesses run a single network, classification levels are enforced through software controls rather than separate hardware. Higher-sensitivity data uses higher encryption standards and more restrictive access control rules. The same physical infrastructure handles all levels, but logical policies determine who can reach what.</p>
+
+  <h3>regulatory mandates</h3>
+  <p>Most commercial organizations have no legally mandated classification standard. However, some industries are required by law to classify and protect specific data types in defined ways:</p>
+  <ul>
+    <li><strong>HIPAA (Health Insurance Portability and Accountability Act):</strong> US healthcare organizations (hospitals, insurers) must handle Protected Health Information (PHI) with specific controls. The classification of PHI as sensitive is not optional — it is legally defined.</li>
+    <li>Similar mandates exist in other regulated industries (financial, legal, education) under their own applicable regulations.</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Know both models by name and their tier labels.</strong> Government: unclassified / confidential / secret / top secret. Commercial: public / private / internal / restricted / confidential. Exams may use either model in a scenario and expect you to identify the classification level by its label.</li>
+      <li><strong>Classification happens at data creation.</strong> It is the first step in the data lifecycle's security process. Everything downstream (labeling, tagging, DLP) depends on classification being done correctly at this stage.</li>
+      <li><strong>Government model = physical separation; commercial model = logical separation.</strong> Separate computers and separate networks per level (government) vs. shared network with access controls and encryption tiers (commercial).</li>
+      <li><strong>SIPRNet is the U.S. military's secret-level network.</strong> It is not connected to the public internet. Know it by name — it may appear as an example of physical network separation or need-to-know enforcement.</li>
+      <li><strong>Top secret = grave danger if disclosed.</strong> This is the specific language used to define the top secret tier. Confidential and secret cause less severe consequences; only top secret disclosure causes grave danger.</li>
+      <li><strong>HIPAA legally mandates classification and handling of PHI.</strong> Healthcare organizations do not choose whether to classify patient health data as sensitive. The law requires it. This makes it a compliance-driven classification, not a business decision.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Unclassified / confidential / secret / top secret</strong> <span class="arrow">→</span> Government or military classification model</li>
+        <li><strong>Public / private / internal / restricted / confidential</strong> <span class="arrow">→</span> Commercial or business classification model</li>
+        <li><strong>Disclosure would cause grave danger</strong> <span class="arrow">→</span> Top secret</li>
+        <li><strong>No restrictions, available to anyone</strong> <span class="arrow">→</span> Unclassified (government) or Public (commercial)</li>
+        <li><strong>Separate computer or network per classification level</strong> <span class="arrow">→</span> Government model (physical separation)</li>
+        <li><strong>Access control and encryption tiers on a shared network</strong> <span class="arrow">→</span> Commercial model (logical separation)</li>
+        <li><strong>Military network not connected to the internet, for secret data</strong> <span class="arrow">→</span> SIPRNet</li>
+        <li><strong>Legally required classification and handling of patient health data</strong> <span class="arrow">→</span> HIPAA / PHI</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 03 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

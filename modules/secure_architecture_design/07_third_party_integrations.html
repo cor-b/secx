@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07_third_party_integrations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 34%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/third_party_integrations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 07 / secure architecture design / Third-Party Integrations</span>
+  <h1 class="module-title">Third-Party Integrations</h1>
+  <p class="subtitle">Every API connection to an external service extends the trust boundary. Security controls — encryption, access management, secure API design, and monitoring — must extend with it.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Third-party integrations connect external services to an organization's internal systems, most commonly via APIs. Four security pillars govern these integrations: <strong>data encryption</strong> (protecting data in transit and at rest), <strong>data protection</strong> (extending organizational policies to external vendors), <strong>API design</strong> (authentication, least privilege, rate limiting, input validation), and <strong>monitoring and logging</strong> (real-time detection and compliance records).</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>data encryption</h2>
+  <p>When data moves between an organization and a third-party service, encryption is required at every stage — not just during transmission.</p>
+  <ul>
+    <li>Encryption must be applied to <strong>data in transit</strong> (moving between systems) and <strong>data at rest</strong> (stored within third-party systems)</li>
+    <li>Example: when integrating with a payment processor, credit card numbers must be encrypted both during API transmission and while stored in the third party's database</li>
+    <li>Encryption standards must meet applicable regulatory requirements — for payment data, this means <strong>PCI DSS</strong> (Payment Card Industry Data Security Standard)</li>
+    <li>Encryption methodologies used by both the organization and the third-party provider should be regularly audited to confirm they remain robust and compliant</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>data protection</h2>
+  <p>Encryption secures the data itself; data protection ensures the third-party environment enforces the same organizational security standards that apply internally. The organization's security policies do not stop at the integration boundary.</p>
+  <ul>
+    <li>Verify that third-party vendors maintain strong controls: <strong>MFA</strong>, <strong>RBAC</strong>, and regular security audits</li>
+    <li>Access management must define who within the organization and who within the third party can access sensitive data, and at what permission level</li>
+    <li>Data protection must apply throughout the full data lifecycle — whether data is stored, being processed, or archived within third-party environments</li>
+    <li>Regular data protection assessments should be conducted on third-party vendors to confirm compliance and identify potential vulnerabilities before they are exploited</li>
+    <li>Example: integrating with a cloud storage provider requires strict access controls so only authorized users and services can interact with the stored data — not just anyone with API credentials</li>
+  </ul>
+
+  <!-- SECTION 3 -->
+  <h2>API design</h2>
+  <p>Secure API design reduces the attack surface that third-party connections introduce. Four principles govern secure API architecture.</p>
+
+  <dl class="def">
+    <dt>Authentication and Authorization (OAuth 2.0)</dt>
+    <dd>APIs must validate who is making a request and what they are permitted to do before responding.
+      <span class="detail">OAuth 2.0 is the standard framework for delegating API access securely. It allows users or services to grant limited access without sharing credentials. In a CRM integration, for example, only authenticated and authorized users should be able to retrieve customer data through the API.</span>
+    </dd>
+    <dt>Principle of Least Privilege</dt>
+    <dd>APIs should expose only the minimum amount of data and functionality required for the integration to work.
+      <span class="detail">An API that returns an entire customer record when the integration only needs a name and email is unnecessarily exposing sensitive data. Least privilege in API design means scoping responses and permissions to exactly what is needed — nothing more.</span>
+    </dd>
+    <dt>Rate Limiting</dt>
+    <dd>APIs must cap the number of requests a client can make within a given time window.
+      <span class="detail">Rate limiting prevents abuse scenarios including brute-force attacks, credential stuffing, and denial-of-service attacks where an attacker floods the API with requests to exhaust resources or extract data at scale. It ensures APIs remain available under both normal and malicious traffic patterns.</span>
+    </dd>
+    <dt>Input Validation</dt>
+    <dd>All data submitted to an API must be validated and sanitized before processing.
+      <span class="detail">Without input validation, APIs are vulnerable to SQL injection (malicious database queries embedded in input fields) and cross-site scripting (XSS). Validating the format, type, length, and content of every input value prevents these attacks at the API boundary.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2>monitoring and logging</h2>
+
+  <dl class="def">
+    <dt>Monitoring</dt>
+    <dd>Real-time tracking of interactions between internal systems and third-party services to detect anomalies as they occur.
+      <span class="detail">An unusual spike in API calls from a specific user, or traffic from an unexpected geographic location, can be a red flag for misuse or a breach in progress. Real-time monitoring enables immediate detection and rapid response, minimizing the impact of a security incident before it escalates.</span>
+    </dd>
+    <dt>Logging</dt>
+    <dd>A detailed historical record of all interactions with third-party services, capturing when data was accessed, by whom, and what actions were performed.
+      <span class="detail">Logs serve two purposes: security investigations and compliance. For investigations, logs allow forensic reconstruction of what happened and when. For compliance, they demonstrate to auditors that interactions with third-party systems are controlled and tracked — a requirement under GDPR, HIPAA, and similar regulatory frameworks.</span>
+    </dd>
+  </dl>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Encryption applies to both in transit and at rest with third-party services.</strong> It is not enough to encrypt data during the API call if it is stored unencrypted on the third party's servers. Both states must be covered.</li>
+      <li><strong>OAuth 2.0 is the standard for API authentication and authorization.</strong> Know it by name. If a scenario involves validating API access without sharing credentials, OAuth 2.0 is the answer.</li>
+      <li><strong>Principle of least privilege in API design means exposing the minimum data needed.</strong> An API that returns more than the integration requires is violating this principle even if the data is encrypted.</li>
+      <li><strong>Rate limiting prevents DoS abuse; input validation prevents injection attacks.</strong> These are two distinct API security controls that address two different threat categories. Know which problem each solves.</li>
+      <li><strong>Monitoring is real-time; logging is historical.</strong> Monitoring detects anomalies as they happen and enables immediate response. Logging records what happened for later investigation and compliance auditing. The exam may distinguish between these in scenario questions about detection vs. audit.</li>
+      <li><strong>PCI DSS governs payment card data; GDPR and HIPAA drive logging and compliance requirements.</strong> Know which regulation applies to which data type when a third-party integration scenario involves compliance.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Encrypting data sent to and stored by a third-party payment processor</strong> <span class="arrow">→</span> PCI DSS compliance + in-transit and at-rest encryption</li>
+        <li><strong>Standard for delegating API access without sharing credentials</strong> <span class="arrow">→</span> OAuth 2.0</li>
+        <li><strong>API returns only the fields the integration actually needs</strong> <span class="arrow">→</span> Principle of least privilege</li>
+        <li><strong>Capping API requests per user per minute to prevent abuse</strong> <span class="arrow">→</span> Rate limiting</li>
+        <li><strong>Protecting an API from SQL injection and XSS</strong> <span class="arrow">→</span> Input validation</li>
+        <li><strong>Detecting an unusual spike in third-party API calls as it happens</strong> <span class="arrow">→</span> Real-time monitoring</li>
+        <li><strong>Record showing who accessed third-party data and when, used for audit</strong> <span class="arrow">→</span> Logging (GDPR, HIPAA compliance)</li>
+        <li><strong>Verifying a third-party vendor uses MFA and RBAC</strong> <span class="arrow">→</span> Data protection assessment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 07 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

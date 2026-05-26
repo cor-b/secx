@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06_hybrid_infrastructures / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 16%; font-weight: 500; }
+  td:nth-child(2) { width: 40%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/hybrid_infrastructures</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 06 / secure architecture design / Hybrid Infrastructures</span>
+  <h1 class="module-title">Hybrid Infrastructures</h1>
+  <p class="subtitle">Hybrid infrastructures combine on-premises systems with cloud-based resources. Security controls must span both environments consistently — the complexity of doing so is the defining challenge.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A hybrid infrastructure gives organizations the control and regulatory compliance of on-premises systems alongside the scalability and cost efficiency of the cloud. The trade-off is management complexity: <strong>firewalls, encryption, access management, and DLP policies must be enforced uniformly across two environments</strong> that may have different configurations, interfaces, and security requirements.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>on-premises infrastructure</h2>
+  <p>On-premises infrastructure means all servers, storage, networking equipment, and software are owned, operated, and maintained by the organization inside its own facilities. The organization controls everything: physical security, power, cooling, and network configuration.</p>
+
+  <h3>advantages</h3>
+  <ul>
+    <li>Full control over hardware, software, and data — no dependency on a third-party provider</li>
+    <li>High customization to meet specific operational or regulatory requirements</li>
+    <li>Preferred for industries with strict regulatory requirements or highly sensitive data that cannot leave the organization's physical control</li>
+  </ul>
+
+  <h3>disadvantages</h3>
+  <ul>
+    <li>Significant upfront capital investment in hardware and software licenses</li>
+    <li>Ongoing costs for skilled personnel, maintenance, updates, and scaling</li>
+    <li>No elasticity: capacity must be provisioned in advance, leading to either over- or under-provisioning</li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>cloud-based infrastructure</h2>
+  <p>Cloud infrastructure delivers computing resources over the internet via third-party providers such as AWS, Microsoft Azure, or Google Cloud Platform. Organizations rent or lease resources on demand rather than owning hardware, paying only for what they use.</p>
+
+  <h3>advantages</h3>
+  <ul>
+    <li>Elastic scalability: resources can be increased or decreased rapidly to match demand</li>
+    <li>No large upfront hardware investment; costs shift from capital to operational</li>
+    <li>Built-in redundancy and failover for high availability and disaster recovery</li>
+  </ul>
+
+  <h3>cloud service models</h3>
+  <table>
+    <thead>
+      <tr><th>Model</th><th>What the cloud provides</th><th>Customer manages</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>IaaS</td>
+        <td>Virtualized hardware: servers, storage, networking</td>
+        <td>Operating system, middleware, applications, data</td>
+      </tr>
+      <tr>
+        <td>PaaS</td>
+        <td>Infrastructure plus OS and development tools</td>
+        <td>Applications and data only; no hardware or OS management</td>
+      </tr>
+      <tr>
+        <td>SaaS</td>
+        <td>Ready-to-use software application hosted entirely in the cloud</td>
+        <td>Data and user configuration only; no infrastructure control</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <h2>hybrid infrastructure</h2>
+  <p>A hybrid infrastructure combines on-premises and cloud-based resources so organizations can keep sensitive or regulated workloads on-premises while using the cloud for more dynamic or less critical functions such as analytics, web hosting, or development environments.</p>
+
+  <h3>advantages</h3>
+  <ul>
+    <li>Sensitive data and critical workloads stay on-premises where regulatory or security requirements demand it</li>
+    <li>Cloud resources absorb variable or unpredictable demand without requiring on-premises over-provisioning</li>
+    <li>Cloud disaster recovery and redundancy options extend operational resilience beyond what a single on-premises data center provides</li>
+  </ul>
+
+  <h3>security challenges</h3>
+  <p>The core challenge in hybrid infrastructure is applying consistent security controls across two environments that may use entirely different management interfaces, tools, and configurations.</p>
+
+  <dl class="def">
+    <dt>Identity and Access Management (IAM)</dt>
+    <dd>Provides unified authentication and authorization policies across on-premises and cloud environments.
+      <span class="detail">Without consistent IAM, a user authenticated on-premises may have different permissions in the cloud, or gaps in access controls may allow unauthorized access to sensitive systems. IAM solutions must bridge both environments with a single coherent policy.</span>
+    </dd>
+    <dt>Encryption and DLP</dt>
+    <dd>Encryption and data loss prevention policies must be applied uniformly to protect data at rest and in transit across the entire infrastructure.
+      <span class="detail">A DLP policy that only applies to on-premises systems leaves cloud-based data transfers unprotected. DLP solutions in hybrid environments must detect and block unauthorized transfers whether the data is moving within the on-premises network, between on-premises and cloud, or within cloud systems.</span>
+    </dd>
+    <dt>Policy Enforcement Tools</dt>
+    <dd>Security tools that enforce consistent firewall rules, configuration standards, and compliance policies across both environments.
+      <span class="detail">Because on-premises and cloud systems may have different native security interfaces, organizations often deploy policy orchestration tools that translate and apply rules uniformly. Without this, administrators must manage two separate security postures, which creates the risk of gaps or inconsistencies.</span>
+    </dd>
+  </dl>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Hybrid = on-premises plus cloud.</strong> Not purely cloud, not purely on-premises. The defining feature is the combination. If a scenario mentions both a local data center and cloud resources in the same infrastructure, it is hybrid.</li>
+      <li><strong>Know all three cloud service models by name.</strong> IaaS: you manage OS and up; cloud manages hardware. PaaS: you manage the app and data; cloud manages hardware and OS. SaaS: cloud manages everything; you just use the software. The exam tests which layer the customer is responsible for in each model.</li>
+      <li><strong>The core hybrid challenge is consistent security enforcement across both environments.</strong> The problem is not just connecting on-premises to cloud — it is ensuring that the same firewall rules, DLP policies, and access controls apply everywhere simultaneously.</li>
+      <li><strong>IAM provides unified authentication and authorization across hybrid environments.</strong> It is the key tool for preventing access control gaps that arise when on-premises and cloud environments handle identity separately.</li>
+      <li><strong>On-premises: high control, high cost, no elasticity. Cloud: flexible, pay-per-use, scalable.</strong> Hybrid exists to get the benefits of both while accepting the management complexity that comes with spanning two environments.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Local data center plus cloud resources in one architecture</strong> <span class="arrow">→</span> Hybrid infrastructure</li>
+        <li><strong>Rent virtualized servers, install and manage your own OS</strong> <span class="arrow">→</span> IaaS</li>
+        <li><strong>Deploy applications without managing underlying hardware or OS</strong> <span class="arrow">→</span> PaaS</li>
+        <li><strong>Use ready-to-use software with no infrastructure control</strong> <span class="arrow">→</span> SaaS</li>
+        <li><strong>Unified login and access rights across on-premises and cloud</strong> <span class="arrow">→</span> IAM (Identity and Access Management)</li>
+        <li><strong>Consistent data transfer blocking across on-premises and cloud</strong> <span class="arrow">→</span> DLP policy enforcement</li>
+        <li><strong>Sensitive/regulated workloads kept on-premises; dynamic workloads in cloud</strong> <span class="arrow">→</span> Hybrid infrastructure split by sensitivity</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 06 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

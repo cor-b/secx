@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08_attack_surface_management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 40%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.12); padding: 2px 7px; border-radius: 3px; }
+  .cmd-table { margin: 16px 0 24px; }
+  .cmd-table td:first-child { color: var(--violet); font-family: var(--font-mono); font-size: 12px; width: 52%; }
+  .cmd-table td:last-child { color: var(--ink-dim); font-size: 13px; }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/attack_surface_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 08 / secure architecture design / Attack Surface Management</span>
+  <h1 class="module-title">Attack Surface Management</h1>
+  <p class="subtitle">Identify, reduce, and continuously monitor all potential attack paths into a system. The fewer entry points an attacker can reach, the smaller the risk.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Attack surface management uses four techniques in combination: <strong>hardening</strong> (eliminate unnecessary exposure), <strong>defense-in-depth</strong> (layer controls so one failure does not compromise everything), <strong>vulnerability management</strong> (scan and remediate weaknesses continuously), and <strong>legacy component management</strong> (plan for systems that no longer receive security updates).</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>device hardening</h2>
+  <p>Hardening reduces a system's attack surface by removing or disabling everything that is not strictly required for the system to perform its function. It applies to servers, endpoints, mobile devices, and network infrastructure alike.</p>
+
+  <h3>hardening actions</h3>
+  <ul>
+    <li>Disable unused services and close unused ports — every running service is a potential entry point</li>
+    <li>Remove unnecessary applications and packages</li>
+    <li>Rename or disable default accounts (default credentials are widely known and frequently targeted)</li>
+    <li>Install and configure required security software: antivirus, host-based firewall, log collection agent</li>
+    <li>Apply encryption to protect data on the device</li>
+    <li>Apply group policies or configuration baselines to enforce strict, consistent security settings</li>
+    <li>Patch all software regularly to close known vulnerabilities</li>
+  </ul>
+
+  <h3>hardware security features</h3>
+  <ul>
+    <li><strong>UEFI (Unified Extensible Firmware Interface):</strong> modern firmware standard that enables Secure Boot, preventing unauthorized code from loading during startup</li>
+    <li><strong>TPM (Trusted Platform Module):</strong> dedicated hardware chip that stores cryptographic keys and supports device attestation and disk encryption (e.g., BitLocker)</li>
+    <li><strong>HSM (Hardware Security Module):</strong> physical device for generating, storing, and managing cryptographic keys at hardware speed, used in high-assurance environments</li>
+  </ul>
+
+  <h3>service hardening reference</h3>
+  <p>The principle: stop the service, prevent it from restarting, then mask it to block both automatic and manual restarts. Each step is more restrictive than the last.</p>
+
+  <table class="cmd-table">
+    <thead>
+      <tr><th>Command</th><th>Effect</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>sudo systemctl stop &lt;service&gt;</td>
+        <td>Stops the running service immediately</td>
+      </tr>
+      <tr>
+        <td>sudo systemctl disable &lt;service&gt;</td>
+        <td>Prevents the service from starting automatically at boot (can still be started manually)</td>
+      </tr>
+      <tr>
+        <td>sudo systemctl mask &lt;service&gt;</td>
+        <td>Links the service to /dev/null, blocking both automatic and manual starts — the most restrictive option</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2 -->
+  <h2>defense-in-depth</h2>
+  <p>Defense-in-depth layers independent security controls so that if one control fails or is bypassed, others continue to protect the system. No single control is relied upon as the sole line of defense.</p>
+
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Control</th><th>What it protects against</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Firewall</td>
+        <td>Filters inbound and outbound traffic using security rules; blocks unauthorized external access at the network perimeter</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>IDS</td>
+        <td>Monitors network activity for unusual behavior; alerts administrators to threats that bypass the firewall</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Encryption in transit</td>
+        <td>Secures data moving across the network; intercepted traffic is unreadable without the decryption key</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Endpoint protection</td>
+        <td>Antivirus and anti-malware tools protect individual devices from threats that enter through non-network vectors</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Encryption at rest</td>
+        <td>Secures stored data; unauthorized access to the physical or logical storage does not yield readable data</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Physical security (locking server rooms, controlling physical access) complements every software layer. Each control addresses a different threat vector; together they form a resilient posture.</p>
+
+  <!-- SECTION 3 -->
+  <h2>vulnerability management</h2>
+  <p>Vulnerability management is the ongoing process of identifying, prioritizing, and remediating security weaknesses before they can be exploited. It is continuous — not a one-time activity.</p>
+  <ul>
+    <li>Scan regularly with tools like <strong>Nessus</strong>, <strong>OpenVAS</strong>, or <strong>Qualys</strong> to discover open ports, outdated software, misconfigured firewalls, and weak protocols</li>
+    <li>Apply patches promptly — if a vulnerability is discovered in a widely used service (e.g., Apache HTTP Server), a patch should be deployed before attackers can exploit it</li>
+    <li>Use compliance benchmarks as scanning targets: <strong>CIS (Center for Internet Security)</strong> benchmarks and <strong>DoD STIGs</strong> (Security Technical Implementation Guides) define hardened configuration baselines</li>
+    <li>Use <strong>SCAP compliance checkers</strong> to automatically monitor system configurations against those benchmarks</li>
+    <li>Beyond patching: remove unnecessary services, close unused ports, disable default accounts — the same actions as hardening, applied continuously as the environment changes</li>
+  </ul>
+
+  <!-- SECTION 4 -->
+  <h2>legacy components</h2>
+  <p>Legacy systems are those at or past their End of Life (EOL) or End of Support (EOS) dates. Once a vendor stops issuing security updates, any newly discovered vulnerability in that system will remain unpatched indefinitely.</p>
+
+  <dl class="def">
+    <dt>End of Life (EOL)</dt>
+    <dd>The vendor no longer sells or develops new features for the product.
+      <span class="detail">At EOL, the product is no longer commercially available, but the vendor may still issue security patches. The primary concern is that development resources are no longer invested in the product.</span>
+    </dd>
+    <dt>End of Support (EOS)</dt>
+    <dd>The vendor no longer issues any patches, security updates, or technical support.
+      <span class="detail">EOS is the critical security milestone. Any vulnerability discovered after the EOS date will go unpatched. Attackers actively target known EOL/EOS systems because exploitation carries no risk of being closed by a vendor patch. Example: Windows Server 2019 reaches EOS in 2029 — organizations still running it after that date face permanent unpatched vulnerabilities.</span>
+    </dd>
+  </dl>
+
+  <p>Organizations must track the lifecycle of every component in their environment and plan upgrades or replacements before EOS is reached. Legacy systems left in place after EOS create persistent weak points regardless of how well the rest of the environment is secured.</p>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Hardening = reduce attack surface by removing what is not needed.</strong> Disabling unused services, closing unused ports, removing unnecessary apps, renaming default accounts. The goal is minimum required functionality.</li>
+      <li><strong>Defense-in-depth = multiple independent layers.</strong> If the firewall fails, the IDS still detects; if the IDS misses something, endpoint protection still acts. No single failure breaks all defenses.</li>
+      <li><strong>EOS (End of Support) is the critical risk date — not EOL.</strong> EOL means no more development. EOS means no more patches. After EOS, any new vulnerability stays open forever. Prioritize EOS in exam scenarios about legacy risk.</li>
+      <li><strong>Masking is more restrictive than disabling.</strong> Disabling prevents automatic start at boot but allows manual start. Masking (linking to /dev/null) prevents both automatic and manual start. Know this distinction — it may appear in a scenario about hardening Linux services.</li>
+      <li><strong>UEFI enables Secure Boot; TPM stores cryptographic keys.</strong> These are hardware-level hardening features. Know them by name and function.</li>
+      <li><strong>CIS benchmarks and DoD STIGs are hardened configuration standards.</strong> SCAP compliance checkers automate verification against these benchmarks. These may appear in vulnerability management scenarios.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Disabling unused services, ports, and accounts</strong> <span class="arrow">→</span> Hardening</li>
+        <li><strong>Multiple independent security controls that each address a different threat</strong> <span class="arrow">→</span> Defense-in-depth</li>
+        <li><strong>Regular scanning plus patching plus closing unused ports</strong> <span class="arrow">→</span> Vulnerability management</li>
+        <li><strong>System with no more vendor security patches available</strong> <span class="arrow">→</span> End of Support (EOS) / legacy component</li>
+        <li><strong>Prevent service from starting automatically at boot</strong> <span class="arrow">→</span> systemctl disable</li>
+        <li><strong>Prevent service from starting manually OR automatically</strong> <span class="arrow">→</span> systemctl mask (links to /dev/null)</li>
+        <li><strong>Hardware chip for secure boot and disk encryption key storage</strong> <span class="arrow">→</span> TPM (Trusted Platform Module)</li>
+        <li><strong>Hardened configuration baselines from CIS or DoD</strong> <span class="arrow">→</span> CIS benchmarks / DoD STIGs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 08 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

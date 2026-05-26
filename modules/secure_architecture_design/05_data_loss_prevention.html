@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05_data_loss_prevention / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 20%; font-weight: 500; }
+  td:nth-child(2) { width: 44%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/data_loss_prevention</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 05 / secure architecture design / Data Loss Prevention</span>
+  <h1 class="module-title">Data Loss Prevention</h1>
+  <p class="subtitle">DLP systems detect, prevent, and respond to unauthorized access, transmission, or use of sensitive data — protecting it at rest and in transit through discovery, policy enforcement, and escalating actions.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>At the core of DLP is <strong>data discovery</strong>: identifying where sensitive data exists before policies can be enforced. From there, three components (policy server, endpoint agent, network agent) apply rules and enforcement across devices and the network. When a violation is detected, DLP responds with one of four escalating actions: alert, block, quarantine, or tombstone.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>three components</h2>
+
+  <dl class="def">
+    <dt>Policy Server</dt>
+    <dd>The central rule engine that classifies data by confidentiality, privacy, or sensitivity level and defines what actions to take on violations.
+      <span class="detail">The policy server logs all incidents of rule violations and compiles reports showing how sensitive data is being used or misused across the network. It is the configuration hub for the entire DLP system.</span>
+    </dd>
+    <dt>Endpoint Agent</dt>
+    <dd>Software installed on individual client devices that enforces DLP policies locally.
+      <span class="detail">Critically, the endpoint agent operates even when the device is disconnected from the corporate network. If an employee attempts to copy sensitive data to a USB drive while offline, the endpoint agent detects and blocks the action. This protects data at rest on devices regardless of network connectivity.</span>
+    </dd>
+    <dt>Network Agent</dt>
+    <dd>Monitors data in transit across the network by scanning traffic across multiple protocols.
+      <span class="detail">Network agents inspect web traffic, emails, messaging platforms, and file transfers. They handle both structured data (CSV, JSON) and unstructured data (Word documents, emails, presentations) and enforce DLP policies based on the rule sets configured on the policy server.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2>allowlists and denylists</h2>
+  <p>DLP systems are configured with one of two fundamental approaches to determine which data transfers are permitted.</p>
+
+  <dl class="def">
+    <dt>Allowlist</dt>
+    <dd>Blocks all data transfers except those explicitly permitted.
+      <span class="detail">Allowlists take a default-deny posture: unless a specific type of data or destination is on the approved list, the transfer is blocked. More restrictive, but requires more maintenance to enumerate what is allowed.</span>
+    </dd>
+    <dt>Denylist</dt>
+    <dd>Allows all data transfers except those explicitly denied.
+      <span class="detail">Denylists take a default-allow posture: everything is permitted unless a specific type of data or destination is on the blocked list. Easier to manage but may miss sensitive data not yet added to the list.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 3 -->
+  <h2>enforcement actions</h2>
+  <p>When a DLP system detects a rule violation, it responds with one of four escalating actions. Each level includes all the actions from the levels before it.</p>
+
+  <table>
+    <thead>
+      <tr><th>Action</th><th>What it does</th><th>Control type</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Alert</td>
+        <td>Logs the incident and notifies administrators. The data transfer is still allowed to proceed.</td>
+        <td>Detective only</td>
+      </tr>
+      <tr>
+        <td>Block</td>
+        <td>Stops the data transfer from occurring. Also triggers alert actions (log + notify).</td>
+        <td>Preventive</td>
+      </tr>
+      <tr>
+        <td>Quarantine</td>
+        <td>Removes user access to the data by encrypting it or rendering it unreadable. Also triggers block and alert actions.</td>
+        <td>Preventive</td>
+      </tr>
+      <tr>
+        <td>Tombstone</td>
+        <td>Replaces the original file with a message indicating a policy violation occurred. The tombstone typically includes instructions for regaining access. Also triggers quarantine, block, and alert actions.</td>
+        <td>Preventive</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 4 -->
+  <h2>additional integrations</h2>
+  <p>DLP systems integrate with other controls to extend coverage across common exfiltration vectors.</p>
+  <ul>
+    <li><strong>External media blocking:</strong> prevents users from copying data to USB drives, CDs, or other removable media, reducing the risk of mass data exfiltration via physical devices</li>
+    <li><strong>Print blocking:</strong> stops sensitive documents from being physically printed and removed from the workplace</li>
+    <li><strong>RDP blocking:</strong> prevents data from being transferred between a Remote Desktop Protocol session and a local machine, protecting data in transit during remote access</li>
+    <li><strong>Clipboard privacy controls:</strong> prevents users from copying and pasting sensitive information from protected applications into unauthorized apps or platforms</li>
+    <li><strong>VDI support:</strong> DLP endpoint agents can be deployed in Virtual Desktop Infrastructure environments, providing the same coverage as on physical laptops and desktops</li>
+  </ul>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Know the three components by name and function.</strong> Policy server: rule sets and logging. Endpoint agent: enforces on devices, works offline. Network agent: monitors in-transit traffic across email, web, messaging.</li>
+      <li><strong>Alert is a detective control, not preventive.</strong> Alert mode logs and notifies but does not stop the data from moving. Block, quarantine, and tombstone are all preventive. This distinction matters when a scenario asks which action "prevents" a transfer.</li>
+      <li><strong>Each DLP action escalates and includes all prior actions.</strong> Tombstone includes quarantine includes block includes alert. If a question says a tombstone was triggered, all four actions occurred.</li>
+      <li><strong>Tombstone replaces the file with a policy violation message.</strong> The original file is removed and replaced by a placeholder (the tombstone) that notifies the user and may include instructions for getting access restored.</li>
+      <li><strong>Endpoint agents work offline.</strong> If a scenario involves a disconnected laptop where an employee tries to copy sensitive data to USB, the endpoint agent still blocks it. Network agents cannot do this because the device is not on the network.</li>
+      <li><strong>Allowlist = default deny; denylist = default allow.</strong> Allowlists are more restrictive and require explicit approval. Denylists require knowing what to block and are easier to bypass with novel data types.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>DLP rule sets, logging, and reports</strong> <span class="arrow">→</span> Policy server</li>
+        <li><strong>DLP enforcement on a device with no network connection</strong> <span class="arrow">→</span> Endpoint agent</li>
+        <li><strong>DLP scanning email and web traffic</strong> <span class="arrow">→</span> Network agent</li>
+        <li><strong>Block all except what is explicitly permitted</strong> <span class="arrow">→</span> Allowlist</li>
+        <li><strong>Allow all except what is explicitly denied</strong> <span class="arrow">→</span> Denylist</li>
+        <li><strong>DLP logs violation but data still transmits</strong> <span class="arrow">→</span> Alert (detective only)</li>
+        <li><strong>DLP stops a file from being copied to USB</strong> <span class="arrow">→</span> Block</li>
+        <li><strong>DLP encrypts file to remove user access</strong> <span class="arrow">→</span> Quarantine</li>
+        <li><strong>DLP replaces file with a policy violation message</strong> <span class="arrow">→</span> Tombstone</li>
+        <li><strong>DLP prevents copy-paste into an unauthorized app</strong> <span class="arrow">→</span> Clipboard privacy controls</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 05 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>

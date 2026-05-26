@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04_data_labeling_and_tagging / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 24%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/data_labeling_and_tagging</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 04 / secure architecture design / Data Labeling and Tagging</span>
+  <h1 class="module-title">Data Labeling and Tagging</h1>
+  <p class="subtitle">Labels communicate classification level. Tags add finer-grained handling requirements. Together they ensure data is protected according to its sensitivity, regardless of who encounters it.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Classification determines a data sensitivity tier; labeling and tagging make that classification visible and actionable. <strong>Labels</strong> are broad classification markers (confidential, secret, top secret). <strong>Tags</strong> add specific handling requirements within or alongside a classification (PII, PHI, BIGOT). Tags exist at every classification level, including unclassified data that still requires protection.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>data labels</h2>
+  <p>A data label marks a piece of information with its classification level so that anyone who encounters it knows how to handle and protect it. In military documents, the classification label appears in both the header and footer of every page.</p>
+
+  <h3>manual vs automatic labeling</h3>
+  <dl class="def">
+    <dt>Manual labeling</dt>
+    <dd>The user creating the data applies the classification label themselves.
+      <span class="detail">For example, an employee writing a document containing the company's new marketing strategy decides it should only be seen by top-level executives and labels it as confidential or top secret. Manual labeling relies on the creator's judgment and knowledge of classification policy.</span>
+    </dd>
+    <dt>Automatic labeling</dt>
+    <dd>The system applies classification labels based on predefined keyword rules, sometimes called a dirty word list.
+      <span class="detail">If a user types a word that appears on the dirty word list, the document is automatically labeled at the corresponding classification level. For instance, if "bazooka" is a secret-classified term, any document containing it is automatically labeled secret — regardless of whether the author meant the weapon or the chewing gum brand. This ambiguity is the limitation of automatic labeling: the system cannot understand context.</span>
+    </dd>
+  </dl>
+
+  <h3>declassification</h3>
+  <p>Labels can also carry declassification requirements, indicating when the data may be downgraded to a lower classification or made public. Declassification is triggered when the data is no longer sensitive enough to warrant its current level of protection.</p>
+  <p>Example: the plans for the Allied invasion of Normandy in June 1944 (Operation Overlord) were labeled top secret during World War II. After the invasion, the information was no longer sensitive, so it was declassified and is now publicly available. Declassifying old data frees up the resources used to protect it, which can then be redirected to protecting current sensitive data.</p>
+
+  <!-- SECTION 2 -->
+  <h2>data tags</h2>
+  <p>Tags provide a level of specificity that classification labels cannot. While a label indicates how sensitive data is, a tag describes what the data contains and what special handling rules apply to it. Tags exist at every classification level, including unclassified.</p>
+
+  <h3>common industry tags</h3>
+  <dl class="def">
+    <dt>PII</dt>
+    <dd>Personally Identifiable Information — data that can identify a specific individual.
+      <span class="detail">Examples include names, addresses, Social Security numbers, and email addresses. PII can appear on otherwise unclassified documents but still requires protection to prevent identity theft or privacy violations.</span>
+    </dd>
+    <dt>SPI</dt>
+    <dd>Sensitive Personal Information — a subset of PII considered more sensitive.
+      <span class="detail">SPI typically includes information such as financial data, biometric data, or data about protected characteristics. It carries stricter handling requirements than general PII.</span>
+    </dd>
+    <dt>PHI</dt>
+    <dd>Protected Health Information (or Personal Health Information) — medical and health-related data.
+      <span class="detail">A hospital patient's medical record is not classified as top secret, but the PHI tag indicates it must still be protected. HIPAA legally mandates specific handling requirements for PHI, making the tag a compliance driver rather than just an internal policy.</span>
+    </dd>
+    <dt>Financial / Restricted</dt>
+    <dd>Tags indicating data subject to financial regulations or restricted to specific roles or departments.
+      <span class="detail">Used to flag data governed by regulations such as SOX (Sarbanes-Oxley) or PCI DSS. The tag ensures automated controls like DLP can enforce access restrictions even when the document itself carries a lower classification label.</span>
+    </dd>
+  </dl>
+
+  <h3>tags within classified data</h3>
+  <p>Tags also exist within highly classified tiers to add further specificity beyond the label alone. The Operation Overlord documents, for example, were labeled top secret but also carried the tag <strong>BIGOT</strong> (British Invasion of German-Occupied Territory), requiring additional special handling beyond what the top secret label alone mandated.</p>
+  <p>Within the top secret classification, examples of further sub-tags include SI (Special Intelligence), TK (Talent Keyhole), and HCS (Human Intelligence Control System). These are not exam-required but demonstrate that the tag system applies at every level of classification.</p>
+
+  <!-- SECTION 3 -->
+  <h2>structured vs unstructured data</h2>
+  <p>Labels and tags must be applied to data regardless of its format. Because different formats require different technical approaches to classification and detection, understanding the distinction between structured and unstructured data matters for DLP configuration.</p>
+
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Definition</th><th>Examples</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Structured</td>
+        <td>Organized according to a predefined model; each field is predictable and machine-parseable</td>
+        <td>CSV (comma-separated values), JSON, SQL database records</td>
+      </tr>
+      <tr>
+        <td>Unstructured</td>
+        <td>No fixed format; content is free-form and variable in length and layout</td>
+        <td>Word documents, emails, PowerPoint files, text files, chat logs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>DLP systems and classification engines must handle both formats. Structured data can be parsed predictably by field; unstructured data requires content inspection and pattern matching to identify sensitive information.</p>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Labels indicate classification level; tags indicate specific handling requirements.</strong> Labels are broad (top secret). Tags are specific (PHI, PII, BIGOT). A document can have one label and multiple tags. Both apply simultaneously.</li>
+      <li><strong>Tags exist at every classification level, including unclassified.</strong> A medical record is unclassified but carries the PHI tag. The tag is what triggers legal protection requirements, not the classification label.</li>
+      <li><strong>Automatic labeling uses dirty word lists; manual labeling is user-applied.</strong> Automatic labeling is efficient but context-blind (it cannot distinguish "bazooka the weapon" from "Bazooka the brand"). Manual labeling is accurate but depends on the creator's judgment.</li>
+      <li><strong>Declassification is when data is downgraded because it is no longer sensitive.</strong> The Operation Overlord example illustrates this: top secret during the war, unclassified after. Declassification frees up protection resources for more current data.</li>
+      <li><strong>Military documents carry the classification label in both the header and footer.</strong> This ensures the classification is visible on every page, not just the cover.</li>
+      <li><strong>Structured data (CSV, JSON) vs unstructured data (Word, email) require different DLP handling.</strong> Structured data is parsed field by field; unstructured data requires content inspection.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Classification marker indicating sensitivity tier (confidential, top secret)</strong> <span class="arrow">→</span> Data label</li>
+        <li><strong>Specific handling requirement within or alongside a label (PII, PHI, BIGOT)</strong> <span class="arrow">→</span> Data tag</li>
+        <li><strong>System automatically applies label because a keyword triggered it</strong> <span class="arrow">→</span> Automatic labeling (dirty word list)</li>
+        <li><strong>User applies the label themselves at document creation</strong> <span class="arrow">→</span> Manual labeling</li>
+        <li><strong>Top secret data downgraded after it is no longer sensitive</strong> <span class="arrow">→</span> Declassification</li>
+        <li><strong>Unclassified medical record that still requires legal protection</strong> <span class="arrow">→</span> PHI tag (HIPAA)</li>
+        <li><strong>Comma-separated or JSON file</strong> <span class="arrow">→</span> Structured data</li>
+        <li><strong>Word document, email, or PowerPoint</strong> <span class="arrow">→</span> Unstructured data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 04 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
