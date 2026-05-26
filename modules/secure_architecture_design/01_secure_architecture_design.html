@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01_secure_architecture_design / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li {
+    font-family: var(--font-sans);
+  }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  ol { counter-reset: item; }
+  ol li { counter-increment: item; padding-left: 36px; }
+  ol li::before { content: counter(item, decimal-leading-zero); color: var(--magenta); position: absolute; left: 0; font-size: 11px; top: 5px; letter-spacing: 0.05em; }
+  .phases { counter-reset: phase; list-style: none; margin: 0 0 50px; padding: 0; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--rule-soft); margin: 0; position: relative; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; font-family: var(--font-mono); }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 14px; display: block; font-family: var(--font-mono); }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; font-family: var(--font-sans); }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
+  td:nth-child(2) { width: 32%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/secure_architecture_design/secure_architecture_design</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /secure_architecture_design</a>
+
+  <span class="module-tag">lesson 01 / secure architecture design / Secure Architecture Design</span>
+  <h1 class="module-title">Secure Architecture Design</h1>
+  <p class="subtitle">Given a scenario, integrate controls into the design of a secure architecture by protecting data across its lifecycle, managing complex environments, and continuously reducing exposure to threats.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>OBJ 2.3 covers how security controls are <strong>built into architecture from the start</strong>, not bolted on afterward. Eight topic areas anchor this objective: data states, data classification, data labeling and tagging, data loss prevention, hybrid infrastructure, third-party integrations, attack surface management, and control effectiveness.</p>
+    <p>The common thread is that protection must follow the data wherever it lives, moves, or gets processed, and architecture decisions directly determine how consistently that protection can be enforced.</p>
+  </div>
+
+  <h4>eight topic areas</h4>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Data States</span>
+      <span class="phase-desc">Data exists in three states: at rest (stored), in transit (moving), and in use (being processed). Each state requires a distinct protection method.</span>
+    </li>
+    <li>
+      <span class="phase-name">Data Classification</span>
+      <span class="phase-desc">Organizing data into sensitivity tiers (public, internal, confidential, restricted) determines what security controls and handling procedures apply to it.</span>
+    </li>
+    <li>
+      <span class="phase-name">Data Labeling and Tagging</span>
+      <span class="phase-desc">Labels indicate classification and sensitivity. Tags add machine-readable metadata such as project names or regulatory associations, enabling automated enforcement.</span>
+    </li>
+    <li>
+      <span class="phase-name">Data Loss Prevention</span>
+      <span class="phase-desc">DLP discovers where sensitive data lives, monitors it in all states, and enforces policies to block unauthorized transfer, quarantine files, or alert administrators.</span>
+    </li>
+    <li>
+      <span class="phase-name">Hybrid Infrastructures</span>
+      <span class="phase-desc">Combining on-premises systems with cloud resources creates environments where security controls must be extended and enforced consistently across both.</span>
+    </li>
+    <li>
+      <span class="phase-name">Third-party Integrations</span>
+      <span class="phase-desc">Connecting external services via APIs requires encrypted transmission, extended access management, and monitoring to ensure security policies apply beyond the organization's own perimeter.</span>
+    </li>
+    <li>
+      <span class="phase-name">Attack Surface Management</span>
+      <span class="phase-desc">Identifying, reducing, and continuously monitoring all potential attack paths into a system minimizes exposure. Hardening, defense-in-depth, and vulnerability management are the core techniques.</span>
+    </li>
+    <li>
+      <span class="phase-name">Control Effectiveness</span>
+      <span class="phase-desc">Security controls must be measured to confirm they actually work. Metrics, scanning, and assessments provide quantitative and qualitative evidence of how well controls mitigate risk.</span>
+    </li>
+  </ol>
+
+  <!-- SECTION 1 -->
+  <h2>data states</h2>
+  <p>Data can exist in three distinct conditions, and the protection method must match the state. The same data may pass through all three states during normal operations.</p>
+
+  <table>
+    <thead>
+      <tr><th>State</th><th>Definition</th><th>Protection method</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>At rest</td>
+        <td>Stored on a hard drive, database, or any persistent medium</td>
+        <td>Encryption of stored data, access control policies</td>
+      </tr>
+      <tr>
+        <td>In transit</td>
+        <td>Actively moving between systems across a network</td>
+        <td>Encryption protocols such as TLS (Transport Layer Security)</td>
+      </tr>
+      <tr>
+        <td>In use</td>
+        <td>Actively being processed by an application or system</td>
+        <td>Secure processing environments (e.g. trusted execution environments)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 2 -->
+  <h2>data classification</h2>
+  <p>Data classification is the process of organizing data into categories based on its sensitivity, value, or regulatory requirements. The assigned classification determines the level of security controls and handling procedures applied to that data.</p>
+
+  <h3>classification models</h3>
+  <p>Classification models use tiered categories to describe sensitivity. A common four-tier model uses:</p>
+  <ul>
+    <li><strong>Public:</strong> no restrictions, safe to share externally</li>
+    <li><strong>Internal:</strong> for employees only, limited risk if exposed</li>
+    <li><strong>Confidential:</strong> restricted access, significant risk if exposed</li>
+    <li><strong>Restricted:</strong> highest sensitivity, strictest controls, often regulatory-driven</li>
+  </ul>
+  <p>Example: a healthcare organization's patient records are classified as Restricted, requiring encryption and strict access controls to meet HIPAA requirements. Internal training documents are classified as Internal Use Only, with lower controls and broader employee access.</p>
+
+  <!-- SECTION 3 -->
+  <h2>data labeling and tagging</h2>
+  <p>Labeling and tagging assign visible or machine-readable markers to data so that classification decisions are enforced consistently, and automated systems know how to handle the data.</p>
+
+  <dl class="def">
+    <dt>Labels</dt>
+    <dd>Human-readable classification markers applied to data or documents.
+      <span class="detail">Labels such as "Confidential" or "Public" communicate the data's sensitivity tier and instruct people how to handle and protect it. They make classification visible at the point of access.</span>
+    </dd>
+    <dt>Tags</dt>
+    <dd>Machine-readable metadata attached to data, such as project names, department associations, or regulatory identifiers.
+      <span class="detail">Tags enable automated processes. A DLP system can trigger a policy when it detects data tagged with "Finance" and "SOX Compliance," restricting who can access it and blocking unauthorized transfers automatically.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2>data loss prevention</h2>
+  <p>Data loss prevention (DLP) detects, prevents, and responds to unauthorized access, transmission, or use of sensitive data. DLP depends on data being correctly classified, labeled, and tagged first.</p>
+
+  <h3>data discovery</h3>
+  <p>Before policies can be enforced, sensitive data must be located. Data discovery identifies where sensitive data exists across the organization's infrastructure, whether stored in databases and file systems (at rest) or flowing across the network (in transit).</p>
+
+  <h3>policy enforcement</h3>
+  <p>Once data is discovered and classified, DLP policies define automated responses to policy violations:</p>
+  <ul>
+    <li>Alert administrators when a sensitive file is accessed or moved unexpectedly</li>
+    <li>Block unauthorized transfer attempts in real time</li>
+    <li>Quarantine files that have violated policy</li>
+    <li>Apply <strong>tombstone markers</strong> in place of the original file, notifying the user that a policy violation occurred and the file has been restricted</li>
+  </ul>
+
+  <!-- SECTION 5 -->
+  <h2>hybrid infrastructures</h2>
+  <p>A hybrid infrastructure combines on-premises systems with cloud-based resources. Security must span both environments consistently, because data and workloads move between them.</p>
+  <ul>
+    <li>Traditional controls (firewalls, encryption, access management) must be extended from the local data center to cloud environments</li>
+    <li>Security challenges arise from differences in management interfaces and control planes across on-premises and cloud systems</li>
+    <li>Policies and tools must enforce security consistently regardless of where data is processed or stored</li>
+    <li>Example: a company stores sensitive data on-premises for regulatory reasons while using cloud applications for processing. Secure communication channels and coordinated policies are required to protect data in both locations.</li>
+  </ul>
+
+  <!-- SECTION 6 -->
+  <h2>third-party integrations</h2>
+  <p>Third-party integrations connect external services to an organization's internal systems, typically through APIs. Every integration extends the trust boundary and introduces new risk that must be explicitly managed.</p>
+  <ul>
+    <li><strong>Encrypted transmission and storage:</strong> API communications must encrypt sensitive data during transit and at rest using protocols like TLS</li>
+    <li><strong>Extended access management:</strong> access controls and authentication must cover third-party services, not just internal systems</li>
+    <li><strong>Monitoring and logging:</strong> interactions with third-party systems must be logged and monitored to detect anomalies and ensure policy compliance</li>
+    <li>Example: integrating a third-party payment processor via API requires TLS encryption, strict access controls, and real-time monitoring to keep financial transactions secure and compliant</li>
+  </ul>
+
+  <!-- SECTION 7 -->
+  <h2>attack surface management</h2>
+  <p>Attack surface management identifies, reduces, and continuously monitors all potential paths of attack into a system. The goal is to minimize the number of ways an attacker can reach protected assets.</p>
+
+  <dl class="def">
+    <dt>Hardening</dt>
+    <dd>Securing systems by reducing their attack surface.
+      <span class="detail">Hardening includes disabling unnecessary services and open ports, removing unused software, and applying up-to-date security patches. Fewer running components means fewer potential entry points.</span>
+    </dd>
+    <dt>Defense-in-depth</dt>
+    <dd>Implementing multiple, layered security controls so that a failure in one layer does not compromise the entire system.
+      <span class="detail">Combining firewalls, intrusion detection systems, and access controls means an attacker must bypass multiple independent barriers. No single control is relied upon as the sole line of defense.</span>
+    </dd>
+    <dt>Vulnerability management</dt>
+    <dd>Regular scanning and remediation of security weaknesses across the network and assets.
+      <span class="detail">This includes legacy components that no longer receive vendor updates but remain critical to the infrastructure. Identified vulnerabilities are prioritized and addressed before they can be exploited.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 8 -->
+  <h2>control effectiveness</h2>
+  <p>Security controls are only valuable if they actually mitigate the risks they are designed to address. Control effectiveness refers to the degree to which controls achieve that goal, verified through ongoing measurement.</p>
+
+  <dl class="def">
+    <dt>Metrics</dt>
+    <dd>Quantitative measures of security control performance.
+      <span class="detail">Examples include incident response times, the number of vulnerabilities patched within an SLA window, or the percentage of systems with up-to-date signatures. Metrics reveal whether controls are improving over time.</span>
+    </dd>
+    <dt>Scanning</dt>
+    <dd>Automated tool-based detection of vulnerabilities or misconfigurations within the system.
+      <span class="detail">Scanning produces a prioritized list of weaknesses that need remediation. Running scans regularly catches new vulnerabilities introduced by changes to systems or software.</span>
+    </dd>
+    <dt>Assessments</dt>
+    <dd>Structured evaluations of security controls through audits, penetration testing, or compliance checks.
+      <span class="detail">Assessments verify that controls are functioning as intended, not just that they are deployed. Penetration testing actively probes for gaps; audits verify policy compliance; compliance checks confirm alignment with regulatory requirements.</span>
+    </dd>
+  </dl>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>Know all three data states and their protection method.</strong> At rest: encryption and access control. In transit: TLS. In use: secure processing environments. The exam will swap the state and ask for the control, or give the control and ask what state it applies to.</li>
+      <li><strong>Data classification drives everything downstream.</strong> Labeling, tagging, and DLP policies all depend on data being classified first. If the scenario describes a failure in DLP, the root cause is often missing or incorrect classification.</li>
+      <li><strong>Labels are for people; tags are for machines.</strong> Labels communicate sensitivity to users. Tags attach metadata that automated systems (like DLP engines) act on.</li>
+      <li><strong>Tombstone markers are a DLP enforcement action.</strong> When a DLP policy is violated, a tombstone marker is placed where the file was, notifying the user that the file has been restricted due to a policy violation.</li>
+      <li><strong>Hybrid infrastructure requires consistent policy across both environments.</strong> The challenge is not just connecting on-premises and cloud but enforcing the same security controls in both places simultaneously.</li>
+      <li><strong>Attack surface management: three techniques.</strong> Hardening (reduce), defense-in-depth (protect with layers), vulnerability management (monitor and remediate). Know each by name and function.</li>
+      <li><strong>Control effectiveness: three mechanisms.</strong> Metrics (measure), scanning (detect), assessments (validate). These are distinct: scanning finds vulnerabilities; assessments verify whether controls actually work.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Data stored in a database or on disk</strong> <span class="arrow">→</span> At rest: encryption + access control</li>
+        <li><strong>Data moving across a network</strong> <span class="arrow">→</span> In transit: TLS</li>
+        <li><strong>Data actively being processed</strong> <span class="arrow">→</span> In use: secure processing environment</li>
+        <li><strong>Sensitivity tiers (public/internal/confidential/restricted)</strong> <span class="arrow">→</span> Data classification model</li>
+        <li><strong>Human-readable marker on a document</strong> <span class="arrow">→</span> Data label</li>
+        <li><strong>Machine-readable metadata enabling automated DLP</strong> <span class="arrow">→</span> Data tag</li>
+        <li><strong>User notified of a policy violation in place of their file</strong> <span class="arrow">→</span> Tombstone marker (DLP enforcement)</li>
+        <li><strong>On-premises plus cloud environment</strong> <span class="arrow">→</span> Hybrid infrastructure</li>
+        <li><strong>Disabling unused services and applying patches</strong> <span class="arrow">→</span> Hardening</li>
+        <li><strong>Firewalls plus IDS plus access controls working together</strong> <span class="arrow">→</span> Defense-in-depth</li>
+        <li><strong>Quantitative measure of how well controls perform</strong> <span class="arrow">→</span> Metrics (control effectiveness)</li>
+        <li><strong>Audit, penetration test, or compliance check to verify controls</strong> <span class="arrow">→</span> Assessment (control effectiveness)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 01 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
