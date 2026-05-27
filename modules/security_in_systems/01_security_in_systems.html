@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01_security_in_systems / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p, p, li, .phase-desc, dl.def dd .detail,
+  .exam-tips ul li, .decision-rules ul li { font-family: var(--font-sans); }
+  ul li::before, ol li::before { font-family: var(--font-mono); }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
+  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
+  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
+  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
+  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
+  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
+  .phases { counter-reset: phase; list-style: none; margin: 0 0 50px; padding: 0; }
+  .phases li { counter-increment: phase; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--rule-soft); margin: 0; position: relative; }
+  .phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-size: 11px; color: var(--magenta); letter-spacing: 0.05em; font-family: var(--font-mono); }
+  .phases li:last-child { border-bottom: none; }
+  .phases .phase-name { font-weight: 500; color: var(--ink); font-size: 14px; display: block; font-family: var(--font-mono); }
+  .phases .phase-desc { color: var(--ink-dim); font-size: 14px; display: block; margin-top: 4px; line-height: 1.6; font-family: var(--font-sans); }
+  dl.def { margin: 20px 0 30px; }
+  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
+  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
+  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
+  td:first-child { color: var(--cyan); width: 18%; font-weight: 500; }
+  td:nth-child(2) { width: 30%; color: var(--ink-dim); }
+  td:last-child { color: var(--ink-dim); }
+  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
+  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
+  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
+  .exam-tips ul li:last-child { border-bottom: none; }
+  .exam-tips strong { color: var(--amber); }
+  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
+  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
+  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
+  .decision-rules ul li::before { content: ''; }
+  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 28px; }
+    h2 { font-size: 18px; }
+    .exam-tips { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_in_systems/security_in_systems</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_in_systems</a>
+
+  <span class="module-tag">lesson 01 / security in systems / Security in Systems</span>
+  <h1 class="module-title">Security in Systems</h1>
+  <p class="subtitle">Given a scenario, implement security at every stage of a system's lifecycle — from initial hardware and requirements through testing, CI/CD pipelines, and end-of-life planning.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>OBJ 2.2 treats security as a property that must be <strong>designed in from the start</strong>, not added after deployment. Nine topic areas span the full system lifecycle: hardware and software assurance, supply chain risk, security requirements, pre- and post-deployment testing, CI/CD management and testing practices, and end-of-life considerations.</p>
+  </div>
+
+  <h4>nine topic areas</h4>
+  <ol class="phases">
+    <li>
+      <span class="phase-name">Hardware Assurance</span>
+      <span class="phase-desc">Certification verifies hardware meets security standards before deployment. Validation confirms it continues to meet those standards as updates and changes occur.</span>
+    </li>
+    <li>
+      <span class="phase-name">Security Requirements</span>
+      <span class="phase-desc">Functional requirements define specific security behaviors a system must have (authentication, encryption). Non-functional requirements define the qualities it must exhibit (performance, reliability). Security and usability often require trade-offs.</span>
+    </li>
+    <li>
+      <span class="phase-name">Software Assurance</span>
+      <span class="phase-desc">A Software Bill of Materials (SBOM) inventories all components. Software Composition Analysis (SCA) scans them for vulnerabilities. Formal methods use mathematical proofs to verify correctness.</span>
+    </li>
+    <li>
+      <span class="phase-name">Supply Chain Assurance</span>
+      <span class="phase-desc">Hardware supply chain management addresses counterfeit and tampered components. Software supply chain management addresses vulnerable or non-compliant third-party libraries.</span>
+    </li>
+    <li>
+      <span class="phase-name">Pre-deployment Testing</span>
+      <span class="phase-desc">SAST analyzes code without executing it. DAST tests the running application with simulated attacks. IAST combines both by integrating an agent into a running application for real-time feedback.</span>
+    </li>
+    <li>
+      <span class="phase-name">Post-deployment Testing</span>
+      <span class="phase-desc">Vulnerability analysis scans a live application for known weaknesses. RASP (Runtime Application Self-Protection) monitors behavior inside the running application and blocks threats in real time.</span>
+    </li>
+    <li>
+      <span class="phase-name">CI/CD Management</span>
+      <span class="phase-desc">Coding standards and linting enforce consistency. Branch protection requires reviews and tests before merging. Continuous improvement refines the pipeline based on feedback and metrics.</span>
+    </li>
+    <li>
+      <span class="phase-name">CI/CD Testing</span>
+      <span class="phase-desc">Canary (small rollout), regression (no regressions), integration (component interaction), automated (pipeline-driven), and unit testing (individual function correctness) together validate code before production.</span>
+    </li>
+    <li>
+      <span class="phase-name">End-of-Life Considerations</span>
+      <span class="phase-desc">Lifecycle management ensures unsupported components are upgraded or replaced before becoming liabilities. Data migration and secure deletion protect sensitive data during decommission.</span>
+    </li>
+  </ol>
+
+  <!-- SECTION 1 -->
+  <h2>hardware assurance</h2>
+  <p>Hardware assurance ensures physical components are secure, reliable, and free from malicious alterations or defects before and during their operational life.</p>
+  <dl class="def">
+    <dt>Certification</dt>
+    <dd>A formal evaluation that verifies hardware components meet specific security standards and operate as expected.
+      <span class="detail">Certification is conducted before deployment. It provides documented evidence that a component has been tested against a defined security baseline. Government agencies, for instance, may require hardware used in critical systems to pass a rigorous certification process before it is approved for use.</span>
+    </dd>
+    <dt>Validation</dt>
+    <dd>Ongoing testing and verification that hardware continues to meet its design standards, especially when updates or changes are made.
+      <span class="detail">Unlike certification, which is a one-time evaluation, validation is continuous. Any change to hardware — a firmware update, a component replacement — triggers a new validation cycle to confirm the security posture has not degraded.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 2 -->
+  <h2>security requirements</h2>
+  <p>Security requirements define what a system must do and how it must behave to protect against threats. They are established before development begins and drive design decisions throughout the lifecycle.</p>
+  <dl class="def">
+    <dt>Functional Security Requirements</dt>
+    <dd>Specific security-related behaviors and features the system must implement.
+      <span class="detail">Examples: the system must authenticate users with MFA, enforce role-based access controls, and encrypt data in transit using TLS. These are concrete, verifiable behaviors that can be tested directly.</span>
+    </dd>
+    <dt>Non-functional Security Requirements</dt>
+    <dd>The qualities and characteristics the system must exhibit while performing its security functions.
+      <span class="detail">Examples: the authentication system must respond within 500ms (performance), remain available 99.9% of the time (reliability), and not require more than three steps to complete login (usability). These define how well the system does something, not what it does.</span>
+    </dd>
+  </dl>
+  <p>A persistent challenge is the <strong>security vs usability trade-off</strong>: increasing security controls (requiring MFA, enforcing password complexity) reduces convenience and accessibility. Requirements must balance both considerations rather than maximizing one at the expense of the other.</p>
+
+  <!-- SECTION 3 -->
+  <h2>software assurance</h2>
+  <p>Software assurance ensures that software is developed and maintained in a way that consistently meets security and reliability standards throughout its lifecycle.</p>
+  <dl class="def">
+    <dt>SBOM (Software Bill of Materials)</dt>
+    <dd>A comprehensive inventory of all components, libraries, and dependencies used in a software application.
+      <span class="detail">An SBOM provides transparency into what a piece of software is actually made of. When a new vulnerability is disclosed in a library, an organization with an up-to-date SBOM can immediately determine which of its applications are affected, rather than discovering exposure only after an incident.</span>
+    </dd>
+    <dt>SCA (Software Composition Analysis)</dt>
+    <dd>Automated scanning and analysis of software components and dependencies to identify known vulnerabilities or licensing issues.
+      <span class="detail">SCA tools check the components listed in an SBOM against known vulnerability databases (such as CVE). They identify which versions have disclosed weaknesses and flag licensing conflicts that could create legal exposure. SCA is often integrated into the CI/CD pipeline to run automatically with each build.</span>
+    </dd>
+    <dt>Formal Methods</dt>
+    <dd>Mathematically based techniques used to verify the correctness, safety, and security of software algorithms and systems.
+      <span class="detail">Formal methods use mathematical proofs rather than testing to establish that software behaves exactly as specified — including in edge cases that testing might miss. They are used in high-assurance environments such as cryptographic systems, aerospace software, and safety-critical infrastructure.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 4 -->
+  <h2>supply chain assurance</h2>
+  <p>Supply chain assurance ensures that every component and process in the supply chain meets security and quality standards, from initial sourcing through delivery and integration. Vulnerabilities can be introduced at any point in the chain.</p>
+  <dl class="def">
+    <dt>Hardware Supply Chain Risk Management</dt>
+    <dd>Evaluating and securing physical components against tampering, counterfeit parts, or vulnerabilities introduced during manufacturing and distribution.
+      <span class="detail">An attacker who compromises a hardware component during manufacturing can introduce a backdoor that persists regardless of software-level security. Risk management involves vetting suppliers, requiring provenance documentation, and physically inspecting critical components. A financial institution verifying its trading platform hardware checks each component for authenticity and evidence of tampering before installation.</span>
+    </dd>
+    <dt>Software Supply Chain Risk Management</dt>
+    <dd>Assessing and managing risks from third-party software components, including vulnerabilities and compliance issues that could propagate into the final system.
+      <span class="detail">Most modern software includes dozens or hundreds of open-source libraries. A single vulnerable dependency can expose the entire application. Software supply chain risk management involves tracking all dependencies (via SBOM), scanning them with SCA, evaluating vendor security practices, and monitoring for new disclosures in components already in use.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 5 -->
+  <h2>pre-deployment testing</h2>
+  <p>Pre-deployment testing identifies vulnerabilities before software reaches the live environment. Three approaches target different phases of the development process.</p>
+
+  <table>
+    <thead>
+      <tr><th>Type</th><th>How it works</th><th>What it finds</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SAST</td>
+        <td>Analyzes source code or binaries without executing the application (static)</td>
+        <td>Coding flaws, insecure patterns, security weaknesses detectable in code structure</td>
+      </tr>
+      <tr>
+        <td>DAST</td>
+        <td>Tests the running application by simulating attacks from outside (dynamic)</td>
+        <td>Runtime vulnerabilities: injection flaws, authentication weaknesses, exposed API endpoints</td>
+      </tr>
+      <tr>
+        <td>IAST</td>
+        <td>Integrates an agent into the running application to monitor behavior from inside during functional tests</td>
+        <td>Real-time feedback on vulnerabilities as they are triggered; more comprehensive than SAST or DAST alone</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 6 -->
+  <h2>post-deployment testing</h2>
+  <p>Post-deployment testing continues security evaluation after the application is live. The environment is real, the users are real, and new vulnerabilities can emerge as the application interacts with production systems.</p>
+  <dl class="def">
+    <dt>Vulnerability Analysis</dt>
+    <dd>Scanning the deployed application for known security weaknesses that could be exploited.
+      <span class="detail">Post-deployment vulnerability scanning checks the live system against current vulnerability databases. It catches weaknesses introduced by configuration changes, new integrations, or newly disclosed CVEs against components already in production.</span>
+    </dd>
+    <dt>RASP (Runtime Application Self-Protection)</dt>
+    <dd>Security technology embedded within the running application that monitors behavior and blocks threats in real time.
+      <span class="detail">RASP operates inside the application process itself, giving it visibility into what the application is actually doing at runtime. When it detects anomalous behavior — such as an attempted SQL injection — it can block the malicious request automatically, without waiting for a human response. Example: an online banking RASP detects an SQL injection attempt and blocks the request before it reaches the database, even if no WAF was configured to catch that specific pattern.</span>
+    </dd>
+  </dl>
+
+  <!-- SECTION 7 -->
+  <h2>CI/CD management</h2>
+  <p>CI/CD (Continuous Integration / Continuous Deployment) management automates code integration, testing, and deployment. Security controls must be built into the pipeline itself so they run consistently with every change.</p>
+  <ul>
+    <li><strong>Coding standards and linting:</strong> predefined guidelines for how code should be written; linting tools automatically scan code for style violations, potential bugs, and security anti-patterns before it is committed</li>
+    <li><strong>Branch protection:</strong> rules that prevent code from being merged into important branches (e.g., main) without passing automated tests and receiving required code reviews — ensuring no unreviewed or untested code reaches production</li>
+    <li><strong>Continuous improvement:</strong> regularly updating the CI/CD pipeline itself based on performance metrics, emerging threats, and new tooling — the pipeline is a living system, not a fixed configuration</li>
+  </ul>
+
+  <!-- SECTION 8 -->
+  <h2>CI/CD testing</h2>
+  <p>CI/CD testing systematically evaluates code changes at multiple levels to catch security and functional issues before they reach production.</p>
+
+  <table>
+    <thead>
+      <tr><th>Test type</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Canary</td>
+        <td>Deploys changes to a small subset of users first; monitors for issues before rolling out to everyone</td>
+      </tr>
+      <tr>
+        <td>Regression</td>
+        <td>Verifies that new code changes do not break existing functionality that was previously working</td>
+      </tr>
+      <tr>
+        <td>Integration</td>
+        <td>Tests interactions between different system components to catch issues that arise from combined functionality</td>
+      </tr>
+      <tr>
+        <td>Automated</td>
+        <td>Runs tests automatically on every code change in the pipeline, removing manual bottlenecks and ensuring consistent coverage</td>
+      </tr>
+      <tr>
+        <td>Unit</td>
+        <td>Verifies individual functions or components in isolation for correctness</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 9 -->
+  <h2>end-of-life considerations</h2>
+  <p>Every system component has a finite supported life. Planning for end-of-life (EOL) prevents the security debt that accumulates when unsupported components remain in production.</p>
+  <dl class="def">
+    <dt>Lifecycle Management</dt>
+    <dd>Ensuring that unsupported software or hardware is upgraded or replaced before it becomes a security liability.
+      <span class="detail">Once a vendor stops issuing security patches, any discovered vulnerability in that component goes unaddressed indefinitely. Lifecycle management means tracking EOL/EOS dates for every component in the environment and planning upgrades or replacements well in advance — not reactively after support has already ended.</span>
+    </dd>
+    <dt>Data Migration and Secure Deletion</dt>
+    <dd>Moving data from decommissioned systems to supported ones, and securely wiping the old storage so that sensitive data cannot be recovered.
+      <span class="detail">Simply decommissioning a server without wiping its storage leaves all its data readable to anyone who later gains physical or logical access to it. Secure deletion standards (such as DoD 5220.22-M or NIST 800-88) ensure data is rendered unrecoverable. Example: when replacing an old server, migrate live data to the new system, then perform a secure wipe of the old storage before disposal or repurposing.</span>
+    </dd>
+  </dl>
+
+  <!-- EXAM TIPS -->
+  <div class="exam-tips">
+    <span class="exam-tips-label">exam tips</span>
+    <h2>key takeaways</h2>
+    <ul>
+      <li><strong>SAST, DAST, IAST: know the distinction.</strong> SAST = static, no execution, catches code-level flaws early. DAST = dynamic, running app, simulates attacks from outside. IAST = agent inside running app, real-time feedback, most comprehensive. The exam gives a scenario and asks which testing type is being described.</li>
+      <li><strong>SBOM is the inventory; SCA is the scanning.</strong> SBOM lists what components are in the software. SCA checks those components for known vulnerabilities. Both are software assurance concepts; they work together but are distinct tools.</li>
+      <li><strong>RASP operates inside the running application.</strong> Unlike a WAF (which is external), RASP is embedded in the application process itself. It monitors and blocks threats from inside, in real time, without human intervention. Post-deployment control.</li>
+      <li><strong>Functional requirements = what; non-functional = how well.</strong> Authentication is functional. Response time under 500ms is non-functional. Both are security requirements; the distinction determines how they are tested and verified.</li>
+      <li><strong>Supply chain risk has two faces: hardware (counterfeit/tampered) and software (vulnerable libraries).</strong> Know both. A scenario about a backdoored network component is hardware supply chain risk. A scenario about a vulnerable npm package is software supply chain risk.</li>
+      <li><strong>Canary testing deploys to a small group first.</strong> It is a CI/CD testing technique for detecting issues before a full rollout — not a penetration testing technique. Know it by name and purpose.</li>
+      <li><strong>EOL and secure deletion go together.</strong> Decommissioning without secure deletion leaves data exposed. Any scenario involving retiring a server or device should trigger the answer: migrate data, then securely wipe the storage.</li>
+    </ul>
+    <div class="decision-rules">
+      <div class="decision-rules-title">quick decision rules</div>
+      <ul>
+        <li><strong>Analyzing source code without running it</strong> <span class="arrow">→</span> SAST (pre-deployment)</li>
+        <li><strong>Simulating attacks against a live application from outside</strong> <span class="arrow">→</span> DAST (pre-deployment)</li>
+        <li><strong>Agent inside a running app providing real-time vulnerability feedback</strong> <span class="arrow">→</span> IAST (pre-deployment)</li>
+        <li><strong>Scanning a deployed live application for known weaknesses</strong> <span class="arrow">→</span> Vulnerability analysis (post-deployment)</li>
+        <li><strong>Security embedded in the running app that blocks threats automatically</strong> <span class="arrow">→</span> RASP (post-deployment)</li>
+        <li><strong>Complete inventory of all software components and dependencies</strong> <span class="arrow">→</span> SBOM</li>
+        <li><strong>Scanning software components for known CVEs</strong> <span class="arrow">→</span> SCA</li>
+        <li><strong>Mathematical proof of software correctness</strong> <span class="arrow">→</span> Formal methods</li>
+        <li><strong>Counterfeit or tampered physical component in the supply chain</strong> <span class="arrow">→</span> Hardware supply chain risk</li>
+        <li><strong>Vulnerable third-party library in the software stack</strong> <span class="arrow">→</span> Software supply chain risk</li>
+        <li><strong>Deploy to a small user group before full rollout</strong> <span class="arrow">→</span> Canary testing</li>
+        <li><strong>New code must not break existing functionality</strong> <span class="arrow">→</span> Regression testing</li>
+        <li><strong>Decommissioning a server: what must happen to its storage</strong> <span class="arrow">→</span> Secure deletion</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>lesson 01 / eof</span>
+  </div>
+
+</div>
+</body>
+</html>
