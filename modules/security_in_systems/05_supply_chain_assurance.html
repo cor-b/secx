@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supply Chain Assurance / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 24px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 15px; line-height: 1.75; margin: 0 0 18px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 15px; color: var(--ink); padding: 4px 0 4px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  dl.def { margin: 0 0 24px; }
+  dl.def dt { font-size: 12px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 6px; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 4px 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  dl.def dd .detail { display: block; font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin-top: 5px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_in_systems/supply_chain_assurance</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_in_systems</a>
+
+  <span class="module-tag">lesson 05 / security in systems / Supply Chain Assurance</span>
+  <h1 class="module-title">Supply Chain Assurance</h1>
+  <p class="subtitle">Securing every stage of the supply chain, from vendors to delivery, to prevent tampering, counterfeit parts, and vulnerable software components from entering a system.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Supply chain assurance addresses risk on two fronts. <strong>Hardware supply chain risk management</strong> protects against tampering and counterfeit components through authentication and transparency. <strong>Software supply chain risk management</strong> ensures that third-party libraries, open-source tools, and frameworks integrated into a system are free from known vulnerabilities. Both domains emphasize authenticity, continuous assessment, and documented traceability.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">domain 01</span>
+      <p class="card-name">Hardware SCM</p>
+      <p class="card-desc">Securing physical components against tampering, counterfeiting, and backdoors introduced during manufacturing or distribution.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">domain 02</span>
+      <p class="card-name">Software SCM</p>
+      <p class="card-desc">Ensuring third-party libraries, frameworks, and tools integrated into software are free from vulnerabilities and meet compliance standards.</p>
+    </div>
+  </div>
+
+  <h2>hardware supply chain risk management</h2>
+
+  <h3>primary threats</h3>
+
+  <dl class="def">
+    <dt>Tampering</dt>
+    <dd>Malicious modification of hardware components during manufacturing or distribution.
+      <span class="detail">When hardware is sourced from suppliers across multiple countries, any party along the chain could alter components to introduce backdoors. Once the device is deployed, attackers can use those backdoors to compromise systems, often without detection.</span>
+    </dd>
+    <dt>Counterfeit components</dt>
+    <dd>Fake or substandard parts that are difficult to detect visually and may introduce severe reliability or security risks.
+      <span class="detail">Counterfeit hardware is cheaper to produce but more prone to failure. In some cases, counterfeit parts are deliberately designed with malicious functions. Industries like defense, aerospace, and financial services are especially vigilant because the consequences of a compromised component are severe.</span>
+    </dd>
+  </dl>
+
+  <h3>hardware authentication</h3>
+
+  <p>The primary mitigation for tampering and counterfeiting is embedding <strong>cryptographic modules</strong> directly into chips and components during manufacturing. These modules use techniques from PKI (Public Key Infrastructure), including unique digital signatures, that can be cryptographically verified at inspection time.</p>
+
+  <p>On inspection, the embedded signature is checked against the expected value. If the component has been tampered with or replaced with a counterfeit, the signature will not match. This makes it possible to detect compromised components before they are integrated into critical systems, even when physical inspection alone would miss the issue.</p>
+
+  <h3>supply chain transparency</h3>
+
+  <p>Companies handling sensitive systems maintain close supplier relationships and require detailed documentation tracing the origin and production process of every component. Apple and Cisco are examples of organizations known for requiring high levels of supply chain transparency, including records of where each hardware component originated, to verify that no security risks were pre-embedded during manufacturing.</p>
+
+  <h2>software supply chain risk management</h2>
+
+  <p>Most software applications depend on third-party libraries, open-source frameworks, and external tools. Each dependency carries risk: it may contain known vulnerabilities or licensing issues that the integrating organization did not author and may not be actively monitoring. Organizations often do not know the full extent of their software dependencies, especially transitive ones (see the SBOM and SCA lesson for depth on dependency graphs).</p>
+
+  <h3>SCA tools</h3>
+
+  <dl class="def">
+    <dt>OWASP Dependency-Check</dt>
+    <dd>Scans software projects to identify components with publicly disclosed CVEs.
+    </dd>
+    <dt>OWASP Dependency-Track</dt>
+    <dd>Continuous monitoring platform that alerts on newly disclosed vulnerabilities affecting components already in production.
+    </dd>
+  </dl>
+
+  <h3>the SolarWinds breach: a software supply chain attack</h3>
+
+  <p>In 2020, attackers inserted malicious code into a signed, trusted software update for the SolarWinds Orion platform. When customers, including major U.S. government agencies and private corporations, installed the update, the malicious code gave attackers persistent access to highly sensitive networks.</p>
+
+  <p>The SolarWinds breach is the canonical software supply chain attack example. It demonstrated that even updates from a trusted, established vendor cannot be assumed safe without verification. The attack bypassed perimeter defenses entirely because the malicious payload was delivered through a legitimate, authenticated update channel.</p>
+
+  <h3>mitigation strategies</h3>
+
+  <ul>
+    <li>Regularly assess third-party software for vulnerabilities, licensing issues, and compliance with security standards using SCA tools</li>
+    <li>Use <strong>digital signatures and certificates</strong> to verify the authenticity and integrity of software updates before installation</li>
+    <li>Enforce policies requiring developers to use only approved, vetted software libraries</li>
+    <li>Conduct periodic audits of all third-party dependencies and patch when vulnerabilities are discovered</li>
+    <li>Maintain an up-to-date SBOM so that newly disclosed CVEs can be rapidly matched against components in use</li>
+  </ul>
+
+  <h2>hardware vs software comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>dimension</th>
+        <th>hardware</th>
+        <th>software</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>primary threats</td><td>tampering, counterfeit parts, backdoors</td><td>vulnerable libraries, malicious updates, unlicensed components</td></tr>
+      <tr><td>authentication method</td><td>cryptographic modules / PKI / digital signatures in hardware</td><td>digital signatures / certificates on packages and updates</td></tr>
+      <tr><td>key tools</td><td>Trusted Foundry Program, hardware inspection</td><td>OWASP Dependency-Check, OWASP Dependency-Track</td></tr>
+      <tr><td>notable example</td><td>Defense/aerospace counterfeit part risks</td><td>SolarWinds Orion breach (2020)</td></tr>
+      <tr><td>core mitigation</td><td>transparency, supplier vetting, cryptographic verification</td><td>SCA scanning, SBOM maintenance, update signing</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Supply chain assurance covers both hardware (physical components) and software (libraries, frameworks, updates)</li>
+      <li>Hardware risks: tampering (backdoors introduced during manufacturing) and counterfeit parts (fake/substandard, prone to failure, may be malicious)</li>
+      <li>Hardware authentication uses cryptographic modules embedded in chips during manufacturing; PKI and digital signatures allow verification at inspection</li>
+      <li>SolarWinds is the exam-ready software supply chain attack example: malicious code in a trusted, signed update delivered through a legitimate update channel</li>
+      <li>Software SCM mitigation: SCA tools (OWASP), digital signatures on updates, approved library policies, regular audits</li>
+      <li>Both hardware and software assurance share the same core principles: transparency, authenticity, and continuous assessment</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves a backdoor or counterfeit component introduced during manufacturing → <strong>hardware supply chain risk</strong></li>
+        <li>Scenario involves malicious code inserted into a software update from a trusted vendor → <strong>software supply chain attack</strong> (SolarWinds pattern)</li>
+        <li>Scenario involves verifying the authenticity of a hardware component on inspection → <strong>cryptographic modules / PKI in hardware</strong></li>
+        <li>Scenario involves verifying that a software update has not been tampered with → <strong>digital signatures / code signing certificates</strong></li>
+        <li>Scenario involves detecting vulnerable third-party libraries in a software project → <strong>SCA</strong> (Dependency-Check / Dependency-Track)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>security_in_systems / supply_chain_assurance</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-Deployment Testing / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 24px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 15px; line-height: 1.75; margin: 0 0 18px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 15px; color: var(--ink); padding: 4px 0 4px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  dl.def { margin: 0 0 24px; }
+  dl.def dt { font-size: 12px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 6px; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 4px 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  dl.def dd .detail { display: block; font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin-top: 5px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_in_systems/post_deployment_testing</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_in_systems</a>
+
+  <span class="module-tag">lesson 07 / security in systems / Post-Deployment Testing</span>
+  <h1 class="module-title">Post-Deployment Testing</h1>
+  <p class="subtitle">Identifying and addressing vulnerabilities in a live environment through continuous scanning and real-time runtime protection.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Post-deployment security operates on two tracks. <strong>Vulnerability analysis</strong> continuously scans the deployed application and its infrastructure for known weaknesses, catching new threats as they emerge. <strong>Runtime Application Self-Protection (RASP)</strong> operates inside the running application, detecting and blocking attacks in real time based on observed behavior rather than static signatures.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">method 01</span>
+      <p class="card-name">Vulnerability Analysis</p>
+      <p class="card-desc">Continuously scans the live application and infrastructure for known vulnerabilities: unpatched software, misconfigurations, insecure code.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 02</span>
+      <p class="card-name">RASP</p>
+      <p class="card-desc">An agent embedded inside the running application. Monitors behavior in real time and blocks attacks as they occur, from inside the runtime environment.</p>
+    </div>
+  </div>
+
+  <h2>vulnerability analysis</h2>
+
+  <p>Vulnerability analysis scans a deployed application and its surrounding infrastructure for known security weaknesses: unpatched software, misconfigurations, and insecure code. The goal is to identify weaknesses before attackers can exploit them. Because new vulnerabilities are disclosed continuously after software ships, recurring scheduled scans are essential, not a one-time activity.</p>
+
+  <h3>OpenVAS</h3>
+
+  <p><strong>OpenVAS</strong> is an open-source vulnerability scanner that detects outdated software, insecure configurations, and missing patches across systems, networks, and applications. It generates detailed reports to help prioritize remediation by severity.</p>
+
+  <h4>configuring recurring scans in OpenVAS</h4>
+
+  <ol style="list-style:none;margin:0 0 24px;padding:0;counter-reset:ol-counter;">
+    <li style="font-family:var(--font-sans);font-size:15px;color:var(--ink);padding:5px 0 5px 38px;position:relative;counter-increment:ol-counter;line-height:1.65;">
+      <span style="position:absolute;left:0;color:var(--magenta);font-family:var(--font-mono);font-size:13px;font-weight:500;top:7px;">01</span>
+      <strong>Create a target:</strong> define the systems or network ranges to scan (e.g., a subnet like <code>192.168.0.0/24</code>)
+    </li>
+    <li style="font-family:var(--font-sans);font-size:15px;color:var(--ink);padding:5px 0 5px 38px;position:relative;counter-increment:ol-counter;line-height:1.65;">
+      <span style="position:absolute;left:0;color:var(--magenta);font-family:var(--font-mono);font-size:13px;font-weight:500;top:7px;">02</span>
+      <strong>Create a scan task:</strong> define the scan configuration (e.g., full and fast) and assign the target
+    </li>
+    <li style="font-family:var(--font-sans);font-size:15px;color:var(--ink);padding:5px 0 5px 38px;position:relative;counter-increment:ol-counter;line-height:1.65;">
+      <span style="position:absolute;left:0;color:var(--magenta);font-family:var(--font-mono);font-size:13px;font-weight:500;top:7px;">03</span>
+      <strong>Schedule the scan:</strong> set a recurring schedule (e.g., every Saturday at 01:00 UTC) to automate ongoing coverage
+    </li>
+    <li style="font-family:var(--font-sans);font-size:15px;color:var(--ink);padding:5px 0 5px 38px;position:relative;counter-increment:ol-counter;line-height:1.65;">
+      <span style="position:absolute;left:0;color:var(--magenta);font-family:var(--font-mono);font-size:13px;font-weight:500;top:7px;">04</span>
+      <strong>Configure alerts:</strong> set up notifications for high-severity findings so teams are informed immediately when critical issues surface
+    </li>
+  </ol>
+
+  <p>Recurring scans are critical because even previously secure environments become vulnerable over time when new software updates, configuration changes, or newly disclosed CVEs introduce fresh risks.</p>
+
+  <h4>vulnerability analysis limitations</h4>
+  <ul>
+    <li><strong>Zero-day blind spot:</strong> scanners rely on databases of known vulnerabilities. A zero-day (a previously unknown threat with no published CVE or patch) will not appear in scan results.</li>
+    <li><strong>False positives:</strong> flagged issues that are not actual vulnerabilities slow down remediation as security teams investigate non-threats.</li>
+  </ul>
+
+  <h2>runtime application self-protection (RASP)</h2>
+
+  <p>RASP operates from inside the application, embedding directly into the runtime environment. Unlike perimeter defenses or external scanners, RASP monitors the application's actual behavior as it runs and can block an attack the moment it is detected, before any damage occurs.</p>
+
+  <p>Example: a RASP tool detects an attempted SQL injection attack against a live banking application. Rather than logging the event for later review, RASP immediately blocks the malicious request, preventing unauthorized database access. This real-time response is what distinguishes RASP from reactive scanning.</p>
+
+  <h4>key tools</h4>
+
+  <dl class="def">
+    <dt>Contrast Security</dt>
+    <dd>Integrates into the application at runtime. Monitors for abnormal behavior, unexpected input patterns, and known attack signatures, blocking threats automatically.
+    </dd>
+    <dt>Imperva RASP</dt>
+    <dd>Embeds into the application layer to detect and block attacks in real time, including injection attacks and zero-day exploits that bypass perimeter controls.
+    </dd>
+  </dl>
+
+  <h4>RASP limitations</h4>
+  <ul>
+    <li><strong>Performance impact:</strong> operating inside the application adds overhead, which can slow performance in resource-intensive environments</li>
+    <li>RASP is not a replacement for pre-deployment testing. It defends against runtime attacks but does not fix underlying code vulnerabilities, which still require code review, SAST, and DAST.</li>
+  </ul>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>method</th>
+        <th>when it operates</th>
+        <th>control type</th>
+        <th>key tools</th>
+        <th>main limitation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Vulnerability Analysis</td><td>recurring scans on live environment</td><td>detective</td><td>OpenVAS</td><td>misses zero-days; false positives</td></tr>
+      <tr><td>RASP</td><td>real-time inside running application</td><td>preventive</td><td>Contrast Security, Imperva RASP</td><td>performance overhead; does not fix underlying flaws</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Post-deployment testing runs after software ships to a live environment. Pre-deployment runs before.</li>
+      <li>Vulnerability analysis scans for known CVEs in the live environment. OpenVAS is the key open-source tool: detects outdated software, misconfigurations, missing patches, and supports recurring scheduled scans.</li>
+      <li>Zero-day = a previously unknown vulnerability with no CVE or patch. Vulnerability scanners cannot detect them because they are not in the database.</li>
+      <li>RASP operates inside the running application and blocks attacks in real time. It is a preventive control, not just detective.</li>
+      <li>RASP is not a substitute for pre-deployment testing (SAST/DAST/IAST). It addresses runtime threats but does not fix code-level vulnerabilities.</li>
+      <li>Contrast Security appears in both IAST (pre-deployment) and RASP (post-deployment). Context matters: IAST = during functional testing; RASP = in live production.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves scanning a live deployed application for known vulnerabilities → <strong>vulnerability analysis</strong> (OpenVAS)</li>
+        <li>Scenario involves a threat that has no patch and is unknown to scanners → <strong>zero-day</strong> (vulnerability analysis will miss it)</li>
+        <li>Scenario involves blocking an attack in real time inside a running production application → <strong>RASP</strong></li>
+        <li>Question asks about control type: vulnerability analysis = <strong>detective</strong>; RASP = <strong>preventive</strong></li>
+        <li>Scenario states RASP is being used as the only security measure → flag this as insufficient; RASP does not replace pre-deployment testing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>security_in_systems / post_deployment_testing</span>
+  </div>
+
+</div>
+</body>
+</html>

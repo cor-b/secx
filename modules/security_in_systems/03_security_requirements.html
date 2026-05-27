@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Requirements / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 24px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 15px; line-height: 1.75; margin: 0 0 18px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 15px; color: var(--ink); padding: 4px 0 4px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  dl.def { margin: 0 0 24px; }
+  dl.def dt { font-size: 12px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 6px; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 4px 0; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  dl.def dd .detail { display: block; font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin-top: 5px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_in_systems/security_requirements</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_in_systems</a>
+
+  <span class="module-tag">lesson 03 / security in systems / Security Requirements</span>
+  <h1 class="module-title">Security Requirements</h1>
+  <p class="subtitle">Defining what a system must do and how well it must perform to stay secure, and navigating the constant tension between stronger security and everyday usability.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Security requirements are the specific criteria a system must meet to protect against threats and vulnerabilities. They divide into two categories: <strong>functional</strong> requirements (what the system must do, such as authentication and access controls) and <strong>non-functional</strong> requirements (how well it must do it, such as performance and reliability). A persistent implementation challenge is finding the right trade-off between security and usability.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">type 01</span>
+      <p class="card-name">Functional</p>
+      <p class="card-desc">Specific security-related behaviors and features a system must have. Authentication, access controls, encryption protocols. The "what must it do" layer.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 02</span>
+      <p class="card-name">Non-functional</p>
+      <p class="card-desc">Qualities of the system: performance, reliability, and usability under stress. The "how well must it do it" layer. Often in tension with stronger security controls.</p>
+    </div>
+  </div>
+
+  <h2>functional security requirements</h2>
+
+  <p>Functional requirements define the concrete, observable defenses a system must implement. They are testable: either the feature exists and works, or it does not.</p>
+
+  <dl class="def">
+    <dt>Authentication mechanisms</dt>
+    <dd>Ensuring only authorized users can access a system.
+      <span class="detail">May involve passwords, biometric data, certificates, or multi-factor authentication (MFA). MFA requires verification through two or more factors, such as a password combined with a one-time code or fingerprint scan.</span>
+    </dd>
+    <dt>Access controls</dt>
+    <dd>Determining who is permitted to access which resources within the system.
+      <span class="detail">Ensures users can only interact with the parts of the system relevant to their role. Implemented through role-based access control (RBAC), attribute-based access control (ABAC), or discretionary/mandatory models.</span>
+    </dd>
+    <dt>Encryption protocols</dt>
+    <dd>Securing communications and data by converting sensitive information into unreadable ciphertext.
+      <span class="detail">Prevents unauthorized parties from accessing or interpreting data in transit or at rest. Examples include TLS for in-transit protection and AES-256 for at-rest encryption.</span>
+    </dd>
+  </dl>
+
+  <h2>non-functional security requirements</h2>
+
+  <p>Non-functional requirements focus on the qualities that allow a system to remain secure and operational under real-world conditions. They are harder to measure but equally critical.</p>
+
+  <dl class="def">
+    <dt>Performance</dt>
+    <dd>Security controls must not degrade the system beyond acceptable limits.
+      <span class="detail">Encryption algorithms must be robust enough to resist attack while also optimized to avoid significant processing delays. In environments requiring real-time data handling (financial transactions, healthcare networks), a system that is secure but too slow becomes a liability.</span>
+    </dd>
+    <dt>Reliability</dt>
+    <dd>The system must remain operational even under high traffic, hardware failures, or partial outages.
+      <span class="detail">Achieved through redundancy (backup components that activate on failure) and failover mechanisms (automatic rerouting to alternate pathways). Reliability ensures availability and security are maintained even during disruptions.</span>
+    </dd>
+  </dl>
+
+  <h2>security vs. usability</h2>
+
+  <p>A common challenge in enterprise IT is that stronger security controls often reduce convenience for legitimate users. The goal is not to eliminate security, but to find the right balance for the environment and risk profile.</p>
+
+  <h3>common trade-off scenarios</h3>
+
+  <h4>multi-factor authentication (MFA)</h4>
+  <p>MFA adds an essential security layer, preventing unauthorized access even when a password is compromised. However, employees who authenticate multiple times per day across multiple systems can find it cumbersome. Solutions like <strong>single sign-on (SSO)</strong> can reduce friction while preserving the security benefit.</p>
+
+  <h4>encryption latency</h4>
+  <p>Encrypting and decrypting data introduces processing overhead. In environments requiring real-time operations, such as financial transactions or large-scale data transfers, administrators may need to choose between more complex (slower) algorithms for maximum security or lighter encryption that preserves system responsiveness.</p>
+
+  <h4>granular access controls</h4>
+  <p>Highly specific access controls protect against insider threats by limiting what users can do. However, requiring multiple approvals to access a tool or dataset can slow workflows significantly, delaying project timelines and frustrating legitimate users performing routine tasks.</p>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>dimension</th>
+        <th>functional requirements</th>
+        <th>non-functional requirements</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>focus</td><td>what security features exist</td><td>how well the system performs under pressure</td></tr>
+      <tr><td>examples</td><td>MFA, RBAC, TLS encryption</td><td>response time, uptime, latency under load</td></tr>
+      <tr><td>testability</td><td>binary: feature works or it does not</td><td>measured against thresholds (e.g., 99.9% uptime)</td></tr>
+      <tr><td>trade-off risk</td><td>weaker features = weaker access controls</td><td>over-securing = slow, unusable system</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Functional requirements define specific behaviors: authentication, access controls, encryption. Non-functional requirements define qualities: performance, reliability, usability.</li>
+      <li>The security vs. usability tension is a core theme: stronger controls (more complex encryption, granular RBAC, MFA) can reduce efficiency and user convenience</li>
+      <li>MFA is the classic security-usability trade-off example. SSO is the mitigation that preserves security while reducing friction.</li>
+      <li>Redundancy and failover are non-functional reliability measures, not security features per se, but they support availability (the A in CIA)</li>
+      <li>Encryption introduces latency. Real-time environments (financial, healthcare) feel this most acutely.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Question asks what a system must do (specific behavior or feature) → <strong>functional</strong> security requirement</li>
+        <li>Question asks how well the system must perform (speed, uptime, resilience) → <strong>non-functional</strong> security requirement</li>
+        <li>Scenario describes a security control slowing down users or workflows → <strong>security vs. usability trade-off</strong></li>
+        <li>Scenario describes a way to reduce MFA friction without removing MFA → <strong>single sign-on (SSO)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>security_in_systems / security_requirements</span>
+  </div>
+
+</div>
+</body>
+</html>

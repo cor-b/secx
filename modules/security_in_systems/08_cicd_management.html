@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI/CD Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13102a; --panel: #1c1738; --rule: #363052; --rule-soft: #251f3e;
+    --ink: #d8d4e8; --ink-dim: #9a94b8; --ink-faint: #4a4566;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 15px; line-height: 1.75; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 17px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 24px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 15px; line-height: 1.75; margin: 0 0 18px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 15px; color: var(--ink); padding: 4px 0 4px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/security_in_systems/cicd_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /security_in_systems</a>
+
+  <span class="module-tag">lesson 08 / security in systems / CI/CD Management</span>
+  <h1 class="module-title">CI/CD Management</h1>
+  <p class="subtitle">Automating code integration, testing, and deployment through consistent standards, enforced quality gates, and continuous refinement of the pipeline.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>CI/CD management automates the process of integrating code changes, running tests, and deploying applications to ensure consistent, efficient software delivery. Four practices form its foundation: <strong>coding standards</strong> enforce consistent style across a team, <strong>linting</strong> catches bugs and security issues before code runs, <strong>branch protection</strong> prevents untested code from reaching production, and <strong>continuous improvement</strong> keeps the pipeline effective against new threats and changing requirements.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">practice 01</span>
+      <p class="card-name">Coding Standards</p>
+      <p class="card-desc">Guidelines for how code should be written. Ensures consistency across a team, improves readability, and reduces the risk of errors and maintenance debt.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">practice 02</span>
+      <p class="card-name">Linting</p>
+      <p class="card-desc">Automated checks that enforce best practices and flag potential bugs or security issues before code is executed. An early warning system for the pipeline.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">practice 03</span>
+      <p class="card-name">Branch Protection</p>
+      <p class="card-desc">Rules that prevent untested or unreviewed code from being merged into important branches like main. Code reviews and automated tests are required gates.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">practice 04</span>
+      <p class="card-name">Continuous Improvement</p>
+      <p class="card-desc">Ongoing refinement of the pipeline based on feedback, performance data, and new security requirements. Keeps the pipeline efficient and threat-aware over time.</p>
+    </div>
+  </div>
+
+  <h2>coding standards</h2>
+
+  <p>Coding standards define how code should be written across a team. Without them, large codebases developed by multiple contributors become inconsistent and hard to maintain. Standards address concerns like indentation (spaces vs tabs), naming conventions, and file structure.</p>
+
+  <h4>naming convention examples</h4>
+  <ul>
+    <li><strong>CamelCase:</strong> first letter of each word capitalized, no spaces (<code>getUserProfile</code>, <code>parseAuthToken</code>)</li>
+    <li><strong>snake_case:</strong> all lowercase, words separated by underscores (<code>get_user_profile</code>, <code>parse_auth_token</code>)</li>
+  </ul>
+
+  <h4>key tools</h4>
+  <ul>
+    <li><strong>Prettier:</strong> opinionated formatter that automatically enforces consistent code style (spacing, line breaks, quote style)</li>
+    <li><strong>ESLint:</strong> configurable linting and style enforcement for JavaScript. Can check both formatting standards and code quality rules.</li>
+  </ul>
+
+  <h2>linting</h2>
+
+  <p>Linting goes beyond style to enforce best practices and flag code patterns that are likely to cause bugs or security vulnerabilities. Where coding standards ensure the code looks consistent, linting ensures the code behaves safely.</p>
+
+  <p>ESLint in JavaScript flags issues like unused variables (code that was declared but never called, indicating a logic error or dead code) and unreachable code (statements following a <code>return</code> or <code>break</code> that can never execute). Linters also catch security-relevant patterns: for example, flagging places where user input is passed directly into a query or command without sanitization, a common precursor to injection attacks.</p>
+
+  <p>Linting acts as an early warning system: problems caught at the linting stage cost far less to fix than problems discovered in production.</p>
+
+  <h2>branch protection</h2>
+
+  <p>In team-based development, the main branch of a repository holds stable, production-ready code. Branch protection rules prevent anyone from pushing unreviewed or untested changes directly to it. Instead, developers work on separate feature branches, and changes are only merged into main after passing a series of required checks.</p>
+
+  <h4>common required checks</h4>
+  <ul>
+    <li><strong>Code review:</strong> at least one other developer must approve the changes before merge</li>
+    <li><strong>Automated tests:</strong> all tests in the CI pipeline must pass before the merge is allowed</li>
+    <li><strong>Linting:</strong> code must pass style and quality checks as part of the merge process</li>
+  </ul>
+
+  <h4>automation tools</h4>
+  <ul>
+    <li><strong>GitHub Actions:</strong> runs automated checks (tests, linting, builds) triggered by pull request events</li>
+    <li><strong>CircleCI:</strong> CI/CD platform that automates build, test, and deployment workflows integrated with version control</li>
+  </ul>
+
+  <h2>continuous improvement</h2>
+
+  <p>Continuous improvement means regularly refining the CI/CD pipeline based on feedback, performance metrics, and emerging threats. This includes introducing new security tools, optimizing slow steps, and updating practices as the threat landscape evolves.</p>
+
+  <ul>
+    <li><strong>Dependabot:</strong> automatically scans project dependencies for known vulnerabilities and opens pull requests to update affected packages when fixes are available</li>
+    <li>If builds are taking too long, teams look to run tasks concurrently or eliminate unnecessary steps to restore pipeline efficiency</li>
+    <li>New vulnerability classes may warrant adding new SAST or SCA tools to the pipeline without waiting for a scheduled review</li>
+  </ul>
+
+  <h2>tool reference</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>tool</th>
+        <th>practice</th>
+        <th>what it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Prettier</td><td>coding standards</td><td>Enforces consistent code formatting automatically</td></tr>
+      <tr><td>ESLint</td><td>coding standards + linting</td><td>Style consistency and best-practice checks for JavaScript; flags bugs and security patterns</td></tr>
+      <tr><td>GitHub Actions</td><td>branch protection</td><td>Runs automated checks triggered by pull requests (tests, linting, builds)</td></tr>
+      <tr><td>CircleCI</td><td>branch protection</td><td>CI/CD platform automating build, test, and deployment workflows</td></tr>
+      <tr><td>Dependabot</td><td>continuous improvement</td><td>Scans dependencies for known CVEs; opens PRs to update vulnerable packages</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Coding standards = style and consistency (Prettier, ESLint). Linting = best practices and bug/security pattern detection (ESLint also handles this). ESLint does both.</li>
+      <li>Branch protection prevents untested or unreviewed code from reaching main. Required checks typically include code review and passing automated tests.</li>
+      <li>GitHub Actions and CircleCI automate checks during the merge process as part of branch protection.</li>
+      <li>Dependabot is the key continuous improvement tool: auto-scans dependencies for CVEs and raises pull requests with fixes.</li>
+      <li>Unreachable code = code that follows a return/break statement and can never execute. Linters flag it.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves enforcing consistent code style across a team → <strong>coding standards</strong> (Prettier, ESLint)</li>
+        <li>Scenario involves flagging unused variables or unsanitized input before code runs → <strong>linting</strong> (ESLint)</li>
+        <li>Scenario involves preventing unreviewed code from reaching the main branch → <strong>branch protection</strong></li>
+        <li>Scenario involves automating test runs on pull requests → <strong>GitHub Actions</strong> or <strong>CircleCI</strong></li>
+        <li>Scenario involves automatically detecting vulnerable dependencies and suggesting updates → <strong>Dependabot</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>security_in_systems / cicd_management</span>
+  </div>
+
+</div>
+</body>
+</html>
