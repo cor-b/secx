@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Provision / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/access_auth_authz/access_provision</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /access_auth_authz</a>
+
+  <span class="module-tag">lesson 03 / access, auth, authz / Access Provision</span>
+  <h1 class="module-title">Access Provision</h1>
+  <p class="subtitle">The full lifecycle of granting and revoking access rights — from identity verification at onboarding to credential removal at offboarding.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Access provision manages user access to resources across their entire relationship with an organization. Four processes form the lifecycle: <strong>credential issuance</strong> creates and distributes authentication credentials after verifying identity, <strong>provisioning</strong> assigns access rights based on role, <strong>self-provisioning</strong> allows users to request access through automated systems, and <strong>deprovisioning</strong> removes access when it is no longer needed. Together they ensure the right people have access to the right resources at the right time.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">step 01</span>
+      <p class="card-name">Credential Issuance</p>
+      <p class="card-desc">Identity is verified (proofing), then credentials are generated and distributed: username, password, MFA token. The entry point for any new user.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">step 02</span>
+      <p class="card-name">Provisioning</p>
+      <p class="card-desc">Access rights are assigned based on the user's role. Marketing gets marketing tools; engineers get dev environments. Often automated via RBAC.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">step 03</span>
+      <p class="card-name">Self-Provisioning</p>
+      <p class="card-desc">Users request access to specific systems through a portal. Requests route to admin approval or are auto-approved by policy. Speeds up onboarding.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">step 04</span>
+      <p class="card-name">Deprovisioning</p>
+      <p class="card-desc">Access is revoked when no longer needed: role change, contract end, termination. Automated deprovisioning removes access across all systems immediately.</p>
+    </div>
+  </div>
+
+  <h2>credential issuance</h2>
+
+  <p>Credential issuance is the first step in the access lifecycle. It has two parts: identity proofing and credential generation.</p>
+
+  <h3>identity proofing</h3>
+  <p>Before credentials are issued, the user's identity must be confirmed. For a new employee, this typically involves providing identification documents or undergoing background checks. Proofing ensures that credentials are issued to the correct person before granting system access.</p>
+
+  <h3>credential generation and distribution</h3>
+  <p>Once identity is confirmed, credentials are created and delivered. Common patterns include:</p>
+  <ul>
+    <li>Email with a temporary password the user must change at first login</li>
+    <li>One-time link that lets the user create their own password</li>
+    <li>MFA enrollment: linking an authenticator app, registering a hardware token, or adding biometrics</li>
+  </ul>
+
+  <h2>provisioning</h2>
+
+  <p>Provisioning assigns access rights based on the user's role in the organization. A marketing employee receives access to marketing tools and databases; a software engineer gets access to development environments and repositories. Role-based access control (RBAC) systems handle this automatically by linking roles to predefined permissions, so assigning a user to a role immediately grants the right access without manual permission-by-permission configuration.</p>
+
+  <h2>self-provisioning</h2>
+
+  <p>Self-provisioning allows users to request additional access without directly involving IT administrators for each request. A new employee might use a self-service portal to request access to the HR system, a project management tool, or internal communication platforms. The request is then:</p>
+
+  <ul>
+    <li>Reviewed and approved by an administrator, then access is granted automatically</li>
+    <li>Or auto-approved based on predefined policies (for example, RBAC rules that allow all marketing employees to access certain tools)</li>
+  </ul>
+
+  <p>Self-provisioning speeds up onboarding and reduces IT burden while maintaining security through required approvals and policy-based gates.</p>
+
+  <h2>deprovisioning</h2>
+
+  <p>Deprovisioning removes access rights when they are no longer appropriate. Key triggers include an employee leaving the organization, changing to a different role, or a contract expiring. Deprovisioning is critical for security: former employees or users with changed responsibilities who retain system access represent a significant risk.</p>
+
+  <p>Automated deprovisioning immediately revokes access to all systems tied to the user's account the moment a trigger event is recorded in the HR or identity management system, ensuring no gap between the departure event and access removal.</p>
+
+  <h2>lifecycle summary</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>process</th>
+        <th>when</th>
+        <th>purpose</th>
+        <th>example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>credential issuance</td><td>onboarding</td><td>verify identity, create credentials</td><td>new hire provides ID, receives temp password and MFA enrollment link</td></tr>
+      <tr><td>provisioning</td><td>onboarding / role assignment</td><td>grant access based on role</td><td>engineer added to dev group, automatically gets repo and staging access</td></tr>
+      <tr><td>self-provisioning</td><td>as needed</td><td>user-initiated access requests</td><td>employee requests PM tool access via portal; manager approves</td></tr>
+      <tr><td>deprovisioning</td><td>departure / role change</td><td>revoke access no longer needed</td><td>employee leaves; all system access removed within minutes automatically</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Identity proofing = verifying who the person is before issuing credentials. Happens before any access is granted.</li>
+      <li>Provisioning = assigning access rights based on role. RBAC automates this by linking roles to permissions.</li>
+      <li>Self-provisioning = user-initiated access requests via a portal. Admin approval or policy-based auto-approval grants access.</li>
+      <li>Deprovisioning = removing access when no longer needed. Automation ensures immediate revocation with no gap between the trigger and removal.</li>
+      <li>Deprovisioning is essential after role changes, not just terminations. A user who moves departments and retains old access is a security risk (privilege accumulation).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves verifying a new user's identity before issuing a username and password → <strong>credential issuance / identity proofing</strong></li>
+        <li>Scenario involves automatically assigning system access based on a user's job role → <strong>provisioning</strong></li>
+        <li>Scenario involves a user requesting access to additional tools through a portal → <strong>self-provisioning</strong></li>
+        <li>Scenario involves an employee leaving and their access being removed → <strong>deprovisioning</strong></li>
+        <li>Scenario involves a user who changed roles still having access to systems from their previous role → <strong>deprovisioning failure / privilege accumulation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>access_auth_authz / access_provision</span>
+  </div>
+
+</div>
+</body>
+</html>

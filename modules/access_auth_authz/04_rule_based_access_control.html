@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rule-Based Access Control / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  dl.def { margin: 0 0 24px; }
+  dl.def dt { font-size: 12px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 6px; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 4px 0; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  dl.def dd .detail { display: block; font-family: var(--font-sans); color: var(--ink-dim); font-size: 15px; line-height: 1.65; margin-top: 6px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/access_auth_authz/rule_based_access_control</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /access_auth_authz</a>
+
+  <span class="module-tag">lesson 04 / access, auth, authz / Rule-Based Access Control</span>
+  <h1 class="module-title">Rule-Based Access Control</h1>
+  <p class="subtitle">Administrator-defined rules and conditions that determine who can access resources — from strict government clearance systems to flexible attribute-driven policies.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Rule-based access control manages user access through predefined rules set by administrators. Three models operate under this umbrella: <strong>MAC</strong> enforces rigid clearance-level classifications (used in government/military systems), <strong>DAC</strong> lets resource owners grant or deny access at their own discretion (the default in Windows and Linux), and <strong>ABAC</strong> evaluates combinations of user, resource, and environment attributes dynamically for more granular, context-aware decisions.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">model 01</span>
+      <p class="card-name">MAC</p>
+      <p class="card-desc">Mandatory Access Control. Strict classifications; users cannot alter policies. Clearance level must match or exceed resource classification. Government/military use.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 02</span>
+      <p class="card-name">DAC</p>
+      <p class="card-desc">Discretionary Access Control. Resource owner controls permissions. Default in Windows and Linux. Flexible but potentially less secure if owners grant permissions carelessly.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 03</span>
+      <p class="card-name">ABAC</p>
+      <p class="card-desc">Attribute-Based Access Control. Access determined dynamically by user, resource, and environment attributes. Most flexible; ideal for complex, context-sensitive environments.</p>
+    </div>
+  </div>
+
+  <h2>rule-based access control</h2>
+
+  <p>Rule-based access control applies predefined rules configured by administrators. These rules determine who can access what and under what conditions, applying equally across all users who fall within the rule's scope. Access control lists (ACLs) on routers and firewalls are a classic example: when an administrator configures a firewall rule to block traffic from a particular subnet, that rule applies to all traffic matching that condition without individual user judgment.</p>
+
+  <ul>
+    <li>Rules are set by administrators and cannot be overridden by individual users</li>
+    <li>Well-suited to environments where access must be tightly and consistently controlled</li>
+    <li>Example: allow access to financial records only during business hours, applied to all users</li>
+  </ul>
+
+  <h2>mandatory access control (MAC)</h2>
+
+  <p>MAC is a strict rule-based model where access decisions are based on security classification labels. Users cannot modify or override these policies. Only administrators and the system itself control label assignments and access rules. MAC is reserved for high-security environments where unauthorized disclosure is unacceptable.</p>
+
+  <h3>classification levels</h3>
+
+  <dl class="def">
+    <dt>Top Secret</dt>
+    <dd>Highest classification. Disclosure could cause exceptionally grave damage to national security.
+      <span class="detail">Users must hold Top Secret clearance to access. A user with Secret clearance is blocked from Top Secret resources.</span>
+    </dd>
+    <dt>Secret</dt>
+    <dd>Disclosure could cause serious damage. Accessible to users with Secret or Top Secret clearance.
+      <span class="detail">Most common clearance level in government settings.</span>
+    </dd>
+    <dt>Confidential</dt>
+    <dd>Disclosure could cause damage. Accessible to Confidential, Secret, or Top Secret clearance holders.</dd>
+    <dt>Unclassified</dt>
+    <dd>No formal classification. Accessible to any cleared individual or the public depending on the system.
+      <span class="detail">A user with any clearance level can access Unclassified resources.</span>
+    </dd>
+  </dl>
+
+  <h3>SELinux</h3>
+  <p>SELinux (Security-Enhanced Linux) is a MAC implementation developed by Red Hat in partnership with the NSA. It modifies the Linux kernel to enforce mandatory access controls and additional security policies, providing fine-grained control over what processes and users can do, even beyond standard Linux permissions.</p>
+
+  <h2>discretionary access control (DAC)</h2>
+
+  <p>DAC gives resource owners full control over their resources. The owner decides who can read, write, or execute a file or object. This is the default access model in both Windows and Linux. DAC is often described as a "need to know" model where access is granted at the owner's discretion.</p>
+
+  <h3>DAC on Linux: chmod and chown</h3>
+
+  <p>On Linux, file permissions are controlled via <code>chmod</code> (change mode) and <code>chown</code> (change owner). The file owner can grant or revoke permissions for themselves, their group, and all other users:</p>
+
+  <ul>
+    <li><code>chmod 700 myfile</code>: owner gets read/write/execute; all others get nothing</li>
+    <li><code>chown root myfile</code>: ownership transferred to root. In DAC, the owner can give away ownership.</li>
+  </ul>
+
+  <p>This flexibility is DAC's strength and weakness. Owners can configure permissions precisely, but if they grant access carelessly (for convenience or by mistake), the model provides no enforcement backstop.</p>
+
+  <h2>attribute-based access control (ABAC)</h2>
+
+  <p>ABAC is the most dynamic and flexible access control model. Rather than fixed roles or clearance levels, access is determined by evaluating a combination of attributes at the time of the request. This allows fine-grained, context-sensitive decisions that simpler models cannot express.</p>
+
+  <h3>attribute categories</h3>
+
+  <dl class="def">
+    <dt>User attributes</dt>
+    <dd>Username, role, department, organization, security clearance, job title.
+      <span class="detail">Example: role = nurse, department = cardiology, clearance = standard.</span>
+    </dd>
+    <dt>Resource attributes</dt>
+    <dd>File name, data sensitivity level, resource owner, creation date, classification.
+      <span class="detail">Example: sensitivity = high, owner = HR department, type = patient record.</span>
+    </dd>
+    <dt>Environment attributes</dt>
+    <dd>Time of access, user location, current security alert level, device type.
+      <span class="detail">Example: time = 02:00, location = off-site, device = personal (unmanaged).</span>
+    </dd>
+  </dl>
+
+  <p>Example: a company's SharePoint site shows different content based on whether a user is accessing from within the corporate office or remotely via VPN — same user, same credentials, different access based on environment attributes. In healthcare, a nurse may access basic patient data during working hours; a doctor may access sensitive records at any time during their shift.</p>
+
+  <h2>model comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>model</th>
+        <th>who controls access</th>
+        <th>basis for decision</th>
+        <th>flexibility</th>
+        <th>common use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Rule-Based</td><td>administrators</td><td>predefined rules (ACLs, conditions)</td><td>moderate</td><td>firewalls, routers, network policy</td></tr>
+      <tr><td>MAC</td><td>system / admins only</td><td>clearance vs. classification labels</td><td>very low</td><td>government, military, high-security systems</td></tr>
+      <tr><td>DAC</td><td>resource owner</td><td>owner's discretion</td><td>high</td><td>Windows/Linux file systems (default)</td></tr>
+      <tr><td>ABAC</td><td>policy engine</td><td>user + resource + environment attributes</td><td>very high</td><td>enterprise cloud, healthcare, complex orgs</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>MAC = mandatory. Strict. Clearance must meet or exceed resource classification. Only admins modify labels. Used in government/military. SELinux is the Linux implementation.</li>
+      <li>DAC = discretionary. Resource owner controls access. Default in Windows and Linux. <code>chmod</code> and <code>chown</code> on Linux.</li>
+      <li>ABAC = attribute-based. Most dynamic. Evaluates user + resource + environment attributes simultaneously. Use when context matters (time, location, device).</li>
+      <li>Rule-Based AC is the umbrella concept; MAC is an example of it. ACLs on firewalls are rule-based.</li>
+      <li>MAC clearance hierarchy (high to low): Top Secret → Secret → Confidential → Unclassified. A Secret-cleared user cannot access Top Secret resources.</li>
+      <li>DAC risk: owners may grant access too freely. No enforcement backstop if the owner makes a poor decision.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves a government system where users cannot change their own access permissions → <strong>MAC</strong></li>
+        <li>Scenario involves a user's clearance level determining what classified documents they can view → <strong>MAC</strong></li>
+        <li>Scenario involves a file owner granting a colleague read access to their document → <strong>DAC</strong></li>
+        <li>Scenario involves <code>chmod</code> or <code>chown</code> on Linux → <strong>DAC</strong></li>
+        <li>Scenario involves access based on role, time of day, and location simultaneously → <strong>ABAC</strong></li>
+        <li>Scenario involves a firewall rule blocking all traffic from a specific subnet → <strong>rule-based access control (ACL)</strong></li>
+        <li>Question asks which model SELinux implements → <strong>MAC</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>access_auth_authz / rule_based_access_control</span>
+  </div>
+
+</div>
+</body>
+</html>

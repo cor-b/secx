@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Control Policies / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/access_auth_authz/access_control_policies</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /access_auth_authz</a>
+
+  <span class="module-tag">lesson 07 / access, auth, authz / Access Control Policies</span>
+  <h1 class="module-title">Access Control Policies</h1>
+  <p class="subtitle">Rules that go beyond identity — evaluating context like location, device, and time before granting access, with separate systems to decide and enforce.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Access control policies define the rules for granting or denying access to resources. Three components work together: <strong>conditional access</strong> enforces policies based on real-time conditions beyond just identity (location, device, time), <strong>policy decision points</strong> evaluate whether a request satisfies defined policies and make the allow/deny call, and <strong>policy enforcement points</strong> act on that decision by granting or blocking access. The PDP decides; the PEP enforces.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">component 01</span>
+      <p class="card-name">Conditional Access</p>
+      <p class="card-desc">Policies that evaluate contextual factors beyond identity: location, device type, network, time of day. Access may require MFA or be blocked entirely depending on conditions.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">component 02</span>
+      <p class="card-name">Policy Decision Point</p>
+      <p class="card-desc">The brain. Evaluates the access request against defined policies and makes the allow or deny decision. Checks role, location, device, and other factors against the policy ruleset.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">component 03</span>
+      <p class="card-name">Policy Enforcement Point</p>
+      <p class="card-desc">The gatekeeper. Acts on the PDP's decision by physically granting or blocking access to the resource. Does not decide — only enforces what the PDP determined.</p>
+    </div>
+  </div>
+
+  <h2>conditional access</h2>
+
+  <p>Traditional access control checks identity and role. Conditional access adds a layer of context: the same user may be granted full access from a managed corporate device on the internal network, required to complete MFA when connecting remotely, or blocked entirely when accessing from an unrecognized location on a personal device.</p>
+
+  <h3>conditions evaluated</h3>
+  <ul>
+    <li><strong>Location:</strong> is the user on the corporate network, a known VPN, or an unfamiliar region?</li>
+    <li><strong>Device type:</strong> is the device a managed corporate device, a personal device, or a device with no MDM enrollment?</li>
+    <li><strong>Time of access:</strong> is the request within working hours or from an unusual time that warrants additional scrutiny?</li>
+    <li><strong>User risk:</strong> has the account shown suspicious behavior (password spray attempts, impossible travel) recently?</li>
+  </ul>
+
+  <h3>Microsoft Azure Active Directory Conditional Access</h3>
+  <p>Azure AD Conditional Access is the leading enterprise tool for this. Administrators configure policies like: "require MFA when accessing financial systems from outside the corporate network" or "block access entirely if the device is not enrolled in Intune." The policy evaluates in real time at the moment of each access request.</p>
+
+  <h2>policy decision points (PDP)</h2>
+
+  <p>A policy decision point is the component that evaluates whether an access request satisfies the organization's security policies. When a user tries to access a resource, the PDP receives information about the request (who, from where, on what device, at what time) and evaluates it against the defined ruleset. The outcome is a binary decision: permit or deny.</p>
+
+  <ul>
+    <li>The PDP does not enforce the decision — it only makes it</li>
+    <li>PDPs may consult multiple policy sources: identity claims, environmental data, resource classification</li>
+    <li>Example: user requests access to work email outside business hours. PDP checks the policy, determines this violates the time-of-access condition, returns a deny decision</li>
+  </ul>
+
+  <p><strong>AWS Identity and Access Management (IAM)</strong> functions as a policy decision point — it evaluates access requests to AWS resources against defined IAM policies and determines whether to allow or deny the action.</p>
+
+  <h2>policy enforcement points (PEP)</h2>
+
+  <p>A policy enforcement point is the component that acts on the PDP's decision. Once the PDP determines permit or deny, the PEP carries it out. The PEP sits between the user and the resource — it is the actual gate. If the PDP says deny, the PEP blocks access. If the PDP says permit, the PEP opens the path to the resource.</p>
+
+  <ul>
+    <li>The PEP does not make decisions — it only enforces what the PDP determined</li>
+    <li>Multiple PEPs may exist in a single architecture (one at the network boundary, one at the application layer)</li>
+    <li>Example: PDP denies a request from an unrecognized location. The PEP prevents the user from connecting to the sensitive system, returning an access denied response</li>
+  </ul>
+
+  <p><strong>Palo Alto Networks Next-Generation Firewall</strong> is a classic policy enforcement point — it receives allow/deny decisions and enforces them at the network layer by permitting or blocking traffic flows.</p>
+
+  <h2>PDP vs PEP</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Policy Decision Point (PDP)</th>
+        <th>Policy Enforcement Point (PEP)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>role</td><td>evaluates requests against policies</td><td>acts on the PDP's decision</td></tr>
+      <tr><td>function</td><td>makes the allow / deny call</td><td>grants or blocks access</td></tr>
+      <tr><td>analogy</td><td>judge</td><td>bailiff / gatekeeper</td></tr>
+      <tr><td>example tool</td><td>AWS IAM</td><td>Palo Alto NGFW</td></tr>
+      <tr><td>sees the user?</td><td>evaluates request metadata</td><td>sits between user and resource</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Conditional access = policies that consider context beyond identity (location, device, time). Stricter conditions trigger MFA or a full block.</li>
+      <li>Azure AD Conditional Access is the go-to enterprise tool for conditional access policies.</li>
+      <li>PDP = decision maker. Evaluates the request against policy. Returns permit or deny. Does not enforce.</li>
+      <li>PEP = enforcer. Acts on the PDP's decision. Grants or blocks actual access to the resource. Does not decide.</li>
+      <li>AWS IAM = PDP example. Palo Alto NGFW = PEP example.</li>
+      <li>The PDP and PEP work together: PDP says "deny," PEP blocks the connection. PDP says "permit," PEP opens the path.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves blocking access to sensitive data when a user is off the corporate network → <strong>conditional access</strong></li>
+        <li>Scenario involves requiring extra authentication based on the device type being used → <strong>conditional access</strong></li>
+        <li>Scenario involves a system evaluating whether an access request complies with defined security policies → <strong>policy decision point (PDP)</strong></li>
+        <li>Scenario involves a system that blocks or allows a connection based on a prior policy evaluation → <strong>policy enforcement point (PEP)</strong></li>
+        <li>Question asks which component makes the access decision → <strong>PDP</strong></li>
+        <li>Question asks which component carries out the access decision → <strong>PEP</strong></li>
+        <li>Question names AWS IAM and asks what role it plays → <strong>policy decision point</strong></li>
+        <li>Question names a next-generation firewall and asks what role it plays → <strong>policy enforcement point</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>access_auth_authz / access_control_policies</span>
+  </div>
+
+</div>
+</body>
+</html>
