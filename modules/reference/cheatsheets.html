@@ -68,6 +68,7 @@
     <li><a href="#arch">architecture &amp; resilience</a></li>
     <li><a href="#zerotrust">zero trust</a></li>
     <li><a href="#hardware">hardware security</a></li>
+    <li><a href="#endpoint">endpoint &amp; server</a></li>
     <li><a href="#crypto">crypto &amp; vendor</a></li>
   </ul>
 
@@ -395,6 +396,66 @@
       <tr><td>Durability</td><td>Recovers from physical/logical failures (circuits rerouting around a fault).</td></tr>
       <tr><td>Sustainability</td><td>Extends lifecycle, reduces replacements (self-healing polymers).</td></tr>
       <tr><td>Innovation</td><td>AI/ML predictive maintenance anticipating failures before they happen.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="endpoint">endpoint &amp; server</h2>
+
+  <h3>threat protection controls</h3>
+  <table>
+    <thead><tr><th>control</th><th>role</th><th>posture</th></tr></thead>
+    <tbody>
+      <tr><td>Anti-malware</td><td>detects/removes malicious software (signatures, behavior, heuristics)</td><td>preventive</td></tr>
+      <tr><td>Host-based firewall</td><td>filters inbound traffic by app/port/IP on the endpoint</td><td>preventive</td></tr>
+      <tr><td>HIDS</td><td>analyzes logs/config/behavior, alerts and logs</td><td>detective only</td></tr>
+      <tr><td>HIPS</td><td>detects (signature + anomaly) and actively blocks</td><td>preventive</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>HIDS detects; HIPS detects and blocks.</strong> Host-based firewalls commonly block private (10/172.16/192.168), loopback (127), multicast (224), and experimental (240) ranges.</p>
+
+  <h3>endpoint management</h3>
+  <table>
+    <thead><tr><th></th><th>Configuration management</th><th>Endpoint privilege management</th></tr></thead>
+    <tbody>
+      <tr><td>manages</td><td>settings, software, updates</td><td>user permissions / access levels</td></tr>
+      <tr><td>goal</td><td>consistency and compliance</td><td>least privilege</td></tr>
+      <tr><td>Windows</td><td>SCCM</td><td>LAPS (local admin password rotation)</td></tr>
+      <tr><td>Linux</td><td>Ansible (declarative playbooks)</td><td>sudo (/etc/sudoers)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>MDM features (within EMM)</h3>
+  <table>
+    <thead><tr><th>feature</th><th>what it does</th></tr></thead>
+    <tbody>
+      <tr><td>Application control</td><td>install, block, configure, or remove apps</td></tr>
+      <tr><td>Password / passcode</td><td>enforce strong passwords and biometrics</td></tr>
+      <tr><td>MFA</td><td>require extra factors, conditionally (e.g. by location)</td></tr>
+      <tr><td>Token-based access</td><td>certificate authentication, often with NAC</td></tr>
+      <tr><td>Patch management</td><td>central updates; block non-compliant devices</td></tr>
+      <tr><td>Remote wipe</td><td>erase lost/stolen devices (needs network); auto-wipe option</td></tr>
+      <tr><td>Geofencing</td><td>enforce policy by location via GPS/RFID</td></tr>
+    </tbody>
+  </table>
+
+  <h3>attack surface: monitor vs reduce</h3>
+  <table>
+    <thead><tr><th></th><th>Monitoring</th><th>Reduction</th></tr></thead>
+    <tbody>
+      <tr><td>purpose</td><td>observe and detect</td><td>act and shrink</td></tr>
+      <tr><td>with Nmap</td><td>identify open ports/services</td><td>decide which to close/disable</td></tr>
+      <tr><td>with Nessus</td><td>find vulnerabilities</td><td>guide patching/remediation</td></tr>
+      <tr><td>core tactics</td><td>scanning, SIEM, EDR, alerts</td><td>close ports, disable Telnet/FTP, harden to CIS, patch (SCCM/WSUS)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SIEM vs EDR</h3>
+  <table>
+    <thead><tr><th></th><th>SIEM</th><th>EDR</th></tr></thead>
+    <tbody>
+      <tr><td>focus</td><td>events across the whole environment</td><td>activity on individual endpoints</td></tr>
+      <tr><td>strength</td><td>aggregation, correlation, audit trail</td><td>real-time detection, isolation, ML</td></tr>
+      <tr><td>response</td><td>alerts the team</td><td>can quarantine the device itself</td></tr>
     </tbody>
   </table>
 

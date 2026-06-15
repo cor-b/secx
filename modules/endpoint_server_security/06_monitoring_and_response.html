@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring and Response / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/endpoint_server_security/monitoring_and_response</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /endpoint_server_security</a>
+
+  <span class="module-tag">lesson 06 / endpoint &amp; server security / Monitoring &amp; Response</span>
+  <h1 class="module-title">Monitoring &amp; Response</h1>
+  <p class="subtitle">Turning the constant noise of system activity into signal: deliberate logging, a SIEM to aggregate and correlate it, and EDR to detect and contain threats at the endpoint.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Monitoring and response is the continuous observation of system activity to detect, analyze, and respond to threats. Two pillars: <strong>event logging and monitoring</strong> records and reviews system and application activity to spot abnormal behavior (centralized and correlated through a SIEM), and <strong>EDR</strong> gives endpoints real-time visibility, automated detection, and the ability to isolate and quarantine malicious activity fast.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">pillar 01</span>
+      <p class="card-name">Logging &amp; Monitoring</p>
+      <p class="card-desc">Records system, app, user, and network events into logs and audit trails. Centralized and correlated by a SIEM for real-time detection and forensics.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">pillar 02</span>
+      <p class="card-name">EDR</p>
+      <p class="card-desc">Endpoint detection and response: continuous endpoint visibility, machine-learning detection of unknown threats, and rapid isolation of compromised devices.</p>
+    </div>
+  </div>
+
+  <h2>logging and monitoring</h2>
+
+  <p>Logs capture system events, application events, user actions, and network activity. Defenders analyze them to find indicators of attack and compromise and to reconstruct attack timelines. The core challenge: you cannot log everything, each log consumes processing, memory, and storage, so logging too much degrades the systems you protect, while logging too little leaves gaps. This balance demands deliberate decisions about what to log.</p>
+
+  <h4>audit log management plan</h4>
+  <ul>
+    <li>Defines what is logged, how long logs are retained, and how they are backed up</li>
+    <li>Sets how often logs are reviewed</li>
+    <li>Protects logs from unauthorized deletion, sometimes requiring two-person approval for any log modification or deletion</li>
+  </ul>
+
+  <h4>thresholds and audit trails</h4>
+  <p>Deciding <strong>thresholds</strong> matters: log every failed login, or only after the third attempt? Too much floods the system; too little misses a brute-force attack. Logging user additions, modifications, and deletions maintains visibility, since attackers often make such changes after a breach. An <strong>audit trail</strong> is a detailed record of transactions and activities, noting whether attempts succeeded or failed. Attackers may try to cover their tracks (<strong>scrubbing the logs</strong>); missing time entries or unexplained gaps are signs of tampering.</p>
+
+  <h4>SIEM</h4>
+  <p>A Security Information and Event Management (SIEM) platform combines security event management and security information management, and is typically run by a Security Operations Center (SOC). Tools include ArcSight, AlienVault, and QRadar. Two core strengths:</p>
+  <ul>
+    <li><strong>Data aggregation:</strong> collects logs from many sources (DHCP, DNS, routers, firewalls, IDS) into one centralized database</li>
+    <li><strong>Data correlation:</strong> connects events across sources, normalizing timestamps to a standard like UTC so a timeline can be assembled automatically</li>
+  </ul>
+  <p>SIEMs provide real-time monitoring and automated alerts, and serve as a central repository for regulatory audits and forensic analysis.</p>
+
+  <h2>endpoint detection and response (EDR)</h2>
+
+  <p>EDR gives security teams deep visibility over endpoints and detects and responds to threats. Unlike simple anti-malware (which focuses on known threats), EDR continuously monitors processes, file access, and network activity, and notices changes from the device's baseline, so it can identify previously unknown attack patterns and ongoing attacks.</p>
+
+  <ul>
+    <li><strong>Isolation:</strong> on detecting suspicious behavior, EDR can immediately disconnect the device from the network while still allowing remote access for investigation, stopping malware or data exfiltration from spreading</li>
+    <li><strong>Machine learning:</strong> ML models learn normal behavior and flag subtle anomalies (unfamiliar connections, unauthorized scripts) that traditional tools miss, even threats never seen before</li>
+    <li><strong>Forensics:</strong> historical data shows how an attack started, which files were affected, and how it spread, e.g. a ransomware timeline from download to encryption</li>
+    <li><strong>Remediation:</strong> after isolation, teams analyze the device, find the entry point, eradicate the threat, then safely reconnect</li>
+  </ul>
+
+  <h2>logging vs EDR</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Logging / SIEM</th>
+        <th>EDR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>focus</td><td>events across the whole environment</td><td>activity on individual endpoints</td></tr>
+      <tr><td>strength</td><td>aggregation, correlation, audit trail</td><td>real-time detection, isolation, ML</td></tr>
+      <tr><td>response</td><td>alerts the team</td><td>can quarantine the device itself</td></tr>
+      <tr><td>operated by</td><td>SOC analysts</td><td>endpoint security teams</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>You cannot log everything: balance coverage against performance and storage. An audit log management plan defines what/retention/backup/review.</li>
+      <li>Protect log integrity (e.g. two-person approval for deletion). "Scrubbing the logs" / missing time gaps = tampering.</li>
+      <li>SIEM = SEM + SIM, run by a SOC. Core functions: data aggregation (collect) and data correlation (connect, normalize to UTC). Tools: ArcSight, AlienVault, QRadar.</li>
+      <li>EDR monitors endpoints in real time, uses machine learning to catch unknown threats, and can isolate/quarantine a compromised device.</li>
+      <li>EDR vs anti-malware: anti-malware blocks known threats; EDR detects unknown patterns and responds/contains.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves aggregating and correlating logs from many devices in one platform → <strong>SIEM</strong></li>
+        <li>Scenario involves normalizing timestamps to UTC to build an attack timeline → <strong>SIEM data correlation</strong></li>
+        <li>Scenario involves isolating a compromised laptop while keeping it reachable for investigation → <strong>EDR</strong></li>
+        <li>Scenario involves machine learning catching a never-before-seen endpoint threat → <strong>EDR</strong></li>
+        <li>Scenario involves deciding to log failed logins only after the third attempt → <strong>logging threshold</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>endpoint_server_security / monitoring_and_response</span>
+  </div>
+
+</div>
+</body>
+</html>

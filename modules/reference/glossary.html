@@ -168,6 +168,7 @@
       <tr><td class="term">EDR</td><td class="expand">Endpoint Detection and Response</td><td class="mean">Endpoint security tooling, often with built-in file integrity monitoring.</td></tr>
       <tr><td class="term">EF</td><td class="expand">Exposure Factor</td><td class="mean">Percentage of asset value lost if a threat is realized.</td></tr>
       <tr><td class="term">EHR</td><td class="expand">Electronic Health Records</td><td class="mean">Digital health records incentivized under HITECH.</td></tr>
+      <tr><td class="term">EMM</td><td class="expand">Enterprise Mobility Management</td><td class="mean">Broad strategy/suite for managing mobile devices; MDM is its technical component.</td></tr>
       <tr><td class="term">EOL</td><td class="expand">End of Life</td><td class="mean">Vendor stops selling/developing; patches may still exist at a premium.</td></tr>
       <tr><td class="term">EOSL</td><td class="expand">End of Service Life</td><td class="mean">All support and patches end; critical security threshold.</td></tr>
       <tr><td class="term">EOS</td><td class="expand">End of Support</td><td class="mean">Vendor stops issuing patches and security updates.</td></tr>
@@ -191,6 +192,7 @@
       <tr class="alpha" id="h"><th colspan="3">H</th></tr>
       <tr><td class="term">HIDS</td><td class="expand">Host-based Intrusion Detection System</td><td class="mean">IDS deployed on an individual endpoint.</td></tr>
       <tr><td class="term">HIPAA</td><td class="expand">Health Insurance Portability and Accountability Act</td><td class="mean">US law protecting patient health information (PHI).</td></tr>
+      <tr><td class="term">HIPS</td><td class="expand">Host-based Intrusion Prevention System</td><td class="mean">Host agent that detects and actively blocks attacks (vs HIDS, which only detects).</td></tr>
       <tr><td class="term">HITECH</td><td class="expand">Health Information Technology for Economic and Clinical Health Act</td><td class="mean">Strengthens HIPAA and incentivizes EHR adoption.</td></tr>
       <tr><td class="term">HSM</td><td class="expand">Hardware Security Module</td><td class="mean">Dedicated device for generating and protecting cryptographic keys.</td></tr>
 
@@ -217,12 +219,14 @@
       <tr><td class="term">KDC</td><td class="expand">Key Distribution Center</td><td class="mean">Kerberos component that issues TGTs and service tickets.</td></tr>
 
       <tr class="alpha" id="l"><th colspan="3">L</th></tr>
+      <tr><td class="term">LAPS</td><td class="expand">Local Administrator Password Solution</td><td class="mean">Windows tool rotating unique local-admin passwords stored in AD; blocks lateral movement.</td></tr>
       <tr><td class="term">LGPD</td><td class="expand">Lei Geral de Proteção de Dados</td><td class="mean">Brazil's data protection law, modeled on GDPR.</td></tr>
       <tr><td class="term">LUKS</td><td class="expand">Linux Unified Key Setup</td><td class="mean">Linux disk-encryption key management, used via Cryptsetup (AES).</td></tr>
 
       <tr class="alpha" id="m"><th colspan="3">M</th></tr>
       <tr><td class="term">MAC</td><td class="expand">Mandatory Access Control</td><td class="mean">Strict clearance-vs-classification model; admins only (SELinux).</td></tr>
       <tr><td class="term">MD5</td><td class="expand">Message Digest 5</td><td class="mean">128-bit hash, now deprecated due to collisions.</td></tr>
+      <tr><td class="term">MDM</td><td class="expand">Mobile Device Management</td><td class="mean">Technical controls enforcing security policy on mobile devices (component of EMM).</td></tr>
       <tr><td class="term">MEA</td><td class="expand">Monitor, Evaluate, Assess</td><td class="mean">COBIT management domain for performance and compliance monitoring.</td></tr>
       <tr><td class="term">MEF</td><td class="expand">Mission-Essential Function</td><td class="mean">Core activity an organization must sustain; identified in a BIA.</td></tr>
       <tr><td class="term">MFA</td><td class="expand">Multi-Factor Authentication</td><td class="mean">Two or more factors from different categories (know/have/are).</td></tr>
@@ -301,6 +305,7 @@
       <tr><td class="term">SLA</td><td class="expand">Service Level Agreement</td><td class="mean">Contract defining uptime, response times, and performance metrics.</td></tr>
       <tr><td class="term">SLE</td><td class="expand">Single Loss Expectancy</td><td class="mean">Loss from one occurrence of a risk: AV × EF.</td></tr>
       <tr><td class="term">SOAP</td><td class="expand">Simple Object Access Protocol</td><td class="mean">Strict XML API style for high-security, reliable transactions.</td></tr>
+      <tr><td class="term">SOC</td><td class="expand">Security Operations Center</td><td class="mean">Team that runs monitoring/response; the primary users of a SIEM.</td></tr>
       <tr><td class="term">SOC 2</td><td class="expand">Service Organization Control 2</td><td class="mean">AICPA audit report on a service provider's controls (Type I vs II).</td></tr>
       <tr><td class="term">SOX</td><td class="expand">Sarbanes-Oxley Act</td><td class="mean">US law mandating financial reporting accuracy and internal controls.</td></tr>
       <tr><td class="term">SP</td><td class="expand">Service Provider</td><td class="mean">App that delegates authentication to an IdP (Slack, Dropbox, Salesforce).</td></tr>
@@ -323,6 +328,7 @@
 
       <tr class="alpha" id="u"><th colspan="3">U</th></tr>
       <tr><td class="term">UEFI</td><td class="expand">Unified Extensible Firmware Interface</td><td class="mean">Modern firmware standard enabling Secure Boot.</td></tr>
+      <tr><td class="term">UFW</td><td class="expand">Uncomplicated Firewall</td><td class="mean">Simple front-end for managing Linux host firewall rules.</td></tr>
 
       <tr class="alpha" id="v"><th colspan="3">V</th></tr>
       <tr><td class="term">VDI</td><td class="expand">Virtual Desktop Infrastructure</td><td class="mean">Hosted virtual desktops; a deployment target for endpoint agents.</td></tr>
@@ -360,11 +366,14 @@
     <tbody>
       <tr><td class="term">Air-gapped network</td><td class="mean">Network physically isolated from all external connections; highest isolation.</td></tr>
       <tr><td class="term">Always-on VPN</td><td class="mean">VPN that auto-connects on startup and stays active regardless of location.</td></tr>
+      <tr><td class="term">Application control</td><td class="mean">Restricts which apps can run via allow lists (permitted) and block lists (denied).</td></tr>
       <tr><td class="term">Asset attestation</td><td class="mean">Verifying an asset's security posture/compliance; failing assets are quarantined.</td></tr>
       <tr><td class="term">Attack surface</td><td class="mean">Total set of entry points an attacker could exploit; reduced through hardening.</td></tr>
       <tr><td class="term">Attestation</td><td class="mean">Signed message from an IdP to an SP confirming a user is authenticated (SAML/JWT).</td></tr>
+      <tr><td class="term">Audit trail</td><td class="mean">Detailed record of system transactions noting whether each attempt succeeded or failed.</td></tr>
       <tr><td class="term">Bastion host</td><td class="mean">Hardened, minimal-service host that controls and absorbs external access.</td></tr>
       <tr><td class="term">BitLocker</td><td class="mean">Windows full-disk encryption (AES), often using a TPM to manage keys.</td></tr>
+      <tr><td class="term">Browser isolation</td><td class="mean">Runs the browser in a VM/container/remote server to contain web threats off the host.</td></tr>
       <tr><td class="term">Conditional access</td><td class="mean">Access policy that evaluates context (location, device, time), not just identity.</td></tr>
       <tr><td class="term">Continuous authorization</td><td class="mean">Re-evaluating access permissions throughout a session, not just at login.</td></tr>
       <tr><td class="term">Data controller</td><td class="mean">Party deciding why/how personal data is processed; bears primary GDPR responsibility.</td></tr>
@@ -383,17 +392,21 @@
       <tr><td class="term">Due diligence</td><td class="mean">Thorough evaluation of a vendor before entering a partnership.</td></tr>
       <tr><td class="term">Federation</td><td class="mean">Trust shared across organizations so home credentials work elsewhere (eduGAIN).</td></tr>
       <tr><td class="term">FileVault</td><td class="mean">macOS full-disk encryption (AES) built into the operating system.</td></tr>
+      <tr><td class="term">Geofencing</td><td class="mean">Virtual boundary (GPS/RFID) that auto-enforces device policy on enter/exit.</td></tr>
       <tr><td class="term">Hardening</td><td class="mean">Reducing attack surface by removing unnecessary services, ports, and accounts.</td></tr>
       <tr><td class="term">Hashing</td><td class="mean">One-way function producing a fixed-size fingerprint of input data.</td></tr>
       <tr><td class="term">Hypervisor</td><td class="mean">Software layer between physical hardware and VMs that creates virtual hardware.</td></tr>
       <tr><td class="term">Identity proofing</td><td class="mean">Verifying a user's real identity before issuing credentials.</td></tr>
       <tr><td class="term">Jump box</td><td class="mean">Hardened gateway admins connect through to reach systems in a secure zone.</td></tr>
+      <tr><td class="term">Lateral movement</td><td class="mean">Attacker moving from one compromised system to others; LAPS and segmentation limit it.</td></tr>
+      <tr><td class="term">Least privilege</td><td class="mean">Granting users only the access their role needs, nothing more.</td></tr>
       <tr><td class="term">Measured Boot</td><td class="mean">Records boot-component hashes to the TPM for attestation; detects but does not block.</td></tr>
       <tr><td class="term">Micro-segmentation</td><td class="mean">Isolating individual workloads so a breach cannot move laterally.</td></tr>
       <tr><td class="term">Need-to-know</td><td class="mean">Access granted only with both clearance and a demonstrated need.</td></tr>
       <tr><td class="term">Normalization</td><td class="mean">SIEM converting diverse log formats into one structure for correlation.</td></tr>
       <tr><td class="term">Piggybacking</td><td class="mean">Entering a secure area by being let in by an authorized person (with awareness).</td></tr>
       <tr><td class="term">Provisioning</td><td class="mean">Assigning access rights based on a user's role.</td></tr>
+      <tr><td class="term">Remote wipe</td><td class="mean">MDM feature erasing a lost/stolen device; needs network, can auto-wipe on failed logins.</td></tr>
       <tr><td class="term">Residual risk</td><td class="mean">Risk remaining after controls are applied.</td></tr>
       <tr><td class="term">Risk appetite</td><td class="mean">Overall amount of risk an organization is willing to take.</td></tr>
       <tr><td class="term">Risk tolerance</td><td class="mean">Acceptable variation around the risk appetite for a specific activity.</td></tr>
@@ -401,6 +414,7 @@
       <tr><td class="term">Screened subnet</td><td class="mean">Another name for the DMZ: a buffer zone between internal and external networks.</td></tr>
       <tr><td class="term">Secure Boot</td><td class="mean">Firmware (UEFI) check preventing unauthorized code from loading at startup.</td></tr>
       <tr><td class="term">Secure Enclave</td><td class="mean">Apple coprocessor with its own processor/memory for keys and biometric data.</td></tr>
+      <tr><td class="term">Security context</td><td class="mean">SELinux label set (user/role/type/level) that drives access decisions by policy.</td></tr>
       <tr><td class="term">Self-healing hardware</td><td class="mean">Hardware that auto-detects, corrects, and recovers from faults (e.g. RAID rebuild).</td></tr>
       <tr><td class="term">Self-provisioning</td><td class="mean">User-initiated access requests via a portal, then approved by policy or admin.</td></tr>
       <tr><td class="term">Separation of duties</td><td class="mean">No single person controls all of a critical process; fraud prevention.</td></tr>

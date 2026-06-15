@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/endpoint_server_security/application_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /endpoint_server_security</a>
+
+  <span class="module-tag">lesson 05 / endpoint &amp; server security / Application Management</span>
+  <h1 class="module-title">Application Management</h1>
+  <p class="subtitle">Controlling what software can run, and containing the riskiest activity (web browsing) away from the rest of the system.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Application management oversees and controls applications so they do not introduce vulnerabilities or compromise system integrity. Two concepts: <strong>application control</strong> uses policies and tools (allow lists and block lists) to restrict which applications can run, and <strong>browser isolation</strong> separates web-browsing activity from the rest of the system, containing web-based threats in an isolated environment.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Application Control</p>
+      <p class="card-desc">Policies and tools that decide which apps can run, using allow lists and block lists. Prevents unauthorized or malicious software from executing.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Browser Isolation</p>
+      <p class="card-desc">Separates browsing from the OS by running the browser in a VM, remote server, or container, so web threats stay contained.</p>
+    </div>
+  </div>
+
+  <h2>application control</h2>
+
+  <p>Application control decides which applications can run on a system, preventing unauthorized or malicious software from compromising the network. It uses two list types (formerly called whitelists and blacklists):</p>
+
+  <ul>
+    <li><strong>Allow lists:</strong> specify the applications that are permitted to run</li>
+    <li><strong>Block lists:</strong> specify applications that are not permitted (for example games or unapproved software)</li>
+  </ul>
+
+  <p>Application control is commonly implemented through Windows Group Policy, where administrators define rules and push allow/block list policies to all workstations in the domain, preventing unapproved software from being installed. More advanced solutions, such as a HIPS, can block not just installation but the <strong>execution</strong> of certain files, like portable executables that run without being installed, stopping harmful software before it ever runs.</p>
+
+  <h2>browser isolation</h2>
+
+  <p>Browser isolation separates web-browsing activity from the rest of the system, preventing web-based threats from spreading. It runs the browser in an isolated environment, a virtual machine, remote server, or secure container, creating a barrier between dangerous websites and the main OS. Malicious content like drive-by downloads, malware, or harmful scripts stays contained within the isolated environment.</p>
+
+  <p>In the enterprise, browser isolation can be cloud-based or on-premises, integrated with secure web gateways or firewalls. Administrators route web traffic through isolated environments by policy: high-risk sites or specific user groups can be auto-isolated, and policies can enforce read-only browsing or block downloads entirely. Centralized consoles let security teams monitor browsing, adjust isolation rules, and apply dynamic isolation based on real-time site reputation or user behavior.</p>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Application Control</th>
+        <th>Browser Isolation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>purpose</td><td>restrict which apps can run</td><td>contain web-based threats</td></tr>
+      <tr><td>mechanism</td><td>allow lists / block lists</td><td>run browser in VM/container/remote</td></tr>
+      <tr><td>typical tool</td><td>Windows Group Policy, HIPS</td><td>secure web gateway, isolation service</td></tr>
+      <tr><td>stops</td><td>unauthorized software execution</td><td>drive-by downloads, malicious scripts</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Application control = decide which apps run, via allow lists (permitted) and block lists (denied). Formerly whitelists/blacklists.</li>
+      <li>Windows Group Policy pushes allow/block rules to all domain workstations. A HIPS can block execution of portable executables, not just installation.</li>
+      <li>Browser isolation runs the browser in a VM, container, or remote server so web threats never touch the host OS.</li>
+      <li>Isolation can be cloud-based or on-premises, and can enforce read-only browsing or block downloads.</li>
+      <li>Application control governs local software; browser isolation governs web activity, they are complementary.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves permitting only approved applications to run → <strong>application control (allow list)</strong></li>
+        <li>Scenario involves blocking games or unapproved software → <strong>application control (block list)</strong></li>
+        <li>Scenario involves stopping a portable executable from running → <strong>application control via HIPS</strong></li>
+        <li>Scenario involves containing risky web browsing away from the OS → <strong>browser isolation</strong></li>
+        <li>Scenario involves running the browser in a remote container with downloads blocked → <strong>browser isolation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>endpoint_server_security / application_management</span>
+  </div>
+
+</div>
+</body>
+</html>
