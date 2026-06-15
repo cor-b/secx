@@ -66,6 +66,7 @@
     <li><a href="#testing">testing &amp; dev</a></li>
     <li><a href="#risk">risk &amp; governance</a></li>
     <li><a href="#arch">architecture &amp; resilience</a></li>
+    <li><a href="#zerotrust">zero trust</a></li>
     <li><a href="#crypto">crypto &amp; vendor</a></li>
   </ul>
 
@@ -269,6 +270,72 @@
       <tr><td>Full interruption</td><td>Production taken offline to test real failover.</td></tr>
       <tr><td>Active-active</td><td>Both nodes run simultaneously and share load.</td></tr>
       <tr><td>Active-standby</td><td>Backup idle until the primary fails.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="zerotrust">zero trust</h2>
+
+  <h3>secure zones &amp; access hosts</h3>
+  <table>
+    <thead><tr><th>element</th><th>purpose</th><th>placement</th></tr></thead>
+    <tbody>
+      <tr><td>Screened subnet (DMZ)</td><td>buffer hosting internet-facing servers</td><td>between trusted and untrusted zones</td></tr>
+      <tr><td>Bastion host</td><td>hardens and controls external access</td><td>exposed area, inside the screened subnet</td></tr>
+      <tr><td>Jump box</td><td>secure administrative gateway into secure zones</td><td>between admins and protected systems</td></tr>
+      <tr><td>Air-gapped network</td><td>complete physical isolation</td><td>no external connections at all</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Bastion host vs jump box:</strong> the bastion host controls inbound external access; the jump box is the gateway admins pass through to reach internal systems.</p>
+
+  <h3>VPN models</h3>
+  <table>
+    <thead><tr><th>model</th><th>connects</th><th>operates at</th><th>best for</th></tr></thead>
+    <tbody>
+      <tr><td>Client-server</td><td>one device to a server</td><td>device level</td><td>remote individual access</td></tr>
+      <tr><td>Site-to-site</td><td>whole network to whole network</td><td>router level</td><td>connecting offices/branches</td></tr>
+      <tr><td>Always-on</td><td>device to network, continuously</td><td>device level, persistent</td><td>high-security, mobile workforce</td></tr>
+    </tbody>
+  </table>
+
+  <h3>segmentation vs micro-segmentation</h3>
+  <table>
+    <thead><tr><th></th><th>Segmentation</th><th>Micro-segmentation</th></tr></thead>
+    <tbody>
+      <tr><td>granularity</td><td>network zones</td><td>individual workloads</td></tr>
+      <tr><td>policy basis</td><td>zone role (financial, guest)</td><td>server role, app tags, templates</td></tr>
+      <tr><td>blast radius</td><td>contained to a segment</td><td>contained to one workload</td></tr>
+      <tr><td>typical use</td><td>broad areas of the network</td><td>data center / cloud workloads</td></tr>
+    </tbody>
+  </table>
+
+  <h3>deperimeterization technologies</h3>
+  <table>
+    <thead><tr><th>tech</th><th>scope</th><th>what it does</th></tr></thead>
+    <tbody>
+      <tr><td>SDN</td><td>within an enterprise network</td><td>software control via control/data/management planes</td></tr>
+      <tr><td>SD-WAN</td><td>across wide geographic areas</td><td>secures branch/remote links, routes by application</td></tr>
+      <tr><td>SASE</td><td>cloud-delivered, anywhere</td><td>unifies firewall + SWG + ZTNA into one service</td></tr>
+    </tbody>
+  </table>
+
+  <h3>zero trust access management</h3>
+  <table>
+    <thead><tr><th>concept</th><th>question it answers</th><th>when it acts</th></tr></thead>
+    <tbody>
+      <tr><td>Subject-object relationship</td><td>who may access what?</td><td>defined up front, before access</td></tr>
+      <tr><td>Continuous authorization</td><td>is this access still appropriate?</td><td>throughout the entire session</td></tr>
+      <tr><td>Context-based reauthentication</td><td>is this still the right person, here?</td><td>when context changes (location, connection)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>REST vs SOAP</h3>
+  <table>
+    <thead><tr><th></th><th>REST</th><th>SOAP</th></tr></thead>
+    <tbody>
+      <tr><td>format</td><td>lightweight (JSON common)</td><td>strict XML</td></tr>
+      <tr><td>strengths</td><td>fast, simple, scalable</td><td>security, reliability, strict validation</td></tr>
+      <tr><td>built-in features</td><td>minimal</td><td>error handling, transactions</td></tr>
+      <tr><td>typical use</td><td>web/e-commerce, social, payments</td><td>finance, government, telecom</td></tr>
     </tbody>
   </table>
 
