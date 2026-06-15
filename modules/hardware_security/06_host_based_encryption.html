@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host-Based Encryption / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  ol.phases { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: phase; }
+  ol.phases li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 38px; position: relative; line-height: 1.65; counter-increment: phase; }
+  ol.phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; color: var(--magenta); font-family: var(--font-mono); font-size: 13px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/hardware_security/host_based_encryption</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /hardware_security</a>
+
+  <span class="module-tag">lesson 06 / hardware security / Host-Based Encryption</span>
+  <h1 class="module-title">Host-Based Encryption</h1>
+  <p class="subtitle">Encryption managed by the operating system to protect data at rest. Each major OS ships its own full-disk tool, all built on AES.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Host-based encryption is encryption managed and controlled by the local operating system, used to secure <strong>data at rest</strong>: the contents of a storage device when the OS is not running. It prevents unauthorized access if someone gains physical access to a device. Each OS provides its own full-disk tool: <strong>BitLocker</strong> on Windows, <strong>LUKS/Cryptsetup</strong> on Linux, and <strong>FileVault</strong> on macOS, all using AES encryption.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">windows</span>
+      <p class="card-name">BitLocker</p>
+      <p class="card-desc">Built-in full-disk encryption using AES. Often relies on a TPM to manage keys securely within the device.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">linux</span>
+      <p class="card-name">LUKS / Cryptsetup</p>
+      <p class="card-desc">Cryptsetup with the Linux Unified Key Setup (LUKS) manages keys and encrypts disk partitions with AES.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">macos</span>
+      <p class="card-name">FileVault</p>
+      <p class="card-desc">Apple's built-in full-disk encryption using AES, protecting data when the Mac is powered off or unattended.</p>
+    </div>
+  </div>
+
+  <h2>data at rest</h2>
+
+  <p>Host-based encryption protects data at rest, the data stored on a device when the operating system is not running. This is essential for preventing unauthorized access to sensitive information, especially if a device is lost, stolen, or physically accessed. Because the OS manages the encryption, decryption only happens once the correct credentials (passphrase, key, or TPM-backed key) are supplied.</p>
+
+  <h2>the tools</h2>
+
+  <h3>BitLocker (Windows)</h3>
+  <p>BitLocker is built into Windows and uses AES to encrypt the entire disk. It often relies on a TPM to manage encryption keys securely within the device, so even if the computer is stolen, the data stays inaccessible without the correct credentials.</p>
+
+  <h3>LUKS / Cryptsetup (Linux)</h3>
+  <p>On Linux, Cryptsetup with the Linux Unified Key Setup (LUKS) provides full-disk encryption comparable to BitLocker, using AES. LUKS acts as the layer that manages encryption keys and ensures data is encrypted before it is written and decrypted when read, keeping data at rest unreadable without the correct passphrase or key.</p>
+
+  <h3>FileVault (macOS)</h3>
+  <p>FileVault offers full-disk encryption built into macOS, using the same AES standard to protect data on Apple devices when they are shut down or left unattended.</p>
+
+  <h2>setting up LUKS on Linux</h2>
+
+  <p>The typical Cryptsetup + LUKS workflow to encrypt a disk (for example <code>/dev/sdb</code>):</p>
+
+  <ol class="phases">
+    <li>Identify the target disk with <code>lsblk</code> and unmount it (<code>umount /dev/sdb</code>).</li>
+    <li>Optionally wipe it with random data (<code>dd if=/dev/urandom of=/dev/sdb</code>).</li>
+    <li>Initialize encryption headers: <code>cryptsetup luksFormat /dev/sdb</code> (set a passphrase).</li>
+    <li>Open the encrypted volume to a mapped device: <code>cryptsetup open /dev/sdb encrypted_disk</code>.</li>
+    <li>Create a file system on it: <code>mkfs.ext4 /dev/mapper/encrypted_disk</code>.</li>
+    <li>Mount it (<code>mount /dev/mapper/encrypted_disk /mnt</code>); when done, unmount and <code>cryptsetup close encrypted_disk</code> to take it offline while keeping it encrypted.</li>
+  </ol>
+
+  <h2>tools by platform</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>tool</th>
+        <th>notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Windows</td><td>BitLocker</td><td>AES full-disk; often TPM-backed key management</td></tr>
+      <tr><td>Linux</td><td>Cryptsetup + LUKS</td><td>AES; LUKS manages keys and partition encryption</td></tr>
+      <tr><td>macOS</td><td>FileVault</td><td>AES full-disk; integrated into the OS</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Host-based encryption = OS-managed encryption protecting data at rest (device powered off / OS not running).</li>
+      <li>Match the tool to the OS: BitLocker (Windows), LUKS/Cryptsetup (Linux), FileVault (macOS). All use AES.</li>
+      <li>BitLocker often relies on a TPM to store and manage encryption keys, tying together two hardware-security topics.</li>
+      <li>LUKS is the key-management standard; Cryptsetup is the tool that uses it on Linux.</li>
+      <li>Host-based encryption protects against physical theft/access; it does not protect data while the system is running and unlocked.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves full-disk encryption on Windows with TPM-managed keys → <strong>BitLocker</strong></li>
+        <li>Scenario involves encrypting a Linux disk partition with a passphrase → <strong>LUKS / Cryptsetup</strong></li>
+        <li>Scenario involves built-in full-disk encryption on a Mac → <strong>FileVault</strong></li>
+        <li>Scenario involves protecting a stolen laptop's stored data → <strong>host-based (full-disk) encryption</strong></li>
+        <li>Scenario names <code>cryptsetup luksFormat</code> → <strong>LUKS on Linux</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>hardware_security / host_based_encryption</span>
+  </div>
+
+</div>
+</body>
+</html>

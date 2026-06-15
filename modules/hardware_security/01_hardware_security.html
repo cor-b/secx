@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  strong { color: var(--cyan); font-weight: 500; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/hardware_security/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /hardware_security</a>
+
+  <span class="module-tag">lesson 01 / hardware security / Overview</span>
+  <h1 class="module-title">Hardware Security</h1>
+  <p class="subtitle">Securing systems from the silicon up: trusted foundations, verified boot, protected crypto operations, and encryption built into the hardware itself.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3, Objective 3.4: given a scenario, <strong>implement hardware security technologies and techniques</strong>. Hardware security starts the moment a device powers on and extends to protecting data at rest. Specialized chips and encryption hardware establish trust, verify the boot sequence, isolate sensitive operations, and keep data unreadable to anyone without the keys. This section covers roots of trust, boot options, security coprocessors, self-encrypting drives, host-based encryption, self-healing hardware, and virtual hardware.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">theme 01</span>
+      <p class="card-name">Trust &amp; Boot</p>
+      <p class="card-desc">Roots of trust (TPM, vTPM, HSM) anchor cryptographic trust; Secure Boot and Measured Boot verify integrity before the OS loads.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 02</span>
+      <p class="card-name">Protected Execution</p>
+      <p class="card-desc">Security coprocessors (CPU security extensions, Apple Secure Enclave) isolate sensitive operations and keys from the main OS.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 03</span>
+      <p class="card-name">Encryption Hardware</p>
+      <p class="card-desc">Self-encrypting drives and host-based encryption (BitLocker, LUKS, FileVault) protect data at rest with hardware or OS-managed keys.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 04</span>
+      <p class="card-name">Resilience &amp; Virtualization</p>
+      <p class="card-desc">Self-healing hardware recovers from faults automatically; virtual hardware delivers scalable, efficient, cost-effective infrastructure.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>lesson</th>
+        <th>topic</th>
+        <th>key concepts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Roots of Trust</td><td>TPM (chip on motherboard), vTPM (VM emulation), HSM (standalone appliance)</td></tr>
+      <tr><td>03</td><td>Boot Options</td><td>Secure Boot (prevents, UEFI signatures), Measured Boot (records hashes to TPM, detects)</td></tr>
+      <tr><td>04</td><td>Security Coprocessors</td><td>CPU security extensions (Intel TXT, AMD SEV), Apple Secure Enclave</td></tr>
+      <tr><td>05</td><td>Self-Encrypting Drives</td><td>onboard encryption engine, transparent, FIPS 140-2 / IEEE 1667</td></tr>
+      <tr><td>06</td><td>Host-Based Encryption</td><td>BitLocker (Windows), LUKS/Cryptsetup (Linux), FileVault (macOS), AES, data at rest</td></tr>
+      <tr><td>07</td><td>Self-Healing Hardware</td><td>efficiency, durability, sustainability, innovation; RAID rebuild</td></tr>
+      <tr><td>08</td><td>Virtual Hardware</td><td>scalability, efficiency, cost-effectiveness; hypervisor, VMware vSphere</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>hardware_security / overview</span>
+  </div>
+
+</div>
+</body>
+</html>

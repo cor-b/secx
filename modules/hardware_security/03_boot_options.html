@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boot Options / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  ol.phases { margin: 0 0 24px; padding: 0; list-style: none; counter-reset: phase; }
+  ol.phases li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 38px; position: relative; line-height: 1.65; counter-increment: phase; }
+  ol.phases li::before { content: counter(phase, decimal-leading-zero); position: absolute; left: 0; color: var(--magenta); font-family: var(--font-mono); font-size: 13px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/hardware_security/boot_options</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /hardware_security</a>
+
+  <span class="module-tag">lesson 03 / hardware security / Boot Options</span>
+  <h1 class="module-title">Boot Options</h1>
+  <p class="subtitle">Verifying integrity before the OS loads. Secure Boot blocks untrusted code from running; Measured Boot records what loaded so tampering can be detected after the fact.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Boot options determine how a system starts and verifies its integrity before the operating system loads. Two work together with UEFI: <strong>Secure Boot</strong> ensures each component (firmware, OS loader, drivers) has a valid digital signature and blocks anything that fails, actively preventing unauthorized code. <strong>Measured Boot</strong> records cryptographic hashes of each component into the TPM to create a verifiable log, used for attestation to detect tampering. Secure Boot prevents; Measured Boot detects.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">option 01</span>
+      <p class="card-name">Secure Boot</p>
+      <p class="card-desc">Validates the digital signature of every boot component and blocks any that fail. Actively prevents unauthorized code from running. UEFI setting.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">option 02</span>
+      <p class="card-name">Measured Boot</p>
+      <p class="card-desc">Records cryptographic hashes of each component into the TPM as a verifiable log. Detects tampering for attestation, but does not block or halt.</p>
+    </div>
+  </div>
+
+  <h2>UEFI vs BIOS</h2>
+
+  <p>Secure Boot is enabled in the Unified Extensible Firmware Interface (UEFI) settings. UEFI is modern system firmware that replaces the older BIOS, adding a graphical interface, mouse support during boot, and improved security. It also supports disks larger than 2 TB, provides a CPU-independent architecture, and allows a pre-OS environment that can include networking and even web browsing.</p>
+
+  <h2>secure boot</h2>
+
+  <p>When enabled, Secure Boot performs three verifications during startup to ensure the system has not been compromised:</p>
+
+  <ol class="phases">
+    <li>Firmware checks the integrity of the UEFI executable files and the operating system loader to confirm they have not been tampered with.</li>
+    <li>Windows boot components verify the digital signature of each component before loading, blocking any that fail and triggering an alert.</li>
+    <li>Boot-critical drivers are validated against their known-good hashes; only verified drivers are allowed to load.</li>
+  </ol>
+
+  <p>The result is that the OS starts with only trusted, verified components, significantly reducing the risk of boot-level attacks. A key limitation: Secure Boot only functions with Windows, so it cannot be used with a dual-boot system or Linux.</p>
+
+  <h2>measured boot</h2>
+
+  <p>Measured Boot (sometimes called Trusted Boot) checks the integrity of software components during startup using cryptographic hashing, comparing each component against a known-good catalog of expected hash values. The device's TPM records the hashes of key boot stages (UEFI firmware, boot loader, OS kernel, critical drivers) into the TPM, building a verifiable log of the boot sequence.</p>
+
+  <p>Crucially, Measured Boot does not halt the boot process even when it detects a discrepancy, it records what happened. Those logs can be accessed by remote management systems, letting security teams verify integrity against known-good states and identify unauthorized modifications. The slight cost is a small increase in boot time.</p>
+
+  <h2>secure boot vs measured boot</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Secure Boot</th>
+        <th>Measured Boot</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>action</td><td>prevents (blocks) untrusted code</td><td>records / logs what loaded</td></tr>
+      <tr><td>mechanism</td><td>validates digital signatures</td><td>hashes components into the TPM</td></tr>
+      <tr><td>on tampering</td><td>blocks the component, alerts</td><td>logs it, does not halt</td></tr>
+      <tr><td>purpose</td><td>stop boot-level attacks</td><td>attestation / detection</td></tr>
+      <tr><td>needs a TPM?</td><td>no (uses UEFI signatures)</td><td>yes (stores measurements)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Secure Boot PREVENTS: it validates digital signatures and blocks unsigned/tampered components. Measured Boot DETECTS: it records hashes to the TPM but does not block.</li>
+      <li>Measured Boot stores its measurements in the TPM and is used for attestation. Secure Boot relies on UEFI digital signatures.</li>
+      <li>Secure Boot is a UEFI feature and only works with Windows, so no dual-boot or Linux.</li>
+      <li>UEFI replaces BIOS: GUI, mouse support, &gt;2 TB disks, CPU-independent, pre-OS environment.</li>
+      <li>If a question stresses "blocks untrusted code" → Secure Boot. If it stresses "creates a log to detect tampering" → Measured Boot.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves blocking unsigned drivers or boot loaders from running → <strong>Secure Boot</strong></li>
+        <li>Scenario involves recording a hash log of the boot sequence for later analysis → <strong>Measured Boot</strong></li>
+        <li>Scenario involves attestation of boot integrity to a remote system → <strong>Measured Boot</strong></li>
+        <li>Scenario notes the boot process is not halted despite detecting a change → <strong>Measured Boot</strong></li>
+        <li>Scenario involves enabling a firmware feature that requires Windows and breaks Linux dual-boot → <strong>Secure Boot</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>hardware_security / boot_options</span>
+  </div>
+
+</div>
+</body>
+</html>
