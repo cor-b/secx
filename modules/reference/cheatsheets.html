@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheat Sheets / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 40px; line-height: 1.55; max-width: 600px; }
+  .jump-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; padding: 0; list-style: none; }
+  .jump-nav a { display: inline-block; padding: 6px 12px; font-size: 12px; color: var(--ink-dim); text-decoration: none; border: 1px solid var(--rule); border-radius: 3px; transition: all 0.15s ease; letter-spacing: 0.04em; }
+  .jump-nav a:hover { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 6px; padding-top: 48px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 32px 0 14px; }
+  p.note { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin: 0 0 22px; max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 12px; font-size: 13.5px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.08em; padding: 8px 12px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 11px 12px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; line-height: 1.45; }
+  td:first-child { color: var(--cyan); white-space: nowrap; font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.92em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 6px; border-radius: 3px; }
+  strong { color: var(--amber); font-weight: 500; }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    table { font-size: 12.5px; }
+    td, th { padding: 8px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/reference/cheatsheets</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /reference</a>
+
+  <span class="module-tag">reference / Cheat Sheets</span>
+  <h1 class="module-title">Cheat Sheets</h1>
+  <p class="subtitle">Side-by-side comparison tables that pull one theme across every section. Built for the questions that make you choose between similar-sounding options.</p>
+
+  <ul class="jump-nav">
+    <li><a href="#access">access &amp; identity</a></li>
+    <li><a href="#testing">testing &amp; dev</a></li>
+    <li><a href="#risk">risk &amp; governance</a></li>
+    <li><a href="#arch">architecture &amp; resilience</a></li>
+    <li><a href="#crypto">crypto &amp; vendor</a></li>
+  </ul>
+
+  <h2 id="access">access &amp; identity</h2>
+
+  <h3>access control models</h3>
+  <table>
+    <thead><tr><th>model</th><th>who controls</th><th>basis</th><th>flexibility</th><th>example</th></tr></thead>
+    <tbody>
+      <tr><td>Rule-Based</td><td>administrators</td><td>predefined rules / conditions</td><td>moderate</td><td>firewall ACLs, business-hours access</td></tr>
+      <tr><td>MAC</td><td>system / admins only</td><td>clearance vs. classification labels</td><td>very low</td><td>government, military, SELinux</td></tr>
+      <tr><td>DAC</td><td>resource owner</td><td>owner's discretion</td><td>high</td><td>Windows/Linux files, <code>chmod</code>/<code>chown</code></td></tr>
+      <tr><td>RBAC</td><td>admins (via roles)</td><td>job-function role</td><td>moderate</td><td>AD groups, Linux user groups</td></tr>
+      <tr><td>ABAC</td><td>policy engine</td><td>user + resource + environment attributes</td><td>very high</td><td>healthcare, cloud, context-aware access</td></tr>
+    </tbody>
+  </table>
+
+  <h3>authentication factors</h3>
+  <table>
+    <thead><tr><th>factor</th><th>category</th><th>examples</th><th>weakness</th></tr></thead>
+    <tbody>
+      <tr><td>Something you know</td><td>knowledge</td><td>password, PIN, security question</td><td>phishable, guessable, reusable</td></tr>
+      <tr><td>Something you have</td><td>possession</td><td>phone OTP, authenticator app, token, smart card</td><td>can be lost or stolen</td></tr>
+      <tr><td>Something you are</td><td>inherence</td><td>fingerprint, face, iris, voice</td><td>spoofable; cannot be changed</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>MFA</strong> requires two or more factors from <em>different</em> categories. A password + PIN is still single-factor (both are "know"). A smart card + PIN is two-factor (have + know).</p>
+
+  <h3>identity &amp; SSO protocols</h3>
+  <table>
+    <thead><tr><th>protocol</th><th>scope</th><th>token / format</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>Kerberos</td><td>single domain (AD)</td><td>TGT + service ticket</td><td>KDC issues TGT, then TGS issues per-service tickets</td></tr>
+      <tr><td>Shibboleth</td><td>cross-domain / federated</td><td>SAML assertions</td><td>privacy-preserving: SP gets confirmation, not identity</td></tr>
+      <tr><td>SAML</td><td>enterprise / web SSO</td><td>XML assertion</td><td>signed attestation from IdP to SP</td></tr>
+      <tr><td>JWT / OIDC</td><td>web / API / mobile</td><td>signed JSON token</td><td>built on OAuth 2.0; compact claims</td></tr>
+    </tbody>
+  </table>
+
+  <h3>data roles &amp; responsibilities</h3>
+  <table>
+    <thead><tr><th>role</th><th>responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>Data owner</td><td>Business leader accountable for classification, access policy, and risk acceptance.</td></tr>
+      <tr><td>Data custodian</td><td>IT/security staff implementing the technical protection day to day.</td></tr>
+      <tr><td>Data steward</td><td>Subject-matter expert owning data quality, meaning, and accuracy.</td></tr>
+      <tr><td>Data controller</td><td>Decides why/how personal data is processed; primary GDPR responsibility.</td></tr>
+      <tr><td>Data processor</td><td>Processes data on the controller's documented instructions.</td></tr>
+      <tr><td>Data subject</td><td>The individual whose personal data is processed; holds rights.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="testing">testing &amp; development</h2>
+
+  <h3>application security testing</h3>
+  <table>
+    <thead><tr><th>method</th><th>when</th><th>what it sees</th><th>tools</th></tr></thead>
+    <tbody>
+      <tr><td>SAST</td><td>pre-deploy</td><td>source code, not running (white-box)</td><td>Checkmarx, Veracode, Fortify</td></tr>
+      <tr><td>DAST</td><td>pre-deploy</td><td>running app from outside (black-box)</td><td>OWASP ZAP, Burp Suite, Peach Fuzzer</td></tr>
+      <tr><td>IAST</td><td>pre-deploy</td><td>agent inside app during functional tests</td><td>Contrast Security, Veracode</td></tr>
+      <tr><td>RASP</td><td>post-deploy (runtime)</td><td>blocks attacks inside the live app (preventive)</td><td>Contrast Security, Imperva</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Contrast Security</strong> appears in both IAST and RASP, context (pre- vs post-deployment) tells them apart. RASP is the only one that <em>blocks</em> in production.</p>
+
+  <h3>CI/CD testing types</h3>
+  <table>
+    <thead><tr><th>type</th><th>scope</th><th>when it runs</th><th>key benefit</th></tr></thead>
+    <tbody>
+      <tr><td>Canary</td><td>production (limited users)</td><td>during phased rollout</td><td>catches real-world issues; safe rollback</td></tr>
+      <tr><td>Regression</td><td>existing features</td><td>after merge to main</td><td>new changes don't break old functionality</td></tr>
+      <tr><td>Automated</td><td>all test types</td><td>on every integration</td><td>the mechanism enabling all others</td></tr>
+      <tr><td>Unit</td><td>single function/class</td><td>during development</td><td>precise bug isolation; fast</td></tr>
+      <tr><td>Integration</td><td>interactions between modules</td><td>after unit testing</td><td>catches data mismatches, broken APIs</td></tr>
+    </tbody>
+  </table>
+
+  <h3>secure deletion methods</h3>
+  <table>
+    <thead><tr><th>method</th><th>how</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>NIST erasure</td><td>standards-based overwrite of data</td><td>software-level sanitization</td></tr>
+      <tr><td>Cryptographic erasure</td><td>destroy the encryption key</td><td>fast; data becomes unrecoverable</td></tr>
+      <tr><td>Degaussing</td><td>strong magnetic field wipes media</td><td>HDDs and tape only, not SSDs</td></tr>
+      <tr><td>Physical destruction</td><td>shred, crush, incinerate</td><td>most definitive</td></tr>
+      <tr><td>DoD 5220.22-M</td><td>three-pass overwrite (zeros, ones, random)</td><td>classic multi-pass standard</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="risk">risk &amp; governance</h2>
+
+  <h3>governance &amp; IT frameworks</h3>
+  <table>
+    <thead><tr><th>framework</th><th>focus</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>COBIT</td><td>IT governance</td><td>aligns IT to business; 5 domains, 40 objectives (EDM + APO/BAI/DSS/MEA)</td></tr>
+      <tr><td>ITIL</td><td>IT service management</td><td>34 service-management practices; most widely adopted</td></tr>
+      <tr><td>NIST CSF</td><td>cyber risk outcomes</td><td>Identify, Protect, Detect, Respond, Recover (+ Govern in 2.0)</td></tr>
+      <tr><td>COSO</td><td>enterprise risk / internal controls</td><td>financial and operational control emphasis</td></tr>
+      <tr><td>ISO 27001</td><td>ISMS (certifiable)</td><td>third-party audited; 27002 gives the controls</td></tr>
+      <tr><td>CIS Controls / Benchmarks</td><td>prescriptive hardening</td><td>system-specific, step-by-step baselines</td></tr>
+    </tbody>
+  </table>
+
+  <h3>risk assessment frameworks</h3>
+  <table>
+    <thead><tr><th>framework</th><th>style</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>NIST RMF</td><td>federal, control-driven</td><td>categorize → select → implement → assess → authorize → monitor</td></tr>
+      <tr><td>ISO 27005</td><td>international, ISMS-aligned</td><td>risk management within ISO 27001</td></tr>
+      <tr><td>COSO ERM</td><td>enterprise, strategy-aligned</td><td>business-strategy risk focus</td></tr>
+      <tr><td>OCTAVE</td><td>operational, hands-on</td><td>self-directed, asset/threat/vulnerability driven</td></tr>
+      <tr><td>FAIR</td><td>quantitative, financial</td><td>expresses risk in dollar terms</td></tr>
+    </tbody>
+  </table>
+
+  <h3>quantitative risk formulas</h3>
+  <table>
+    <thead><tr><th>term</th><th>formula</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td>SLE</td><td><code>AV × EF</code></td><td>loss from one occurrence</td></tr>
+      <tr><td>ALE</td><td><code>SLE × ARO</code></td><td>expected loss per year</td></tr>
+      <tr><td>AV</td><td>asset value</td><td>monetary worth of the asset</td></tr>
+      <tr><td>EF</td><td>exposure factor</td><td>% of asset value lost per event</td></tr>
+      <tr><td>ARO</td><td>annualized rate of occurrence</td><td>events expected per year</td></tr>
+    </tbody>
+  </table>
+
+  <h3>privacy &amp; compliance laws</h3>
+  <table>
+    <thead><tr><th>law</th><th>scope</th><th>protects</th></tr></thead>
+    <tbody>
+      <tr><td>GDPR</td><td>EU (extraterritorial)</td><td>personal data; right to be forgotten, consent</td></tr>
+      <tr><td>CCPA</td><td>California</td><td>consumer personal data rights</td></tr>
+      <tr><td>HIPAA</td><td>US healthcare</td><td>PHI / ePHI (HITECH strengthens it)</td></tr>
+      <tr><td>GLBA</td><td>US financial</td><td>customer financial data</td></tr>
+      <tr><td>SOX</td><td>US public companies</td><td>financial reporting integrity</td></tr>
+      <tr><td>COPPA</td><td>US, children under 13</td><td>children's online data (FTC)</td></tr>
+      <tr><td>LGPD</td><td>Brazil</td><td>personal data (GDPR-modeled)</td></tr>
+      <tr><td>PCI DSS</td><td>card processors (contractual)</td><td>cardholder data</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="arch">architecture &amp; resilience</h2>
+
+  <h3>network security devices</h3>
+  <table>
+    <thead><tr><th>device</th><th>role</th></tr></thead>
+    <tbody>
+      <tr><td>IDS</td><td>Passive: detects and alerts on malicious activity.</td></tr>
+      <tr><td>IPS</td><td>Active: detects, alerts, and blocks inline.</td></tr>
+      <tr><td>NIDS / HIDS</td><td>Network-wide (SPAN port) vs. host-based IDS.</td></tr>
+      <tr><td>NGFW</td><td>Application-aware firewall with deep packet inspection and IPS.</td></tr>
+      <tr><td>WAF</td><td>Filters HTTP to block web attacks (SQLi, XSS).</td></tr>
+      <tr><td>NAC</td><td>Enforces device health checks before network access.</td></tr>
+      <tr><td>TAP / SPAN</td><td>Copies traffic for monitoring (passive/active TAP, or switch SPAN port).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cloud service models &amp; shared responsibility</h3>
+  <table>
+    <thead><tr><th>model</th><th>provider manages</th><th>customer manages</th></tr></thead>
+    <tbody>
+      <tr><td>IaaS</td><td>hardware, virtualization, network</td><td>OS, runtime, apps, data</td></tr>
+      <tr><td>PaaS</td><td>hardware, OS, runtime</td><td>apps and data</td></tr>
+      <tr><td>SaaS</td><td>everything (full stack)</td><td>data and access only</td></tr>
+    </tbody>
+  </table>
+
+  <h3>data states &amp; protection</h3>
+  <table>
+    <thead><tr><th>state</th><th>where</th><th>protection</th></tr></thead>
+    <tbody>
+      <tr><td>At rest</td><td>disk, database, storage</td><td>AES-256, TDE, BitLocker/FileVault</td></tr>
+      <tr><td>In transit</td><td>moving across a network</td><td>TLS/HTTPS, IPsec VPN, SFTP/SSH</td></tr>
+      <tr><td>In use</td><td>being processed in memory</td><td>secure enclave, memory encryption (SGX)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>DR sites &amp; backup strategies</h3>
+  <table>
+    <thead><tr><th>option</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Hot site</td><td>Fully operational, real-time, immediate failover.</td></tr>
+      <tr><td>Warm site</td><td>Infrastructure ready, needs data restore to go live.</td></tr>
+      <tr><td>Cold site</td><td>Bare facility; rebuild from scratch.</td></tr>
+      <tr><td>Synchronous</td><td>Real-time replication, zero data loss.</td></tr>
+      <tr><td>Asynchronous</td><td>Slight delay; changes batch before sending.</td></tr>
+      <tr><td>3-2-1 rule</td><td>3 copies, on 2 media types, with 1 off-site.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>DR testing &amp; failover</h3>
+  <table>
+    <thead><tr><th>type</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Tabletop</td><td>Discussion-based walkthrough; no systems touched.</td></tr>
+      <tr><td>Simulation</td><td>Mock disaster; team responds in real time.</td></tr>
+      <tr><td>Parallel</td><td>Backup runs alongside production (production stays up).</td></tr>
+      <tr><td>Full interruption</td><td>Production taken offline to test real failover.</td></tr>
+      <tr><td>Active-active</td><td>Both nodes run simultaneously and share load.</td></tr>
+      <tr><td>Active-standby</td><td>Backup idle until the primary fails.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="crypto">crypto &amp; vendor</h2>
+
+  <h3>hashing algorithms</h3>
+  <table>
+    <thead><tr><th>algorithm</th><th>size</th><th>status</th></tr></thead>
+    <tbody>
+      <tr><td>MD5</td><td>128-bit</td><td>deprecated (collisions)</td></tr>
+      <tr><td>SHA-1</td><td>160-bit</td><td>deprecated</td></tr>
+      <tr><td>SHA-256 (SHA-2)</td><td>256-bit</td><td>current standard</td></tr>
+      <tr><td>SHA-3</td><td>variable</td><td>newest family (2015)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>biometric error rates</h3>
+  <table>
+    <thead><tr><th>metric</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td>FAR</td><td>False Acceptance Rate: unauthorized user wrongly accepted (security risk).</td></tr>
+      <tr><td>FRR</td><td>False Rejection Rate: legitimate user wrongly rejected (usability problem).</td></tr>
+      <tr><td>CER</td><td>Crossover Error Rate: where FAR = FRR; lower CER = better system.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>vendor agreement types</h3>
+  <table>
+    <thead><tr><th>agreement</th><th>purpose</th></tr></thead>
+    <tbody>
+      <tr><td>SLA</td><td>Defines uptime, response times, and performance metrics.</td></tr>
+      <tr><td>MSA</td><td>Master terms; individual SOWs hang off it.</td></tr>
+      <tr><td>MOU / MOA</td><td>Non-binding statements of intent / agreement.</td></tr>
+      <tr><td>NDA</td><td>Confidentiality obligations.</td></tr>
+      <tr><td>BPA</td><td>Governs strategic partnerships (joint ventures, revenue share).</td></tr>
+      <tr><td>ISA</td><td>Technical/security requirements for connecting two networks.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>reference / cheatsheets</span>
+  </div>
+
+</div>
+</body>
+</html>
