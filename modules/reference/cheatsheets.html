@@ -67,6 +67,7 @@
     <li><a href="#risk">risk &amp; governance</a></li>
     <li><a href="#arch">architecture &amp; resilience</a></li>
     <li><a href="#zerotrust">zero trust</a></li>
+    <li><a href="#hardware">hardware security</a></li>
     <li><a href="#crypto">crypto &amp; vendor</a></li>
   </ul>
 
@@ -336,6 +337,64 @@
       <tr><td>strengths</td><td>fast, simple, scalable</td><td>security, reliability, strict validation</td></tr>
       <tr><td>built-in features</td><td>minimal</td><td>error handling, transactions</td></tr>
       <tr><td>typical use</td><td>web/e-commerce, social, payments</td><td>finance, government, telecom</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="hardware">hardware security</h2>
+
+  <h3>roots of trust</h3>
+  <table>
+    <thead><tr><th></th><th>TPM</th><th>vTPM</th><th>HSM</th></tr></thead>
+    <tbody>
+      <tr><td>form</td><td>chip on a motherboard</td><td>software emulation</td><td>standalone appliance / card</td></tr>
+      <tr><td>scope</td><td>one physical machine</td><td>one virtual machine</td><td>many machines at once</td></tr>
+      <tr><td>root of trust</td><td>hardware</td><td>virtual</td><td>dedicated hardware</td></tr>
+      <tr><td>typical use</td><td>secure boot, BitLocker</td><td>VM boot, VM attestation</td><td>PKI, payment PINs, TLS, DNS signing</td></tr>
+    </tbody>
+  </table>
+
+  <h3>boot options</h3>
+  <table>
+    <thead><tr><th></th><th>Secure Boot</th><th>Measured Boot</th></tr></thead>
+    <tbody>
+      <tr><td>action</td><td>prevents (blocks) untrusted code</td><td>records / logs what loaded</td></tr>
+      <tr><td>mechanism</td><td>validates digital signatures (UEFI)</td><td>hashes components into the TPM</td></tr>
+      <tr><td>on tampering</td><td>blocks the component, alerts</td><td>logs it, does not halt</td></tr>
+      <tr><td>purpose</td><td>stop boot-level attacks</td><td>attestation / detection</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Secure Boot prevents; Measured Boot detects.</strong> Measured Boot needs a TPM to store its measurements; Secure Boot relies on UEFI signatures and works only with Windows.</p>
+
+  <h3>security coprocessors</h3>
+  <table>
+    <thead><tr><th></th><th>CPU security extensions</th><th>Secure Enclave</th></tr></thead>
+    <tbody>
+      <tr><td>examples</td><td>Intel TXT, AMD SEV</td><td>Apple Secure Enclave</td></tr>
+      <tr><td>platform</td><td>Intel / AMD systems</td><td>Apple hardware only</td></tr>
+      <tr><td>scope</td><td>trusted environment within the CPU</td><td>separate dedicated processor and memory</td></tr>
+      <tr><td>primary use</td><td>isolate processes; AMD SEV encrypts VM memory</td><td>store keys, handle biometrics</td></tr>
+    </tbody>
+  </table>
+
+  <h3>host-based encryption by OS</h3>
+  <table>
+    <thead><tr><th>OS</th><th>tool</th><th>notes</th></tr></thead>
+    <tbody>
+      <tr><td>Windows</td><td>BitLocker</td><td>AES full-disk; often TPM-backed keys</td></tr>
+      <tr><td>Linux</td><td>Cryptsetup + LUKS</td><td>AES; LUKS manages keys and partitions</td></tr>
+      <tr><td>macOS</td><td>FileVault</td><td>AES full-disk; built into the OS</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>SED vs host-based:</strong> a self-encrypting drive runs encryption on the drive's own engine (keys never leave the hardware, no CPU hit); host-based encryption is managed by the OS.</p>
+
+  <h3>self-healing hardware properties</h3>
+  <table>
+    <thead><tr><th>property</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Efficiency</td><td>Fast fault detection and automated repair (RAID rebuilding a failed disk).</td></tr>
+      <tr><td>Durability</td><td>Recovers from physical/logical failures (circuits rerouting around a fault).</td></tr>
+      <tr><td>Sustainability</td><td>Extends lifecycle, reduces replacements (self-healing polymers).</td></tr>
+      <tr><td>Innovation</td><td>AI/ML predictive maintenance anticipating failures before they happen.</td></tr>
     </tbody>
   </table>
 
