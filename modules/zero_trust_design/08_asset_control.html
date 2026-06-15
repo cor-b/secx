@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Control / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/zero_trust_design/asset_control</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /zero_trust_design</a>
+
+  <span class="module-tag">lesson 08 / zero trust design / Asset Control</span>
+  <h1 class="module-title">Asset Control</h1>
+  <p class="subtitle">You cannot secure what you cannot see. Maintaining a continuous inventory of every device, app, and data source, then constantly validating that each stays compliant.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Asset control maintains a detailed inventory of all assets and continuously validates their security status against policy. Three concepts build it: <strong>asset identification</strong> catalogs every device, application, and data source to create a complete inventory, <strong>asset management</strong> is the ongoing work of patching, configuring, and monitoring those assets, and <strong>asset attestation</strong> verifies each asset's security posture and compliance, quarantining anything that fails until it is fixed.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Asset Identification</p>
+      <p class="card-desc">Catalogs all devices, apps, and data to build a comprehensive, continuously updated inventory using network scanners and cloud/endpoint tools.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Asset Management</p>
+      <p class="card-desc">Ongoing patching, configuration enforcement, and monitoring to keep identified assets secure, compliant, and correctly configured.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Asset Attestation</p>
+      <p class="card-desc">Verifies each asset's security posture and compliance through checks. Failing assets are quarantined or denied access until they comply.</p>
+    </div>
+  </div>
+
+  <h2>asset identification</h2>
+
+  <p>Asset identification is the first step: cataloging all devices, applications, and data within the network to create a comprehensive inventory. Organizations use automated discovery tools so the inventory stays current and accurate, which is essential for security and compliance in a zero trust environment.</p>
+
+  <ul>
+    <li><strong>Network scanning:</strong> Nmap or Nessus discover connected devices (laptops, desktops, printers, servers)</li>
+    <li><strong>Software inventory:</strong> Microsoft System Center Configuration Manager (SCCM) tracks installed applications</li>
+    <li><strong>Cloud/hybrid:</strong> AWS Asset Manager or Azure Resource Manager catalog cloud resources like VMs and databases</li>
+    <li><strong>Endpoint:</strong> EDR tools like CrowdStrike or SentinelOne provide a continuous endpoint inventory with security-posture details</li>
+  </ul>
+
+  <h2>asset management</h2>
+
+  <p>Asset management is the ongoing process of monitoring and maintaining identified assets to keep them secure and compliant: applying the latest updates, ensuring correct configuration, and enforcing security policy. In zero trust, this means continuously watching the health and status of each asset to prevent vulnerabilities.</p>
+
+  <ul>
+    <li><strong>Patch management:</strong> Windows Server Update Services (WSUS) deploys and verifies updates</li>
+    <li><strong>Configuration management:</strong> Ansible, Puppet, or Chef enforce consistent settings across devices</li>
+    <li><strong>Endpoint management:</strong> Microsoft Intune or VMware Workspace ONE monitor compliance and auto-remediate issues</li>
+    <li><strong>Centralized platforms:</strong> ServiceNow or SolarWinds track assets and integrate with security tools for real-time status</li>
+  </ul>
+
+  <h2>asset attestation</h2>
+
+  <p>Asset attestation verifies the security posture and compliance of assets to ensure they meet required standards, through regular or real-time assessments confirming devices, applications, and data are secure, correctly configured, and policy-compliant.</p>
+
+  <ul>
+    <li><strong>EDR:</strong> CrowdStrike or SentinelOne continuously monitor for compliance, detecting missing updates or unauthorized configurations and triggering alerts or corrective action</li>
+    <li><strong>SIEM:</strong> Splunk or IBM QRadar analyze security data for real-time insight into compliance failures and threats</li>
+    <li><strong>Compliance scanning:</strong> Tenable or Qualys run continuous vulnerability scans and compliance checks against benchmarks like CIS</li>
+  </ul>
+
+  <p>In practice, an organization continuously attests devices, checking for up-to-date antivirus, encryption, and required configurations. If a device fails attestation, it may be quarantined or denied access to sensitive resources until it meets the requirements, ensuring only secure, compliant assets operate in the network.</p>
+
+  <h2>tools by function</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>concept</th>
+        <th>function</th>
+        <th>example tools</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Identification</td><td>build and update inventory</td><td>Nmap, Nessus, SCCM, AWS Asset Manager, Azure Resource Manager, CrowdStrike, SentinelOne</td></tr>
+      <tr><td>Management</td><td>patch, configure, monitor</td><td>WSUS, Ansible, Puppet, Chef, Intune, VMware Workspace ONE, ServiceNow, SolarWinds</td></tr>
+      <tr><td>Attestation</td><td>verify posture and compliance</td><td>CrowdStrike, SentinelOne, Splunk, IBM QRadar, Tenable, Qualys (vs CIS benchmarks)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three asset control concepts in order: identification (catalog it), management (maintain it), attestation (verify it).</li>
+      <li>Asset identification = building the inventory with discovery tools (Nmap/Nessus for network, SCCM for software, cloud managers, EDR).</li>
+      <li>Asset management = ongoing patching (WSUS), configuration enforcement (Ansible/Puppet/Chef), and endpoint compliance (Intune).</li>
+      <li>Asset attestation = verifying posture/compliance. A device failing attestation is quarantined or denied access until it complies.</li>
+      <li>EDR (CrowdStrike, SentinelOne) appears in both identification and attestation. Compliance scanners (Tenable, Qualys) check against CIS benchmarks.</li>
+      <li>Continuous inventory and attestation are essential to zero trust: an unknown or non-compliant asset is a risk.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves discovering and cataloging all devices on the network → <strong>asset identification</strong> (Nmap/Nessus)</li>
+        <li>Scenario involves keeping assets patched and correctly configured → <strong>asset management</strong> (WSUS, Ansible/Puppet/Chef)</li>
+        <li>Scenario involves verifying a device meets policy before granting access → <strong>asset attestation</strong></li>
+        <li>Scenario involves quarantining a device that lacks current antivirus → <strong>asset attestation failure</strong></li>
+        <li>Scenario involves scanning assets against CIS benchmarks → <strong>compliance scanning (Tenable/Qualys)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>zero_trust_design / asset_control</span>
+  </div>
+
+</div>
+</body>
+</html>

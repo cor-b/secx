@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/zero_trust_design/access_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /zero_trust_design</a>
+
+  <span class="module-tag">lesson 06 / zero trust design / Access Management</span>
+  <h1 class="module-title">Access Management</h1>
+  <p class="subtitle">Continuously verifying and controlling access based on policy and context, instead of granting trust just because a request came from inside the network.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Access management continuously verifies and controls user and device access based on policies and contextual factors, which is far more secure than assuming trust by network location. Three concepts define it: <strong>subject-object relationships</strong> set the rules for how users interact with resources, <strong>continuous authorization</strong> re-evaluates permissions throughout a session, and <strong>context-based reauthentication</strong> prompts users to verify again when conditions like location or connection security change.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Subject-Object Relationships</p>
+      <p class="card-desc">Rules defining how subjects (users, devices, apps) may interact with objects (data, files, systems), based on permissions, roles, and access levels.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Continuous Authorization</p>
+      <p class="card-desc">Ongoing evaluation of permissions throughout a session, not just at login. Adapts dynamically when behavior or context shifts.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Context-Based Reauthentication</p>
+      <p class="card-desc">Prompts re-verification when monitored conditions change: new location, switching from secure to insecure connection, or accessing sensitive data.</p>
+    </div>
+  </div>
+
+  <h2>subject-object relationships</h2>
+
+  <p>Defining subject-object relationships is the foundation of access management. It sets the rules for how subjects (users, devices, or applications) can interact with objects (data, files, or systems), based on permissions, roles, and access levels in an access control system.</p>
+
+  <p>Think of a library: books are the objects and readers are the subjects. Access management specifies who can check out which books. A librarian with higher permissions can access all books, including restricted or rare collections, while a regular reader can access only general, non-restricted titles. The clear definition ensures each subject only interacts with objects it is authorized to access.</p>
+
+  <h2>continuous authorization</h2>
+
+  <p>Continuous authorization evaluates access permissions throughout a user's session rather than checking only once at login. Continuous monitoring adapts to changes in context or security posture, enforcing policies dynamically as behavior shifts. In a Windows domain, it is implemented with tools like Group Policy and Active Directory, which continuously evaluate permissions and enforce rules in real time.</p>
+
+  <p>For example, a finance team member normally accesses financial reports. If that user suddenly tries to open unrelated or restricted files (HR records, executive-level data), the system detects the deviation, can dynamically restrict access, logs the suspicious activity, and notifies administrators. Access rights continually adapt to the user's behavior.</p>
+
+  <h2>context-based reauthentication</h2>
+
+  <p>Context-based reauthentication adds a layer of security by prompting users to verify their identity again when contextual factors change, such as a location shift or a move to an insecure connection. In a Windows environment it is implemented with Conditional Access policies in Azure Active Directory and Microsoft Endpoint Manager.</p>
+
+  <p>For example, if an employee working in the office moves to a coffee shop, the system detects the change in location and network. Because accessing resources from a public place is riskier, it prompts the employee to log on again to confirm their identity. This adaptive approach keeps access appropriate in new or risky situations.</p>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>concept</th>
+        <th>question it answers</th>
+        <th>when it acts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Subject-object relationship</td><td>who may access what?</td><td>defined up front, before access</td></tr>
+      <tr><td>Continuous authorization</td><td>is this access still appropriate?</td><td>throughout the entire session</td></tr>
+      <tr><td>Context-based reauthentication</td><td>is this still the right person, here?</td><td>when context changes (location, connection)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Access management verifies and controls access by policy and context, not by network location. This is the zero trust core.</li>
+      <li>Subject-object relationships define who (subject) can do what to which resource (object). Subjects = users/devices/apps; objects = data/files/systems.</li>
+      <li>Continuous authorization re-evaluates permissions throughout the session, not just at login. Group Policy and Active Directory enforce it in a Windows domain.</li>
+      <li>Context-based reauthentication triggers a fresh login when context changes (new location, insecure connection). Azure AD Conditional Access and Microsoft Endpoint Manager implement it.</li>
+      <li>This lesson reinforces access_auth_authz: conditional access, PDP/PEP, and continuous validation are the same ideas framed for zero trust.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves defining which users can interact with which resources → <strong>subject-object relationships</strong></li>
+        <li>Scenario involves access being re-checked continuously during a session as behavior changes → <strong>continuous authorization</strong></li>
+        <li>Scenario involves a user being prompted to log in again after moving to public wifi → <strong>context-based reauthentication</strong></li>
+        <li>Scenario names Group Policy and Active Directory evaluating access in real time → <strong>continuous authorization</strong></li>
+        <li>Scenario names Azure AD Conditional Access triggering on a location change → <strong>context-based reauthentication</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>zero_trust_design / access_management</span>
+  </div>
+
+</div>
+</body>
+</html>

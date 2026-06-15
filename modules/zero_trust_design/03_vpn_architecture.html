@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN Architecture / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  pre { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 20px; overflow-x: auto; margin: 0 0 12px; font-size: 13px; line-height: 1.7; color: var(--ink-dim); }
+  pre .c { color: var(--ink-faint); }
+  pre .k { color: var(--violet); }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/zero_trust_design/vpn_architecture</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /zero_trust_design</a>
+
+  <span class="module-tag">lesson 03 / zero trust design / VPN Architecture</span>
+  <h1 class="module-title">VPN Architecture</h1>
+  <p class="subtitle">Encrypted tunnels that extend access controls beyond the network edge: connecting a single device, two whole networks, or maintaining an always-active secure link.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>VPN architecture extends access controls beyond traditional network boundaries by encrypting traffic between endpoints. Three models matter: <strong>client-server</strong> connects an individual device to a central server for remote access, <strong>site-to-site</strong> connects entire networks at the router level so offices act as one logical network, and <strong>always-on</strong> maintains a continuous, automatically established connection that enforces policy regardless of location. Encryption relies on IPsec or TLS.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">model 01</span>
+      <p class="card-name">Client-Server</p>
+      <p class="card-desc">Encrypted tunnel between one device and a central server. Ideal for remote access. Uses IPsec or TLS; server authenticates the client by credentials or certificate.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 02</span>
+      <p class="card-name">Site-to-Site</p>
+      <p class="card-desc">Connects entire networks at the router level, not individual devices. Branch offices act as one logical LAN. Typically IPsec.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 03</span>
+      <p class="card-name">Always-On</p>
+      <p class="card-desc">Continuous connection that auto-establishes on device startup. Used in government/healthcare. Often pairs with MFA and NAC.</p>
+    </div>
+  </div>
+
+  <h2>client-server VPN</h2>
+
+  <p>A client-server VPN connects a single client device to a central server through an encrypted tunnel, ideal for remote access from any location. Encryption uses IPsec or TLS. The server authenticates the client with username/password or digital certificates, and once authenticated the client reaches internal resources (files, applications, databases) as if physically on the corporate network.</p>
+
+  <h2>site-to-site VPN</h2>
+
+  <p>A site-to-site VPN connects two or more entire networks, such as a headquarters and its branch offices. It operates at the router level, so the tunnel is established between routers rather than individual devices. The standard protocol is IPsec, which encrypts and authenticates the packets traveling between sites. All devices in one network can then communicate securely with the other, making the two appear as one local network, useful for sharing file servers, intranet apps, and internal services across offices.</p>
+
+  <h2>always-on VPN</h2>
+
+  <p>An always-on VPN provides a continuous, uninterrupted connection that establishes automatically whenever the device powers on, regardless of where the user is or what network they join. Common in security-critical environments like government and healthcare, it keeps all device-to-network traffic encrypted using IPsec or TLS. Always-on VPNs frequently integrate MFA to verify identity on each connection and NAC to check the device's security posture before granting full access.</p>
+
+  <h2>reading an OpenVPN config</h2>
+
+  <p>An always-on OpenVPN client configuration for an organization shows the key directives that keep the tunnel secure and persistent:</p>
+
+  <pre><span class="k">client</span>                  <span class="c"># this is a VPN client, not a server</span>
+<span class="k">dev</span> tun                <span class="c"># create a tun (network-layer) tunnel interface</span>
+<span class="k">remote</span> vpn.host 1194   <span class="c"># server address, protocol, and port</span>
+<span class="k">resolve-retry</span> infinite <span class="c"># keep retrying DNS resolution on failure</span>
+<span class="k">nobind</span>                 <span class="c"># do not bind to a fixed local port</span>
+<span class="k">persist-key</span>            <span class="c"># keep encryption keys across reconnects</span>
+<span class="k">persist-tun</span>            <span class="c"># keep the tunnel interface active across drops</span>
+<span class="k">ping-restart</span> 60        <span class="c"># auto-reconnect if the link drops</span>
+<span class="k">user</span> nobody            <span class="c"># drop privileges after connecting</span>
+<span class="k">group</span> nogroup          <span class="c"># run with a low-privilege group</span></pre>
+
+  <ul>
+    <li><code>dev tun</code> creates a network-layer tunnel interface that routes IP packets through the VPN</li>
+    <li><code>persist-key</code> and <code>persist-tun</code> keep the keys and interface intact through network disruptions</li>
+    <li><code>ping-restart</code> automatically reconnects if the connection drops, supporting the always-on model</li>
+    <li><code>user nobody</code> and <code>group nogroup</code> drop privileges after connecting, applying least privilege to shrink the attack surface if the client is compromised</li>
+  </ul>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>model</th>
+        <th>connects</th>
+        <th>operates at</th>
+        <th>best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Client-server</td><td>one device to a server</td><td>device level</td><td>remote individual access</td></tr>
+      <tr><td>Site-to-site</td><td>whole network to whole network</td><td>router level</td><td>connecting offices/branches</td></tr>
+      <tr><td>Always-on</td><td>device to network, continuously</td><td>device level, persistent</td><td>high-security, mobile workforce</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Client-server VPN = one device to a central server. Remote access. IPsec or TLS.</li>
+      <li>Site-to-site VPN = network to network at the router level. Connects offices. Almost always IPsec.</li>
+      <li>Always-on VPN = continuous, auto-connecting. Government/healthcare. Pairs with MFA and NAC.</li>
+      <li>Site-to-site operates router-to-router; client-server and always-on operate at the individual device.</li>
+      <li>Dropping privileges (<code>user nobody</code>, <code>group nogroup</code>) after connecting applies least privilege and reduces the attack surface.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves a remote employee securely reaching internal apps from a laptop → <strong>client-server VPN</strong></li>
+        <li>Scenario involves linking two branch office networks over the internet → <strong>site-to-site VPN</strong></li>
+        <li>Scenario involves a device that stays connected and re-secures automatically as the user moves → <strong>always-on VPN</strong></li>
+        <li>Question asks which VPN operates at the router level → <strong>site-to-site</strong></li>
+        <li>Config drops to <code>user nobody</code> after connecting → <strong>least privilege to limit compromise</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>zero_trust_design / vpn_architecture</span>
+  </div>
+
+</div>
+</body>
+</html>

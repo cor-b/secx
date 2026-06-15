@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Boundaries / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { font-family: var(--font-sans); color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { font-family: var(--font-sans); margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .three-elements { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 0 0 50px; }
+  .elem-card { background: var(--panel); border: 1px solid var(--rule); padding: 22px 24px; }
+  .card-label { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+  .card-name { font-size: 16px; font-weight: 500; color: var(--ink); margin: 0 0 8px; }
+  .card-desc { font-family: var(--font-sans); color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0; }
+  h2 { font-size: 22px; font-weight: 500; color: var(--ink); margin: 0 0 28px; padding-top: 44px; border-top: 1px solid var(--rule); }
+  h3 { font-size: 12px; font-weight: 500; color: var(--violet); text-transform: uppercase; letter-spacing: 0.12em; margin: 28px 0 14px; }
+  h4 { font-size: 12px; font-weight: 400; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.16em; margin: 24px 0 12px; }
+  p { font-family: var(--font-sans); color: var(--ink); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
+  ul { margin: 0 0 24px; padding: 0; list-style: none; }
+  ul li { font-family: var(--font-sans); font-size: 16px; color: var(--ink); padding: 5px 0 5px 18px; position: relative; line-height: 1.65; }
+  ul li::before { content: '·'; position: absolute; left: 0; color: var(--magenta); font-weight: 600; }
+  dl.def { margin: 0 0 24px; }
+  dl.def dt { font-size: 12px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 6px; }
+  dl.def dt:first-child { margin-top: 0; }
+  dl.def dd { margin: 0 0 4px 0; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  dl.def dd .detail { display: block; font-family: var(--font-sans); color: var(--ink-dim); font-size: 15px; line-height: 1.65; margin-top: 6px; }
+  strong { color: var(--cyan); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--violet); background: rgba(167,138,212,0.08); padding: 2px 7px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 32px; font-size: 14px; }
+  th { text-align: left; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: top; }
+  td:first-child { color: var(--cyan); white-space: nowrap; }
+  .exam-tips { padding: 30px; border: 1px solid var(--rule); background: var(--panel); margin-top: 50px; }
+  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; border-bottom: 1px solid var(--rule); color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; }
+  .exam-tips h2 { font-size: 18px; border: none; padding-top: 0; margin-bottom: 16px; }
+  .exam-tips ul { margin-bottom: 24px; }
+  .decision-rules { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .decision-rules-title { display: block; font-size: 12px; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+  .decision-rules ul li { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.module-title { font-size: 30px; }
+    .three-elements { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/zero_trust_design/security_boundaries</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /zero_trust_design</a>
+
+  <span class="module-tag">lesson 02 / zero trust design / Security Boundaries</span>
+  <h1 class="module-title">Security Boundaries</h1>
+  <p class="subtitle">In zero trust, boundaries are defined by access controls and continuous verification, not by physical walls. Every component, data store, and zone is secured on its own terms.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Security boundaries enforce zero trust by monitoring and validating every cross-network interaction instead of trusting a network perimeter. Three concepts define them: <strong>system components</strong> are the individual elements (servers, workstations, apps) secured separately, <strong>data perimeters</strong> are the controlled boundaries around sensitive information wherever it resides, and <strong>secure zones</strong> are tightly controlled, continuously verified network segments. Zone tools include the screened subnet, bastion host, jump box, and air-gapped network.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">System Components</p>
+      <p class="card-desc">Individual infrastructure elements (servers, workstations, apps, routers, databases) each secured separately. No component is trusted automatically.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Perimeters</p>
+      <p class="card-desc">Boundaries around sensitive data, enforced with encryption, ACLs, and monitoring, protecting it in transit and at rest wherever it lives.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Secure Zones</p>
+      <p class="card-desc">Tightly controlled, continuously verified network segments. Trusted internal, untrusted external, and the screened subnet (DMZ) between them.</p>
+    </div>
+  </div>
+
+  <h2>system components</h2>
+
+  <p>System components are the individual elements that make up an organization's IT infrastructure: servers, workstations, applications, routers, and databases. In a zero trust model, no component is trusted automatically, so each is secured separately within strict boundaries. A web server handling public requests should never have direct access to a sensitive database; that access is mediated through role-based access controls, MFA, and network segmentation.</p>
+
+  <p>Components are grouped into zones based on their role, such as credit card processing or user authentication, so security policies can be tailored to each. Credit card systems demand encryption and strict access controls; authentication systems demand strong password management. Dividing the network into role-based zones makes it simpler to manage and lets administrators focus on the requirements of their assigned area.</p>
+
+  <h2>data perimeters</h2>
+
+  <p>Data perimeters define the boundaries that protect sensitive information, ensuring only authorized users can access it whether it is stored on-premise or in the cloud. They rely on encryption, access control lists, and monitoring, and protect data both in transit and at rest using tools like DLP.</p>
+
+  <p>As organizations move to the cloud, the traditional network perimeter is no longer sufficient, so data access requests must be validated continuously. Organizations often create subzones within their networks to store sensitive data, layering on encryption and monitoring for extra protection.</p>
+
+  <h2>secure zones</h2>
+
+  <p>Secure zones are tightly controlled areas designed to protect critical systems and data. The three classic zones are the trusted internal zone, the untrusted external zone, and the demilitarized zone (DMZ), also called a <strong>screened subnet</strong>, which acts as a buffer between internal and external networks. Web servers in the screened subnet may be reachable from the internet while the internal network stays shielded. Firewalls enforce strict rules between zones, and subzones can be carved out with subnetting, firewall rules, and network access control.</p>
+
+  <h3>secure zone tools</h3>
+
+  <dl class="def">
+    <dt>Bastion host</dt>
+    <dd>Hardened server designed to withstand external attacks, placed in an exposed area such as the screened subnet.
+      <span class="detail">Runs minimal services and uses strict security policies to reduce the attack surface. It controls and manages external access to more secure systems.</span>
+    </dd>
+    <dt>Jump box</dt>
+    <dd>Hardened gateway used specifically to provide secure administrative access into a secure zone.
+      <span class="detail">Admins must connect through the jump box before reaching protected systems, minimizing the exposure of critical hosts. Bastion host controls external access; jump box controls internal administrative access.</span>
+    </dd>
+    <dt>Air-gapped network</dt>
+    <dd>Network physically separated from all external connections, the highest level of isolation.
+      <span class="detail">Used in highly sensitive environments like nuclear facilities. Data must be physically transferred in or out, and strict malware checks are required before any device is connected.</span>
+    </dd>
+  </dl>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>element</th>
+        <th>purpose</th>
+        <th>placement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Screened subnet (DMZ)</td><td>buffer between internal and external networks</td><td>between trusted and untrusted zones</td></tr>
+      <tr><td>Bastion host</td><td>controls and hardens external access</td><td>exposed area, inside the screened subnet</td></tr>
+      <tr><td>Jump box</td><td>secure administrative gateway into secure zones</td><td>between admins and protected systems</td></tr>
+      <tr><td>Air-gapped network</td><td>complete physical isolation</td><td>fully separated from external connections</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>DMZ = screened subnet. A buffer zone between the trusted internal network and the untrusted internet, where internet-facing servers live.</li>
+      <li>Bastion host vs jump box: bastion host hardens and controls external access; jump box is a gateway for administrators to reach internal secure systems. This distinction is commonly tested.</li>
+      <li>Air-gapped network = total physical isolation. Highest security, but data must be moved manually with malware checks. Used in nuclear/critical facilities.</li>
+      <li>In zero trust, no system component is trusted automatically. A web server should never have direct access to a sensitive database.</li>
+      <li>Data perimeters protect data in transit and at rest using encryption, ACLs, DLP, and monitoring, regardless of where the data resides.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves a buffer zone hosting internet-facing web servers → <strong>screened subnet / DMZ</strong></li>
+        <li>Scenario involves a hardened, minimal-service host absorbing external attacks → <strong>bastion host</strong></li>
+        <li>Scenario involves admins connecting through one gateway to manage internal systems → <strong>jump box</strong></li>
+        <li>Scenario involves a network with no external connections at all → <strong>air-gapped network</strong></li>
+        <li>Scenario involves protecting sensitive data wherever it moves or rests → <strong>data perimeter</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>zero_trust_design / security_boundaries</span>
+  </div>
+
+</div>
+</body>
+</html>
