@@ -5,82 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>02_security_devices / study.notes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
-    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
-    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
-    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
-    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-    font-family: var(--font-mono);
-    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-  }
-  .subtitle, .overview p, p, li, dl.def dd .detail,
-  .exam-tips ul li, .decision-rules ul li {
-    font-family: var(--font-sans);
-  }
-  ul li::before, ol li::before { font-family: var(--font-mono); }
-  .container { max-width: 760px; margin: 0 auto; padding: 60px 40px 120px; }
-  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
-  .meta-bar .left { color: var(--cyan); }
-  .meta-bar .right { color: var(--ink-faint); }
-  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
-  .back-link:hover { color: var(--cyan); }
-  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
-  .module-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
-  h1.module-title { font-size: 38px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
-  .subtitle { color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 600px; }
-  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 60px; }
-  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
-  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 14px; line-height: 1.7; }
-  .overview p:last-child { margin-bottom: 0; }
-  .overview strong { color: var(--cyan); font-weight: 500; }
-  h2 { font-size: 22px; color: var(--ink); margin: 70px 0 8px; padding-top: 32px; border-top: 1px solid var(--rule); font-weight: 500; letter-spacing: -0.01em; }
-  h3 { color: var(--violet); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 36px 0 12px; font-weight: 500; }
-  h4 { color: var(--ink-dim); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin: 28px 0 12px; font-weight: 500; }
-  p { margin: 0 0 14px; color: var(--ink); font-size: 14px; }
-  strong { color: var(--cyan); font-weight: 500; }
-  ul, ol { margin: 8px 0 20px; padding: 0; list-style: none; }
-  li { margin-bottom: 8px; color: var(--ink); padding-left: 22px; position: relative; font-size: 14px; }
-  ul li::before { content: '·'; color: var(--magenta); position: absolute; left: 6px; font-size: 20px; line-height: 1; top: 2px; }
-  dl.def { margin: 20px 0 30px; }
-  dl.def dt { color: var(--amber); font-size: 12px; letter-spacing: 0.14em; margin-bottom: 4px; margin-top: 24px; font-weight: 500; text-transform: uppercase; }
-  dl.def dt:first-child { margin-top: 0; }
-  dl.def dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.6; }
-  dl.def dd .detail { display: block; color: var(--ink-dim); font-size: 14px; line-height: 1.6; font-family: var(--font-sans); margin-top: 4px; }
-  table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 13px; }
-  th { text-align: left; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink-dim); padding: 12px 14px 12px 0; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
-  td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink); font-size: 13px; }
-  td:first-child { color: var(--cyan); width: 22%; font-weight: 500; }
-  td:nth-child(2) { width: 24%; color: var(--ink-dim); }
-  td:last-child { color: var(--ink-dim); }
-  .exam-tips { margin-top: 70px; padding: 30px; border: 1px solid var(--rule); background: var(--panel); }
-  .exam-tips-label { display: block; margin: -30px -30px 30px; padding: 14px 30px; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; border-bottom: 1px solid var(--rule); }
-  .exam-tips h2 { color: var(--ink); border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 20px; font-size: 20px; }
-  .exam-tips ul li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--rule-soft); margin: 0; }
-  .exam-tips ul li::before { content: '→'; color: var(--cyan); font-size: 14px; top: 10px; left: 0; }
-  .exam-tips ul li:last-child { border-bottom: none; }
-  .exam-tips strong { color: var(--amber); }
-  .decision-rules { margin-top: 24px; padding: 18px 20px; border-left: 2px solid var(--cyan); background: rgba(106,212,212,0.03); }
-  .decision-rules-title { color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 14px; }
-  .decision-rules ul li { padding: 6px 0; border: none; font-size: 13px; }
-  .decision-rules ul li::before { content: ''; }
-  .decision-rules .arrow { color: var(--magenta); margin: 0 8px; }
-  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
-  @media (max-width: 640px) {
-    .container { padding: 30px 22px 80px; }
-    h1.module-title { font-size: 28px; }
-    h2 { font-size: 18px; }
-    .exam-tips { padding: 24px 20px; }
-  }
-</style>
+<link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
 <div class="container">
 
   <div class="meta-bar">
@@ -282,11 +219,24 @@
     </div>
   </div>
 
+  <nav class="lesson-nav">
+    <a class="prev" href="01_resilient_system_design.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_resilient_system_design</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_monitoring_and_detection.html">
+      <span><span class="lbl">next</span><span class="file">03_monitoring_and_detection</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
   <div class="footer">
     <span>study.notes / cor</span>
     <span>lesson 02 / eof</span>
   </div>
 
 </div>
+<script src="../../nav.js"></script>
 </body>
 </html>
