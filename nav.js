@@ -34,6 +34,11 @@
     entries.push({ head: el, link: a });
   });
 
+  if (!entries.length) {
+    var asideEl = document.querySelector('.toc');
+    if (asideEl) asideEl.style.display = 'none';
+  }
+
   // Highlight the current section while scrolling.
   if ('IntersectionObserver' in window && entries.length) {
     var spy = new IntersectionObserver(function (obs) {

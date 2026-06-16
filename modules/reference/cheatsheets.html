@@ -44,9 +44,35 @@
     table { font-size: 12.5px; }
     td, th { padding: 8px 8px; }
   }
+
+  /* --- nav pack (shared behavior in /nav.js) --- */
+  html { scroll-behavior: smooth; }
+  .progress-track { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: transparent; z-index: 50; }
+  .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--cyan), var(--magenta)); transition: width 0.08s linear; }
+  .toc { position: fixed; top: 120px; right: 32px; width: 200px; display: none; }
+  @media (min-width: 1240px) { .toc { display: block; } }
+  .toc-title { color: var(--ink-faint); letter-spacing: 0.16em; text-transform: uppercase; font-size: 10px; margin-bottom: 14px; padding-left: 13px; }
+  .toc-links { border-left: 1px solid var(--rule-soft); }
+  .toc-links a { display: block; color: var(--ink-faint); text-decoration: none; font-size: 11px; line-height: 1.4; padding: 6px 0 6px 13px; margin-left: -1px; border-left: 1px solid transparent; transition: color 0.15s ease, border-color 0.15s ease; }
+  .toc-links a:hover { color: var(--ink-dim); }
+  .toc-links a.active { color: var(--cyan); border-left-color: var(--cyan); }
+  h2 { scroll-margin-top: 70px; }
+  .to-top { position: fixed; bottom: 28px; right: 32px; width: 38px; height: 38px; border: 1px solid var(--rule); background: var(--panel); color: var(--ink-dim); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+  .to-top:hover { color: var(--cyan); border-color: var(--cyan); }
 </style>
 </head>
 <body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
 
 <div class="container">
 
@@ -501,5 +527,6 @@
   </div>
 
 </div>
+<script src="../../nav.js"></script>
 </body>
 </html>
