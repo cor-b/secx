@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Protection / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/data_protection</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 05 / data security concepts / Data Protection</span>
+  <h1 class="module-title">Data Protection</h1>
+  <p class="subtitle">Five techniques for safeguarding data: swapping it for tokens, erasing it by destroying keys, hiding its meaning, encrypting it, and packaging it for safe transport.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data protection safeguards data from unauthorized access, alteration, or loss. Five techniques recur: <strong>tokenization</strong> replaces sensitive data with non-reversible tokens, <strong>cryptographic erase</strong> deletes data by destroying its encryption keys, <strong>obfuscation</strong> hides meaning without cryptography, <strong>cryptographic obfuscation</strong> uses encryption to make data unreadable, and <strong>serialization</strong> converts data into a portable format that can be accurately reconstructed.</p>
+  </div>
+
+  <h2>tokenization</h2>
+
+  <p>Tokenization replaces sensitive data with unique non-sensitive identifiers called tokens. The token is a placeholder that cannot reveal the original data without access to the secure system that holds the data-to-token mapping, making it effectively non-reversible outside that environment. Even if a token is intercepted, it is meaningless.</p>
+
+  <p>NFC payment systems (Apple Pay, Google Pay, Samsung Pay) use tokenization: the wallet stores a token representing the card, not the card number, and transmits the token at the terminal. Only the secure tokenization service can map it back to the real card for authorization. Tools like Thales CipherTrust and TokenEx manage tokenization.</p>
+
+  <h2>cryptographic erase</h2>
+
+  <p>Cryptographic erase securely deletes data by encrypting it and then destroying the encryption keys, rendering the data irrecoverable without overwriting the whole drive. The drive itself stays functional and can be re-encrypted with new keys and reused, a major advantage for decommissioning and repurposing hardware.</p>
+
+  <p>It is especially preferred for <strong>SSDs</strong>, where traditional overwriting is less effective because of how data is spread across memory cells. Modern enterprise HDDs and SSDs, particularly self-encrypting drives, include built-in cryptographic erase (Seagate, Western Digital, Samsung), and third-party Secure Erase tools cover drives without native support.</p>
+
+  <h2>obfuscation vs cryptographic obfuscation</h2>
+
+  <dl class="def">
+    <dt>Obfuscation</dt>
+    <dd>Hides the meaning of data using encoding or scrambling, not cryptographic algorithms.
+      <span class="detail">A common form is masking, such as showing only the last four digits of a Social Security Number. Masking is generally non-reversible, it hides rather than transforms. Used where full encryption is unnecessary.</span>
+    </dd>
+    <dt>Cryptographic obfuscation</dt>
+    <dd>Goes further, using encryption algorithms to transform data into an unreadable format.
+      <span class="detail">Backed by cryptographic security, it is much harder to reverse. Often used to protect software code from reverse engineering. Tools include VeraCrypt and obfuscating compilers.</span>
+    </dd>
+  </dl>
+
+  <h2>serialization</h2>
+
+  <p>Serialization converts data (objects, arrays, data models) into a structured format that can be stored or transmitted and later reconstructed accurately. Common formats are JSON and XML (human-readable, used for web services) and binary (fast and efficient). Deserialization reverses the process. Examples: Python's <code>pickle</code>, Java's <code>Serializable</code> interface, and .NET's <code>JsonSerializer</code>. Serialization preserves data integrity across systems and platforms by keeping all structure and values intact.</p>
+
+  <h2>putting it together</h2>
+
+  <table>
+    <thead>
+      <tr><th>technique</th><th>what it does</th><th>reversible?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tokenization</td><td>swaps data for tokens mapped in a secure system</td><td>only via the secure mapping</td></tr>
+      <tr><td>Cryptographic erase</td><td>deletes data by destroying its keys</td><td>no (irrecoverable)</td></tr>
+      <tr><td>Obfuscation</td><td>hides meaning via encoding/masking</td><td>generally no</td></tr>
+      <tr><td>Cryptographic obfuscation</td><td>encrypts data/code to make it unreadable</td><td>yes, with the key</td></tr>
+      <tr><td>Serialization</td><td>packages data for storage/transit</td><td>yes (deserialization)</td></tr>
+    </tbody>
+  </table>
+
+  <p>An e-commerce flow uses several at once: tokenization replaces card data, obfuscation conceals it during use, serialization stores it so it can be reconstructed, and cryptographic erase destroys it when no longer needed.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Tokenization swaps sensitive data for tokens; reversible only through the secure mapping system. Think NFC/mobile payments.</li>
+      <li>Cryptographic erase = encrypt then destroy the keys. Fast, irrecoverable, drive stays reusable. Preferred for SSDs.</li>
+      <li>Obfuscation hides meaning WITHOUT cryptography (e.g. masking last-4 of an SSN). Cryptographic obfuscation USES encryption (e.g. protecting code).</li>
+      <li>Serialization converts data to JSON/XML/binary for storage or transit; deserialization rebuilds it.</li>
+      <li>Masking (a form of obfuscation) is generally non-reversible; tokenization is reversible only via the mapping.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves replacing card numbers with placeholders mapped elsewhere → <strong>tokenization</strong></li>
+        <li>Scenario involves securely wiping an SSD quickly while keeping the drive usable → <strong>cryptographic erase</strong></li>
+        <li>Scenario involves showing only the last four digits of a number → <strong>obfuscation (masking)</strong></li>
+        <li>Scenario involves encrypting source code to prevent reverse engineering → <strong>cryptographic obfuscation</strong></li>
+        <li>Scenario involves converting an object to JSON to send over a network → <strong>serialization</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_blockchain.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_blockchain</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_data_state_protection.html">
+      <span><span class="lbl">next</span><span class="file">06_data_state_protection</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / data_protection</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

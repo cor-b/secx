@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Security Concepts / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 01 / data security concepts / Overview</span>
+  <h1 class="module-title">Data Security Concepts</h1>
+  <p class="subtitle">Applying cryptography across the data lifecycle: proving integrity, protecting data in every state, and meeting privacy obligations.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3, Objective 3.8: given a scenario, <strong>apply appropriate cryptographic use cases and techniques</strong>. Protecting data means keeping it accurate and trustworthy, shielding it whether it is stored, moving, or in use, and handling it in line with privacy law. This section covers data integrity, integrity use cases, blockchain, data protection techniques, data state protection, data handling and management, and data compliance and privacy.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">theme 01</span>
+      <p class="card-name">Integrity</p>
+      <p class="card-desc">Hashing proves data has not changed; provenance and code signing prove software is trustworthy; blockchain makes records immutable.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 02</span>
+      <p class="card-name">Protection</p>
+      <p class="card-desc">Tokenization, cryptographic erase, obfuscation, cryptographic obfuscation, and serialization safeguard data from exposure and loss.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 03</span>
+      <p class="card-name">States</p>
+      <p class="card-desc">Data at rest, in transit, and in use each need their own protection: AES, TLS/IPsec, and in-memory encryption.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 04</span>
+      <p class="card-name">Governance</p>
+      <p class="card-desc">Anonymization and sanitization manage data across its lifecycle; GDPR and CCPA set the legal and regulatory guardrails.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>lesson</th>
+        <th>topic</th>
+        <th>key concepts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Data Integrity</td><td>hashing, hash digest, MD5/SHA/RIPEMD, collisions, FIM, digital signatures</td></tr>
+      <tr><td>03</td><td>Integrity Use Cases</td><td>software provenance (Git, SBOM, SCA), software/code integrity (hashes, code signing)</td></tr>
+      <tr><td>04</td><td>Blockchain</td><td>decentralized distributed ledger, immutable blocks, immutable databases, hash linking</td></tr>
+      <tr><td>05</td><td>Data Protection</td><td>tokenization, cryptographic erase, obfuscation, cryptographic obfuscation, serialization</td></tr>
+      <tr><td>06</td><td>Data State Protection</td><td>at rest (AES, disk/block/file/record), in transit (TLS, IPsec), in use (in-memory encryption)</td></tr>
+      <tr><td>07</td><td>Data Handling &amp; Management</td><td>anonymization (masking/tokenization/banding), sanitization (overwrite/degauss/destroy)</td></tr>
+      <tr><td>08</td><td>Data Compliance &amp; Privacy</td><td>privacy applications, legal (GDPR/CCPA), regulatory (privacy by design, 72-hour breach)</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">data_security_concepts/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 08</span>
+    <a class="next" href="02_data_integrity.html">
+      <span><span class="lbl">next</span><span class="file">02_data_integrity</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

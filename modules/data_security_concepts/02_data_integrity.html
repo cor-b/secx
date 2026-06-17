@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Integrity / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/data_integrity</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 02 / data security concepts / Data Integrity</span>
+  <h1 class="module-title">Data Integrity</h1>
+  <p class="subtitle">Proving data has not changed. Hashing turns any input into a fixed-length fingerprint, so even a one-character change is instantly detectable.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data integrity ensures the accuracy, consistency, and reliability of data throughout its lifecycle, confirming it has not been altered without permission. <strong>Hashing</strong> is the primary technique: a one-way cryptographic function turns any-size input into a fixed-size <strong>hash digest</strong> that uniquely fingerprints the data and cannot be reverse-engineered. Key algorithms are MD5, the SHA family, and RIPEMD. Hashing underpins file verification, file integrity monitoring, and digital signatures.</p>
+  </div>
+
+  <h2>how hashing works</h2>
+
+  <p>A hashing function takes input of any length and transforms it into a fixed-length output called a hash digest, a digital fingerprint of the original data. The slightest change to the input produces a dramatically different output, and the function cannot be reversed to recover the input. Three properties make a hashing algorithm reliable:</p>
+
+  <ul>
+    <li><strong>Fixed-length output</strong> regardless of input size (MD5 always produces a 128-bit digest, whether you hash a word or a whole book)</li>
+    <li><strong>Deterministic:</strong> the same input always produces the same output, ensuring consistency across systems</li>
+    <li><strong>One-way (trapdoor):</strong> the output cannot be used to recreate the input</li>
+  </ul>
+
+  <p>A <strong>collision</strong> occurs when two different inputs produce the same hash output, which undermines integrity validation. Resistance to collisions is what separates strong algorithms from weak ones.</p>
+
+  <h2>hashing algorithms</h2>
+
+  <dl class="def">
+    <dt>MD5</dt>
+    <dd>Message Digest 5, a 128-bit digest.
+      <span class="detail">Once popular but now considered insecure because its short digest makes it prone to collisions. Its weakness drove the development of SHA.</span>
+    </dd>
+    <dt>SHA family</dt>
+    <dd>Secure Hash Algorithm. SHA-1 (160-bit) improved on MD5 but hit similar collision issues.
+      <span class="detail">SHA-2 (digests from 224 to 512 bits) greatly reduces collision risk and is the current standard. SHA-3 is the latest, adding more rounds of computation for stronger security.</span>
+    </dd>
+    <dt>RIPEMD</dt>
+    <dd>RACE Integrity Primitives Evaluation Message Digest, with 128, 160, 256, and 320-bit variants.
+      <span class="detail">Developed independently of government influence, which makes it popular with privacy advocates. Used in PGP and Bitcoin.</span>
+    </dd>
+  </dl>
+
+  <table>
+    <thead>
+      <tr><th>algorithm</th><th>digest size</th><th>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>MD5</td><td>128-bit</td><td>insecure (collisions)</td></tr>
+      <tr><td>SHA-1</td><td>160-bit</td><td>deprecated</td></tr>
+      <tr><td>SHA-2</td><td>224–512-bit</td><td>current standard</td></tr>
+      <tr><td>SHA-3</td><td>variable</td><td>latest, strongest</td></tr>
+      <tr><td>RIPEMD</td><td>128/160/256/320-bit</td><td>niche (PGP, Bitcoin)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>practical applications</h2>
+
+  <h3>file and download verification</h3>
+  <p>If a file is sent along with its hash digest, the recipient can hash the received file with the same algorithm and compare. Matching digests confirm the file was not altered in transit. Software vendors publish a hash next to downloads for exactly this reason: hash the download, compare to the vendor value, and a match confirms it was not tampered with.</p>
+
+  <h3>file integrity monitoring (FIM)</h3>
+  <p>FIM creates a baseline hash digest for critical files and continuously re-checks them. If a file changes, its new digest differs from the baseline, triggering an alert, useful for catching an attacker modifying a config file or installing unauthorized software. Tools include Tripwire, OSSEC, and AIDE.</p>
+
+  <h3>digital signatures</h3>
+  <p>Digital signatures combine integrity with <strong>non-repudiation</strong>. The sender hashes the message, then encrypts that digest with their private key to form the signature. The recipient decrypts the signature with the sender's public key to reveal the original digest, independently hashes the received message, and compares. A match proves the message is unaltered and that only the sender (who holds the private key) could have signed it.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Hashing = one-way, fixed-length digest, deterministic, not reversible. It validates integrity, not confidentiality.</li>
+      <li>MD5 (128-bit) and SHA-1 (160-bit) are deprecated due to collisions. SHA-2 is the current standard; SHA-3 is newest.</li>
+      <li>A collision = two different inputs producing the same hash. Collision resistance is the measure of a hash's strength.</li>
+      <li>RIPEMD is the privacy-community algorithm, used in PGP and Bitcoin.</li>
+      <li>FIM tools (Tripwire, OSSEC, AIDE) baseline file hashes and alert on changes.</li>
+      <li>Digital signatures = hash the message, encrypt the hash with the sender's private key. Provides integrity AND non-repudiation.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves confirming a downloaded file was not modified → <strong>compare hash digests</strong></li>
+        <li>Scenario involves two different files producing the same hash → <strong>collision</strong></li>
+        <li>Scenario involves alerting when a critical system file changes → <strong>file integrity monitoring</strong></li>
+        <li>Scenario involves proving both integrity and that the sender cannot deny sending → <strong>digital signature</strong></li>
+        <li>Scenario asks for the current recommended hashing family → <strong>SHA-2 (or SHA-3)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_data_security_concepts.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_data_security_concepts</span></span>
+    </a>
+    <span class="counter">lesson 02 / 08</span>
+    <a class="next" href="03_integrity_use_cases.html">
+      <span><span class="lbl">next</span><span class="file">03_integrity_use_cases</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / data_integrity</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

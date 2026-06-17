@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Handling and Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/data_handling_and_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 07 / data security concepts / Data Handling and Management</span>
+  <h1 class="module-title">Data Handling and Management</h1>
+  <p class="subtitle">Two ends of the lifecycle: making data safe to analyze by stripping identities, and making it safe to discard by destroying it for good.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data handling and management protects data across its lifecycle. <strong>Data anonymization</strong> (de-identification) modifies data to prevent identifying individuals while keeping it usable for analysis. <strong>Data sanitization</strong> securely destroys data so sensitive information cannot be recovered before storage media is disposed of, repurposed, or transferred.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Data Anonymization</p>
+      <p class="card-desc">Strips identifying details so individuals cannot be traced, while keeping data analyzable. Techniques: masking, tokenization, aggregation and banding.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Sanitization</p>
+      <p class="card-desc">Securely destroys data before media is disposed of or reused. Methods: overwriting, degaussing, physical destruction.</p>
+    </div>
+  </div>
+
+  <h2>data anonymization</h2>
+
+  <p>Anonymization, also called de-identification, removes the ability to uniquely identify individuals while letting the data still be analyzed. To report how many students pass an exam you need the totals, not the names. Common techniques:</p>
+
+  <dl class="def">
+    <dt>Data masking</dt>
+    <dd>Replaces real data with generic or placeholder values while preserving format.
+      <span class="detail">Substituting real card numbers with placeholder digits keeps the structure but hides the value. Masking is not reversible.</span>
+    </dd>
+    <dt>Tokenization</dt>
+    <dd>Replaces sensitive data with tokens that reference the original stored elsewhere.
+      <span class="detail">Unlike masking, tokenization is reversible, allowing re-identification when a legitimate business need arises.</span>
+    </dd>
+    <dt>Aggregation and banding</dt>
+    <dd>Groups data into ranges to generalize individual values.
+      <span class="detail">Reporting that 20 employees earn $40,000–$50,000 hides each exact salary while still giving useful insight.</span>
+    </dd>
+  </dl>
+
+  <p>Anonymization is not foolproof: small datasets can be re-identified. If a survey's demographic bands match only one person in a small company, "anonymous" responses can be traced back to that individual. Aggregation only protects privacy when the groups are large enough.</p>
+
+  <h2>data sanitization</h2>
+
+  <p>Sanitization ensures data is completely removed from media before disposal, repurposing, or transfer. Deleting files or formatting a drive is not enough, deleted files are just marked as free space and formatting only removes file-system references, so recovery tools can still retrieve the data. Real sanitization methods:</p>
+
+  <dl class="def">
+    <dt>Overwriting</dt>
+    <dd>Writes random patterns, zeros, or ones over the data three, seven, or more times.
+      <span class="detail">Replaces the original data with meaningless information. Microsoft's Sysinternals SDelete overwrites files with random data.</span>
+    </dd>
+    <dt>Degaussing</dt>
+    <dd>Uses strong magnetic fields to scramble data on magnetic media.
+      <span class="detail">Works only on magnetic media (HDDs, tapes), not SSDs, and permanently destroys the media so it cannot be reused.</span>
+    </dd>
+    <dt>Physical destruction</dt>
+    <dd>Shreds, crushes, or incinerates storage devices.
+      <span class="detail">Makes recovery and reuse impossible. Banks often industrially shred old drives holding financial data.</span>
+    </dd>
+  </dl>
+
+  <p>Sanitization matters for individuals too: before selling a phone, do a factory reset and run a sanitization tool so no personal data remains.</p>
+
+  <h2>anonymization vs sanitization</h2>
+
+  <table>
+    <thead>
+      <tr><th></th><th>Anonymization</th><th>Sanitization</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>goal</td><td>keep data usable, hide identities</td><td>destroy data entirely</td></tr>
+      <tr><td>data survives?</td><td>yes (de-identified)</td><td>no (removed)</td></tr>
+      <tr><td>techniques</td><td>masking, tokenization, aggregation/banding</td><td>overwriting, degaussing, physical destruction</td></tr>
+      <tr><td>risk</td><td>re-identification of small groups</td><td>incomplete erasure if done poorly</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Anonymization keeps data usable while removing identifiers. Sanitization destroys the data. Don't mix them up.</li>
+      <li>Masking is not reversible; tokenization is reversible (it maps back to original data). Aggregation/banding groups values into ranges.</li>
+      <li>Anonymization can fail on small datasets through re-identification.</li>
+      <li>Deleting or formatting does NOT sanitize, data remains recoverable. Use overwriting, degaussing, or physical destruction.</li>
+      <li>Degaussing works only on magnetic media (not SSDs) and destroys the media permanently. SDelete overwrites files.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves using customer data for analysis without exposing identities → <strong>anonymization</strong></li>
+        <li>Scenario needs reversible de-identification for legitimate business use → <strong>tokenization</strong></li>
+        <li>Scenario reports salaries in ranges to hide individuals → <strong>aggregation and banding</strong></li>
+        <li>Scenario involves disposing of old drives so data cannot be recovered → <strong>sanitization</strong></li>
+        <li>Scenario involves wiping HDDs with magnetic fields → <strong>degaussing</strong> (not for SSDs)</li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_data_state_protection.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_data_state_protection</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_data_compliance_and_privacy.html">
+      <span><span class="lbl">next</span><span class="file">08_data_compliance_and_privacy</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / data_handling_and_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

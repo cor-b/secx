@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Compliance and Privacy / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/data_compliance_and_privacy</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 08 / data security concepts / Data Compliance and Privacy</span>
+  <h1 class="module-title">Data Compliance and Privacy</h1>
+  <p class="subtitle">Meeting legal obligations around personal data: the tools that protect it, the laws that govern it, and the standards that dictate how it must be handled.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data compliance and privacy means adhering to legal and regulatory requirements to protect personal data and respect individual rights. Three pieces: <strong>privacy applications</strong> are the tools (encryption, access controls, anonymization) that protect data, <strong>legal considerations</strong> are the laws that dictate how data must be managed (GDPR, CCPA), and <strong>regulatory considerations</strong> are the specific standards and practices organizations must follow (privacy by design, breach notification).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Privacy Applications</p>
+      <p class="card-desc">Tools that protect personal data: encryption software, secure access controls (MFA, RBAC), and automated anonymization tools.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Legal Considerations</p>
+      <p class="card-desc">Laws governing personal data: GDPR (EU) and CCPA (California), setting rules for handling and individual rights.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Regulatory Considerations</p>
+      <p class="card-desc">Standards and practices to stay compliant: privacy by design and default, 72-hour breach notification, clear privacy notices.</p>
+    </div>
+  </div>
+
+  <h2>privacy applications</h2>
+
+  <p>Privacy applications are the tools that protect personal information and ensure it is handled per policy and regulation, building user trust. They include:</p>
+
+  <ul>
+    <li><strong>Encryption software</strong> that produces ciphertext only authorized users with the key can decrypt</li>
+    <li><strong>Secure access controls</strong> using MFA and RBAC so only the right people reach sensitive data (a hospital limiting records to the doctors and nurses treating a patient)</li>
+    <li><strong>Automated anonymization tools</strong> that strip personal identifiers, replacing them with generic placeholders so data stays useful for research without exposing individuals</li>
+  </ul>
+
+  <h2>legal considerations</h2>
+
+  <p>Laws dictate how personal data must be managed. They vary by region but share principles: safeguard personal data, be transparent about its use, and uphold data-subject rights. Two dominate the exam.</p>
+
+  <dl class="def">
+    <dt>GDPR</dt>
+    <dd>General Data Protection Regulation, applies to any organization processing the personal data of EU individuals.
+      <span class="detail">Requires data minimization (collect only what is needed), explicit consent, and the right to access, correct, or delete data. Mandates protections like encryption and pseudonymization. Fines up to 20 million euros or 4% of annual global revenue, whichever is higher.</span>
+    </dd>
+    <dt>CCPA</dt>
+    <dd>California Consumer Privacy Act, protects the personal data of California residents.
+      <span class="detail">Grants rights to know what data is collected, request deletion, and opt out of its sale. Requires clear privacy notices and a chain of accountability for third-party processors. Fines up to $7,500 per intentional violation.</span>
+    </dd>
+  </dl>
+
+  <p>Non-compliance brings more than fines: reputational damage, lost trust, and legal action. Compliance audits, data protection impact assessments, and regular staff training reduce the risk.</p>
+
+  <h2>regulatory considerations</h2>
+
+  <p>Regulatory considerations are the specific standards and best practices organizations follow to stay compliant. Under GDPR, <strong>data protection by design and by default</strong> means privacy is built into every stage of the data lifecycle, using encryption, pseudonymization, and strict access controls. GDPR also mandates reporting data breaches to authorities within <strong>72 hours</strong>. The CCPA requires clear privacy notices and honoring user requests about their data.</p>
+
+  <p>Privacy, legal, and regulatory considerations work together. An online retailer operating in both Europe and California must comply with GDPR and CCPA at once, deploying privacy technologies (encryption, access controls), informing customers how data is used, and respecting rights to access, correct, or delete.</p>
+
+  <h2>GDPR vs CCPA</h2>
+
+  <table>
+    <thead>
+      <tr><th></th><th>GDPR</th><th>CCPA</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>scope</td><td>EU individuals' personal data</td><td>California residents' personal data</td></tr>
+      <tr><td>key rights</td><td>access, correct, delete; consent; minimization</td><td>know, delete, opt out of sale</td></tr>
+      <tr><td>breach rule</td><td>report within 72 hours</td><td>clear notices, honor requests</td></tr>
+      <tr><td>fines</td><td>up to €20M or 4% of global revenue</td><td>up to $7,500 per intentional violation</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Privacy applications = the tools (encryption, MFA/RBAC access controls, anonymization). Legal = the laws. Regulatory = the standards/practices.</li>
+      <li>GDPR: EU data, data minimization, explicit consent, right to access/correct/delete, fines up to €20M or 4% of global revenue.</li>
+      <li>CCPA: California residents, right to know/delete/opt out of sale, fines up to $7,500 per intentional violation.</li>
+      <li>GDPR mandates breach notification within 72 hours and "data protection by design and by default."</li>
+      <li>A business in both regions must satisfy GDPR and CCPA simultaneously.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves EU residents' data, consent, and the right to be forgotten → <strong>GDPR</strong></li>
+        <li>Scenario involves California residents opting out of data sale → <strong>CCPA</strong></li>
+        <li>Scenario requires reporting a breach within 72 hours → <strong>GDPR</strong></li>
+        <li>Scenario involves building privacy into a system from the start → <strong>privacy by design and by default</strong></li>
+        <li>Scenario involves tools like encryption and RBAC to protect personal data → <strong>privacy applications</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_data_handling_and_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_data_handling_and_management</span></span>
+    </a>
+    <span class="counter">lesson 08 / 08</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">data_security_concepts/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / data_compliance_and_privacy</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

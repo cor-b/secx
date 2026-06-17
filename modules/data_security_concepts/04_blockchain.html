@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockchain / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/blockchain</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 04 / data security concepts / Blockchain</span>
+  <h1 class="module-title">Blockchain</h1>
+  <p class="subtitle">A decentralized ledger where each block is chained to the last by its hash. Change one block and the whole chain breaks, making tampering obvious.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Blockchain is a decentralized, distributed ledger that ensures data integrity and transaction transparency by recording transactions in a series of <strong>immutable blocks</strong> (unchangeable after creation). An <strong>immutable database</strong> is any database where data, once written, cannot be altered or deleted. Blockchain uses immutability as a core feature but adds decentralization and cryptography on top.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Blockchain</p>
+      <p class="card-desc">Decentralized, distributed ledger maintained by many nodes. Blocks chain together by hash; tampering is detectable across the network.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Immutable Database</p>
+      <p class="card-desc">Data, once written, cannot be changed or deleted. Preserves a permanent record. Does not require decentralization on its own.</p>
+    </div>
+  </div>
+
+  <h2>blockchain</h2>
+
+  <p>Blockchain works like a digital ledger, but unlike a traditional ledger it is <strong>decentralized and distributed</strong>: no single person or organization controls it. Instead it is maintained by a network of computers called <strong>nodes</strong>. Each transaction or piece of data is recorded in a block; when a block is full it is linked to the previous one, forming a chain, hence "blockchain."</p>
+
+  <p>Its strengths are transparency and security. Once data is recorded it is effectively impossible to change, giving a tamper-proof record. Every participant holds a copy of the chain, so if someone tampers with the data, the rest of the network sees the discrepancy. This makes blockchain ideal where a transparent, trustworthy record matters: financial transactions, voting systems, and supply chain tracking.</p>
+
+  <h2>how hash linking makes it immutable</h2>
+
+  <p>Each block is hashed, producing a digital fingerprint of its data. Crucially, each block also stores the <strong>hash of the previous block</strong>, linking them into a continuous chain. The first block, with no predecessor, is the <strong>genesis block</strong> (block 0), which typically contains no transactions.</p>
+
+  <p>If any data in a block is altered, even slightly, that block's hash changes, which breaks its link to the next block and alerts the network. To successfully alter one block, an attacker would have to change every subsequent block, recalculate all their hashes, and control the majority of the network's computing power, which is practically impossible. This dependency on previous-block hashes is what makes blockchain immutable.</p>
+
+  <h2>blockchain vs immutable database</h2>
+
+  <p>The two are related but not the same. An immutable database simply guarantees that once data is written it cannot be modified, providing a reliable permanent record, valuable for compliance, auditing, and legal contexts. It does not need to be distributed or decentralized. Blockchain is a specific application of an immutable database that also relies on decentralization and cryptography to manage data securely and transparently across a network.</p>
+
+  <table>
+    <thead>
+      <tr><th></th><th>Immutable database</th><th>Blockchain</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>immutability</td><td>yes</td><td>yes</td></tr>
+      <tr><td>decentralized</td><td>not required</td><td>yes (network of nodes)</td></tr>
+      <tr><td>cryptographic linking</td><td>not required</td><td>yes (each block holds prior hash)</td></tr>
+      <tr><td>typical use</td><td>audit logs, compliance records</td><td>finance, voting, supply chain</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Blockchain = decentralized, distributed, immutable ledger maintained by nodes; each block linked to the previous by its hash.</li>
+      <li>Immutability comes from hash linking: changing a block changes its hash and breaks the chain, exposing tampering.</li>
+      <li>The genesis block is block 0, the first block, and contains no transactions.</li>
+      <li>An immutable database guarantees write-once data but does NOT require decentralization or cryptography. Blockchain adds both.</li>
+      <li>Good fits: supply chain tracking, financial transactions, voting, any tamper-proof transparent record.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs a tamper-proof, transparent record shared across many parties → <strong>blockchain</strong></li>
+        <li>Scenario needs write-once records but no network/decentralization → <strong>immutable database</strong></li>
+        <li>Scenario asks what links blocks together → <strong>the previous block's hash</strong></li>
+        <li>Scenario asks why altering one block fails → <strong>it breaks the hash chain for all later blocks</strong></li>
+        <li>Scenario names the first block with no transactions → <strong>genesis block</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_integrity_use_cases.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_integrity_use_cases</span></span>
+    </a>
+    <span class="counter">lesson 04 / 08</span>
+    <a class="next" href="05_data_protection.html">
+      <span><span class="lbl">next</span><span class="file">05_data_protection</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / blockchain</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

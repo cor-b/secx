@@ -95,6 +95,7 @@
     <li><a href="#zerotrust">zero trust</a></li>
     <li><a href="#hardware">hardware security</a></li>
     <li><a href="#endpoint">endpoint &amp; server</a></li>
+    <li><a href="#datasec">data security</a></li>
     <li><a href="#crypto">crypto &amp; vendor</a></li>
   </ul>
 
@@ -485,6 +486,54 @@
     </tbody>
   </table>
 
+  <h2 id="datasec">data security (crypto use cases)</h2>
+
+  <h3>data protection techniques</h3>
+  <table>
+    <thead><tr><th>technique</th><th>what it does</th><th>reversible?</th></tr></thead>
+    <tbody>
+      <tr><td>Tokenization</td><td>swaps data for tokens mapped in a secure system</td><td>only via the mapping</td></tr>
+      <tr><td>Cryptographic erase</td><td>deletes data by destroying its keys (SSD-friendly)</td><td>no (irrecoverable)</td></tr>
+      <tr><td>Obfuscation</td><td>hides meaning via encoding/masking, no crypto</td><td>generally no</td></tr>
+      <tr><td>Cryptographic obfuscation</td><td>encrypts data/code to make it unreadable</td><td>yes, with the key</td></tr>
+      <tr><td>Serialization</td><td>packages data (JSON/XML/binary) for storage/transit</td><td>yes (deserialization)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>anonymization techniques</h3>
+  <table>
+    <thead><tr><th>technique</th><th>how</th><th>reversible?</th></tr></thead>
+    <tbody>
+      <tr><td>Data masking</td><td>placeholder values, same format</td><td>no</td></tr>
+      <tr><td>Tokenization</td><td>tokens referencing data stored elsewhere</td><td>yes (via mapping)</td></tr>
+      <tr><td>Aggregation &amp; banding</td><td>group values into ranges</td><td>no</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Anonymization vs sanitization:</strong> anonymization keeps data usable while hiding identities; sanitization destroys data (overwriting/SDelete, degaussing for magnetic media only, physical destruction). Deleting or formatting is NOT sanitization.</p>
+
+  <h3>IPsec components</h3>
+  <table>
+    <thead><tr><th>component</th><th>role</th></tr></thead>
+    <tbody>
+      <tr><td>AH</td><td>Authentication Header: authentication and integrity, no encryption.</td></tr>
+      <tr><td>ESP</td><td>Encapsulating Security Payload: adds encryption for confidentiality.</td></tr>
+      <tr><td>Transport mode</td><td>encrypts the payload only.</td></tr>
+      <tr><td>Tunnel mode</td><td>encrypts payload and headers; preferred for site-to-site VPNs.</td></tr>
+      <tr><td>IKE</td><td>sets up the tunnel: Phase 1 authenticates peers, Phase 2 builds security associations.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>blockchain vs immutable database</h3>
+  <table>
+    <thead><tr><th></th><th>Immutable database</th><th>Blockchain</th></tr></thead>
+    <tbody>
+      <tr><td>write-once</td><td>yes</td><td>yes</td></tr>
+      <tr><td>decentralized</td><td>not required</td><td>yes (nodes)</td></tr>
+      <tr><td>hash-linked</td><td>not required</td><td>yes (each block holds prior hash)</td></tr>
+      <tr><td>use</td><td>audit logs, compliance</td><td>finance, voting, supply chain</td></tr>
+    </tbody>
+  </table>
+
   <h2 id="crypto">crypto &amp; vendor</h2>
 
   <h3>hashing algorithms</h3>
@@ -495,6 +544,7 @@
       <tr><td>SHA-1</td><td>160-bit</td><td>deprecated</td></tr>
       <tr><td>SHA-256 (SHA-2)</td><td>256-bit</td><td>current standard</td></tr>
       <tr><td>SHA-3</td><td>variable</td><td>newest family (2015)</td></tr>
+      <tr><td>RIPEMD</td><td>128/160/256/320-bit</td><td>niche (PGP, Bitcoin)</td></tr>
     </tbody>
   </table>
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data State Protection / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/data_state_protection</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 06 / data security concepts / Data State Protection</span>
+  <h1 class="module-title">Data State Protection</h1>
+  <p class="subtitle">Data needs different protection depending on what it is doing: sitting in storage, moving across a network, or being processed in memory.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data state protection safeguards data based on its current condition. <strong>Data at rest</strong> is in storage, protected with encryption (AES) and access controls. <strong>Data in transit</strong> moves across networks, protected by encrypted tunnels (TLS, IPsec). <strong>Data in use</strong> is being processed in RAM or CPU registers, protected by in-memory encryption and secure enclaves. Each state has a different threat model and a different defense.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">state 01</span>
+      <p class="card-name">At Rest</p>
+      <p class="card-desc">Stored on disk, SSD, or cloud. Protected with AES and access controls. Encryption granularity: disk, block, file, or record level.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">state 02</span>
+      <p class="card-name">In Transit</p>
+      <p class="card-desc">Moving across networks. Protected by encrypted tunnels: TLS (web, email, file transfer) and IPsec (VPNs).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">state 03</span>
+      <p class="card-name">In Use</p>
+      <p class="card-desc">Active in RAM or CPU registers. Vulnerable to memory scraping. Protected by in-memory encryption (AMD SME) and secure enclaves (Intel SGX).</p>
+    </div>
+  </div>
+
+  <h2>data at rest</h2>
+
+  <p>Data at rest is stored on devices (thumb drives, hard drives, SSDs) or cloud storage, not moving or being processed, files, databases, backups. The primary protection is encryption: <strong>AES</strong> turns data into ciphertext only readable with the correct key, backed by access controls like passwords, MFA, and permissions. Encryption can be applied at four granularities:</p>
+
+  <dl class="def">
+    <dt>Disk-level</dt>
+    <dd>Encrypts an entire disk or partition with a symmetric algorithm like AES.
+      <span class="detail">One key for the whole volume; can slow boot and login. BitLocker (Windows) and FileVault (macOS) are examples.</span>
+    </dd>
+    <dt>Block-level</dt>
+    <dd>Secures individual fixed-size blocks of data, mainly for virtual partitions and storage area networks.
+      <span class="detail">Protects specific data segments rather than the whole disk, useful in complex storage environments.</span>
+    </dd>
+    <dt>File-level</dt>
+    <dd>Encrypts individual files, each with the same or a different key.
+      <span class="detail">Lets users protect their own files on a shared drive so others cannot read them without the key.</span>
+    </dd>
+    <dt>Record-level</dt>
+    <dd>Encrypts each record in a database individually for the most granular control.
+      <span class="detail">Useful for high-security databases. Like file-level but finer; can slow access since data is decrypted on each open.</span>
+    </dd>
+  </dl>
+
+  <h2>data in transit</h2>
+
+  <p>Data in transit moves across corporate networks, the internet, or wireless links, making it vulnerable to interception and tampering. The fix is encrypted tunnels.</p>
+
+  <h3>TLS</h3>
+  <p><strong>Transport Layer Security</strong> creates an encrypted tunnel between a client and server, ensuring confidentiality and integrity. SSL was its 1990s predecessor and is now outdated; <strong>TLS 1.2 and 1.3</strong> are the recommended standards. TLS operates at the application layer (OSI Layer 7). To set up, the client encrypts a random value with the server's certificate and public key; the server decrypts it to derive a symmetric key both sides use, defeating on-path attacks. TLS secures more than web traffic, it also protects email, file transfers (FTP secured with TLS becomes <strong>FTPS</strong>), and remote authentication. A <strong>cipher suite</strong> like <code>ECDHE_RSA_AES128_GCM_SHA256</code> specifies key exchange (ECDHE), signatures (RSA), encryption (AES-128-GCM), and message authentication (SHA-256).</p>
+
+  <h3>IPsec</h3>
+  <p><strong>IPsec</strong> secures data by creating encrypted tunnels between devices, often for VPNs, providing confidentiality, integrity, and authentication. Its protocols are <strong>Authentication Header (AH)</strong> (authentication and integrity) and <strong>Encapsulating Security Payload (ESP)</strong> (adds encryption). It runs in <strong>transport mode</strong> or <strong>tunnel mode</strong>; tunnel mode encrypts both data and headers and is preferred for site-to-site VPNs. <strong>Internet Key Exchange (IKE)</strong> sets up the tunnel: Phase 1 authenticates peers and exchanges keys, Phase 2 establishes the security associations used to encrypt and transmit data.</p>
+
+  <h2>data in use</h2>
+
+  <p>Data in use is being actively accessed or processed, residing temporarily in RAM or CPU registers. This exposes it to <strong>memory scraping</strong>, where attackers read data directly from memory, since traditional encryption does not protect data during active processing. Protections include in-memory encryption (for example AMD's Secure Memory Encryption, which encrypts data in RAM) and <strong>secure enclaves</strong> (Intel SGX isolates sensitive data within an application, resisting memory scraping).</p>
+
+  <h2>the three states</h2>
+
+  <table>
+    <thead>
+      <tr><th>state</th><th>where</th><th>protection</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>At rest</td><td>disk, SSD, cloud storage</td><td>AES; disk/block/file/record encryption; access controls</td></tr>
+      <tr><td>In transit</td><td>networks, internet, wireless</td><td>TLS (Layer 7), IPsec (AH/ESP, tunnel mode, IKE)</td></tr>
+      <tr><td>In use</td><td>RAM, CPU registers</td><td>in-memory encryption (AMD SME), secure enclaves (Intel SGX)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three states: at rest (storage), in transit (networks), in use (RAM/CPU registers).</li>
+      <li>At rest → AES. In transit → TLS and IPsec. In use → in-memory encryption and secure enclaves.</li>
+      <li>At-rest encryption granularity, broad to fine: disk → block → file → record. Disk-level = BitLocker/FileVault.</li>
+      <li>TLS (1.2/1.3) replaced SSL; operates at OSI Layer 7. FTP + TLS = FTPS. Cipher suites name the algorithms used.</li>
+      <li>IPsec: AH = authentication/integrity, ESP = encryption. Tunnel mode encrypts headers too (site-to-site VPNs). IKE has Phase 1 and Phase 2.</li>
+      <li>Data in use is exposed to memory scraping; Intel SGX secure enclaves and AMD SME defend it.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves encrypting stored database files → <strong>data at rest (AES)</strong></li>
+        <li>Scenario involves securing a credit card number traveling to a payment processor → <strong>data in transit (TLS)</strong></li>
+        <li>Scenario involves a site-to-site VPN encrypting packets and headers → <strong>IPsec tunnel mode</strong></li>
+        <li>Scenario involves protecting data being processed in memory → <strong>data in use (secure enclave / in-memory encryption)</strong></li>
+        <li>Scenario involves encrypting each database record with its own key → <strong>record-level encryption</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_data_protection.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_data_protection</span></span>
+    </a>
+    <span class="counter">lesson 06 / 08</span>
+    <a class="next" href="07_data_handling_and_management.html">
+      <span><span class="lbl">next</span><span class="file">07_data_handling_and_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / data_state_protection</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

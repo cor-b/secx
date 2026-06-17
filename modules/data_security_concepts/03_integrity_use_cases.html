@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrity Use Cases / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/data_security_concepts/integrity_use_cases</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /data_security_concepts</a>
+
+  <span class="module-tag">lesson 03 / data security concepts / Integrity Use Cases</span>
+  <h1 class="module-title">Integrity Use Cases</h1>
+  <p class="subtitle">Trusting software, not just data. Knowing where code came from (provenance) and proving it has not been altered (code integrity) defends the supply chain.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Integrity use cases apply integrity controls to software to keep it functional and secure. <strong>Software provenance</strong> answers "where did this come from and can I trust it?" using version control, an SBOM, and SCA tooling. <strong>Software and code integrity</strong> proves code has not been altered from its trusted state using cryptographic hashes and code signing. Together they defend against supply chain attacks.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">use case 01</span>
+      <p class="card-name">Software Provenance</p>
+      <p class="card-desc">Tracks origin and history of components. Version control (Git), SBOM inventory, and SCA tools verify sources and flag tampering.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">use case 02</span>
+      <p class="card-name">Software &amp; Code Integrity</p>
+      <p class="card-desc">Proves code is unaltered from its trusted state via cryptographic hashes and code signing, automated in CI/CD pipelines.</p>
+    </div>
+  </div>
+
+  <h2>software provenance</h2>
+
+  <p>Software provenance is about understanding the origin and history of every software component: who developed it, where it came from, and how it changed over time. It answers the trust question for code the way a chain of custody does for evidence.</p>
+
+  <h3>version control</h3>
+  <p>Version control systems like <strong>Git</strong> record every change to the codebase, what changed, when, and by whom, creating an auditable history of development. Beyond tracking, version control lets teams roll back to a previous trusted version if a problem is found.</p>
+
+  <h3>SBOM and SCA</h3>
+  <p>A <strong>software bill of materials (SBOM)</strong> is a detailed recipe listing every component, library, and dependency in an application, including third-party and open-source pieces. <strong>Software Composition Analysis (SCA)</strong> tools such as Snyk, Black Duck, or WhiteSource scan the SBOM and codebase to verify components come from trusted sources, checking for vulnerabilities, licensing issues, and tampering.</p>
+
+  <p>SCA tools identify each component and version, compare them against a database of trusted components and known vulnerabilities, and verify integrity by comparing cryptographic hashes against known-good sources. A hash mismatch flags a component that may have been swapped for a compromised version, the core defense against supply chain attacks.</p>
+
+  <h2>software and code integrity</h2>
+
+  <p>Code integrity ensures software stays secure, reliable, and unchanged from its trusted state. Two mechanisms work together.</p>
+
+  <h3>cryptographic hashes</h3>
+  <p>A hash creates a unique fingerprint of each version of the code. The hash is stored securely and recalculated whenever the code is accessed, modified, or deployed; if the new hash matches the original, the code is unaltered. This catches unauthorized modifications early.</p>
+
+  <h3>code signing</h3>
+  <p>Code signing lets a developer sign code with a digital certificate from a trusted certificate authority. The code itself is not encrypted; instead a hash of the code is encrypted with the developer's private key, forming a digital signature attached to the code. On download, the system uses the developer's public key to decrypt the signature (revealing the original hash), independently hashes the downloaded code, and compares. A match confirms the code is authentic and unaltered; a mismatch flags it as untrusted. This is automated in CI/CD pipelines with tools like Jenkins or GitLab CI.</p>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr><th>use case</th><th>question</th><th>tools</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Provenance</td><td>where did this come from?</td><td>Git, SBOM, SCA (Snyk, Black Duck, WhiteSource)</td></tr>
+      <tr><td>Code integrity</td><td>has this been altered?</td><td>cryptographic hashes, code signing (Jenkins, GitLab CI)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Provenance = origin and history of software. Code integrity = proof it has not been altered.</li>
+      <li>Version control (Git) provides the auditable change history and rollback for provenance.</li>
+      <li>SBOM lists all components/dependencies; SCA tools (Snyk, Black Duck, WhiteSource) scan it for bad sources, vulnerabilities, and tampering.</li>
+      <li>Code signing = encrypt a hash of the code with the developer's private key; verify with the public key. Confirms authenticity and integrity.</li>
+      <li>Together these defend against supply chain attacks (a compromised component swapped in during development).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves tracking who wrote code and how it changed → <strong>software provenance (version control)</strong></li>
+        <li>Scenario involves an inventory of all components and dependencies → <strong>SBOM</strong></li>
+        <li>Scenario involves scanning dependencies for compromised or vulnerable components → <strong>SCA</strong></li>
+        <li>Scenario involves signing software so users can verify it is authentic and unaltered → <strong>code signing</strong></li>
+        <li>Scenario involves preventing a malicious component being inserted during development → <strong>integrity use cases / supply chain defense</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_data_integrity.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_data_integrity</span></span>
+    </a>
+    <span class="counter">lesson 03 / 08</span>
+    <a class="next" href="04_blockchain.html">
+      <span><span class="lbl">next</span><span class="file">04_blockchain</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>data_security_concepts / integrity_use_cases</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
