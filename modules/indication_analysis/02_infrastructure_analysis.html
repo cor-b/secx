@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infrastructure Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/infrastructure_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 02 / indication analysis / Infrastructure Analysis</span>
+  <h1 class="module-title">Infrastructure Analysis</h1>
+  <p class="subtitle">Examining the three layers of a system for compromise: down at the hardware (JTAG), on the endpoints (host), and across the wire (network).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Infrastructure analysis examines hardware, software, and network components to detect vulnerabilities or compromise. Three concepts: <strong>JTAG interfaces</strong> (hardware-level debugging/testing of embedded systems), <strong>host analysis</strong> (scrutinizing endpoints for malware/misconfig), and <strong>network analysis</strong> (traffic patterns and connections).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">JTAG Interfaces</p>
+      <p class="card-desc">Hardware interface for debugging/testing embedded systems. Detect tampered firmware/circuits at the hardware level.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Host Analysis</p>
+      <p class="card-desc">Examine endpoints for IoCs (malware, misconfig, odd behavior). Tools: Sysmon, EnCase, Autopsy, SIEM.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Network Analysis</p>
+      <p class="card-desc">Scrutinize traffic/connections for anomalies. Wireshark (full packets) vs NetFlow (metadata only).</p>
+    </div>
+  </div>
+
+  <h2>JTAG interfaces</h2>
+
+  <p><strong>JTAG</strong> (Joint Test Action Group) is a hardware interface standard for testing and debugging <strong>embedded systems</strong>, giving direct, low-level access to a device's internals. It's valuable for detecting hardware-level vulnerabilities, insecure firmware, or tampered circuits, e.g. investigating a network switch whose firmware appears modified without authorization, recovering hardware-level logs, and restoring it to a known secure state. It secures even the hardware layer, reducing the attack surface.</p>
+
+  <h2>host analysis</h2>
+
+  <p>Host analysis examines individual endpoints (servers, workstations) to detect <strong>indicators of compromise</strong>, malware, misconfigurations, unusual behavior. Example: an endpoint running slow with files modified without authorization, a security analyst inspects logs, file changes, and processes (using <strong>Sysmon</strong>, or forensic tools like <strong>EnCase</strong>, <strong>Autopsy</strong>) and finds malware that opened an unauthorized channel for exfiltration, then isolates and cleans it. Antivirus, file integrity monitoring, and SIEM platforms automate detection.</p>
+
+  <h2>network analysis</h2>
+
+  <p>Network analysis scrutinizes data traffic, communication patterns, and connections to find malicious activity, revealing data breaches, DoS attacks, or unauthorized connections. Example: unusual off-peak traffic where a server contacts an external IP at 2am, packet inspection reveals malware exfiltrating data. Two key tools differ in depth:</p>
+  <dl class="def">
+    <dt>Wireshark</dt>
+    <dd>Captures <strong>full packet data</strong> (header + payload) for detailed content/structure analysis, great for investigating specific incidents, but storage- and time-intensive.</dd>
+    <dt>NetFlow</dt>
+    <dd>Captures <strong>metadata</strong> only (source/destination IPs, ports, protocols), not the content. More efficient for monitoring large networks over time, but less detailed.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three layers: JTAG (hardware), host analysis (endpoints), network analysis (traffic).</li>
+      <li>JTAG = hardware interface for debugging/testing embedded systems; detects firmware/circuit tampering.</li>
+      <li>Host analysis tools: Sysmon, EnCase, Autopsy, SIEM; finds endpoint IoCs.</li>
+      <li>Wireshark captures full packets (header + payload, detailed but heavy); NetFlow captures metadata only (efficient, less detail).</li>
+      <li>Match the need: deep single-incident analysis → Wireshark; broad long-term monitoring → NetFlow.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario debugs a tampered embedded device's firmware → <strong>JTAG interface</strong></li>
+        <li>Scenario inspects an endpoint's processes/logs for malware → <strong>host analysis</strong></li>
+        <li>Scenario needs full packet content for one incident → <strong>Wireshark</strong></li>
+        <li>Scenario monitors traffic metadata across a large network → <strong>NetFlow</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_indication_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_indication_analysis</span></span>
+    </a>
+    <span class="counter">lesson 02 / 08</span>
+    <a class="next" href="03_metadata_analysis.html">
+      <span><span class="lbl">next</span><span class="file">03_metadata_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / infrastructure_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

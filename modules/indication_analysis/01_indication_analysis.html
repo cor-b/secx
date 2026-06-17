@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indication Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 01 / indication analysis / Overview</span>
+  <h1 class="module-title">Indication Analysis</h1>
+  <p class="subtitle">Digging into the artifacts an incident leaves behind: infrastructure and metadata, volatile and stored data, reversed code and detonated malware, coding fingerprints, and cloud workloads.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 4 (Security Operations), Objective 4.4: analyze data and artifacts in support of incident response. Indication analysis examines components and behaviors to understand threats, investigating infrastructure, data patterns, storage, malware, and code. The section covers infrastructure analysis, metadata analysis, volatile/non-volatile storage analysis, reverse engineering, malware analysis, code stylometry, and the cloud workload protection platform.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Examine the System</p>
+      <p class="card-desc">Infrastructure analysis (JTAG, host, network), metadata analysis (files, media, email), volatile/non-volatile storage analysis.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Examine the Code</p>
+      <p class="card-desc">Reverse engineering (byte/binary code, disassembly, decompilation), malware analysis (sandboxing, detonation, IoC), code stylometry.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Protect the Cloud</p>
+      <p class="card-desc">Cloud workload protection platform (CWPP): detection/response, integration, multi-cloud.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Infrastructure Analysis</td><td>JTAG interfaces, host analysis, network analysis</td></tr>
+      <tr><td>03</td><td>Metadata Analysis</td><td>files/filesystems, images/audio/video, email headers</td></tr>
+      <tr><td>04</td><td>Volatile &amp; Non-volatile Storage Analysis</td><td>order of volatility (RFC 3227), forensic imaging</td></tr>
+      <tr><td>05</td><td>Reverse Engineering</td><td>byte code, binary code, disassembly, decompilation</td></tr>
+      <tr><td>06</td><td>Malware Analysis</td><td>sandboxing, malware detonation, IoC extraction</td></tr>
+      <tr><td>07</td><td>Code Stylometry</td><td>variant matching, code similarity, malware attribution</td></tr>
+      <tr><td>08</td><td>Cloud Workload Protection Platform</td><td>detection/response, integration, multi-cloud</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">indication_analysis/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 08</span>
+    <a class="next" href="02_infrastructure_analysis.html">
+      <span><span class="lbl">next</span><span class="file">02_infrastructure_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

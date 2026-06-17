@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volatile and Non-volatile Storage Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/volatile_and_non_volatile_storage_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 04 / indication analysis / Storage Analysis</span>
+  <h1 class="module-title">Volatile and Non-volatile Storage Analysis</h1>
+  <p class="subtitle">Collect the most fleeting evidence first. The order of volatility decides what to capture before it vanishes, and forensic imaging makes a court-admissible copy of what persists.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Volatile and non-volatile storage analysis examines temporary and permanent data for evidence of compromise. Two concepts: the <strong>order of volatility</strong> (the sequence to collect evidence, most ephemeral first, per RFC 3227) and <strong>forensic imaging</strong> (creating an exact, court-admissible bit-by-bit copy of non-volatile storage).</p>
+  </div>
+
+  <h2>order of volatility</h2>
+
+  <p>The order of volatility is the sequence in which to collect digital evidence, since data types are lost at different rates. <strong>Volatile</strong> data (CPU cache, RAM) disappears at power-off; <strong>non-volatile</strong> data (hard drives, USBs) persists. Collecting in the right order preserves the most transient evidence first. <strong>RFC 3227</strong> ("Guidelines for Evidence Collection and Archiving") defines the order:</p>
+  <ol>
+    <li>Registers and CPU cache</li>
+    <li>Routing tables, ARP cache, process tables, kernel statistics, and RAM</li>
+    <li>Temporary file systems / swap space</li>
+    <li>Disks</li>
+    <li>Remote logging and monitoring data</li>
+    <li>Physical configuration and network topology</li>
+    <li>Archival media (e.g. backup tapes)</li>
+  </ol>
+  <p>So a forensic analyst at a powered-on machine captures CPU registers/cache and RAM (active processes, network connections, encryption keys) before disks, because that memory data is permanently lost if the system is turned off.</p>
+
+  <h2>forensic imaging</h2>
+
+  <p>Forensic imaging creates an exact, <strong>bit-by-bit copy</strong> of a storage device while preserving integrity to a court-admissible standard, so the original stays untouched. It captures not just visible files but <strong>slack space</strong> (unused space between the end of a file and the end of its cluster/block), unallocated space, and deleted files. Three common tools:</p>
+  <dl class="def">
+    <dt>dd</dt>
+    <dd>Native Unix/Linux command for a bit-by-bit copy (e.g. <code>if=</code> input device, <code>of=</code> output file, <code>bs=64K</code> block size, <code>conv</code> to continue past errors).</dd>
+    <dt>dcfldd</dt>
+    <dd>A forensic version of dd (US DoD Computer Forensics Lab) adding on-the-fly hashing (MD5, SHA-256) and progress indicators to verify integrity.</dd>
+    <dt>FTK Imager</dt>
+    <dd>A graphical tool that creates copies, automates hash generation, and supports chain of custody.</dd>
+  </dl>
+  <p>Best practices: use a <strong>write blocker</strong> to prevent modifying the original, hash the image to verify it matches the original, and image the original once, then analyze a copy-of-the-copy to preserve integrity.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Order of volatility (RFC 3227): registers/cache → routing/ARP/process tables/RAM → swap → disks → remote logs → physical config/topology → archival media.</li>
+      <li>Capture the most volatile data (CPU cache, RAM) first, it's lost at power-off.</li>
+      <li>Forensic imaging = exact bit-by-bit copy preserving integrity; captures slack space, unallocated space, deleted files.</li>
+      <li>Tools: dd (basic), dcfldd (adds hashing), FTK Imager (GUI, chain of custody).</li>
+      <li>Use a write blocker and hash the image to keep evidence admissible.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario decides what evidence to grab first on a live system → <strong>order of volatility (RAM before disk)</strong></li>
+        <li>Scenario makes a court-admissible exact copy of a drive → <strong>forensic imaging</strong></li>
+        <li>Scenario prevents writing to the original during imaging → <strong>write blocker</strong></li>
+        <li>Scenario needs on-the-fly hashing during imaging → <strong>dcfldd</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_metadata_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_metadata_analysis</span></span>
+    </a>
+    <span class="counter">lesson 04 / 08</span>
+    <a class="next" href="05_reverse_engineering.html">
+      <span><span class="lbl">next</span><span class="file">05_reverse_engineering</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / volatile_and_non_volatile_storage_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

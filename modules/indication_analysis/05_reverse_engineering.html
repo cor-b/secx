@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse Engineering / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/reverse_engineering</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 05 / indication analysis / Reverse Engineering</span>
+  <h1 class="module-title">Reverse Engineering</h1>
+  <p class="subtitle">Taking compiled software apart to understand it: the two forms code takes (byte code, binary), and the two ways to make it readable (disassembly to assembly, decompilation to high-level).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Reverse engineering breaks down software or hardware to understand its structure, functionality, and vulnerabilities. Four concepts: <strong>byte code</strong> (intermediate code for virtual machines), <strong>binary code</strong> (machine-level ones and zeros), <strong>disassembly</strong> (binary → assembly language), and <strong>decompilation</strong> (executable → high-level language).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Byte Code</p>
+      <p class="card-desc">Intermediate, platform-independent code run by a virtual machine (.class, .pyc, .dll). Architecture-neutral.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Binary Code</p>
+      <p class="card-desc">Machine-level instructions (1s and 0s) executed directly by the CPU. Tools: binwalk, hexdump, strace, ldd.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Disassembly / Decompilation</p>
+      <p class="card-desc">Disassembly: binary → assembly (IDA Pro, Ghidra, OllyDbg). Decompilation: → high-level language (closer to source).</p>
+    </div>
+  </div>
+
+  <h2>byte code and binary code</h2>
+
+  <p><strong>Byte code</strong> is a low-level, <strong>platform-independent</strong> intermediate representation executed by a virtual machine, more abstract and portable than assembly, which is tied to a CPU architecture. In forensics it lets analysts examine software/malware without source code (e.g. analyzing Java byte code), found in <code>.class</code> (Java), <code>.pyc</code> (Python), or <code>.dll</code> (.NET) files. <strong>Binary code</strong> is machine-level instructions (ones and zeros) the CPU executes directly, key for analyzing executables and firmware. Tools: <strong>binwalk</strong> (extract embedded firmware components), <strong>hexdump</strong> (display binary in hex), <strong>strace</strong> (trace system calls of a running binary), and <strong>ldd</strong> (identify shared library dependencies).</p>
+
+  <h2>disassembly and decompilation</h2>
+
+  <dl class="def">
+    <dt>Disassembly</dt>
+    <dd>Converts binary code into <strong>assembly language</strong>, a low-level human-readable form, to see how software operates. Tools: <strong>IDA Pro</strong>, <strong>Ghidra</strong>, <strong>OllyDbg</strong> (and debuggers like GDB). Debuggers add <strong>breakpoints</strong> to pause execution and inspect memory/variables/registers at critical moments.</dd>
+    <dt>Decompilation</dt>
+    <dd>Goes further, translating executable/byte code back into a <strong>high-level language</strong> (C, Python, Java) that resembles the original source, easier to interpret. Languages that compile to byte code (Java, Python, JavaScript) decompile most successfully (tools: Java Decompiler, Uncompyle6, Ghidra).</dd>
+  </dl>
+  <p>The distinction: disassembly produces assembly (low-level), decompilation produces high-level source-like code.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Byte code = platform-independent intermediate code run by a VM (.class, .pyc, .dll); binary = machine code (1s and 0s) the CPU runs directly.</li>
+      <li>Disassembly converts binary → assembly language; decompilation converts executable → high-level language.</li>
+      <li>Disassembly/debugging tools: IDA Pro, Ghidra, OllyDbg, GDB; breakpoints pause execution to inspect state.</li>
+      <li>Binary analysis tools: binwalk (firmware), hexdump (hex view), strace (system calls), ldd (dependencies).</li>
+      <li>Byte-code languages (Java, Python) decompile most successfully.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario analyzes a .class or .pyc file without source → <strong>byte code</strong></li>
+        <li>Scenario converts a binary to assembly to study it → <strong>disassembly</strong></li>
+        <li>Scenario recovers high-level source-like code → <strong>decompilation</strong></li>
+        <li>Scenario extracts components from a firmware image → <strong>binary analysis (binwalk)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_volatile_and_non_volatile_storage_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_volatile_and_non_volatile_storage_analysis</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_malware_analysis.html">
+      <span><span class="lbl">next</span><span class="file">06_malware_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / reverse_engineering</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

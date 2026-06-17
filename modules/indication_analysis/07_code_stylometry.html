@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Stylometry / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/code_stylometry</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 07 / indication analysis / Code Stylometry</span>
+  <h1 class="module-title">Code Stylometry</h1>
+  <p class="subtitle">Code has a fingerprint. Analyzing a developer's coding style to recognize evolving variants, find shared code across samples, and trace malware back to its author.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Code stylometry analyzes a developer's coding style to identify unique patterns for malware attribution or tracing software origin. Three concepts: <strong>variant matching</strong> (similarities between versions of the same malware family), <strong>code similarity</strong> (shared structures/functions across samples), and <strong>malware attribution</strong> (linking malware to a threat actor via coding habits).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Variant Matching</p>
+      <p class="card-desc">Spot similarities between versions of the same malware family despite modifications made to evade detection. Recognize evolving threats fast.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Code Similarity</p>
+      <p class="card-desc">Compare code segments across samples for shared structures/functions, linking seemingly unrelated software (or detecting plagiarism).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Malware Attribution</p>
+      <p class="card-desc">Link malware to a developer/group by unique coding habits, reused libraries, preferred algorithms. Turns stylometry into cyber forensics.</p>
+    </div>
+  </div>
+
+  <h2>variant matching and code similarity</h2>
+
+  <p><strong>Variant matching</strong> identifies similarities between different versions or variants of the same <strong>malware family</strong>. Attackers tweak code structure or functionality to evade signature-based detection while keeping the core malicious behavior; variant matching links these back to the family (e.g. a new strain with a different payload but the same coding style), enabling rapid identification and response. <strong>Code similarity</strong> compares code segments across samples to find shared structures, techniques, or functions, linking seemingly unrelated software, detecting threats by comparison to a known-malware database, and even spotting software plagiarism. Example: a new malware sharing the same encryption algorithm as a known banking trojan links it to a specific group.</p>
+
+  <h2>malware attribution</h2>
+
+  <p>Malware attribution links a piece of malware to a specific developer, group, or threat actor by analyzing unique coding habits and patterns, markers like coding style, reused libraries, or preferred algorithms. It turns code stylometry into a <strong>cyber forensics</strong> tool. Knowing who is behind an attack helps predict future risks, adapt defenses, and collaborate with law enforcement or share intelligence. Example: ransomware sharing a particular encryption library and a distinct error-logging style with past attacks lets the team confidently attribute it to a known group and prepare defenses for that group's TTPs.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Code stylometry = analyzing coding style/patterns for attribution and origin tracing.</li>
+      <li>Variant matching = similarities across versions of the SAME malware family (catches evolving strains).</li>
+      <li>Code similarity = shared structures/functions ACROSS samples (links unrelated software, detects plagiarism).</li>
+      <li>Malware attribution = linking malware to a specific actor by unique coding habits/reused code.</li>
+      <li>Distinguish variant matching (same family) from code similarity (across different samples).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario links a new strain to an older one in the same family → <strong>variant matching</strong></li>
+        <li>Scenario finds shared code across unrelated samples → <strong>code similarity</strong></li>
+        <li>Scenario traces malware to a known threat group by coding habits → <strong>malware attribution</strong></li>
+        <li>Scenario detects copied code without attribution → <strong>code similarity (plagiarism)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_malware_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_malware_analysis</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_cloud_workload_protection_platform.html">
+      <span><span class="lbl">next</span><span class="file">08_cloud_workload_protection_platform</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / code_stylometry</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

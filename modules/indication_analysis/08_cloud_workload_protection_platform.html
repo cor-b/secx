@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Workload Protection Platform / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/cloud_workload_protection_platform</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 08 / indication analysis / CWPP</span>
+  <h1 class="module-title">Cloud Workload Protection Platform (CWPP)</h1>
+  <p class="subtitle">Security purpose-built for cloud workloads: spotting and stopping threats in real time, plugging into existing tools, and protecting consistently across every cloud provider.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A <strong>CWPP</strong> is a security solution that detects, protects, and responds to threats targeting cloud-based workloads. Three concepts: <strong>detection and response</strong> (real-time monitoring and rapid countermeasures), <strong>integration</strong> (working with existing cloud infrastructure and security tools), and <strong>multi-cloud environments</strong> (consistent protection across AWS, Azure, GCP).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Detection &amp; Response</p>
+      <p class="card-desc">Continuously monitor workloads for anomalies; respond automatically (isolate workload, revoke access) to limit impact.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Integration</p>
+      <p class="card-desc">Work with cloud platforms and security tools (CSPM, SIEM, EPP); share threat info, avoid silos/blind spots.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Multi-Cloud Environments</p>
+      <p class="card-desc">Apply uniform security across AWS, Azure, GCP. Avoid vendor lock-in; consistent protection wherever workloads run.</p>
+    </div>
+  </div>
+
+  <h2>detection and response</h2>
+
+  <p>Detection and response is the CWPP's core: continuously monitoring cloud workloads for abnormal behavior (e.g. a workload accessing sensitive info it normally wouldn't) and detecting it in real time. The <strong>response</strong> takes immediate action to minimize impact, an automated response such as <strong>isolating the compromised workload</strong> or <strong>revoking access rights</strong> for a suspicious user. Fast detection and response is essential in dynamic, evolving cloud environments where threats could otherwise go unnoticed.</p>
+
+  <h2>integration and multi-cloud</h2>
+
+  <p><strong>Integration</strong> is the CWPP's ability to work smoothly with existing cloud infrastructure and security tools (CSPM, SIEM, endpoint protection), creating a unified protection layer. It shares threat information across platforms, so a threat detected in AWS can alert Azure Security Center or Google Cloud's Security Command Center, minimizing silos and blind spots. <strong>Multi-cloud environments</strong> use more than one provider; a multi-cloud-capable CWPP applies <strong>uniform security</strong> across AWS, Azure, and GCP despite their differing configurations, letting organizations avoid vendor lock-in and improve performance while keeping consistent protection. Example: a CWPP detects an unusually large data transfer from an AWS S3 bucket to an unrecognized external IP, flags potential exfiltration, blocks the connection, revokes access, isolates the instance, and coordinates across the multi-cloud infrastructure.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>A CWPP detects, protects, and responds to threats on cloud workloads.</li>
+      <li>Detection and response = real-time monitoring + automated action (isolate workload, revoke access).</li>
+      <li>Integration connects the CWPP with cloud platforms and security tools (CSPM, SIEM, EPP), sharing threat info to avoid blind spots.</li>
+      <li>Multi-cloud support applies uniform security across AWS, Azure, and GCP, avoiding vendor lock-in.</li>
+      <li>CWPP focuses specifically on workloads (vs CSPM, which focuses on posture/misconfiguration).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario auto-isolates a compromised cloud workload in real time → <strong>detection and response</strong></li>
+        <li>Scenario shares a threat across AWS, Azure, and GCP tools → <strong>integration</strong></li>
+        <li>Scenario applies uniform protection across multiple providers → <strong>multi-cloud environments</strong></li>
+        <li>Scenario secures cloud workloads specifically → <strong>CWPP</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_code_stylometry.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_code_stylometry</span></span>
+    </a>
+    <span class="counter">lesson 08 / 08</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">indication_analysis/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / cloud_workload_protection_platform</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

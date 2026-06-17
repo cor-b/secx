@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metadata Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/indication_analysis/metadata_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /indication_analysis</a>
+
+  <span class="module-tag">lesson 03 / indication analysis / Metadata Analysis</span>
+  <h1 class="module-title">Metadata Analysis</h1>
+  <p class="subtitle">The data about the data. Examining file timestamps, media EXIF, and email headers to uncover origin, manipulation, and malicious intent.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Metadata analysis examines the underlying data about files, media, or communications to uncover origin, manipulation, or malicious intent. Three concepts: <strong>files and filesystems</strong> (timestamps, permissions), <strong>images/audio/video</strong> (device, GPS, editing history), and <strong>email header analysis</strong> (sender, path, authentication).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Files &amp; Filesystems</p>
+      <p class="card-desc">Creation/modification times, permissions, ownership. Tools: stat (Linux), Windows properties, Autopsy, FTK Imager. Spot tampering/unauthorized access.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Images/Audio/Video</p>
+      <p class="card-desc">Device model, GPS coordinates, editing history. Tool: ExifTool. Verify authenticity, trace source.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Email Headers</p>
+      <p class="card-desc">Received fields, Message-ID, Return-Path, SPF/DKIM/DMARC. Tools: MXToolbox, Gmail/Outlook. Detect spoofing/phishing.</p>
+    </div>
+  </div>
+
+  <h2>files and filesystems</h2>
+
+  <p>File metadata includes creation date, modification history, and user permissions, revealing tampered or suspicious files through inconsistencies or unusual access. Tools: <code>stat</code> in Linux (or Windows file properties) show timestamps, permissions, and ownership; forensic tools like <strong>Autopsy</strong> or <strong>FTK Imager</strong> extract metadata from disk images to reconstruct a security incident (e.g. tracing how malware was planted or finding hidden files with modified attributes).</p>
+
+  <h2>images, audio, and video</h2>
+
+  <p>Media metadata can include device model, GPS coordinates, and editing history. The tool <strong>ExifTool</strong> displays this (camera model, creation date, GPS, editing software). It's used in digital forensics and authenticity verification, e.g. metadata revealing an "original" photo was actually edited, or a video edited after the alleged event, challenging its authenticity and helping establish chain of custody.</p>
+
+  <h2>email header analysis</h2>
+
+  <p>Email headers reveal a message's origin and transmission path. Key fields: <strong>Received</strong> (the server path), <strong>Message-ID</strong>, and <strong>Return-Path</strong>, which can show whether an email was spoofed. Tools like <strong>MXToolbox</strong> or built-in client header analysis (Gmail's "Show original," Outlook) trace the journey. In a phishing attack, headers can show an email originated from an unexpected region or lacks proper authentication (<strong>SPF, DKIM, DMARC</strong>). The lesson's demo analyzed a fake Chase email and found four malicious indicators: receipt from blacklisted suspicious IPs, an SPF failure, missing DKIM/failed DMARC, and a misaligned Reply-To (secure-chase.login.com vs chase.com), confirming a phishing attempt.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three metadata domains: files/filesystems, images/audio/video, email headers.</li>
+      <li>File metadata (stat, Autopsy, FTK Imager) reveals timestamps/permissions, exposing tampering.</li>
+      <li>Media metadata (ExifTool) reveals device, GPS, and editing history for authenticity/source tracing.</li>
+      <li>Email headers (Received, Message-ID, Return-Path) plus SPF/DKIM/DMARC checks detect spoofing/phishing (MXToolbox).</li>
+      <li>Phishing red flags in headers: blacklisted IPs, SPF failure, missing DKIM/failed DMARC, misaligned Reply-To.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario checks file timestamps for unauthorized changes → <strong>file/filesystem metadata</strong></li>
+        <li>Scenario reads GPS/device data from a photo → <strong>image metadata (ExifTool)</strong></li>
+        <li>Scenario traces an email's path and finds SPF/DMARC failures → <strong>email header analysis</strong></li>
+        <li>Scenario finds a Reply-To that doesn't match the From domain → <strong>spoofing indicator (email header)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_infrastructure_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_infrastructure_analysis</span></span>
+    </a>
+    <span class="counter">lesson 03 / 08</span>
+    <a class="next" href="04_volatile_and_non_volatile_storage_analysis.html">
+      <span><span class="lbl">next</span><span class="file">04_volatile_and_non_volatile_storage_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>indication_analysis / metadata_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
