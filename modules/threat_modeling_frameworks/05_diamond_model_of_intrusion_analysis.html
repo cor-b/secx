@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diamond Model of Intrusion Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/diamond_model_of_intrusion_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 05 / threat modeling frameworks / Diamond Model</span>
+  <h1 class="module-title">Diamond Model of Intrusion Analysis</h1>
+  <p class="subtitle">Dissecting an intrusion into four interconnected points, adversary, infrastructure, capability, victim, plus meta-features for context. Trace any vertex to reach the others.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The Diamond Model dissects cyber incidents using four interconnected components visualized as a diamond's vertices: <strong>adversary</strong> (who, their motives/resources), <strong>infrastructure</strong> (tools, networks, C2 servers, phishing sites), <strong>capability</strong> (the TTPs used), and <strong>victim</strong> (the target and exploited vulnerabilities). <strong>Meta-features</strong> add context.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">vertex 01</span>
+      <p class="card-name">Adversary</p>
+      <p class="card-desc">The individual/group behind the attack: motives, resources, intent.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">vertex 02</span>
+      <p class="card-name">Infrastructure</p>
+      <p class="card-desc">Tools, networks, resources used: C2 servers, malware, phishing sites.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">vertex 03</span>
+      <p class="card-name">Capability</p>
+      <p class="card-desc">The TTPs employed: exploiting a vulnerability, deploying malware.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">vertex 04</span>
+      <p class="card-name">Victim</p>
+      <p class="card-desc">The target (org, individual, system) and the vulnerabilities exploited.</p>
+    </div>
+  </div>
+
+  <h2>the four components and meta-features</h2>
+
+  <p>The four vertices are <strong>interconnected</strong>, each influencing the others: an adversary uses their infrastructure to deploy a capability against a victim. Alongside them, <strong>meta-features</strong> add context and depth:</p>
+  <dl class="def">
+    <dt>Timestamp</dt>
+    <dd>When the attack occurred.</dd>
+    <dt>Phase</dt>
+    <dd>The stage of the attack.</dd>
+    <dt>Result</dt>
+    <dd>The outcome (successful access, data theft).</dd>
+    <dt>Direction</dt>
+    <dd>The network path/connection used.</dd>
+    <dt>Methodology</dt>
+    <dd>The attack techniques/tactics used.</dd>
+    <dt>Resources</dt>
+    <dd>The assets the adversary needed (tools, exploits).</dd>
+  </dl>
+
+  <h2>applying the model</h2>
+
+  <p>Investigation example: malware on a <strong>victim</strong> system → analyze the <strong>capability</strong> (it connects to a malicious C2 domain) → trace the <strong>infrastructure</strong> (the C2 server) → attribute to an <strong>adversary</strong> (linking the C2 IP to a known group). Proactively, defenders break the attack at multiple points: filter email/train users (victim), block C2 IPs on the firewall (infrastructure), or add a DNS rule redirecting malicious domains. The Diamond Model can integrate with <strong>MITRE ATT&amp;CK</strong> to map specific tactics/techniques to the broader intrusion strategy.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four vertices: adversary, infrastructure, capability, victim, interconnected as a diamond.</li>
+      <li>Adversary = who; infrastructure = tools/networks/C2; capability = TTPs; victim = target + vulnerabilities.</li>
+      <li>Meta-features: timestamp, phase, result, direction, methodology, resources.</li>
+      <li>Tracing one vertex (e.g. capability → infrastructure → adversary) supports attribution.</li>
+      <li>Integrates with MITRE ATT&CK to map tactics/techniques to the intrusion.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario analyzes an intrusion via adversary/infrastructure/capability/victim → <strong>Diamond Model</strong></li>
+        <li>Scenario blocks the attacker's C2 servers → <strong>infrastructure vertex</strong></li>
+        <li>Scenario attributes an attack to a known group → <strong>adversary vertex</strong></li>
+        <li>Scenario records when and how the attack happened → <strong>meta-features (timestamp, methodology)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_mitre_attack.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_mitre_attack</span></span>
+    </a>
+    <span class="counter">lesson 05 / 07</span>
+    <a class="next" href="06_stride.html">
+      <span><span class="lbl">next</span><span class="file">06_stride</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / diamond_model_of_intrusion_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

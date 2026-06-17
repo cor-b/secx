@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAPEC / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/capec</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 03 / threat modeling frameworks / CAPEC</span>
+  <h1 class="module-title">CAPEC</h1>
+  <p class="subtitle">MITRE's free catalog of common attack patterns. Each entry spells out an attack's prerequisites, steps, and outcomes, so developers can design defenses against it early.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>CAPEC</strong> (Common Attack Pattern Enumeration and Classification) is a MITRE threat modeling framework that categorizes and describes common attack patterns. Each entry details an attack's <strong>prerequisites</strong>, <strong>potential outcomes</strong>, and the <strong>typical steps</strong> involved. It's a free public resource (capec.mitre.org), most useful for anticipating threats during the software development lifecycle.</p>
+  </div>
+
+  <h2>what CAPEC provides</h2>
+
+  <p>CAPEC gives a structured way to understand attacks. Each entry goes beyond a general description with detailed attributes:</p>
+  <ul>
+    <li><strong>Prerequisites:</strong> conditions needed for the attack (specific software configs, user permissions).</li>
+    <li><strong>Potential outcomes:</strong> what success looks like (data theft, disruption, denial of service).</li>
+    <li><strong>Steps:</strong> the typical sequence attackers follow.</li>
+  </ul>
+  <p>It organizes patterns into <strong>categories and subcategories</strong> so teams can quickly locate specific threats or related techniques, supporting both specific and broad defense strategies.</p>
+
+  <h2>use in the software development lifecycle</h2>
+
+  <p>CAPEC's key strength is the <strong>SDLC</strong>: security teams and developers reference it early to anticipate which attacks may target their application and build in protections proactively (secure coding, input validation, encryption). Example: a team that finds a potential <strong>SQL injection</strong> vulnerability consults the relevant CAPEC entry to understand how attackers exploit it, then applies the recommended defenses, parameterized queries and input validation, to secure database interactions before deployment.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>CAPEC = Common Attack Pattern Enumeration and Classification, a MITRE catalog of attack patterns.</li>
+      <li>Each entry details prerequisites, potential outcomes, and typical steps.</li>
+      <li>Free public resource (capec.mitre.org); organized into categories/subcategories.</li>
+      <li>Primary use is the software development lifecycle: anticipate and design against attacks early.</li>
+      <li>Don't confuse with MITRE ATT&CK: CAPEC = attack patterns (app/dev focus); ATT&CK = adversary TTPs.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario references a catalog of attack patterns with prerequisites/steps → <strong>CAPEC</strong></li>
+        <li>Scenario uses it during development to design secure code → <strong>CAPEC in the SDLC</strong></li>
+        <li>Scenario looks up SQL injection defenses by attack pattern → <strong>CAPEC entry</strong></li>
+        <li>Scenario maps adversary TTPs across attack stages → <strong>MITRE ATT&CK (not CAPEC)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_cyber_kill_chain.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_cyber_kill_chain</span></span>
+    </a>
+    <span class="counter">lesson 03 / 07</span>
+    <a class="next" href="04_mitre_attack.html">
+      <span><span class="lbl">next</span><span class="file">04_mitre_attack</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / capec</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

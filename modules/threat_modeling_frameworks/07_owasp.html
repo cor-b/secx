@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OWASP / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/owasp</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 07 / threat modeling frameworks / OWASP</span>
+  <h1 class="module-title">OWASP</h1>
+  <p class="subtitle">A nonprofit's toolkit for web-app security: the Top 10 risk checklist, the ASVS standard for detailed requirements, and ZAP for dynamic testing.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>OWASP</strong> (Open Web Application Security Project) is a nonprofit providing resources to improve software security, especially web applications. Three key offerings: the <strong>OWASP Top 10</strong> (most critical web app risks), the <strong>ASVS</strong> (Application Security Verification Standard, detailed requirements), and <strong>ZAP</strong> (Zed Attack Proxy, a dynamic testing tool).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">resource 01</span>
+      <p class="card-name">OWASP Top 10</p>
+      <p class="card-desc">The 10 most critical web app risks (injection, broken auth, XSS). A health checklist/baseline for compliance.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">resource 02</span>
+      <p class="card-name">ASVS</p>
+      <p class="card-desc">Application Security Verification Standard: detailed, specific security controls (session mgmt, validation, auth) for the design phase.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">resource 03</span>
+      <p class="card-name">ZAP</p>
+      <p class="card-desc">Zed Attack Proxy: dynamic application security testing tool that scans for SQLi, XSS, etc., automated and manual.</p>
+    </div>
+  </div>
+
+  <h2>OWASP Top 10</h2>
+
+  <p>The <strong>OWASP Top 10</strong> lists the most critical web application security risks (injection flaws, broken authentication, cross-site scripting). It's a <strong>health checklist</strong> for web apps: developers assess "vitals" like validating inputs (injection) and reviewing authentication. Enterprises often use it as a <strong>baseline</strong> to meet regulatory/compliance requirements and ensure apps aren't vulnerable to common, preventable attacks.</p>
+
+  <h2>ASVS and ZAP</h2>
+
+  <p>The <strong>ASVS</strong> (Application Security Verification Standard) goes beyond the Top 10's general risks, providing <strong>specific, detailed security requirements</strong> (secure session management, data validation, authentication controls). Teams use it in design and development to set clear security objectives and verify their app meets them.</p>
+
+  <p><strong>ZAP</strong> (Zed Attack Proxy) is a <strong>dynamic application security testing</strong> tool that probes a running application for weaknesses like SQL injection and XSS, like inspecting a house for cracks before buying. It automates many checks and supports manual exploration, suitable for routine scans or deep testing. In practice the three combine: use the <strong>Top 10</strong> as a starting checklist, apply <strong>ASVS</strong> requirements to build robust features, and run <strong>ZAP</strong> to catch hidden vulnerabilities before deployment.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>OWASP = nonprofit focused on web application security.</li>
+      <li>Top 10 = the most critical web app risks (a checklist/baseline); ASVS = detailed, specific security requirements.</li>
+      <li>ZAP = Zed Attack Proxy, a dynamic (running-app) security testing tool.</li>
+      <li>Workflow: Top 10 checklist → ASVS requirements → ZAP testing.</li>
+      <li>Top 10 is general/awareness; ASVS is granular/verifiable.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses a checklist of the top web app risks → <strong>OWASP Top 10</strong></li>
+        <li>Scenario needs detailed, verifiable security requirements → <strong>ASVS</strong></li>
+        <li>Scenario dynamically scans a running app for SQLi/XSS → <strong>ZAP</strong></li>
+        <li>Scenario sets a compliance baseline for web apps → <strong>OWASP Top 10</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_stride.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_stride</span></span>
+    </a>
+    <span class="counter">lesson 07 / 07</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">threat_modeling_frameworks/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / owasp</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

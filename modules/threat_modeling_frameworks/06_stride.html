@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/stride</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 06 / threat modeling frameworks / STRIDE</span>
+  <h1 class="module-title">STRIDE</h1>
+  <p class="subtitle">An acronym that turns threat modeling into a checklist: six categories of threat to walk through during design, each with a matched mitigation.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>STRIDE identifies and categorizes threats across six types: <strong>S</strong>poofing, <strong>T</strong>ampering, <strong>R</strong>epudiation, <strong>I</strong>nformation disclosure, <strong>D</strong>enial of service, and <strong>E</strong>levation of privilege. It's commonly used during the <strong>design phase</strong> of software development to evaluate how each threat could be exploited.</p>
+  </div>
+
+  <h2>the six categories</h2>
+
+  <dl class="def">
+    <dt>Spoofing</dt>
+    <dd>Impersonating another user or system to gain unauthorized access. Mitigate with multi-factor authentication.</dd>
+    <dt>Tampering</dt>
+    <dd>Unauthorized modification of data or processes. Mitigate with integrity checks and input validation.</dd>
+    <dt>Repudiation</dt>
+    <dd>Denying actions after performing them, challenging accountability. Mitigate with secure logging/audit trails.</dd>
+    <dt>Information disclosure</dt>
+    <dd>Unauthorized release of sensitive data (leaks, breaches). Mitigate with encryption (in transit and at rest).</dd>
+    <dt>Denial of service</dt>
+    <dd>Disrupting system availability so legitimate users can't access it. Mitigate with rate limiting.</dd>
+    <dt>Elevation of privilege</dt>
+    <dd>Gaining higher access rights than intended. Mitigate with role-based access controls.</dd>
+  </dl>
+
+  <h2>using STRIDE in design</h2>
+
+  <p>Walk each category against the system being designed: for <strong>spoofing</strong>, add MFA; for <strong>tampering</strong>, add integrity checks where input validation is weak; for <strong>repudiation</strong>, add secure logging; for <strong>information disclosure</strong>, encrypt data in transit and at rest; for <strong>denial of service</strong>, add rate limiting; for <strong>elevation of privilege</strong>, enforce RBAC. Applying STRIDE during design proactively identifies and addresses each threat category, building security in from the start.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>STRIDE = Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege.</li>
+      <li>Used during the design phase to categorize and address threats proactively.</li>
+      <li>Match mitigations: spoofing→MFA, tampering→integrity checks, repudiation→logging, info disclosure→encryption, DoS→rate limiting, EoP→RBAC.</li>
+      <li>Repudiation is about deniability/accountability; non-repudiation (logging) counters it.</li>
+      <li>STRIDE is design-focused, unlike kill chain/ATT&CK which model live attacks.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario impersonates a legitimate user → <strong>spoofing</strong></li>
+        <li>Scenario denies having performed an action → <strong>repudiation</strong></li>
+        <li>Scenario leaks sensitive data → <strong>information disclosure</strong></li>
+        <li>Scenario gains admin rights it shouldn't have → <strong>elevation of privilege</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_diamond_model_of_intrusion_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_diamond_model_of_intrusion_analysis</span></span>
+    </a>
+    <span class="counter">lesson 06 / 07</span>
+    <a class="next" href="07_owasp.html">
+      <span><span class="lbl">next</span><span class="file">07_owasp</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / stride</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

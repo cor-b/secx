@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Kill Chain / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/cyber_kill_chain</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 02 / threat modeling frameworks / Cyber Kill Chain</span>
+  <h1 class="module-title">Cyber Kill Chain</h1>
+  <p class="subtitle">Lockheed Martin's seven sequential phases of an attack. Break any single link and the whole attack fails, forcing the adversary back to step one.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The Cyber Kill Chain, developed by <strong>Lockheed Martin</strong>, breaks an attack into <strong>seven sequential steps</strong>; each must occur in order for the attack to succeed. Breaking any link disrupts the whole attack, forcing the attacker to start over. The steps: reconnaissance, weaponization, delivery, exploitation, installation, command and control, actions on objectives.</p>
+  </div>
+
+  <h2>the seven steps</h2>
+
+  <ol class="phases">
+    <li>
+      <span class="phase-name">reconnaissance</span>
+      <span class="phase-desc">Gather information about the target (OSINT, scanning) to find vulnerabilities and entry points. Passive or active.</span>
+    </li>
+    <li>
+      <span class="phase-name">weaponization</span>
+      <span class="phase-desc">Create a malicious payload/exploit tailored to the discovered weakness, often tested in a controlled environment.</span>
+    </li>
+    <li>
+      <span class="phase-name">delivery</span>
+      <span class="phase-desc">Transmit the payload to the target (phishing email, compromised website, infected USB). First direct interaction with the target.</span>
+    </li>
+    <li>
+      <span class="phase-name">exploitation</span>
+      <span class="phase-desc">The payload executes, exploiting a vulnerability to gain access (e.g. victim clicks a malicious link/attachment).</span>
+    </li>
+    <li>
+      <span class="phase-name">installation</span>
+      <span class="phase-desc">Malware establishes itself, creating a backdoor or persistence mechanism for continued access.</span>
+    </li>
+    <li>
+      <span class="phase-name">command and control (C2)</span>
+      <span class="phase-desc">A communication channel connects the attacker to the compromised system for remote control; often encrypted/concealed.</span>
+    </li>
+    <li>
+      <span class="phase-name">actions on objectives</span>
+      <span class="phase-desc">The attacker achieves their goal: data theft, ransomware, sabotage, espionage.</span>
+    </li>
+  </ol>
+
+  <h2>breaking the chain and the six Ds</h2>
+
+  <p>Defenders can disrupt an attack at any step. Detecting suspicious emails at the <strong>delivery</strong> stage lets a team block the sender, add filters, and alert users, stopping exploitation and later phases. Even at the <strong>C2</strong> stage, monitoring traffic for connections to unfamiliar servers lets defenders cut the channel. The kill chain aligns with the <strong>six Ds of defense</strong>: <strong>detect, deny, disrupt, degrade, deceive, destroy</strong> (e.g. deceive with a honeypot, degrade by throttling network speed to slow exfiltration).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Seven steps in order: reconnaissance, weaponization, delivery, exploitation, installation, command and control, actions on objectives.</li>
+      <li>Developed by Lockheed Martin; steps are sequential, breaking one link stops the attack.</li>
+      <li>Delivery is the first step where the attacker directly interacts with the target.</li>
+      <li>The six Ds of defense: detect, deny, disrupt, degrade, deceive, destroy.</li>
+      <li>Detecting and blocking phishing at delivery prevents exploitation and everything after.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario gathers target info before attacking → <strong>reconnaissance</strong></li>
+        <li>Scenario emails a malicious attachment → <strong>delivery</strong></li>
+        <li>Scenario establishes a remote control channel → <strong>command and control</strong></li>
+        <li>Scenario deploys a honeypot to mislead the attacker → <strong>deceive (six Ds)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_threat_modeling_frameworks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_threat_modeling_frameworks</span></span>
+    </a>
+    <span class="counter">lesson 02 / 07</span>
+    <a class="next" href="03_capec.html">
+      <span><span class="lbl">next</span><span class="file">03_capec</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / cyber_kill_chain</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

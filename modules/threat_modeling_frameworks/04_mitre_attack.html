@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MITRE ATT&amp;CK / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/mitre_attack</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 04 / threat modeling frameworks / MITRE ATT&amp;CK</span>
+  <h1 class="module-title">MITRE ATT&amp;CK</h1>
+  <p class="subtitle">A comprehensive catalog of real-world adversary tactics, techniques, and procedures, organized into matrices, with a Navigator tool to map a specific threat actor against your defenses.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The <strong>MITRE ATT&amp;CK</strong> (Adversarial Tactics, Techniques, and Common Knowledge) framework documents the <strong>TTPs</strong> adversaries use, organized into <strong>matrices</strong> with entries detailing required permissions, affected platforms, and mitigations. Matrices: <strong>Enterprise</strong>, <strong>Mobile</strong>, <strong>PRE-ATT&amp;CK</strong>, and <strong>ICS</strong>. The <strong>ATT&amp;CK Navigator</strong> visually maps techniques to specific threat actors.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">matrix 01</span>
+      <p class="card-name">Enterprise / Mobile</p>
+      <p class="card-desc">Enterprise: desktops, servers, cloud (most used). Mobile: attacks on mobile devices/apps/OSes.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">matrix 02</span>
+      <p class="card-name">PRE / ICS</p>
+      <p class="card-desc">PRE-ATT&CK: pre-attack behavior (recon, planning). ICS: industrial control systems (energy, manufacturing).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool</span>
+      <p class="card-name">ATT&amp;CK Navigator</p>
+      <p class="card-desc">Visually map a threat actor's techniques onto a matrix to find gaps in your defenses.</p>
+    </div>
+  </div>
+
+  <h2>the matrices</h2>
+
+  <p>ATT&amp;CK organizes TTPs into matrices for different environments:</p>
+  <ul>
+    <li><strong>Enterprise ATT&amp;CK:</strong> the most widely used, covering desktops, servers, and cloud.</li>
+    <li><strong>ATT&amp;CK for Mobile:</strong> tactics/techniques against mobile devices, apps, and OSes.</li>
+    <li><strong>PRE-ATT&amp;CK:</strong> adversary behavior <em>before</em> an attack (reconnaissance, planning).</li>
+    <li><strong>ATT&amp;CK for ICS:</strong> techniques targeting industrial environments (energy, manufacturing).</li>
+  </ul>
+
+  <h2>the ATT&amp;CK Navigator</h2>
+
+  <p>The <strong>ATT&amp;CK Navigator</strong> is a visual tool to map and analyze how specific techniques align with real-world threat actors. Example workflow: research a threat actor like <strong>APT29</strong> (attributed to Russia's SVR), overlay its known techniques onto the Enterprise matrix, color-coded (e.g. techniques used directly vs in attributed campaigns), then review your own infrastructure to identify high-probability targets and gaps. This lets a team prioritize hardening and detection for the techniques that specific adversary actually uses, e.g. preparing for <strong>credential dumping</strong> by checking ATT&amp;CK for the technique, mapping it against current defenses, and adding alerts or restricting admin permissions where coverage is missing.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>ATT&CK documents adversary TTPs (tactics, techniques, procedures) in matrices.</li>
+      <li>Four matrices: Enterprise (desktops/servers/cloud), Mobile, PRE-ATT&CK (pre-attack recon/planning), ICS.</li>
+      <li>The ATT&CK Navigator visually maps a specific threat actor's techniques onto a matrix to find defensive gaps.</li>
+      <li>Use case: map a known APT (e.g. APT29) against your defenses and prioritize hardening.</li>
+      <li>CAPEC = attack patterns for dev; ATT&CK = real-world adversary TTPs for defense mapping.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario catalogs real-world adversary TTPs in matrices → <strong>MITRE ATT&CK</strong></li>
+        <li>Scenario visually maps APT29 techniques to find gaps → <strong>ATT&CK Navigator</strong></li>
+        <li>Scenario needs pre-attack reconnaissance behavior → <strong>PRE-ATT&CK matrix</strong></li>
+        <li>Scenario covers industrial control systems → <strong>ATT&CK for ICS</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_capec.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_capec</span></span>
+    </a>
+    <span class="counter">lesson 04 / 07</span>
+    <a class="next" href="05_diamond_model_of_intrusion_analysis.html">
+      <span><span class="lbl">next</span><span class="file">05_diamond_model_of_intrusion_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / mitre_attack</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

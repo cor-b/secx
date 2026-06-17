@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Modeling Frameworks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_frameworks/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_frameworks</a>
+
+  <span class="module-tag">lesson 01 / threat modeling frameworks / Overview</span>
+  <h1 class="module-title">Threat Modeling Frameworks</h1>
+  <p class="subtitle">Structured ways to understand and defend against attacks: the kill chain's sequential phases, MITRE's attack catalogs, the diamond's intrusion components, STRIDE's threat categories, and OWASP's web-app risks.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 1 (Governance, Risk, and Compliance), Objective 1.4: perform threat modeling activities. Frameworks give different perspectives, from categorizing attack patterns to mapping intrusion stages, helping teams prioritize defenses. The section covers the Cyber Kill Chain, CAPEC, MITRE ATT&amp;CK, the Diamond Model, STRIDE, and OWASP.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">group 01</span>
+      <p class="card-name">Lifecycle &amp; Patterns</p>
+      <p class="card-desc">Cyber Kill Chain (7 sequential phases) and CAPEC (catalog of common attack patterns).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">group 02</span>
+      <p class="card-name">Adversary Mapping</p>
+      <p class="card-desc">MITRE ATT&amp;CK (TTP matrices + Navigator) and the Diamond Model (adversary, infrastructure, capability, victim).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">group 03</span>
+      <p class="card-name">Design &amp; Web</p>
+      <p class="card-desc">STRIDE (six threat categories for design) and OWASP (Top 10, ASVS, ZAP for web apps).</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Cyber Kill Chain</td><td>7 sequential phases (Lockheed Martin), break a link</td></tr>
+      <tr><td>03</td><td>CAPEC</td><td>MITRE catalog of attack patterns, SDLC use</td></tr>
+      <tr><td>04</td><td>MITRE ATT&amp;CK</td><td>TTP matrices, ATT&amp;CK Navigator, APT mapping</td></tr>
+      <tr><td>05</td><td>Diamond Model</td><td>adversary, infrastructure, capability, victim + meta-features</td></tr>
+      <tr><td>06</td><td>STRIDE</td><td>spoofing, tampering, repudiation, info disclosure, DoS, EoP</td></tr>
+      <tr><td>07</td><td>OWASP</td><td>Top 10, ASVS, ZAP</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">threat_modeling_frameworks/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 07</span>
+    <a class="next" href="02_cyber_kill_chain.html">
+      <span><span class="lbl">next</span><span class="file">02_cyber_kill_chain</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_frameworks / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
