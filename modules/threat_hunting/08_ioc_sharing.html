@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoC Sharing / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/ioc_sharing</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 08 / threat hunting / IoC Sharing</span>
+  <h1 class="module-title">IoC Sharing</h1>
+  <p class="subtitle">Exchanging indicators of compromise so one organization's discovery protects many. A standard language (STIX), a transport protocol (TAXII), and a government real-time program (AIS).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>IoC sharing is the exchange of data about potential threats (malicious IPs, file hashes) between organizations to improve detection and response. Three concepts: <strong>STIX</strong> (a standardized language for representing threat info), <strong>TAXII</strong> (the protocol for securely sharing it), and <strong>AIS</strong> (a US government program for real-time public/private indicator sharing).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">STIX</p>
+      <p class="card-desc">Structured Threat Information eXpression: a standardized LANGUAGE/format for threat data (IOCs, vulnerabilities, TTPs).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">TAXII</p>
+      <p class="card-desc">Trusted Automated eXchange of Intelligence Information: the PROTOCOL for securely, automatically sharing threat data.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">AIS</p>
+      <p class="card-desc">Automated Indicator Sharing: a US DHS PROGRAM for real-time public/private IOC sharing at machine speed.</p>
+    </div>
+  </div>
+
+  <h2>STIX, TAXII, and AIS</h2>
+
+  <dl class="def">
+    <dt>STIX (Structured Threat Information eXpression)</dt>
+    <dd>A standardized <strong>language</strong> to represent and communicate cyber threat information (IOCs, vulnerabilities, attacker tactics) in a consistent, structured format, so data can be shared and understood across organizations and tools. Integrates with SIEMs and TIPs (e.g. banks formatting phishing data in STIX to share).</dd>
+    <dt>TAXII (Trusted Automated eXchange of Intelligence Information)</dt>
+    <dd>The <strong>protocol</strong> that securely and automatically exchanges threat intelligence over the internet, enabling real-time updates without manual effort. TAXII-compliant tools pull in new IOCs (e.g. hospitals sharing ransomware-strain info).</dd>
+    <dt>AIS (Automated Indicator Sharing)</dt>
+    <dd>A US <strong>Department of Homeland Security program</strong> enabling real-time IOC exchange (malicious IPs, hashes, domains) between public and private sectors at machine speed, giving access to up-to-date threat info from government and other companies.</dd>
+  </dl>
+
+  <p>Memory hook: STIX = the <em>language/format</em>, TAXII = the <em>transport/protocol</em>, AIS = the <em>government program</em>. They combine: format data in STIX, share it via TAXII, and participate in AIS for real-time alerts. (Note: the lesson demoed pulling AlienVault OTX data via REST API into JSON when TAXII isn't supported, then noted a script could convert it to STIX if needed.)</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>STIX = the standardized language/format for threat data; TAXII = the protocol that transports it.</li>
+      <li>Don't swap them: STIX describes, TAXII delivers.</li>
+      <li>AIS = a US DHS program for real-time public/private IOC sharing at machine speed.</li>
+      <li>IoCs include malicious IPs, file hashes, and domain names.</li>
+      <li>Workflow: format in STIX → share via TAXII → AIS enables real-time gov/industry exchange.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario formats threat data in a standardized language → <strong>STIX</strong></li>
+        <li>Scenario securely transports threat data between orgs → <strong>TAXII</strong></li>
+        <li>Scenario shares IOCs in real time with the government → <strong>AIS</strong></li>
+        <li>Scenario exchanges malicious IPs/hashes to improve detection → <strong>IoC sharing</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_threat_intelligence_platforms.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_threat_intelligence_platforms</span></span>
+    </a>
+    <span class="counter">lesson 08 / 10</span>
+    <a class="next" href="09_rule_based_languages.html">
+      <span><span class="lbl">next</span><span class="file">09_rule_based_languages</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / ioc_sharing</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

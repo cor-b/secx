@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat-hunting / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 01 / threat hunting / Overview</span>
+  <h1 class="module-title">Threat-hunting</h1>
+  <p class="subtitle">Assume breach, then go looking. Proactively searching the network for signs of malicious activity using behavior analysis, internal and external intelligence, shared indicators, and deception.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 2 and 4, Objectives 2.3 (integrate controls into a secure architecture) and 4.3 (apply threat-hunting and threat intelligence concepts). Threat-hunting is proactive: it <strong>assumes breach</strong> and searches for signs of malicious activity that traditional defenses miss. The section covers indicators of attack, behavior/data analysis, internal and external intelligence sources, detection enablers, threat intelligence platforms, IoC sharing, rule-based languages, and counterintelligence/operational security.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Hunt</p>
+      <p class="card-desc">Indicators of attack (TTPs), behavior and data analysis, internal intelligence sources, detection and threat-hunting enablers.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Intelligence</p>
+      <p class="card-desc">External intelligence sources, threat intelligence platforms (TIPs), IoC sharing (STIX/TAXII/AIS).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Detect &amp; Deceive</p>
+      <p class="card-desc">Rule-based languages (Sigma/YARA/Rita/Snort), counterintelligence and operational security (cyber deception).</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Indicators of Attack</td><td>TTPs: initial access, privilege escalation, lateral movement, exfil, C2, persistence</td></tr>
+      <tr><td>03</td><td>Behavior &amp; Data Analysis</td><td>internal reconnaissance, hypothesis-based searches, UBA</td></tr>
+      <tr><td>04</td><td>Internal Intelligence Sources</td><td>adversary emulation, honeypots, honeynets</td></tr>
+      <tr><td>05</td><td>Detection &amp; Threat-hunting Enablers</td><td>sensor placement, continuous monitoring, alerting, centralized logging</td></tr>
+      <tr><td>06</td><td>External Intelligence Sources</td><td>OSINT, ISACs, reliability (Admiralty Scale), dark web</td></tr>
+      <tr><td>07</td><td>Threat Intelligence Platforms</td><td>TIPs, third-party feeds, internal/external cross-reference</td></tr>
+      <tr><td>08</td><td>IoC Sharing</td><td>STIX, TAXII, AIS</td></tr>
+      <tr><td>09</td><td>Rule-Based Languages</td><td>Sigma, YARA, Rita, Snort</td></tr>
+      <tr><td>10</td><td>Counterintelligence &amp; OpSec</td><td>cyber deception (honey terms), monitoring and response</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">threat_hunting/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 10</span>
+    <a class="next" href="02_indicators_of_attack.html">
+      <span><span class="lbl">next</span><span class="file">02_indicators_of_attack</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

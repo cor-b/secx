@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavior and Data Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/behavior_and_data_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 03 / threat hunting / Behavior &amp; Data Analysis</span>
+  <h1 class="module-title">Behavior and Data Analysis</h1>
+  <p class="subtitle">Three lenses for finding a breach already underway: spotting the attacker's information-gathering, hunting on educated guesses, and flagging users who deviate from their own norms.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Behavior and data analysis examines patterns and anomalies in system and user activity to detect threats. Three concepts: <strong>internal reconnaissance</strong> (spotting an attacker gathering info inside the network), <strong>hypothesis-based searches</strong> (hunting guided by assumptions about attacker behavior), and <strong>user behavior analytics (UBA)</strong> (flagging deviations from a user's normal activity).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Internal Reconnaissance</p>
+      <p class="card-desc">Attacker gathering info after initial access (port scanning, mapping). A key sign a breach already occurred.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Hypothesis-based Searches</p>
+      <p class="card-desc">Hunting guided by an assumption about how an attacker might operate. Focused, efficient; catches stealthy APTs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">User Behavior Analytics</p>
+      <p class="card-desc">Baseline normal user activity, flag deviations (odd hours, unusual locations). Catches insider threats, compromised accounts.</p>
+    </div>
+  </div>
+
+  <h2>internal reconnaissance</h2>
+
+  <p>Internal reconnaissance is what an attacker does <em>after</em> gaining initial access but before continuing, gathering info on the internal network (vulnerabilities, privileges, critical assets) by scanning ports, identifying services, and locating sensitive data. Because threat-hunting <strong>assumes a breach has occurred</strong>, spotting internal reconnaissance is a key indicator a breach already happened. Hunters analyze network logs for unusual scanning, anomalous access to sensitive resources, or a sudden spike in port scanning from an unknown device, then act before the attacker escalates.</p>
+
+  <h2>hypothesis-based searches</h2>
+
+  <p>Hypothesis-based searches begin with an assumption or theory about how an attacker might be operating (e.g. "attackers are exploiting a known web-app vulnerability"), then look for evidence to support or disprove it. This is <strong>focused and strategic</strong> rather than blindly searching all data, making investigations efficient. It's especially good at detecting <strong>advanced persistent threats (APTs)</strong> that evade traditional alerts. Even if the hypothesis is wrong, the hunter learns whether their defenses would have caught that attack.</p>
+
+  <h2>user behavior analytics (UBA)</h2>
+
+  <p>UBA analyzes user activity to detect deviations from a <strong>baseline</strong> of normal behavior, tracking interactions over time and alerting on anomalies like accessing sensitive data at odd hours or logging in from unusual locations. It's powerful for <strong>insider threats and compromised accounts</strong>, catching subtle indicators that signature-based systems miss because the malicious activity is performed by legitimately issued credentials. Example: an account suddenly downloading large volumes from a sensitive database late at night gets flagged for investigation.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Threat-hunting assumes a breach; internal reconnaissance is a key sign it already happened.</li>
+      <li>Internal reconnaissance = attacker mapping the network after access (port scans, unusual resource access).</li>
+      <li>Hypothesis-based searches are focused/strategic, guided by an assumption; good for stealthy APTs.</li>
+      <li>UBA baselines normal user behavior and flags deviations (odd hours, locations), catching insider threats and compromised accounts.</li>
+      <li>UBA catches what signature-based detection misses because legit credentials are used.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario sees port scanning from an internal device post-breach → <strong>internal reconnaissance</strong></li>
+        <li>Scenario hunts based on a theory about a specific exploit → <strong>hypothesis-based search</strong></li>
+        <li>Scenario flags a user downloading data at 3am → <strong>user behavior analytics</strong></li>
+        <li>Scenario detects misuse by a legitimate account → <strong>UBA (insider/compromised account)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_indicators_of_attack.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_indicators_of_attack</span></span>
+    </a>
+    <span class="counter">lesson 03 / 10</span>
+    <a class="next" href="04_internal_intelligence_sources.html">
+      <span><span class="lbl">next</span><span class="file">04_internal_intelligence_sources</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / behavior_and_data_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

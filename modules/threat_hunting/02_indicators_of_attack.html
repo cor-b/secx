@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicators of Attack / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/indicators_of_attack</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 02 / threat hunting / Indicators of Attack</span>
+  <h1 class="module-title">Indicators of Attack</h1>
+  <p class="subtitle">Behaviors that signal an attack in progress, organized by the attacker's playbook (TTPs). Catch them at each stage, from getting in to staying in.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Indicators of attack (IoA) are observable behaviors and patterns suggesting an ongoing or imminent attack, focused on the attacker's <strong>tactics, techniques, and procedures (TTPs)</strong>. Tactics = the goal, techniques = the actions, procedures = the exact methods. Recognizing TTPs lets hunters detect malicious activity and predict the next step. The lesson follows six TTP stages.</p>
+  </div>
+
+  <h2>following the TTPs</h2>
+
+  <ol class="phases">
+    <li>
+      <span class="phase-name">initial access</span>
+      <span class="phase-desc">First penetration: phishing, exploiting vulnerabilities, stolen credentials. Detect via login-attempt surges from unfamiliar IPs, phishing reports. Defend with email filtering, MFA, SIEM.</span>
+    </li>
+    <li>
+      <span class="phase-name">privilege escalation</span>
+      <span class="phase-desc">Elevating access: unpatched software, malicious scripts, modified privileges. Detect via suspicious PowerShell or unusual privilege changes (EDR like CrowdStrike).</span>
+    </li>
+    <li>
+      <span class="phase-name">lateral movement</span>
+      <span class="phase-desc">Moving system to system: RDP, admin tools like PsExec. Detect via unusual RDP connections or admin tools on systems that don't normally communicate (SIEM, network analyzers).</span>
+    </li>
+    <li>
+      <span class="phase-name">exfiltration</span>
+      <span class="phase-desc">Stealing data out: encrypted channels, disguised traffic, legitimate cloud services. Detect via unusual outbound traffic/large transfers (DLP).</span>
+    </li>
+    <li>
+      <span class="phase-name">command and control (C2)</span>
+      <span class="phase-desc">Maintaining communication: DNS tunneling, malicious servers. Detect via unusual outbound connections to suspicious domains/DNS queries (IDS, network monitoring).</span>
+    </li>
+    <li>
+      <span class="phase-name">persistence</span>
+      <span class="phase-desc">Keeping access: new admin accounts, backdoors, modified settings. Detect via unauthorized account creation or config changes (EDR like Carbon Black, CrowdStrike).</span>
+    </li>
+  </ol>
+
+  <p>Setting up alerts for known TTPs lets teams detect suspicious activity early and respond before escalation, combining EDR and SIEM with threat intelligence to stay ahead.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>IoA = behaviors signaling an attack, based on TTPs (tactics = goal, techniques = actions, procedures = methods).</li>
+      <li>Six TTP stages: initial access, privilege escalation, lateral movement, exfiltration, C2, persistence.</li>
+      <li>Detect privilege escalation via suspicious PowerShell; lateral movement via unusual RDP/PsExec; C2 via odd DNS/outbound connections.</li>
+      <li>Tools: EDR (CrowdStrike, Carbon Black), SIEM, DLP (exfiltration), IDS (C2).</li>
+      <li>IoA focuses on behavior, distinct from IoC, which focuses on artifacts (IPs, hashes).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario sees a phishing surge gaining a foothold → <strong>initial access</strong></li>
+        <li>Scenario detects suspicious PowerShell raising privileges → <strong>privilege escalation</strong></li>
+        <li>Scenario sees unusual RDP/PsExec between systems → <strong>lateral movement</strong></li>
+        <li>Scenario detects DNS tunneling to a suspicious domain → <strong>command and control</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_threat_hunting.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_threat_hunting</span></span>
+    </a>
+    <span class="counter">lesson 02 / 10</span>
+    <a class="next" href="03_behavior_and_data_analysis.html">
+      <span><span class="lbl">next</span><span class="file">03_behavior_and_data_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / indicators_of_attack</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

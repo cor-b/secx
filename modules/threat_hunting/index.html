@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>threat_hunting / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p { font-family: var(--font-sans); }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .section-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.section-title { font-size: 42px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 620px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .prompt { margin: 0 0 20px; font-size: 13px; color: var(--ink-dim); padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .prompt .user { color: var(--cyan); }
+  .prompt .path { color: var(--violet); }
+  .prompt .cmd { color: var(--ink); }
+  .ls-list { list-style: none; margin: 0; padding: 0; }
+  .ls-item {
+    display: grid;
+    grid-template-columns: 90px 80px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s ease, border-color 0.2s ease;
+  }
+  .ls-item:hover { padding-left: 12px; border-bottom-color: var(--cyan); }
+  .ls-item:hover .filename { color: var(--cyan); }
+  .ls-item:hover .ls-arrow { color: var(--magenta); transform: translateX(4px); }
+  .perms { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .lesson-tag { color: var(--violet); font-size: 11px; letter-spacing: 0.06em; }
+  .filename-wrap { min-width: 0; }
+  .filename { color: var(--ink); font-size: 15px; font-weight: 500; display: block; transition: color 0.2s ease; }
+  .filename .ext { color: var(--magenta); }
+  .desc { display: block; color: var(--ink-dim); font-size: 13px; margin-top: 6px; line-height: 1.55; }
+  .ls-arrow { color: var(--ink-faint); font-size: 14px; transition: all 0.2s ease; }
+  .status-line { margin-top: 22px; padding-top: 16px; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .status-line .val { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.section-title { font-size: 32px; }
+    .ls-item { grid-template-columns: 70px 1fr auto; gap: 12px; }
+    .ls-item .lesson-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting</span>
+  </div>
+
+  <a class="back-link" href="../../index.html"><span class="arrow">←</span>back to /securityx</a>
+
+  <span class="section-tag">securityx / threat-hunting</span>
+  <h1 class="section-title">Threat-hunting</h1>
+  <p class="subtitle">Proactively hunting threats: indicators of attack, behavior analysis, internal and external intelligence, detection enablers, threat intelligence platforms, IoC sharing, rule-based languages, and counterintelligence.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 2 &amp; 4 <strong>OBJ 2.3 / OBJ 4.3</strong>: integrate controls into a secure architecture and apply threat-hunting and threat intelligence concepts. Topics span indicators of attack (TTPs), behavior and data analysis (recon, hypothesis-based searches, UBA), internal intelligence (adversary emulation, honeypots/honeynets), detection enablers (sensors, monitoring, alerting, logging), external intelligence (OSINT, ISACs, Admiralty Scale, dark web), threat intelligence platforms, IoC sharing (STIX/TAXII/AIS), rule-based languages (Sigma/YARA/Rita/Snort), and counterintelligence/operational security.</p>
+  </div>
+
+  <div class="prompt">
+    <span class="user">cor</span>:<span class="path">~/securityx/threat_hunting</span>$ <span class="cmd">ls lessons/</span>
+  </div>
+
+  <ul class="ls-list">
+
+    <li>
+      <a class="ls-item" href="01_threat_hunting.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 01</span>
+        <span class="filename-wrap">
+          <span class="filename">threat_hunting<span class="ext">.lesson</span></span>
+          <span class="desc">Overview: the ten topics, from indicators of attack to counterintelligence and operational security</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="02_indicators_of_attack.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 02</span>
+        <span class="filename-wrap">
+          <span class="filename">indicators_of_attack<span class="ext">.lesson</span></span>
+          <span class="desc">TTPs: initial access, privilege escalation, lateral movement, exfiltration, C2, persistence</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="03_behavior_and_data_analysis.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 03</span>
+        <span class="filename-wrap">
+          <span class="filename">behavior_and_data_analysis<span class="ext">.lesson</span></span>
+          <span class="desc">Internal reconnaissance, hypothesis-based searches, user behavior analytics (UBA)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="04_internal_intelligence_sources.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 04</span>
+        <span class="filename-wrap">
+          <span class="filename">internal_intelligence_sources<span class="ext">.lesson</span></span>
+          <span class="desc">Adversary emulation engagements, honeypots, honeynets</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="05_detection_and_threat_hunting_enablers.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 05</span>
+        <span class="filename-wrap">
+          <span class="filename">detection_and_threat_hunting_enablers<span class="ext">.lesson</span></span>
+          <span class="desc">Sensor placement (east-west, Zeek), continuous monitoring, alerting, centralized logging (ELK Stack)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="06_external_intelligence_sources.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 06</span>
+        <span class="filename-wrap">
+          <span class="filename">external_intelligence_sources<span class="ext">.lesson</span></span>
+          <span class="desc">OSINT (Maltego/Shodan), ISACs, reliability (Admiralty Scale A-F/1-6), dark web monitoring</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="07_threat_intelligence_platforms.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 07</span>
+        <span class="filename-wrap">
+          <span class="filename">threat_intelligence_platforms<span class="ext">.lesson</span></span>
+          <span class="desc">TIPs aggregate vendor feeds (Recorded Future/FireEye/CrowdStrike), cross-reference internal data, automate, prioritize</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="08_ioc_sharing.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 08</span>
+        <span class="filename-wrap">
+          <span class="filename">ioc_sharing<span class="ext">.lesson</span></span>
+          <span class="desc">STIX (language), TAXII (protocol), AIS (US DHS real-time program)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="09_rule_based_languages.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 09</span>
+        <span class="filename-wrap">
+          <span class="filename">rule_based_languages<span class="ext">.lesson</span></span>
+          <span class="desc">Sigma (SIEM events), YARA (malware/files), Rita (network anomalies), Snort (real-time IDS/IPS)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="10_counterintelligence_and_operational_security.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 10</span>
+        <span class="filename-wrap">
+          <span class="filename">counterintelligence_and_operational_security<span class="ext">.lesson</span></span>
+          <span class="desc">Cyber deception (honeypot/honeynet/honeyfile/honeytoken), monitoring and response</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="status-line">
+    total <span class="val">10 lessons</span><span class="sep" style="color:var(--rule);margin:0 10px">·</span><span style="color:var(--ink-dim)">complete</span>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / eof</span>
+  </div>
+
+</div>
+
+</body>
+</html>

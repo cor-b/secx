@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internal Intelligence Sources / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/internal_intelligence_sources</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 04 / threat hunting / Internal Intelligence Sources</span>
+  <h1 class="module-title">Internal Intelligence Sources</h1>
+  <p class="subtitle">Intelligence generated from inside your own walls: rehearsing attacks against yourself, and setting traps that capture how real attackers behave.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Internal intelligence sources are data and insights gathered from within an organization's own network. Three concepts: <strong>adversary emulation engagements</strong> (simulate real attacker TTPs to test defenses), <strong>honeypots</strong> (decoy systems mimicking valuable assets), and <strong>honeynets</strong> (networks of honeypots simulating a whole environment).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">source 01</span>
+      <p class="card-name">Adversary Emulation</p>
+      <p class="card-desc">Simulate a known attacker's TTPs in a controlled environment to test defenses, find gaps, and refine detection.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 02</span>
+      <p class="card-name">Honeypots</p>
+      <p class="card-desc">A single decoy system mimicking a valuable asset; logs all interaction to study attacker behavior and divert from real systems.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 03</span>
+      <p class="card-name">Honeynets</p>
+      <p class="card-desc">A whole network of honeypots simulating a production environment; reveals multi-stage tactics like lateral movement.</p>
+    </div>
+  </div>
+
+  <h2>adversary emulation engagements</h2>
+
+  <p>Adversary emulation engagements simulate the TTPs of real-world attackers within the network, letting the security team see how a specific attacker would exploit vulnerabilities and move, without an actual threat. Teams pick a scenario based on a known threat actor or attack vector, use tools to simulate behaviors (lateral movement, privilege escalation, exfiltration) in a controlled environment, and record gaps or delays in detection to fix them. Because the scenarios mirror real attacker behavior, defenses are tested against the same methods attackers will use in the wild.</p>
+
+  <h2>honeypots</h2>
+
+  <p>A honeypot is a single decoy system or device that mimics a real asset (server, database) but is intentionally vulnerable or appears as a high-value target, with no operational role, so any interaction with it is automatically suspicious. It's placed where attackers are likely to find it (e.g. a screened subnet/DMZ) and configured to log all activity. The goal is not to defend but to <strong>gather intelligence</strong>: observe the exact methods used so teams can adjust firewalls, detection, and policies on real production systems.</p>
+
+  <h2>honeynets</h2>
+
+  <p>A honeynet takes the decoy concept further, a controlled, monitored <strong>network of multiple honeypots</strong> simulating an organization's production network (web servers, email servers, databases). It entices attackers to reveal more complex, multi-stage tactics, offering deeper insight into how they escalate privileges, pivot between systems, and extract data, valuable against sophisticated, multi-stage attacks. Watching an attacker move within the honeynet lets teams strengthen real network defenses.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three internal sources: adversary emulation engagements, honeypots, honeynets.</li>
+      <li>Adversary emulation simulates a known attacker's TTPs to test defenses (controlled, no real threat).</li>
+      <li>A honeypot = a single decoy; any interaction is automatically suspicious (no operational role).</li>
+      <li>A honeynet = a network of honeypots simulating a whole environment; reveals multi-stage tactics.</li>
+      <li>Honeypots/honeynets gather intelligence and divert attackers, they don't actively defend.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario simulates a known threat actor to test defenses → <strong>adversary emulation engagement</strong></li>
+        <li>Scenario deploys one decoy server to study attackers → <strong>honeypot</strong></li>
+        <li>Scenario builds a fake network of decoys to observe lateral movement → <strong>honeynet</strong></li>
+        <li>Scenario flags any interaction with a no-purpose system as suspicious → <strong>honeypot</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_behavior_and_data_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_behavior_and_data_analysis</span></span>
+    </a>
+    <span class="counter">lesson 04 / 10</span>
+    <a class="next" href="05_detection_and_threat_hunting_enablers.html">
+      <span><span class="lbl">next</span><span class="file">05_detection_and_threat_hunting_enablers</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / internal_intelligence_sources</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

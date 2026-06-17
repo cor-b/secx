@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>External Intelligence Sources / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/external_intelligence_sources</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 06 / threat hunting / External Intelligence Sources</span>
+  <h1 class="module-title">External Intelligence Sources</h1>
+  <p class="subtitle">Intelligence from outside your walls: what's publicly findable (OSINT), industry sharing groups (ISACs), grading source trust (the Admiralty Scale), and watching the dark web.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>External intelligence sources are data and insights gathered from outside the organization. Four concepts: <strong>OSINT</strong> (publicly available information), <strong>ISACs</strong> (industry information-sharing centers), <strong>reliability factors</strong> (assessing source trustworthiness, the Admiralty Scale), and <strong>dark web monitoring</strong> (tracking criminal activity and leaks).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">source 01</span>
+      <p class="card-name">OSINT</p>
+      <p class="card-desc">Publicly available info (websites, social media, forums). See your exposure as attackers do; study their TTPs. Maltego, Shodan.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 02</span>
+      <p class="card-name">ISACs</p>
+      <p class="card-desc">Industry-specific info-sharing centers (FS-ISAC, Health-ISAC). Pool threat intelligence across a sector.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 03</span>
+      <p class="card-name">Reliability Factors</p>
+      <p class="card-desc">Assess source trust. Admiralty Scale: source A-F, info 1-6 (A1 best, F6 worst). Cross-verify.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 04</span>
+      <p class="card-name">Dark Web Monitoring</p>
+      <p class="card-desc">Track criminal marketplaces for leaked data/targeting (DarkOwl). Early breach warning.</p>
+    </div>
+  </div>
+
+  <h2>OSINT and ISACs</h2>
+
+  <p><strong>OSINT</strong> is the collection of publicly available information (websites, social media, forums). It lets an organization see its <strong>external exposure as attackers do</strong> (tools: Maltego, Shodan) and also study attackers' TTPs by monitoring threat-actor forums and exploit databases. <strong>ISACs (Information Sharing and Analysis Centers)</strong> facilitate cybersecurity collaboration within specific industries, pooling resources, e.g. <strong>FS-ISAC</strong> (financial), <strong>Health-ISAC</strong>, Energy-ISAC, Aviation-ISAC. They provide threat reports, alerts, and best practices; some have paid tiers for deeper, real-time intelligence. Sharing means a threat seen by one member helps all members respond faster.</p>
+
+  <h2>reliability factors and dark web monitoring</h2>
+
+  <p><strong>Reliability factors</strong> assess the credibility and trustworthiness of intelligence sources, ensuring information is accurate and timely. The <strong>Admiralty Scale</strong> assigns two ratings: source <strong>reliability A-F</strong> and information <strong>accuracy 1-6</strong> (where A1 is a highly reliable source with confirmed info, F6 is unreliable with unverified info). This prevents acting on bad intelligence (which wastes resources or causes disruption); organizations also use multiple sources and cross-verification. <strong>Dark web monitoring</strong> tracks hidden parts of the internet where criminals sell stolen data, hacking services, and vulnerabilities (tool: DarkOwl); finding your credentials for sale signals a breach, providing an early warning to reset passwords and investigate.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four external sources: OSINT, ISACs, reliability factors, dark web monitoring.</li>
+      <li>OSINT = publicly available info (Maltego, Shodan); shows your exposure and attackers' TTPs.</li>
+      <li>ISACs = industry-specific sharing groups (FS-ISAC, Health-ISAC).</li>
+      <li>The Admiralty Scale rates source reliability (A-F) and information accuracy (1-6); A1 best, F6 worst.</li>
+      <li>Dark web monitoring (DarkOwl) gives early warning of leaked data or targeting.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario gathers publicly available info with Shodan → <strong>OSINT</strong></li>
+        <li>Scenario shares threat data within a financial-sector group → <strong>ISAC (FS-ISAC)</strong></li>
+        <li>Scenario grades a feed A1 vs F6 → <strong>reliability factors (Admiralty Scale)</strong></li>
+        <li>Scenario finds company credentials for sale online → <strong>dark web monitoring</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_detection_and_threat_hunting_enablers.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_detection_and_threat_hunting_enablers</span></span>
+    </a>
+    <span class="counter">lesson 06 / 10</span>
+    <a class="next" href="07_threat_intelligence_platforms.html">
+      <span><span class="lbl">next</span><span class="file">07_threat_intelligence_platforms</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / external_intelligence_sources</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

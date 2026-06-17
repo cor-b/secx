@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Counterintelligence and Operational Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/counterintelligence_and_operational_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 10 / threat hunting / Counterintelligence &amp; OpSec</span>
+  <h1 class="module-title">Counterintelligence and Operational Security</h1>
+  <p class="subtitle">Turning the tables on attackers: deception that lures them into traps and reveals their methods, paired with real-time monitoring and response to catch and contain them.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Counterintelligence and operational security identify and mitigate adversary efforts to gather intelligence or exploit weaknesses. Two concepts: <strong>cyber deception</strong> (decoy systems, false data, and misleading info to confuse attackers and lure them from real assets) and <strong>monitoring and response</strong> (real-time tracking and prompt action against threats).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Cyber Deception</p>
+      <p class="card-desc">Decoys and false data confuse attackers, force them to reveal TTPs. The "honey" family: honeypot, honeynet, honeyfile, honeytoken.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Monitoring &amp; Response</p>
+      <p class="card-desc">Real-time observation (IDS, SIEM, behavioral analytics) + predefined response (isolate, block, notify) to contain threats fast.</p>
+    </div>
+  </div>
+
+  <h2>cyber deception</h2>
+
+  <p>Cyber deception is a proactive strategy that creates fake assets, false data, or misleading pathways to confuse and divert attackers, adding uncertainty and forcing them to reveal their TTPs while giving teams time to observe and analyze, often without the attacker realizing. The <strong>"honey"</strong> family of decoys:</p>
+  <dl class="def">
+    <dt>Honeypot</dt>
+    <dd>A single decoy system that looks like a legitimate target but has no operational role, so any interaction is automatically suspicious.</dd>
+    <dt>Honeynet</dt>
+    <dd>A series of honeypots simulating an entire network environment, to observe TTPs across multiple decoy systems.</dd>
+    <dt>Honeyfile</dt>
+    <dd>A fake document/data file placed as bait, with hidden triggers that notify the team when it's opened or moved.</dd>
+    <dt>Honeytoken</dt>
+    <dd>Bait that can take many forms (fake credentials, a data record); when accessed/used, it signals unauthorized activity.</dd>
+  </dl>
+
+  <h2>monitoring and response</h2>
+
+  <p>Monitoring and response continuously observes network traffic and system activity to detect incidents in real time, using IDS, SIEM platforms, and behavioral analytics to spot anomalies (unusual logins, unauthorized data access, unexpected connections). <strong>Response mechanisms</strong> are predefined actions, automatically isolating compromised systems, blocking malicious traffic, or notifying the team for manual investigation, so incidents are contained with minimal damage and downtime. Example: a SIEM flags a user accessing sensitive files at unusual hours, an analyst investigates and locks down the account before damage occurs.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Cyber deception uses decoys/false data to confuse attackers and reveal their TTPs.</li>
+      <li>The "honey" family: honeypot (one decoy system), honeynet (network of honeypots), honeyfile (fake file), honeytoken (fake credential/data record).</li>
+      <li>Any interaction with a honeypot/honeytoken is automatically suspicious (no legitimate purpose).</li>
+      <li>Monitoring and response = real-time detection (IDS/SIEM/behavioral) + predefined actions (isolate, block, notify).</li>
+      <li>Deception also yields intelligence to harden production defenses.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario deploys a single decoy server to study attackers → <strong>honeypot</strong></li>
+        <li>Scenario plants a fake document that alerts when opened → <strong>honeyfile</strong></li>
+        <li>Scenario seeds fake credentials that signal misuse → <strong>honeytoken</strong></li>
+        <li>Scenario auto-isolates a system on detecting an intrusion → <strong>monitoring and response</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="09_rule_based_languages.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">09_rule_based_languages</span></span>
+    </a>
+    <span class="counter">lesson 10 / 10</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">threat_hunting/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / counterintelligence_and_operational_security</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

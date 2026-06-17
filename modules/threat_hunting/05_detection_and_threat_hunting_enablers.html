@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detection and Threat-hunting Enablers / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/detection_and_threat_hunting_enablers</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 05 / threat hunting / Detection &amp; Threat-hunting Enablers</span>
+  <h1 class="module-title">Detection and Threat-hunting Enablers</h1>
+  <p class="subtitle">The infrastructure that makes hunting possible: where you watch (sensors), watching all the time (continuous monitoring), getting notified (alerting), and pooling it all in one place (centralized logging).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Detection and threat-hunting enablers are the tools and infrastructure that facilitate finding and investigating threats. Four concepts: <strong>sensor placement</strong> (positioning monitoring devices), <strong>continuous monitoring</strong> (constant real-time tracking), <strong>alerting</strong> (notifications on predefined criteria), and <strong>centralized logging</strong> (aggregating logs into one platform).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">enabler 01</span>
+      <p class="card-name">Sensor Placement</p>
+      <p class="card-desc">Strategically position IDS/IPS sensors (perimeter, internal segments) to capture critical traffic, including east-west. Zeek (formerly Bro).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">enabler 02</span>
+      <p class="card-name">Continuous Monitoring</p>
+      <p class="card-desc">Constant real-time watch over network/systems/endpoints; spots deviations instantly. SIEM (Splunk).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">enabler 03</span>
+      <p class="card-name">Alerting</p>
+      <p class="card-desc">Predefined rules/thresholds trigger notifications (failed logins, odd traffic). Like a fire alarm. Splunk, Palo Alto.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">enabler 04</span>
+      <p class="card-name">Centralized Logging</p>
+      <p class="card-desc">Aggregate logs from all sources into one platform (ELK Stack) for correlation, a single hub.</p>
+    </div>
+  </div>
+
+  <h2>sensor placement and continuous monitoring</h2>
+
+  <p><strong>Sensor placement</strong> is the strategic deployment of monitoring devices (IDS/IPS) across the network, perimeter (between corporate network and internet) and internal segments (server zones capturing <strong>east-west traffic</strong>, communication between internal devices), like surveillance cameras at building entry points. Tool: <strong>Zeek</strong> (formerly Bro). Without proper placement, attackers slip through undetected. <strong>Continuous monitoring</strong> maintains a constant, real-time watch over the network, systems, and endpoints (rather than periodic reviews), flagging unauthorized access or deviations instantly, like a guard watching surveillance feeds (tool: Splunk/SIEM).</p>
+
+  <h2>alerting and centralized logging</h2>
+
+  <p><strong>Alerting</strong> sets predefined rules or thresholds that trigger notifications on suspicious events (multiple failed logins, unusual outbound traffic, odd-location access), like a fire alarm, it doesn't stop the threat but gives the team a heads-up to react (tools: Splunk, Palo Alto Networks). <strong>Centralized logging</strong> aggregates log data from all devices, servers, applications, and security tools into one location, giving a complete view and enabling correlation across the network. It's like a central hub for all the building's camera footage (tool: <strong>ELK Stack</strong>, Elasticsearch + Logstash + Kibana).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four enablers: sensor placement, continuous monitoring, alerting, centralized logging.</li>
+      <li>Sensor placement captures critical traffic including east-west (internal device-to-device); tool: Zeek.</li>
+      <li>Continuous monitoring = constant real-time watch (not periodic); alerting = predefined-rule notifications (fire alarm).</li>
+      <li>Centralized logging aggregates all logs into one platform (ELK Stack) for correlation.</li>
+      <li>East-west traffic = lateral communication inside the network; north-south = in/out of the network.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario positions IDS sensors to capture internal device-to-device traffic → <strong>sensor placement (east-west)</strong></li>
+        <li>Scenario watches the network constantly in real time → <strong>continuous monitoring</strong></li>
+        <li>Scenario notifies the team on multiple failed logins → <strong>alerting</strong></li>
+        <li>Scenario funnels all logs into one platform to correlate → <strong>centralized logging</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_internal_intelligence_sources.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_internal_intelligence_sources</span></span>
+    </a>
+    <span class="counter">lesson 05 / 10</span>
+    <a class="next" href="06_external_intelligence_sources.html">
+      <span><span class="lbl">next</span><span class="file">06_external_intelligence_sources</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / detection_and_threat_hunting_enablers</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

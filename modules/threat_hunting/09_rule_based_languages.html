@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rule-Based Languages / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_hunting/rule_based_languages</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_hunting</a>
+
+  <span class="module-tag">lesson 09 / threat hunting / Rule-Based Languages</span>
+  <h1 class="module-title">Rule-Based Languages</h1>
+  <p class="subtitle">Four tools for writing detection rules, each with its own domain: SIEM events (Sigma), files and malware (YARA), network anomalies (Rita), and live network traffic (Snort).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Rule-based languages create patterns and detection rules to identify malicious activity. Four examples: <strong>Sigma</strong> (generic SIEM event patterns), <strong>YARA</strong> (file/malware classification), <strong>Rita</strong> (network anomaly detection), and <strong>Snort</strong> (real-time network IDS/IPS). Each targets a different layer; they work together.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">tool 01</span>
+      <p class="card-name">Sigma</p>
+      <p class="card-desc">Generic, platform-agnostic SIEM event patterns (YAML). Write once, use across SIEMs. E.g. detect a "whoami" command.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 02</span>
+      <p class="card-name">YARA</p>
+      <p class="card-desc">Identify/classify malware by patterns in files (strings, sizes, byte sequences). For malware researchers and file scanning.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 03</span>
+      <p class="card-name">Rita</p>
+      <p class="card-desc">Open-source network anomaly detection (beaconing, DNS tunneling, long connections). Integrates with Zeek logs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 04</span>
+      <p class="card-name">Snort</p>
+      <p class="card-desc">Open-source network IDS/IPS analyzing real-time traffic with rules/signatures (port scans, exploit attempts).</p>
+    </div>
+  </div>
+
+  <h2>the four languages</h2>
+
+  <dl class="def">
+    <dt>Sigma</dt>
+    <dd>A generic, <strong>platform-agnostic</strong> rule language (written in YAML) for defining security event patterns across SIEMs, write a rule once and use it on any Sigma-supporting SIEM. Example: detect command-line execution of <code>whoami</code> (a common reconnaissance command).</dd>
+    <dt>YARA</dt>
+    <dd>"Yet Another Recursive Acronym": identifies and classifies <strong>malware</strong> by defining patterns in files (strings, file sizes, byte sequences). Used in threat hunting and incident response to scan endpoints/files (e.g. matching suspicious strings like <code>whoami</code>, <code>hostname</code>, <code>netstat</code>).</dd>
+    <dt>Rita</dt>
+    <dd>An open-source framework for detecting <strong>network anomalies</strong> like beaconing (malware contacting C2 at intervals), DNS tunneling, and long-running connections. Integrates with <strong>Zeek</strong> (formerly Bro) logs; good for stealthy APTs.</dd>
+    <dt>Snort</dt>
+    <dd>An open-source <strong>network IDS/IPS</strong> that analyzes real-time traffic against predefined or custom rules/signatures (port scans, malware payloads, exploit attempts like Shellshock), blocking or alerting. Works alongside Sigma/YARA/Rita.</dd>
+  </dl>
+
+  <p>Layered: Snort detects at the network layer in real time, while Sigma and YARA detect malicious behavior/IOCs at the system/file level, and Rita finds covert network patterns.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Sigma = generic, platform-agnostic SIEM event rules (YAML); write once, use across SIEMs.</li>
+      <li>YARA = identify/classify malware by file patterns (strings, byte sequences).</li>
+      <li>Rita = network anomaly detection (beaconing, DNS tunneling); integrates with Zeek.</li>
+      <li>Snort = real-time network IDS/IPS with rules/signatures.</li>
+      <li>Match the domain: Sigma → SIEM events, YARA → files/malware, Rita → network anomalies, Snort → live traffic.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario writes one rule usable across any SIEM → <strong>Sigma</strong></li>
+        <li>Scenario classifies malware by patterns in files → <strong>YARA</strong></li>
+        <li>Scenario detects C2 beaconing in network flow → <strong>Rita</strong></li>
+        <li>Scenario blocks an exploit attempt in real-time traffic → <strong>Snort</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_ioc_sharing.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_ioc_sharing</span></span>
+    </a>
+    <span class="counter">lesson 09 / 10</span>
+    <a class="next" href="10_counterintelligence_and_operational_security.html">
+      <span><span class="lbl">next</span><span class="file">10_counterintelligence_and_operational_security</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_hunting / rule_based_languages</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
