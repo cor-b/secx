@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Security Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/cloud_security_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 05 / cloud security / Cloud Security Considerations</span>
+  <h1 class="module-title">Cloud Security Considerations</h1>
+  <p class="subtitle">The four ways cloud data goes wrong: storage left open, data accidentally exposed, data leaking out, and deleted data that lingers and gets recovered.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Four key cloud data risks: <strong>unsecured storage resources</strong> (misconfigured buckets/blobs), <strong>data exposure</strong> (sensitive data accidentally made accessible), <strong>data leakage</strong> (unauthorized transmission out of the org), and <strong>data remanence</strong> (residual data recoverable after deletion).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">risk 01</span>
+      <p class="card-name">Unsecured Storage</p>
+      <p class="card-desc">Misconfigured buckets (AWS) / blobs (Azure): default open access, bad CORS/origin settings. Fix container policies, IAM, and object ACLs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 02</span>
+      <p class="card-name">Data Exposure</p>
+      <p class="card-desc">Sensitive data accidentally accessible via misconfig or weak access control. Mitigate with encryption and permission audits.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 03</span>
+      <p class="card-name">Data Leakage</p>
+      <p class="card-desc">Unauthorized transmission out of the org (email, personal cloud, USB). Often unnoticed. Mitigate with DLP and policy/training.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 04</span>
+      <p class="card-name">Data Remanence</p>
+      <p class="card-desc">Residual data recoverable after deletion (reused cloud hardware). Mitigate with cryptographic erasure or physical destruction.</p>
+    </div>
+  </div>
+
+  <h2>unsecured storage resources</h2>
+
+  <p>Cloud storage containers, <strong>buckets</strong> (AWS) and <strong>blobs</strong> (Azure), are the most commonly misconfigured resources (you can't nest containers; each holds its own objects). Access is controlled by three things: container policies, IAM authorizations, and object ACLs. Misconfigurations expose data: newly created containers may default to read/write access, and bad <strong>origin settings</strong> (CDN distribution) or <strong>CORS</strong> (cross-origin resource sharing) policies can leak data across domains or enable cross-site scripting. Always update defaults and double-check CORS/origin settings.</p>
+
+  <h2>data exposure</h2>
+
+  <p>Exposure is sensitive data accidentally made accessible, typically from misconfiguration (a bucket set to public, so anyone with the URL reads it) or weak access controls (a departed employee whose permissions weren't revoked). Mitigate with <strong>encryption</strong> (at rest and in transit, via KMS/Key Vault and TLS), regular permission audits, and tools like AWS Config or Azure Security Center to catch misconfigurations early.</p>
+
+  <h2>data leakage</h2>
+
+  <p>Leakage is the unauthorized transmission of data <em>out</em> of the org, through insecure email, unauthorized cloud apps, or USB drives (an employee emailing unencrypted financial reports externally, or syncing files to a personal Dropbox). It often goes unnoticed without monitoring. Prevent it with <strong>DLP</strong> tools plus clear policy and employee training on personal devices, cloud services, and email.</p>
+
+  <h2>data remanence</h2>
+
+  <p>Remanence is residual data that lingers on storage media after deletion and can be recovered, a risk when retiring cloud instances or when a provider reuses hardware that wasn't fully wiped (potentially exposing your data to the next tenant). Mitigate with secure deletion, <strong>cryptographic erasure</strong> or physical destruction, and confirm your provider follows industry-standard data destruction.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Buckets (AWS) and blobs (Azure) are cloud storage containers; misconfigured access (default open, bad CORS/origin) is the top exposure risk.</li>
+      <li>Data exposure = accidental accessibility (misconfig/weak access); data leakage = unauthorized transmission OUT of the org.</li>
+      <li>Data remanence = recoverable leftover data after deletion; fix with cryptographic erasure or physical destruction.</li>
+      <li>Container access = container policies + IAM + object ACLs. CORS controls cross-domain resource sharing.</li>
+      <li>Encryption protects exposed data; DLP and training reduce leakage.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario has a public bucket exposing customer data → <strong>unsecured storage / data exposure</strong></li>
+        <li>Scenario has an employee emailing sensitive files externally → <strong>data leakage</strong></li>
+        <li>Scenario recovers deleted data from reused cloud hardware → <strong>data remanence</strong></li>
+        <li>Scenario misconfigures cross-domain sharing enabling XSS → <strong>CORS misconfiguration</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_connectivity_and_integration.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_connectivity_and_integration</span></span>
+    </a>
+    <span class="counter">lesson 05 / 11</span>
+    <a class="next" href="06_api_security.html">
+      <span><span class="lbl">next</span><span class="file">06_api_security</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / cloud_security_considerations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

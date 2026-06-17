@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/cloud_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 03 / cloud security / Cloud Management</span>
+  <h1 class="module-title">Cloud Management</h1>
+  <p class="subtitle">Knowing exactly who secures what. The shared responsibility model draws the line between provider and customer, and it shifts as you move up the stack.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cloud management secures cloud resources while clearly dividing duties between provider and customer. The <strong>shared responsibility model</strong> sets that division: the provider handles the cloud itself (physical infrastructure, hardware), the customer handles what's <em>in</em> the cloud (data, access, configuration). This extends to <strong>encryption keys and licenses</strong>, which may be cloud-managed or customer-managed.</p>
+  </div>
+
+  <h2>the shared responsibility model</h2>
+
+  <p>The model defines which security tasks belong to the provider (AWS, Azure, GCP) and which to the customer. Providers own physical infrastructure, hardware security, and environmental controls; customers own data encryption, access management, and security permissions. Three control types:</p>
+
+  <dl class="def">
+    <dt>Inherited controls</dt>
+    <dd>Fully managed by the provider (e.g. data-center environmental conditions).</dd>
+    <dt>Shared controls</dt>
+    <dd>Split between both, e.g. patch management: the provider patches the infrastructure, the customer patches the OS they run.</dd>
+    <dt>Customer-specific controls</dt>
+    <dd>Solely the customer's (e.g. configuring security zones, communication protocols).</dd>
+  </dl>
+
+  <p>The rule of thumb: the further up the stack you go (infrastructure → user-facing apps), the more responsibility shifts to the customer. The provider handles hardware, regions, availability zones, and core compute/storage; the customer protects data, patches and configures systems, and manages identity/access.</p>
+
+  <h2>cloud vs customer-managed resources</h2>
+
+  <p>For critical resources, responsibility often shifts to the customer even when the provider runs the infrastructure:</p>
+
+  <ul>
+    <li><strong>Encryption keys:</strong> the provider secures the key infrastructure (AWS KMS, Azure Key Vault), but the customer must generate, manage, and rotate keys properly, mismanage them (no rotation, loose access) and data is exposed despite secure infrastructure.</li>
+    <li><strong>Licenses:</strong> in cloud environments, licenses are often bundled into the subscription and the provider handles renewals/compliance; in customer-managed environments, the organization tracks, renews, and maintains compliance itself.</li>
+  </ul>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Shared responsibility: provider secures the cloud (hardware, physical, infrastructure); customer secures what's in the cloud (data, access, config).</li>
+      <li>Control types: inherited (provider-only), shared (e.g. patching, split), customer-specific (customer-only).</li>
+      <li>The higher up the stack, the more responsibility is the customer's.</li>
+      <li>Key management: the provider secures the key infrastructure (KMS/Key Vault), but the CUSTOMER must generate, manage, and rotate keys.</li>
+      <li>Licenses are often bundled/handled by the provider in cloud subscriptions; customer-managed environments put that burden on the org.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario asks who secures the physical data center → <strong>provider (inherited control)</strong></li>
+        <li>Scenario splits patching between provider and customer → <strong>shared control</strong></li>
+        <li>Scenario blames a breach on un-rotated customer keys → <strong>customer key-management responsibility</strong></li>
+        <li>Scenario configures security zones for an app → <strong>customer-specific control</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_cloud_implementation.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_cloud_implementation</span></span>
+    </a>
+    <span class="counter">lesson 03 / 11</span>
+    <a class="next" href="04_connectivity_and_integration.html">
+      <span><span class="lbl">next</span><span class="file">04_connectivity_and_integration</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / cloud_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

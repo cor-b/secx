@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serverless Computing / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/serverless_computing</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 11 / cloud security / Serverless Computing</span>
+  <h1 class="module-title">Serverless Computing</h1>
+  <p class="subtitle">You still run on servers, you just don't manage them. Code runs as short-lived functions triggered by events, and securing it shifts to the code, its permissions, and its triggers.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>In <strong>serverless</strong> computing the provider manages the underlying servers; you deploy code as <strong>functions</strong> that run on demand in response to events (<strong>FaaS</strong>, function as a service). You pay only for execution time. Security focus shifts from infrastructure to <strong>workloads</strong> (the function code), <strong>functions</strong> (permissions and triggers), and <strong>resources</strong> (what each function can access).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Workloads</p>
+      <p class="card-desc">The application logic running serverlessly. Secure the code itself: input validation, no embedded secrets, scanned dependencies.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Functions (FaaS)</p>
+      <p class="card-desc">Short-lived, event-triggered units of code (AWS Lambda, Azure Functions). Apply least-privilege roles and validate every trigger.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Resources</p>
+      <p class="card-desc">What functions touch: storage, databases, APIs. Grant each function only the access it needs, nothing more.</p>
+    </div>
+  </div>
+
+  <h2>what serverless is</h2>
+
+  <p>Serverless does not mean there are no servers, it means the cloud provider provisions, scales, and maintains them so developers focus only on code. You deploy individual <strong>functions</strong> that execute on demand when triggered by an event (an HTTP request, a file upload, a queue message). The provider scales automatically and you pay only for actual execution time. Examples: <strong>AWS Lambda</strong>, <strong>Azure Functions</strong>.</p>
+
+  <h2>securing serverless</h2>
+
+  <p>Because the provider owns the infrastructure, your responsibility narrows to the function and what surrounds it:</p>
+
+  <ul>
+    <li><strong>Least-privilege permissions:</strong> give each function only the IAM permissions it needs; over-permissioned functions widen the blast radius if compromised.</li>
+    <li><strong>Secure the code and dependencies:</strong> validate all input, avoid embedded secrets (use a secrets manager), and scan libraries, the same supply-chain concern as anywhere.</li>
+    <li><strong>Protect the triggers:</strong> event sources (APIs, queues, storage events) are the attack surface; validate and authenticate them, and watch for injection through event data.</li>
+    <li><strong>Monitor and log:</strong> functions are ephemeral, so centralized logging/monitoring is essential to detect abuse and investigate incidents.</li>
+  </ul>
+
+  <p>An advantage worth noting: short-lived, stateless functions reduce the persistent attack surface, there is no long-running server to compromise, but misconfigured permissions and insecure event triggers remain real risks.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Serverless = provider manages the servers; you deploy event-triggered functions and pay per execution (FaaS).</li>
+      <li>"Serverless" still uses servers, you just don't manage them. Examples: AWS Lambda, Azure Functions.</li>
+      <li>Security shifts to the code, function permissions, and triggers, apply least privilege to each function's IAM role.</li>
+      <li>Event triggers (APIs, queues, storage events) are the attack surface; validate and authenticate them.</li>
+      <li>Ephemeral functions shrink the persistent attack surface but require centralized logging to monitor.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario runs code on demand with no servers to manage → <strong>serverless / FaaS</strong></li>
+        <li>Scenario gives a Lambda function broad permissions it doesn't need → <strong>least-privilege violation</strong></li>
+        <li>Scenario abuses an unauthenticated event trigger → <strong>insecure trigger</strong></li>
+        <li>Scenario pays only for actual execution time → <strong>serverless billing model</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="10_container_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">10_container_management</span></span>
+    </a>
+    <span class="counter">lesson 11 / 11</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">cloud_security/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / serverless_computing</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

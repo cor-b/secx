@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Container Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/container_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 10 / cloud security / Container Management</span>
+  <h1 class="module-title">Container Management</h1>
+  <p class="subtitle">Containers package an app with everything it needs to run anywhere. Securing them means trusting the image, isolating the runtime, and locking down the orchestrator.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Containers bundle an application with its dependencies into a portable, isolated unit that runs consistently across environments. Securing them spans two areas: <strong>container security</strong> (trusted images, runtime isolation, least privilege) and <strong>orchestration</strong> (managing containers at scale with tools like <strong>Kubernetes</strong>, secured with RBAC, network policies, and secrets management).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Image Security</p>
+      <p class="card-desc">Use trusted base images, scan for vulnerabilities, keep them minimal and patched. A bad image ships its flaws everywhere it runs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Runtime Isolation</p>
+      <p class="card-desc">Containers share the host kernel, so enforce isolation and least privilege: no unnecessary root, limited capabilities, resource limits.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Orchestration</p>
+      <p class="card-desc">Kubernetes manages containers at scale; secure it with RBAC, network policies, and proper secrets management.</p>
+    </div>
+  </div>
+
+  <h2>container security</h2>
+
+  <p>A container packages an app with its libraries, binaries, and config so it runs the same anywhere; it is more lightweight than a VM because containers share the host OS kernel instead of each carrying a full guest OS. That shared kernel is also the key security consideration: weak isolation can let a compromised container affect the host or its neighbors. Core practices:</p>
+
+  <ul>
+    <li><strong>Trusted images:</strong> pull from trusted registries, use minimal base images, and scan for known vulnerabilities before deployment.</li>
+    <li><strong>Least privilege:</strong> don't run containers as root, drop unneeded Linux capabilities, and make filesystems read-only where possible.</li>
+    <li><strong>Isolation and limits:</strong> enforce resource limits and segmentation so one container can't starve or reach others.</li>
+  </ul>
+
+  <h2>orchestration</h2>
+
+  <p>At scale, organizations run many containers across many hosts, which is what an orchestrator manages, automating deployment, scaling, networking, and self-healing. <strong>Kubernetes</strong> is the dominant platform. Securing the orchestrator is essential because it controls the whole cluster:</p>
+
+  <dl class="def">
+    <dt>RBAC</dt>
+    <dd>Role-based access control restricts who can perform which actions in the cluster, enforcing least privilege for users and service accounts.</dd>
+    <dt>Network policies</dt>
+    <dd>Control which pods/services can talk to each other, segmenting traffic so a compromise can't move freely.</dd>
+    <dt>Secrets management</dt>
+    <dd>Store credentials, keys, and tokens securely (encrypted, access-controlled) rather than hard-coding them into images or config.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Containers share the host OS kernel (lighter than VMs, which each run a full guest OS); that shared kernel is the main isolation concern.</li>
+      <li>Container security = trusted/scanned minimal images + least privilege (no root) + runtime isolation and resource limits.</li>
+      <li>Kubernetes is the standard orchestrator; secure it with RBAC, network policies, and secrets management.</li>
+      <li>Never hard-code secrets into images, use proper secrets management.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario restricts who can act within a Kubernetes cluster → <strong>RBAC</strong></li>
+        <li>Scenario limits which pods can communicate → <strong>network policies</strong></li>
+        <li>Scenario flags a container running as root → <strong>least privilege violation</strong></li>
+        <li>Scenario scans a base image before deployment → <strong>image security</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="09_ci_cd_pipeline.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">09_ci_cd_pipeline</span></span>
+    </a>
+    <span class="counter">lesson 10 / 11</span>
+    <a class="next" href="11_serverless_computing.html">
+      <span><span class="lbl">next</span><span class="file">11_serverless_computing</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / container_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

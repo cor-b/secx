@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/api_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 06 / cloud security / API Security</span>
+  <h1 class="module-title">API Security</h1>
+  <p class="subtitle">APIs are the front door to cloud services. Locking that door means controlling who gets in, capping how fast they can knock, and watching everything that passes through.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>APIs let applications communicate and exchange data, so they are a prime attack target. Three pillars secure them: <strong>authorization</strong> (verify identity and permissions), <strong>rate limiting</strong> (cap request volume to prevent abuse/DoS), and <strong>logging and monitoring</strong> (record and watch API activity to detect threats).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">pillar 01</span>
+      <p class="card-name">Authorization</p>
+      <p class="card-desc">Verify identity and grant only permitted actions. OAuth (delegated access tokens) and JWT (signed identity claims).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">pillar 02</span>
+      <p class="card-name">Rate Limiting</p>
+      <p class="card-desc">Cap how many requests a client can make in a window. Blocks brute force, scraping, and DoS abuse.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">pillar 03</span>
+      <p class="card-name">Logging &amp; Monitoring</p>
+      <p class="card-desc">Record who called what and when; watch for anomalies (spikes, unusual sources) to detect attacks early.</p>
+    </div>
+  </div>
+
+  <h2>authorization</h2>
+
+  <p>Authorization ensures only authenticated, permitted users and applications access the API, the first defense against unauthorized access. Two common mechanisms:</p>
+
+  <dl class="def">
+    <dt>OAuth</dt>
+    <dd>A delegated-access framework: issues access tokens so a third-party app can act on a user's behalf without sharing the password.
+      <span class="detail">Used widely for "sign in with" flows and granting scoped, revocable access to resources.</span>
+    </dd>
+    <dt>JWT (JSON Web Token)</dt>
+    <dd>A compact, signed token carrying identity claims, verified on each request.
+      <span class="detail">The signature lets the server trust the token's contents without a database lookup; commonly paired with OAuth.</span>
+    </dd>
+  </dl>
+
+  <h2>rate limiting</h2>
+
+  <p>Rate limiting caps how many requests a client can make in a given time window, protecting the API from abuse and overload. It blocks <strong>brute-force</strong> attempts, automated scraping, and <strong>denial-of-service</strong> attacks that try to overwhelm the service. Limits can be per user, per API key, or per IP; exceeding them returns a throttling response (HTTP 429) rather than processing the request.</p>
+
+  <h2>logging and monitoring</h2>
+
+  <p>Logging records API activity (who called which endpoint, when, and with what result); monitoring watches those logs in real time for suspicious patterns, a sudden spike in requests, calls from unusual locations, or repeated authorization failures. Together they enable fast detection and response, support forensic investigation after an incident, and help meet compliance and audit requirements.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>API security rests on three pillars: authorization, rate limiting, and logging/monitoring.</li>
+      <li>OAuth = delegated access via tokens (act on a user's behalf, no password sharing); JWT = compact signed token carrying identity claims.</li>
+      <li>Rate limiting caps request volume to stop brute force, scraping, and DoS; over-limit returns HTTP 429.</li>
+      <li>Logging records API activity; monitoring watches it in real time to detect anomalies and support audits.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario grants a third-party app scoped access without sharing the password → <strong>OAuth</strong></li>
+        <li>Scenario passes signed identity claims verified on each request → <strong>JWT</strong></li>
+        <li>Scenario throttles a client flooding the API → <strong>rate limiting</strong></li>
+        <li>Scenario detects an unusual spike in API calls → <strong>logging and monitoring</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_cloud_security_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_cloud_security_considerations</span></span>
+    </a>
+    <span class="counter">lesson 06 / 11</span>
+    <a class="next" href="07_cloud_access_security_broker_casb.html">
+      <span><span class="lbl">next</span><span class="file">07_cloud_access_security_broker_casb</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / api_security</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

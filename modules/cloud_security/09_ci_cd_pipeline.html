@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI/CD Pipeline / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/ci_cd_pipeline</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 09 / cloud security / CI/CD Pipeline</span>
+  <h1 class="module-title">CI/CD Pipeline</h1>
+  <p class="subtitle">The automated assembly line from code commit to production. Security isn't a final gate, it's baked into every stage: integrate, test, build, deploy, monitor.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A <strong>CI/CD pipeline</strong> automates building, testing, and deploying code: <strong>continuous integration</strong> (CI) merges and validates code changes frequently; <strong>continuous deployment</strong> (CD) automatically releases validated changes. Security is embedded across four stages, integrate, test, build and deploy, monitor, so vulnerabilities are caught early (shift left).</p>
+  </div>
+
+  <ol class="phases">
+    <li>
+      <span class="phase-name">integrate</span>
+      <span class="phase-desc">Developers merge code changes frequently into a shared repository. Automated checks, including security scans (SAST) and dependency checks, run on each commit so issues surface immediately.</span>
+    </li>
+    <li>
+      <span class="phase-name">test</span>
+      <span class="phase-desc">Automated tests validate functionality and security: unit/integration tests plus security testing (SAST on source, DAST on running app) to catch vulnerabilities before release.</span>
+    </li>
+    <li>
+      <span class="phase-name">build and deploy</span>
+      <span class="phase-desc">Validated code is packaged and released to environments automatically. Secure the build artifacts and use controlled, repeatable deployments (IaC) so nothing untrusted ships.</span>
+    </li>
+    <li>
+      <span class="phase-name">monitor</span>
+      <span class="phase-desc">After deployment, continuously monitor the running application for performance issues, errors, and security threats, feeding findings back into the next cycle.</span>
+    </li>
+  </ol>
+
+  <h2>security baked into the pipeline</h2>
+
+  <p>The point of a secure CI/CD pipeline is to <strong>shift security left</strong>, integrate it early and throughout rather than bolting it on at the end. Each stage carries its own controls:</p>
+
+  <ul>
+    <li><strong>Integrate:</strong> automated security scans and dependency/package checks on every commit.</li>
+    <li><strong>Test:</strong> SAST (static analysis of source code) and DAST (dynamic testing of the running app).</li>
+    <li><strong>Build and deploy:</strong> protect build artifacts, sign/verify, and deploy via controlled IaC.</li>
+    <li><strong>Monitor:</strong> runtime monitoring and logging to detect threats in production and inform the next iteration.</li>
+  </ul>
+
+  <p>Automating these checks means vulnerabilities are caught consistently and early, when they are cheapest to fix, instead of reaching production.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>CI = frequent integration + automated validation of changes; CD = automated deployment of validated changes.</li>
+      <li>Four stages: integrate, test, build and deploy, monitor, each with security controls.</li>
+      <li>Shift left: embed security early and throughout, not as a final gate.</li>
+      <li>SAST = static analysis of source code (early); DAST = dynamic testing of the running app.</li>
+      <li>Dependency/package checks in the pipeline defend against supply-chain risk.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario scans source code for flaws before it runs → <strong>SAST</strong></li>
+        <li>Scenario tests a running application for vulnerabilities → <strong>DAST</strong></li>
+        <li>Scenario automatically deploys every validated change → <strong>continuous deployment</strong></li>
+        <li>Scenario wants vulnerabilities caught as early as possible → <strong>shift left</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_development_and_deployment.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_development_and_deployment</span></span>
+    </a>
+    <span class="counter">lesson 09 / 11</span>
+    <a class="next" href="10_container_management.html">
+      <span><span class="lbl">next</span><span class="file">10_container_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / ci_cd_pipeline</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

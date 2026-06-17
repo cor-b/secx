@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 01 / cloud security / Overview</span>
+  <h1 class="module-title">Cloud Security</h1>
+  <p class="subtitle">Securing the cloud end to end: how you adopt it, who's responsible for what, how you connect and integrate, and how you build, deploy, and run workloads safely.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 2, Objective 2.5: securely implement cloud capabilities in an enterprise environment. Securing the cloud spans implementation, management, connectivity, and the development/deployment pipeline, with security embedded at every stage, from <strong>shared responsibility</strong> and API protection to <strong>containers</strong> and <strong>serverless</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Adopt &amp; Manage</p>
+      <p class="card-desc">Cloud implementation (control strategies), cloud management (shared responsibility, keys/licenses), connectivity and integration.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Protect</p>
+      <p class="card-desc">Cloud security considerations (storage, exposure, leakage, remnants), API security, and Cloud Access Security Brokers (CASB).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Build &amp; Run</p>
+      <p class="card-desc">Development and deployment (Terraform, Ansible), CI/CD pipeline, container management, and serverless computing.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Cloud Implementation</td><td>service adoption, preventive/detective/proactive controls</td></tr>
+      <tr><td>03</td><td>Cloud Management</td><td>shared responsibility model, key &amp; license management</td></tr>
+      <tr><td>04</td><td>Connectivity &amp; Integration</td><td>customer-to-cloud (VPN/Direct Connect), service integration, shadow IT</td></tr>
+      <tr><td>05</td><td>Cloud Security Considerations</td><td>unsecured storage (buckets/blobs), exposure, leakage, data remanence</td></tr>
+      <tr><td>06</td><td>API Security</td><td>authorization (OAuth/JWT), rate limiting, logging</td></tr>
+      <tr><td>07</td><td>CASB</td><td>API-based vs proxy-based (forward/reverse)</td></tr>
+      <tr><td>08</td><td>Development &amp; Deployment</td><td>Terraform (IaC), Ansible, package monitoring</td></tr>
+      <tr><td>09</td><td>CI/CD Pipeline</td><td>integrate, test, build/deploy, monitor with security baked in</td></tr>
+      <tr><td>10</td><td>Container Management</td><td>container security, orchestration (Kubernetes)</td></tr>
+      <tr><td>11</td><td>Serverless Computing</td><td>workloads, functions (FaaS), resources</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">cloud_security/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 11</span>
+    <a class="next" href="02_cloud_implementation.html">
+      <span><span class="lbl">next</span><span class="file">02_cloud_implementation</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

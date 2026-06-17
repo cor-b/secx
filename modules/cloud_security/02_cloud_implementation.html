@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Implementation / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/cloud_implementation</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 02 / cloud security / Cloud Implementation</span>
+  <h1 class="module-title">Cloud Implementation</h1>
+  <p class="subtitle">Moving to the cloud safely: adopting services with a clear plan, and layering preventive, detective, and proactive controls to manage the new risks.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cloud implementation deploys and configures cloud services with security in place. Two parts: <strong>cloud service adoption</strong> (integrating cloud into existing infrastructure, often a hybrid approach, while meeting compliance like HIPAA/GDPR) and <strong>cloud control strategies</strong>, the three control types: <strong>preventive</strong> (stop incidents before they happen), <strong>detective</strong> (spot them as they occur), and <strong>proactive</strong> (anticipate and address future threats).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">control 01</span>
+      <p class="card-name">Preventive</p>
+      <p class="card-desc">Stop incidents before they occur: IAM access management, MFA, encryption.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 02</span>
+      <p class="card-name">Detective</p>
+      <p class="card-desc">Monitor to catch incidents as they happen: real-time logging (AWS CloudTrail, Azure Monitor), alerts on anomalies.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 03</span>
+      <p class="card-name">Proactive</p>
+      <p class="card-desc">Anticipate and fix risks before they materialize: vulnerability scans, penetration testing, threat intelligence.</p>
+    </div>
+  </div>
+
+  <h2>cloud service adoption</h2>
+
+  <p>Adoption integrates cloud platforms into existing infrastructure to gain scalable resources, storage, and flexible compute (e.g. moving storage to AWS to cut hardware). It brings cost savings and agility, but also new security challenges. Plan which services move and how they integrate, a <strong>hybrid</strong> approach often keeps sensitive data on-premise while using the cloud for less critical work. Compliance drives the choice: HIPAA (healthcare), GDPR (EU data), so adopt platforms that meet your regulatory requirements and apply proper access controls, encryption, and risk assessments.</p>
+
+  <h2>cloud control strategies</h2>
+
+  <dl class="def">
+    <dt>Preventive controls</dt>
+    <dd>The first line of defense, stopping incidents before they occur.
+      <span class="detail">Examples: IAM access management (only authorized users reach resources) and MFA (verify identity multiple ways).</span>
+    </dd>
+    <dt>Detective controls</dt>
+    <dd>Monitor systems to detect incidents as they happen.
+      <span class="detail">Real-time logging/monitoring like AWS CloudTrail or Azure Monitor track activity and alert on abnormal patterns so teams respond fast.</span>
+    </dd>
+    <dt>Proactive controls</dt>
+    <dd>Anticipate risks and address them before they materialize.
+      <span class="detail">Regular vulnerability scans and penetration testing find weaknesses early; threat intelligence keeps you ahead of emerging attacks.</span>
+    </dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three cloud control types: preventive (stop before), detective (catch during), proactive (anticipate before they appear).</li>
+      <li>Preventive = IAM/MFA/encryption; detective = CloudTrail/Azure Monitor logging + alerts; proactive = vuln scans, pen tests, threat intel.</li>
+      <li>Cloud adoption brings scalability and cost savings but new security/compliance challenges; a hybrid approach keeps sensitive data on-premise.</li>
+      <li>Match the cloud platform to your compliance needs (HIPAA, GDPR).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario stops an incident before it happens (MFA, encryption) → <strong>preventive control</strong></li>
+        <li>Scenario detects an incident in progress via monitoring/alerts → <strong>detective control</strong></li>
+        <li>Scenario runs pen tests/scans to find issues before attackers do → <strong>proactive control</strong></li>
+        <li>Scenario keeps sensitive data on-premise while using cloud elsewhere → <strong>hybrid adoption</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_cloud_security.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_cloud_security</span></span>
+    </a>
+    <span class="counter">lesson 02 / 11</span>
+    <a class="next" href="03_cloud_management.html">
+      <span><span class="lbl">next</span><span class="file">03_cloud_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / cloud_implementation</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

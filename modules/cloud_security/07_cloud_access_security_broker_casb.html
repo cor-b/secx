@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Access Security Broker (CASB) / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/casb</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 07 / cloud security / CASB</span>
+  <h1 class="module-title">Cloud Access Security Broker (CASB)</h1>
+  <p class="subtitle">A security checkpoint sitting between your users and the cloud, enforcing policy on everything that passes. It works one of two ways: through the provider's API, or inline as a proxy.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A <strong>CASB</strong> is a security enforcement point placed between cloud users and cloud providers, applying the organization's security policies to cloud traffic (visibility, compliance, data security, threat protection). It operates in two architectures: <strong>API-based</strong> (integrates with the provider's API, out of band) and <strong>proxy-based</strong> (sits inline), with proxy split into <strong>forward</strong> and <strong>reverse</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">model 01</span>
+      <p class="card-name">API-Based</p>
+      <p class="card-desc">Integrates directly with the cloud provider's API. Out of band, no traffic interception; good visibility and data inspection, not real-time inline.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 02</span>
+      <p class="card-name">Forward Proxy</p>
+      <p class="card-desc">Sits in front of users, inline on outbound traffic. Enforces policy in real time, usually needs an agent/config on the endpoint.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">model 03</span>
+      <p class="card-name">Reverse Proxy</p>
+      <p class="card-desc">Sits in front of the cloud service, inline on inbound traffic. Agentless, ideal for unmanaged/BYOD devices.</p>
+    </div>
+  </div>
+
+  <h2>what a CASB does</h2>
+
+  <p>A CASB gives the organization control and visibility over cloud usage by enforcing policy between users and providers. Core functions:</p>
+
+  <ul>
+    <li><strong>Visibility:</strong> discover cloud apps in use (including shadow IT) and who is using them.</li>
+    <li><strong>Compliance:</strong> ensure cloud usage meets regulations (HIPAA, GDPR, PCI DSS).</li>
+    <li><strong>Data security:</strong> enforce DLP, encryption, and access controls on cloud data.</li>
+    <li><strong>Threat protection:</strong> detect and block malware, compromised accounts, and anomalous behavior.</li>
+  </ul>
+
+  <h2>api-based deployment</h2>
+
+  <p>An API-based CASB integrates directly with the cloud provider's API rather than intercepting traffic, so it works <strong>out of band</strong>. It can inspect data already stored in the cloud, apply DLP, and scan for threats without sitting in the traffic path, so there is no latency impact, but it is not real-time and only works with providers that expose suitable APIs.</p>
+
+  <h2>proxy-based deployment</h2>
+
+  <dl class="def">
+    <dt>Forward proxy</dt>
+    <dd>Sits between users and the cloud, inline on outbound traffic, enforcing policy in real time before requests reach the provider.
+      <span class="detail">Typically requires an agent or network configuration on the user's device, so it suits managed endpoints.</span>
+    </dd>
+    <dt>Reverse proxy</dt>
+    <dd>Sits in front of the cloud service, inline on inbound traffic to the provider.
+      <span class="detail">Agentless, so it works well for unmanaged or BYOD devices where you can't install software.</span>
+    </dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>CASB = policy enforcement point between cloud users and providers: visibility, compliance, data security, threat protection.</li>
+      <li>Two architectures: API-based (out of band, integrates with provider API) and proxy-based (inline).</li>
+      <li>Forward proxy = inline in front of users, real-time, usually needs an agent (managed devices).</li>
+      <li>Reverse proxy = inline in front of the cloud service, agentless (great for unmanaged/BYOD).</li>
+      <li>CASBs are a key tool for discovering and controlling shadow IT.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario inspects data at rest in the cloud without touching traffic → <strong>API-based CASB</strong></li>
+        <li>Scenario enforces policy in real time on managed-device traffic → <strong>forward proxy</strong></li>
+        <li>Scenario protects a cloud app for BYOD/unmanaged devices with no agent → <strong>reverse proxy</strong></li>
+        <li>Scenario needs visibility into shadow IT and cloud compliance → <strong>CASB</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_api_security.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_api_security</span></span>
+    </a>
+    <span class="counter">lesson 07 / 11</span>
+    <a class="next" href="08_development_and_deployment.html">
+      <span><span class="lbl">next</span><span class="file">08_development_and_deployment</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / casb</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

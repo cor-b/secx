@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Development and Deployment / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/development_and_deployment</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 08 / cloud security / Development and Deployment</span>
+  <h1 class="module-title">Development and Deployment</h1>
+  <p class="subtitle">Building and shipping cloud infrastructure as code: defining it with Terraform, configuring it with Ansible, and watching the third-party packages you pull in.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Secure cloud development and deployment rests on <strong>infrastructure as code (IaC)</strong>, defining infrastructure in version-controlled config files for consistent, repeatable provisioning, plus <strong>package monitoring</strong> to track third-party dependencies for vulnerabilities. Key tools: <strong>Terraform</strong> (provisioning) and <strong>Ansible</strong> (configuration management).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">tool 01</span>
+      <p class="card-name">Terraform</p>
+      <p class="card-desc">Infrastructure as code: declaratively provision cloud resources from version-controlled config. Consistent, repeatable, auditable.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 02</span>
+      <p class="card-name">Ansible</p>
+      <p class="card-desc">Configuration management: automate setup, config, and patching of provisioned systems to a known good state.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 03</span>
+      <p class="card-name">Package Monitoring</p>
+      <p class="card-desc">Track third-party libraries/dependencies for known vulnerabilities and keep them patched (supply-chain risk).</p>
+    </div>
+  </div>
+
+  <h2>infrastructure as code (IaC)</h2>
+
+  <p>IaC defines and provisions infrastructure through machine-readable config files instead of manual setup, so environments are <strong>consistent, repeatable, and version-controlled</strong>. Because the config lives in source control, changes are reviewed, auditable, and easy to roll back, and the same definition reliably reproduces dev, test, and prod. <strong>Terraform</strong> is the standard tool: you declare the desired end state (networks, compute, storage) and it provisions resources across providers to match.</p>
+
+  <h2>configuration management with ansible</h2>
+
+  <p>Once infrastructure is provisioned, <strong>Ansible</strong> automates configuring it, installing software, applying settings, and patching, so systems converge to a defined, secure baseline. Automating configuration removes manual error and drift, and applies security hardening uniformly across many machines. Used alongside Terraform: Terraform builds the resources, Ansible configures what runs on them.</p>
+
+  <h2>package monitoring</h2>
+
+  <p>Modern apps depend heavily on third-party libraries and packages, each a potential entry point if it contains a known vulnerability (a <strong>supply-chain</strong> risk). Package monitoring continuously tracks these dependencies, flags packages with disclosed CVEs, and prompts updates to patched versions. Keeping dependencies current and scanned is essential to securing the deployment pipeline.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>IaC = infrastructure defined in version-controlled config files: consistent, repeatable, auditable provisioning.</li>
+      <li>Terraform provisions infrastructure (declarative); Ansible configures and patches what's provisioned.</li>
+      <li>Remember the split: Terraform builds resources, Ansible configures them.</li>
+      <li>Package monitoring tracks third-party dependencies for vulnerabilities, a supply-chain defense.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario provisions cloud resources from declarative version-controlled files → <strong>Terraform (IaC)</strong></li>
+        <li>Scenario automates configuration and patching of existing servers → <strong>Ansible</strong></li>
+        <li>Scenario flags a vulnerable third-party library in the build → <strong>package monitoring</strong></li>
+        <li>Scenario wants identical, repeatable environments across dev/test/prod → <strong>infrastructure as code</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_cloud_access_security_broker_casb.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_cloud_access_security_broker_casb</span></span>
+    </a>
+    <span class="counter">lesson 08 / 11</span>
+    <a class="next" href="09_ci_cd_pipeline.html">
+      <span><span class="lbl">next</span><span class="file">09_ci_cd_pipeline</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / development_and_deployment</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connectivity and Integration / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cloud_security/connectivity_and_integration</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cloud_security</a>
+
+  <span class="module-tag">lesson 04 / cloud security / Connectivity and Integration</span>
+  <h1 class="module-title">Connectivity and Integration</h1>
+  <p class="subtitle">Connecting your network to the cloud securely, wiring cloud services together safely, and catching the unapproved services employees sneak in.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Three concepts ensure secure connections between your systems and the cloud: <strong>customer-to-cloud connectivity</strong> (the protected link between your network and the provider), <strong>cloud service integration</strong> (securely linking different cloud services), and <strong>shadow IT detection</strong> (finding unauthorized cloud apps employees use without IT's knowledge).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Customer-to-Cloud</p>
+      <p class="card-desc">Secure, reliable link from your network to the provider: VPN (encrypted) or a dedicated line like AWS Direct Connect (private, low latency).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Service Integration</p>
+      <p class="card-desc">Securely link cloud services via APIs with encryption (rest + transit) and access control; integration platforms like MuleSoft, Azure Logic Apps.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Shadow IT Detection</p>
+      <p class="card-desc">Find unauthorized cloud apps that bypass security controls. Tools: Microsoft Cloud App Security, Cisco Cloudlock.</p>
+    </div>
+  </div>
+
+  <h2>customer-to-cloud connectivity</h2>
+
+  <p>This is the secure, reliable link between your internal network and the provider, protecting data in transit from interception or tampering. Options include a <strong>VPN</strong> (encrypted connection over the internet) or a <strong>dedicated line</strong> like <strong>AWS Direct Connect</strong> (private, high-speed, low-latency, more expensive but more reliable). It matters most for sensitive-data industries (finance, healthcare); use TLS for internet-based links or a private line, and add redundant connections/failover where uptime is critical.</p>
+
+  <h2>cloud service integration</h2>
+
+  <p>Integration securely links different cloud services so they work together, since businesses mix providers (storage, compute, SaaS). The challenge is keeping data secure as it moves between environments: encrypt at rest <em>and</em> in transit, use secure authenticated <strong>APIs</strong>, and enforce access control so only authorized services/users connect. Integration platforms like <strong>MuleSoft</strong> or <strong>Azure Logic Apps</strong> manage these connections and monitor data flows for performance and compatibility.</p>
+
+  <h2>shadow IT detection</h2>
+
+  <p>Shadow IT is unauthorized cloud services/apps used without IT's knowledge (an employee sharing work files via personal Dropbox). It bypasses established security controls, leaving data vulnerable and risking non-compliance with HIPAA/GDPR. Because IT can't secure what it can't see, organizations use monitoring tools, <strong>Microsoft Cloud App Security</strong> or <strong>Cisco Cloudlock</strong>, to track data flows and flag unapproved apps, then block them or migrate users to approved alternatives.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Customer-to-cloud connectivity = secure link to the provider: VPN (encrypted over internet) or AWS Direct Connect (private dedicated line).</li>
+      <li>Cloud service integration links services via secure APIs, with encryption at rest and in transit; platforms like MuleSoft / Azure Logic Apps.</li>
+      <li>Shadow IT = unauthorized cloud apps bypassing security controls; detect with Microsoft Cloud App Security or Cisco Cloudlock.</li>
+      <li>Shadow IT is a major data-leakage and compliance risk because IT can't protect what it doesn't know about.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs a private, low-latency dedicated link to the cloud → <strong>AWS Direct Connect</strong></li>
+        <li>Scenario securely links two cloud services for data sharing → <strong>cloud service integration (secure APIs)</strong></li>
+        <li>Scenario discovers employees using unapproved Dropbox → <strong>shadow IT</strong></li>
+        <li>Scenario deploys tools to flag unknown cloud apps → <strong>shadow IT detection</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_cloud_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_cloud_management</span></span>
+    </a>
+    <span class="counter">lesson 04 / 11</span>
+    <a class="next" href="05_cloud_security_considerations.html">
+      <span><span class="lbl">next</span><span class="file">05_cloud_security_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cloud_security / connectivity_and_integration</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
