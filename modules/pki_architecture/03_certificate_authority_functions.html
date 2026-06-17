@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Authority Functions / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/pki_architecture/certificate_authority_functions</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /pki_architecture</a>
+
+  <span class="module-tag">lesson 03 / pki architecture / Certificate Authority Functions</span>
+  <h1 class="module-title">Certificate Authority Functions</h1>
+  <p class="subtitle">The trusted entities that make PKI work: CAs that sign certificates, the chain of trust that ties them together, and the RA + CSR process for requesting one.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Certificate authorities issue, manage, revoke, and validate digital certificates. A <strong>CA</strong> is a trusted third party that vouches for identities, enabling transitive trust (if we both trust the CA, we can trust each other). A <strong>root CA</strong> anchors a hierarchy of intermediate CAs forming the <strong>chain of trust</strong>. A <strong>registration authority (RA)</strong> verifies requesters before the CA signs, and requests are made via a <strong>certificate signing request (CSR)</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">role 01</span>
+      <p class="card-name">Certificate Authority</p>
+      <p class="card-desc">Trusted third party that signs certificates, binding public keys to identities. Public or private; root and intermediate CAs form a hierarchy.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">role 02</span>
+      <p class="card-name">Registration Authority</p>
+      <p class="card-desc">Intermediary that verifies a requester's identity/authorization before the CA signs. Requests arrive as a CSR.</p>
+    </div>
+  </div>
+
+  <h2>certificate authorities</h2>
+
+  <p>A CA is the trusted third party that issues and verifies certificates, binding public keys to entities so two parties who each trust the CA can trust each other, the transitive property applied to identity. CAs are <strong>public</strong> (Verisign, Let's Encrypt, IdenTrust, DigiCert, Comodo, GlobalSign, trusted by browsers/devices by default) or <strong>private</strong> (internal, must be distributed via group policy so users trust it).</p>
+
+  <p>The five CA functions: (1) provide certificate services, (2) validate certificates and verify applicant identities, (3) establish and maintain trust, (4) manage the servers/repositories storing certificates, (5) oversee the full certificate lifecycle from issuance to revocation.</p>
+
+  <h3>the chain of trust</h3>
+  <p>At scale, a <strong>root CA</strong> sits at the top and issues to <strong>intermediate (subordinate) CAs</strong>, which issue to end entities (<strong>leaf certificates</strong>). For example, a military root CA might have Air Force, Army, Marines, and Navy intermediates. An Air Force member can trust a Navy member because both certs trace back through their intermediates to the common root, this is <strong>certificate chaining</strong>, the chain of trust. It distributes the root's workload and isolates risk.</p>
+
+  <h2>registration authorities and the CSR</h2>
+
+  <p>An RA accepts certificate requests and validates the requester's authorization, denying, say, a request for a domain you don't own. To request a certificate you generate a <strong>certificate signing request (CSR)</strong>, a Base64-encoded ASCII file containing your organization info, the public key to be signed, and the key type/length. Key CSR fields:</p>
+
+  <ul>
+    <li><strong>CN</strong> (Common Name) — the fully qualified domain name (e.g. www.diontraining.com)</li>
+    <li><strong>SAN</strong> (Subject Alternative Name) — additional domains the cert covers (multi-domain)</li>
+    <li><strong>O</strong> / <strong>OU</strong> — organization / organizational unit (department)</li>
+    <li><strong>L</strong> / <strong>S</strong> / <strong>C</strong> — locality (city) / state / country</li>
+  </ul>
+
+  <p>The CA validates the CSR (e.g. confirming domain ownership), signs the public key with its private key, and issues the certificate, which the requester installs.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>A CA is a trusted third party enabling transitive trust: both parties trust the CA, so they trust each other.</li>
+      <li>Chain of trust: root CA → intermediate/subordinate CAs → leaf (end-entity) certs. Root anchors all trust.</li>
+      <li>Public CAs (Let's Encrypt, DigiCert, etc.) are trusted by default; private CAs must be distributed (group policy) to be trusted.</li>
+      <li>The RA verifies the requester before the CA signs. You request via a CSR (Base64 ASCII).</li>
+      <li>CSR fields: CN = fully qualified domain name; plus SAN, O, OU, L, S, C.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario asks what binds a public key to an identity and signs it → <strong>certificate authority</strong></li>
+        <li>Scenario traces a cert back through intermediates to a root → <strong>chain of trust</strong></li>
+        <li>Scenario verifies the requester's identity before issuance → <strong>registration authority</strong></li>
+        <li>Scenario generates a file to request a cert with org details + public key → <strong>CSR</strong></li>
+        <li>Scenario asks which CSR field holds the FQDN → <strong>Common Name (CN)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_certificate_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_certificate_management</span></span>
+    </a>
+    <span class="counter">lesson 03 / 05</span>
+    <a class="next" href="04_certificate_validation.html">
+      <span><span class="lbl">next</span><span class="file">04_certificate_validation</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>pki_architecture / certificate_authority_functions</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

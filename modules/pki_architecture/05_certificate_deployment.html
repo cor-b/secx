@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Deployment / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/pki_architecture/certificate_deployment</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /pki_architecture</a>
+
+  <span class="module-tag">lesson 05 / pki architecture / Certificate Deployment</span>
+  <h1 class="module-title">Certificate Deployment</h1>
+  <p class="subtitle">Getting certificates onto systems consistently and at scale: standardized templates, manual vs automated rollout, and wiring them into the apps that use them.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Deployment distributes and installs certificates so systems can communicate securely. Three concepts: <strong>templates</strong> (predefined configs that standardize settings and permissions), <strong>deployment approach</strong> (manual vs automated distribution), and <strong>integration approach</strong> (wiring certs into existing systems, e.g. S/MIME on email servers, TLS on web servers).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Templates</p>
+      <p class="card-desc">Predefined blueprints standardizing settings, encryption level, expiry, allowed use, and permissions. Update once, apply to all new certs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Deployment Approach</p>
+      <p class="card-desc">Manual (one device at a time, slow, error-prone) vs automated (management tools push to many systems fast and consistently).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Integration Approach</p>
+      <p class="card-desc">Configuring systems to actually use the certs: S/MIME on email servers, TLS on web servers.</p>
+    </div>
+  </div>
+
+  <h2>templates</h2>
+
+  <p>A certificate template is a predefined set of settings and rules for how a certificate is issued, what permissions it has, and how it's used, a blueprint that makes issuance faster and consistent and reduces errors. Update the template (say, raise the encryption standard) and all newly issued certs inherit the change, no per-cert edits. Templates also define permissions: which users or systems may request which certificate types.</p>
+
+  <h2>deployment approach</h2>
+
+  <p><strong>Manual</strong> deployment installs certificates one device at a time, simple but slow and error-prone (500 employees could take days with missed steps). <strong>Automated</strong> deployment uses a certificate management tool to push to all systems at once, consistent, fast, and far less error-prone (the same 500 devices in hours). The right choice depends on org size, certificate count, and infrastructure complexity; automated is generally preferred at scale.</p>
+
+  <h2>integration approach</h2>
+
+  <p>Integration is how certificates are wired into existing systems so they're actually used, not just installed. Examples: integrate <strong>S/MIME</strong> certificates into email servers to encrypt and sign mail, and configure web servers with <strong>TLS</strong> certificates so all browser-server traffic is encrypted. The integration step ensures certs are actively securing communications.</p>
+
+  <h2>the three together</h2>
+
+  <table>
+    <thead>
+      <tr><th>concept</th><th>answers</th><th>example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Template</td><td>what config should every cert have?</td><td>a standard TLS cert blueprint</td></tr>
+      <tr><td>Deployment</td><td>how do we install them?</td><td>automated push to all servers</td></tr>
+      <tr><td>Integration</td><td>how do systems use them?</td><td>web servers present TLS; email uses S/MIME</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Templates standardize certificate settings/permissions; change the template once to update all future certs.</li>
+      <li>Manual deployment = slow, error-prone, one at a time. Automated = fast, consistent, scalable, generally preferred.</li>
+      <li>Integration = configuring systems to actually use certs (S/MIME on email, TLS on web servers).</li>
+      <li>Pick the deployment approach by org size, number of certs, and infrastructure complexity.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs every issued cert to share the same settings → <strong>certificate template</strong></li>
+        <li>Scenario rolls certs to hundreds of devices quickly and consistently → <strong>automated deployment</strong></li>
+        <li>Scenario configures email servers to encrypt/sign mail with certs → <strong>integration (S/MIME)</strong></li>
+        <li>Scenario configures web servers to present certs over HTTPS → <strong>integration (TLS)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_certificate_validation.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_certificate_validation</span></span>
+    </a>
+    <span class="counter">lesson 05 / 05</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">pki_architecture/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>pki_architecture / certificate_deployment</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

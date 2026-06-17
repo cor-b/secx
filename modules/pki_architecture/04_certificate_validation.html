@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Validation / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/pki_architecture/certificate_validation</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /pki_architecture</a>
+
+  <span class="module-tag">lesson 04 / pki architecture / Certificate Validation</span>
+  <h1 class="module-title">Certificate Validation</h1>
+  <p class="subtitle">Confirming a certificate is still trustworthy: not expired, not revoked, and really the one you expect. OCSP stapling, CRLs, and pinning, layered together.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Validation ensures a certificate is trustworthy, unexpired, and not revoked. Three mechanisms: <strong>OCSP stapling</strong> (the server presents signed proof of its own validity, no client lookup needed), the <strong>certificate revocation list (CRL)</strong> (a CA's list of revoked serial numbers), and <strong>certificate pinning</strong> (the app stores a known good cert/key to detect impostors). Layering them gives defense in depth.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">method 01</span>
+      <p class="card-name">OCSP Stapling</p>
+      <p class="card-desc">Server fetches signed proof of its cert's status from the OCSP responder and staples it to the TLS handshake, fast, private, no client lookup.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 02</span>
+      <p class="card-name">CRL</p>
+      <p class="card-desc">A CA-maintained list of revoked certificate serial numbers. Clients check it to reject revoked certs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 03</span>
+      <p class="card-name">Certificate Pinning</p>
+      <p class="card-desc">App stores a known valid cert/key and compares it to what the server presents, bypassing the chain to block on-path attacks.</p>
+    </div>
+  </div>
+
+  <h2>OCSP and OCSP stapling</h2>
+
+  <p>The <strong>Online Certificate Status Protocol (OCSP)</strong> checks one certificate's revocation status by serial number, faster than downloading an entire CRL. An <strong>OCSP responder</strong> answers valid, revoked, or unknown. <strong>OCSP stapling</strong> shifts the work to the server: it periodically fetches a signed status response and "staples" it into the TLS handshake, so the client gets proof of validity without making its own OCSP request, which speeds up the connection and improves privacy (the client isn't pinging a responder that could reveal which sites it visits).</p>
+
+  <p>Related: <strong>HSTS (HTTP Strict Transport Security)</strong> tells browsers to connect only via HTTPS, never HTTP. It's stronger than a 301 redirect (which still allows an initial insecure HTTP request) and can use a preload list of always-secure domains.</p>
+
+  <h2>certificate revocation list (CRL)</h2>
+
+  <p>Certificates have an expiration date, but can be revoked earlier (like a suspended driver's license still showing a future expiry). The <strong>CRL</strong> is the CA's online list of revoked serial numbers, distributed to subordinate/intermediate CAs. On validation, the client first checks expiry, then the CRL. Common revocation reasons: cessation of operation, CA compromise, key compromise, or the cert being superseded.</p>
+
+  <p><strong>Suspension vs revocation:</strong> a suspension is temporary and reversible (e.g. holding a possibly-misplaced smart card for 72 hours); a revocation is permanent. That reversibility is the key difference.</p>
+
+  <h2>certificate pinning</h2>
+
+  <p>Pinning stores a known valid certificate or public key inside the application; on connection it compares the stored value to what the server presents and only trusts a match. This deliberately bypasses the normal CA chain of trust to block <strong>on-path (man-in-the-middle) attacks</strong> where an attacker inserts a fake-but-technically-valid certificate. <strong>HPKP (HTTP Public Key Pinning)</strong> was a web-header version of this, but it's <strong>deprecated</strong>: misconfiguration (lost or wrongly rotated keys) could permanently lock users out.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>OCSP checks one cert's status (valid/revoked/unknown); OCSP stapling has the SERVER present that signed proof in the handshake, faster and more private than a CRL or client OCSP lookup.</li>
+      <li>CRL = CA's list of revoked serial numbers. Suspension is reversible; revocation is permanent, that's the key difference.</li>
+      <li>Certificate pinning stores a known good cert/key in the app to defeat on-path attacks; HPKP is the deprecated header form.</li>
+      <li>HSTS forces HTTPS-only and is stronger than a 301 redirect (no insecure first hop).</li>
+      <li>Layering OCSP stapling + CRL + pinning gives defense in depth for validation.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario has the server present signed proof of validity in the TLS handshake → <strong>OCSP stapling</strong></li>
+        <li>Scenario checks a serial number against a CA's revoked list → <strong>CRL</strong></li>
+        <li>Scenario temporarily disables a cert with intent to restore it → <strong>suspension</strong></li>
+        <li>Scenario hard-codes a known key in an app to stop MITM → <strong>certificate pinning</strong></li>
+        <li>Scenario forces browsers to use HTTPS only → <strong>HSTS</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_certificate_authority_functions.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_certificate_authority_functions</span></span>
+    </a>
+    <span class="counter">lesson 04 / 05</span>
+    <a class="next" href="05_certificate_deployment.html">
+      <span><span class="lbl">next</span><span class="file">05_certificate_deployment</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>pki_architecture / certificate_validation</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

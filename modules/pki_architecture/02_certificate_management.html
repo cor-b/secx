@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/pki_architecture/certificate_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /pki_architecture</a>
+
+  <span class="module-tag">lesson 02 / pki architecture / Certificate Management</span>
+  <h1 class="module-title">Certificate Management</h1>
+  <p class="subtitle">Managing certificates across their lifecycle: the types you'll choose between, the extension fields that define how they're used, and the file formats they ship in.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Certificate management covers issuing, renewing, revoking, and managing digital certificates through their lifecycle. Two concepts anchor it: <strong>certificate types</strong> (TLS, client, code-signing, wildcard, SAN, each for a different job) and <strong>certificate extensions</strong> (X.509 fields defining intended usage, marked critical or non-critical). Knowing the validation tiers (DV/OV/EV) and the wildcard-vs-SAN distinction is the exam core.</p>
+  </div>
+
+  <h2>certificate types</h2>
+
+  <p>A digital certificate is a signed document binding a public key to an identity (person, server, device, software), issued by a CA after verification. The main types:</p>
+
+  <dl class="def">
+    <dt>SSL/TLS certificate</dt>
+    <dd>Secures data between browser and web server (HTTPS) and authenticates the server.
+      <span class="detail">Three validation tiers: DV (domain validation, basic, just proves domain control), OV (organization validation, verifies the org), EV (extended validation, most rigorous, highest trust).</span>
+    </dd>
+    <dt>Client certificate</dt>
+    <dd>Authenticates users and devices, replacing password-based auth with cryptographic verification.
+      <span class="detail">Common in enterprise access control and secure email (validating the sender).</span>
+    </dd>
+    <dt>Code-signing certificate</dt>
+    <dd>Verifies software authenticity and integrity, proving code is from a trusted source and untampered.</dd>
+    <dt>Wildcard certificate</dt>
+    <dd>Secures unlimited subdomains of one domain, e.g. <code>*.securityx.com</code> covers www, mail, etc.
+      <span class="detail">Simplifies management, but if compromised, every subdomain is at risk.</span>
+    </dd>
+    <dt>SAN (Subject Alternative Name) certificate</dt>
+    <dd>Secures multiple distinct domains under one certificate (e.g. example.com and example.org).
+      <span class="detail">Unlike a wildcard (one base domain, many subdomains), a SAN cert covers different domain names. Also called a multi-domain certificate.</span>
+    </dd>
+  </dl>
+
+  <h2>certificate extensions</h2>
+
+  <p>Extensions are extra X.509 fields describing a certificate's purpose and restrictions. Each is marked <strong>critical</strong> (an application must understand and process it or reject the certificate) or <strong>non-critical</strong> (can be ignored if unrecognized). Common ones:</p>
+
+  <ul>
+    <li><strong>Key Usage</strong> — primary functions (digital signature, key encipherment, certificate signing)</li>
+    <li><strong>Extended Key Usage (EKU)</strong> — specific roles (client auth, server auth, code signing, email protection)</li>
+    <li><strong>Subject Alternative Name</strong> — multiple domains/IPs/emails on one cert</li>
+    <li><strong>Basic Constraints</strong> — whether the cert is an end-entity or a CA cert</li>
+    <li><strong>Authority Key Identifier / Subject Key Identifier</strong> — link a cert to its issuer for chain validation</li>
+    <li><strong>Certificate Policies</strong> — policies the cert was issued under</li>
+    <li><strong>CRL Distribution Points</strong> — where to find the revocation list</li>
+  </ul>
+
+  <h2>encoding and file formats</h2>
+
+  <p>Certificates follow the <strong>X.509</strong> standard but are encoded (X.690 rules) as BER (Basic), CER (Canonical), or <strong>DER</strong> (Distinguished, strict and predictable, ideal for crypto). Common file formats:</p>
+
+  <table>
+    <thead>
+      <tr><th>format</th><th>holds</th><th>note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>.pem</td><td>certs, CA certs, keys</td><td>most common; flexible, often DER-based</td></tr>
+      <tr><td>.p12 / PKCS#12</td><td>certs + private key (encrypted)</td><td>bundles credentials for secure transport</td></tr>
+      <tr><td>.pfx</td><td>public + private keys</td><td>like .p12, common in Windows</td></tr>
+      <tr><td>.p7b / PKCS#7</td><td>certificate chain, no private key</td><td>for distribution/validation only</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Wildcard cert = many subdomains of ONE domain (*.example.com). SAN cert = multiple DIFFERENT domains. This distinction is commonly tested.</li>
+      <li>TLS validation tiers: DV (domain only) &lt; OV (organization verified) &lt; EV (most rigorous, highest trust).</li>
+      <li>A critical extension MUST be understood or the certificate is rejected; non-critical can be ignored.</li>
+      <li>Certificates use the X.509 standard. .p12/.pfx can hold private keys; .p7b holds only the chain (no private key).</li>
+      <li>Don't memorize every file format; recognize they're all PKI-related and pick accordingly.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario secures www, mail, and shop under one domain → <strong>wildcard certificate</strong></li>
+        <li>Scenario secures example.com and example.org together → <strong>SAN (multi-domain) certificate</strong></li>
+        <li>Scenario needs the highest browser trust with org name shown → <strong>EV certificate</strong></li>
+        <li>Scenario needs to move a cert plus its private key between systems → <strong>.p12 / .pfx</strong></li>
+        <li>Scenario rejects a cert because an extension can't be processed → <strong>critical extension</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_pki_architecture.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_pki_architecture</span></span>
+    </a>
+    <span class="counter">lesson 02 / 05</span>
+    <a class="next" href="03_certificate_authority_functions.html">
+      <span><span class="lbl">next</span><span class="file">03_certificate_authority_functions</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>pki_architecture / certificate_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

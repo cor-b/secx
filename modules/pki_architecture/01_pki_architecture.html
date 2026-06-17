@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKI Architecture / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/pki_architecture/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /pki_architecture</a>
+
+  <span class="module-tag">lesson 01 / pki architecture / Overview</span>
+  <h1 class="module-title">PKI Architecture</h1>
+  <p class="subtitle">The framework of digital trust: who issues certificates, what's in them, how they're checked for validity, and how they get deployed everywhere.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 2, Objective 2.4: apply security concepts to the design of access, authentication, and authorization systems. Public Key Infrastructure (PKI) is the backbone of secure online communication, a framework for managing <strong>digital certificates</strong>. Trusted <strong>certificate authorities</strong> issue and manage them, <strong>validation</strong> confirms they remain trustworthy, and <strong>deployment</strong> pushes them across servers and devices.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">topic 01</span>
+      <p class="card-name">Certificate Management</p>
+      <p class="card-desc">The certificate lifecycle: certificate types (TLS, client, code-signing, wildcard, SAN) and certificate extensions.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">topic 02</span>
+      <p class="card-name">CA Functions</p>
+      <p class="card-desc">Certificate authorities (root, intermediate, chain of trust) and registration authorities that verify requesters via a CSR.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">topic 03</span>
+      <p class="card-name">Certificate Validation</p>
+      <p class="card-desc">OCSP stapling, certificate revocation lists (CRL), and certificate pinning, layered for trust.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">topic 04</span>
+      <p class="card-name">Certificate Deployment</p>
+      <p class="card-desc">Templates for consistency, deployment approach (manual vs automated), and integration into existing systems.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Certificate Management</td><td>cert types (DV/OV/EV, client, code-signing, wildcard, SAN), extensions, encoding/formats</td></tr>
+      <tr><td>03</td><td>CA Functions</td><td>root/intermediate CAs, chain of trust, registration authority, CSR fields</td></tr>
+      <tr><td>04</td><td>Certificate Validation</td><td>OCSP/OCSP stapling, CRL, suspension vs revocation, pinning, HSTS</td></tr>
+      <tr><td>05</td><td>Certificate Deployment</td><td>templates, manual vs automated deployment, integration (S/MIME, TLS)</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">pki_architecture/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 05</span>
+    <a class="next" href="02_certificate_management.html">
+      <span><span class="lbl">next</span><span class="file">02_certificate_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>pki_architecture / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
