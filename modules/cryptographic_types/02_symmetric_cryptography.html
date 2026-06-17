@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symmetric Cryptography / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/symmetric_cryptography</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 02 / cryptographic types / Symmetric Cryptography</span>
+  <h1 class="module-title">Symmetric Cryptography</h1>
+  <p class="subtitle">One key for both directions. Fast enough for bulk data, with two notable special cases: the unbreakable one-time pad and resource-frugal lightweight crypto.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Symmetric cryptography uses the <strong>same key</strong> to encrypt and decrypt, which makes it efficient for securing data quickly and in bulk (the workhorse algorithm is <strong>AES</strong>). Two special techniques matter: the <strong>one-time pad</strong>, which is theoretically unbreakable when used correctly, and <strong>lightweight cryptography</strong>, built for low-power devices like IoT.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">core</span>
+      <p class="card-name">Symmetric Encryption</p>
+      <p class="card-desc">Same key both ways. Efficient bulk encryption. Algorithms: AES, DES, 3DES, Blowfish, Twofish, RC4, ChaCha20.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">technique 01</span>
+      <p class="card-name">One-Time Pad</p>
+      <p class="card-desc">Random key as long as the message, XOR'd in. Theoretically unbreakable, but the key must be truly random and never reused.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">technique 02</span>
+      <p class="card-name">Lightweight Crypto</p>
+      <p class="card-desc">Optimized for limited power/resources (IoT, sensors, embedded). Smaller keys, fewer rounds, simpler operations.</p>
+    </div>
+  </div>
+
+  <h2>symmetric encryption</h2>
+
+  <p>The same secret key encrypts and decrypts the data, the core advantage being efficient bulk encryption for file storage and network traffic. Common algorithms: <strong>AES</strong> (strong, fast, works as block or stream cipher), <strong>DES</strong> (old, 56-bit, now insecure), <strong>3DES</strong> (DES applied three times, more secure but slower), <strong>Blowfish</strong> (fast, variable key) and its successor <strong>Twofish</strong> (up to 256-bit keys), and <strong>RC4</strong> (fast stream cipher, now outdated) with <strong>ChaCha20</strong> as its secure replacement.</p>
+
+  <h2>one-time pad</h2>
+
+  <p>The one-time pad uses a completely random key that is the exact same length as the message. Each bit of the message is combined with the corresponding key bit via <strong>XOR</strong>, producing ciphertext with no exploitable patterns, which makes it theoretically unbreakable. Its rules are strict:</p>
+
+  <ul>
+    <li>The key must be <strong>truly random</strong>, any predictability weakens it</li>
+    <li>The key must <strong>never be reused</strong>, reuse lets patterns emerge</li>
+    <li>The key must be as long as the message</li>
+  </ul>
+
+  <p>The catch is key distribution: securely sharing a key as long as the message, used only once, is a major logistical problem, so one-time pads are reserved for the most sensitive (diplomatic, military) communications rather than everyday use.</p>
+
+  <h2>lightweight cryptography</h2>
+
+  <p>Lightweight cryptography is designed for resource-constrained environments, IoT devices, smart sensors, embedded systems, where full algorithms like AES can be too computationally heavy. It uses smaller keys, fewer encryption rounds, simpler operations, and shorter block sizes to keep processing and memory demands low. It provides an adequate (not maximum) level of security while letting low-power devices operate effectively.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Symmetric = same key encrypts and decrypts. Fast, efficient, ideal for bulk data. AES is the standard.</li>
+      <li>One-time pad = random key as long as the message, XOR'd. Theoretically unbreakable IF the key is truly random and never reused. Key distribution is its downfall.</li>
+      <li>Lightweight cryptography targets low-power/IoT devices: smaller keys, fewer rounds, less resource use.</li>
+      <li>ChaCha20 is the modern secure replacement for the deprecated RC4.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs fast bulk encryption with one shared key → <strong>symmetric (AES)</strong></li>
+        <li>Scenario describes a random key as long as the message, used once → <strong>one-time pad</strong></li>
+        <li>Scenario involves securing an IoT sensor with minimal resources → <strong>lightweight cryptography</strong></li>
+        <li>Scenario needs to replace RC4 → <strong>ChaCha20</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_cryptographic_types.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_cryptographic_types</span></span>
+    </a>
+    <span class="counter">lesson 02 / 08</span>
+    <a class="next" href="03_symmetric_algorithms.html">
+      <span><span class="lbl">next</span><span class="file">03_symmetric_algorithms</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / symmetric_cryptography</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

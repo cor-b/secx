@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symmetric Algorithms / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/symmetric_algorithms</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 03 / cryptographic types / Symmetric Algorithms</span>
+  <h1 class="module-title">Symmetric Algorithms</h1>
+  <p class="subtitle">Two ways to apply a symmetric key: stream ciphers (bit by bit, for real-time data) and block ciphers (fixed chunks, for files), plus the named algorithms that use each.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Symmetric algorithms split into <strong>stream ciphers</strong> (encrypt bit/byte at a time using a keystream XOR'd with plaintext, ideal for real-time audio/video) and <strong>block ciphers</strong> (encrypt fixed-size blocks using confusion and diffusion, ideal for files). Knowing which algorithm is which type, and which are deprecated, is the core of this lesson: AES, DES/3DES, Blowfish/Twofish, RC4/ChaCha20.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">type 01</span>
+      <p class="card-name">Stream Cipher</p>
+      <p class="card-desc">Encrypts continuously, bit/byte at a time, via a keystream XOR'd with plaintext. Needs a unique IV. Real-time use (audio/video). RC4, ChaCha20.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 02</span>
+      <p class="card-name">Block Cipher</p>
+      <p class="card-desc">Encrypts fixed-size blocks (64/128-bit) using confusion + diffusion across multiple rounds. Modes: ECB, CBC, GCM. DES, 3DES, AES, Blowfish, Twofish.</p>
+    </div>
+  </div>
+
+  <h2>stream vs block ciphers</h2>
+
+  <p><strong>Stream ciphers</strong> generate a pseudo-random keystream from the secret key and XOR it with the plaintext, encrypting continuously, which suits real-time data of unknown length. Each keystream must be unique, ensured by an <strong>initialization vector (IV)</strong>; a weak or predictable IV breaks the encryption (WEP's short 24-bit IV is the classic failure).</p>
+
+  <p><strong>Block ciphers</strong> encrypt fixed-size blocks (usually 64 or 128 bits) using <strong>confusion</strong> (making the key-ciphertext relationship complex) and <strong>diffusion</strong> (spreading plaintext influence across the ciphertext so a tiny input change alters the whole output), applied over multiple rounds. Their <strong>mode of operation</strong> defines how blocks interact: ECB (Electronic Code Book), CBC (Cipher Block Chaining), and GCM (Galois/Counter Mode).</p>
+
+  <h2>the algorithms</h2>
+
+  <dl class="def">
+    <dt>AES</dt>
+    <dd>Advanced Encryption Standard, the current standard. Block (128-bit) or stream (via GCM). Key sizes 128/192/256-bit.
+      <span class="detail">Used in WPA2/WPA3 Wi-Fi, file transfers, messaging apps; hardware-accelerated on modern CPUs. Being usable as both block and stream cipher is distinctive to AES.</span>
+    </dd>
+    <dt>DES / 3DES</dt>
+    <dd>DES: early standard, 56-bit key, 64-bit blocks, now insecure to brute force. 3DES: applies DES three times (~112-bit effective).
+      <span class="detail">3DES is more secure but slower; used in banking/legacy systems, largely replaced by AES.</span>
+    </dd>
+    <dt>Blowfish / Twofish</dt>
+    <dd>Blowfish: fast, variable key (32–448-bit), but a 64-bit block makes it risky for large data. Twofish: successor, 128-bit blocks, up to 256-bit keys.
+      <span class="detail">64-bit-and-below block sizes are vulnerable to collision attacks on large datasets, hence Twofish.</span>
+    </dd>
+    <dt>RC4 / ChaCha20</dt>
+    <dd>RC4: pure stream cipher, very fast, but insecure (weak initial keystream); used in old SSL/WEP. ChaCha20: secure modern replacement.
+      <span class="detail">ChaCha20 is used in TLS and performs well on both servers and low-power devices.</span>
+    </dd>
+  </dl>
+
+  <h2>type and status reference</h2>
+
+  <table>
+    <thead>
+      <tr><th>algorithm</th><th>type</th><th>status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>AES</td><td>block (or stream via GCM)</td><td>current standard</td></tr>
+      <tr><td>DES</td><td>block (56-bit key)</td><td>insecure</td></tr>
+      <tr><td>3DES</td><td>block</td><td>legacy, slow, deprecated</td></tr>
+      <tr><td>Blowfish</td><td>block (64-bit)</td><td>dated (small block)</td></tr>
+      <tr><td>Twofish</td><td>block (128-bit)</td><td>secure</td></tr>
+      <tr><td>RC4</td><td>stream</td><td>insecure</td></tr>
+      <tr><td>ChaCha20</td><td>stream</td><td>current, secure</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Stream ciphers encrypt bit/byte at a time (real-time data); block ciphers encrypt fixed blocks (files). RC4/ChaCha20 = stream; DES/3DES/Blowfish/Twofish = block; AES = both.</li>
+      <li>Stream ciphers need a unique, unpredictable IV. WEP's weak 24-bit IV is the classic vulnerability.</li>
+      <li>Block ciphers rely on confusion (complex key-ciphertext link) and diffusion (small change → big output change). Modes: ECB, CBC, GCM.</li>
+      <li>DES (56-bit) and RC4 are insecure. 3DES is slow/legacy. AES and ChaCha20/Twofish are current.</li>
+      <li>Block sizes of 64-bit and below (Blowfish) are vulnerable to collision attacks on large data.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves encrypting a live audio/video stream → <strong>stream cipher (ChaCha20)</strong></li>
+        <li>Scenario involves encrypting files in fixed chunks → <strong>block cipher (AES)</strong></li>
+        <li>Scenario names a weak/short IV enabling attack → <strong>stream cipher IV weakness (WEP/RC4)</strong></li>
+        <li>Scenario asks the current symmetric standard → <strong>AES</strong></li>
+        <li>Scenario describes applying DES three times → <strong>3DES</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_symmetric_cryptography.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_symmetric_cryptography</span></span>
+    </a>
+    <span class="counter">lesson 03 / 08</span>
+    <a class="next" href="04_symmetric_cryptography_considerations.html">
+      <span><span class="lbl">next</span><span class="file">04_symmetric_cryptography_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / symmetric_algorithms</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptographic Types / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 01 / cryptographic types / Overview</span>
+  <h1 class="module-title">Cryptographic Types</h1>
+  <p class="subtitle">The two families of encryption: symmetric (one shared key, fast and bulk) and asymmetric (a key pair for exchange, signatures, and trust).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3, Objective 3.8: given a scenario, <strong>apply an appropriate cryptographic use case and/or technique</strong>. <strong>Symmetric</strong> cryptography uses one key for both encrypt and decrypt, fast and ideal for bulk data at rest. <strong>Asymmetric</strong> (public-key) cryptography uses a key pair for secure key exchange, digital signatures, and authenticity, at higher computational cost. Real systems combine both: asymmetric to exchange a key, symmetric to encrypt the bulk traffic.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">family 01</span>
+      <p class="card-name">Symmetric</p>
+      <p class="card-desc">Same key encrypts and decrypts. Fast, low-resource, great for bulk data. AES is the standard. Challenge: distributing the key securely.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">family 02</span>
+      <p class="card-name">Asymmetric</p>
+      <p class="card-desc">Public/private key pair. One key encrypts, the other decrypts. Powers key exchange, digital signatures, and authentication. Slower, small data only.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Symmetric Cryptography</td><td>one-time pad, lightweight crypto, AES/DES/3DES/Blowfish/Twofish/RC4/ChaCha20</td></tr>
+      <tr><td>03</td><td>Symmetric Algorithms</td><td>stream vs block ciphers, IV, confusion/diffusion, modes (ECB/CBC/GCM)</td></tr>
+      <tr><td>04</td><td>Symmetric Considerations</td><td>resource use, key distribution problem, centralized vs decentralized key management</td></tr>
+      <tr><td>05</td><td>Asymmetric Cryptography</td><td>key pair, hybrid (key exchange + bulk), code signing; RSA/DSA/DH/ElGamal/ECC</td></tr>
+      <tr><td>06</td><td>Asymmetric Algorithms</td><td>RSA (factoring), DSA (signatures), Diffie-Hellman (key exchange), ECC (small keys)</td></tr>
+      <tr><td>07</td><td>Digital Signatures</td><td>sign a hash with the private key; integrity + authenticity + non-repudiation</td></tr>
+      <tr><td>08</td><td>Asymmetric Use Cases</td><td>certificate-based auth, passwordless auth, secure email (S/MIME)</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">cryptographic_types/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 08</span>
+    <a class="next" href="02_symmetric_cryptography.html">
+      <span><span class="lbl">next</span><span class="file">02_symmetric_cryptography</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

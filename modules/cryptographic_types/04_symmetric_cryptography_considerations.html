@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symmetric Cryptography Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/symmetric_cryptography_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 04 / cryptographic types / Symmetric Cryptography Considerations</span>
+  <h1 class="module-title">Symmetric Cryptography Considerations</h1>
+  <p class="subtitle">Symmetric encryption is cheap to run, but its real challenges are resources on constrained devices and the hardest problem of all: distributing the key securely.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Choosing symmetric encryption means weighing two things. <strong>Resource considerations</strong>, computational power, memory, hardware acceleration, and battery, determine which algorithm fits a given device. And <strong>key management</strong>, the genuine weak point, must be handled either <strong>centrally</strong> (simple, but a single point of failure) or in a <strong>decentralized</strong> way (more secure, but more complex). The underlying problem symmetric crypto can't solve alone is securely distributing the shared key.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">consideration 01</span>
+      <p class="card-name">Resources</p>
+      <p class="card-desc">Computational power, memory, hardware acceleration, and power consumption decide which algorithm suits a device, from servers to IoT.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">consideration 02</span>
+      <p class="card-name">Key Management</p>
+      <p class="card-desc">Centralized (one entity, simple, single point of failure) vs decentralized (distributed, more secure, more complex). Plus the key distribution problem.</p>
+    </div>
+  </div>
+
+  <h2>resource considerations</h2>
+
+  <p>Resource use directly affects performance and feasibility. The key factors are computational power (a bottleneck on phones and IoT sensors), memory (keys, IVs, intermediate data, hard on low-memory devices), hardware acceleration (modern CPUs speed up AES dramatically), and power consumption (heavy computation drains batteries). A rough profile:</p>
+
+  <ul>
+    <li><strong>AES</strong> efficient with hardware acceleration, heavier with larger keys</li>
+    <li><strong>DES</strong> light but insecure; <strong>3DES</strong> resource-heavy (DES three times)</li>
+    <li><strong>Blowfish</strong> fast, low memory, small block risk; <strong>Twofish</strong> more secure but costlier</li>
+    <li><strong>RC4</strong> very light but insecure; <strong>ChaCha20</strong> strong security with low resource demand, ideal for low-power devices</li>
+  </ul>
+
+  <h2>the key distribution problem</h2>
+
+  <p>The biggest weakness of symmetric encryption is getting the shared key securely to every party that needs it. If the key is intercepted during distribution, the whole system is compromised. Symmetric cryptography cannot solve this on its own, which is exactly the gap asymmetric cryptography fills (secure key exchange).</p>
+
+  <h2>centralized vs decentralized key management</h2>
+
+  <dl class="def">
+    <dt>Centralized</dt>
+    <dd>A single entity controls all encryption keys.
+      <span class="detail">Simplifies management and updates from one place (good for a large org's IT admins). Downside: a single point of failure, breach it and all keys are exposed.</span>
+    </dd>
+    <dt>Decentralized</dt>
+    <dd>Control is distributed across multiple entities.
+      <span class="detail">No single point of failure, so it is more resilient (used in multi-cloud setups so no one provider holds all keys). Downside: more coordination and complexity.</span>
+    </dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Symmetric crypto is low-resource overall, but algorithm choice depends on computational power, memory, hardware acceleration, and battery.</li>
+      <li>The defining weakness of symmetric encryption is secure key distribution, asymmetric crypto solves this.</li>
+      <li>Centralized key management = simple but a single point of failure. Decentralized = more secure but more complex.</li>
+      <li>3DES is resource-heavy (runs DES three times); ChaCha20 balances strong security with low resource use for low-power devices.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves one team managing all keys from a single console → <strong>centralized key management</strong></li>
+        <li>Scenario spreads key control across multi-cloud providers → <strong>decentralized key management</strong></li>
+        <li>Scenario asks symmetric crypto's main weakness → <strong>secure key distribution</strong></li>
+        <li>Scenario needs low-power strong encryption on a battery device → <strong>ChaCha20</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_symmetric_algorithms.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_symmetric_algorithms</span></span>
+    </a>
+    <span class="counter">lesson 04 / 08</span>
+    <a class="next" href="05_asymmetric_cryptography.html">
+      <span><span class="lbl">next</span><span class="file">05_asymmetric_cryptography</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / symmetric_cryptography_considerations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

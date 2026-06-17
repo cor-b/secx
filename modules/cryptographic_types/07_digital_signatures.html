@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Signatures / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/digital_signatures</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 07 / cryptographic types / Digital Signatures</span>
+  <h1 class="module-title">Digital Signatures</h1>
+  <p class="subtitle">Sign a hash of your message with your private key. Anyone with your public key can then prove it's really from you and that nothing changed, but the message itself stays readable.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A digital signature proves the <strong>authenticity</strong> and <strong>integrity</strong> of a message, and provides <strong>non-repudiation</strong>. The sender hashes the message, then encrypts that hash digest with their <strong>private key</strong>, that encrypted hash is the signature. The recipient decrypts it with the sender's <strong>public key</strong> and compares hashes. Signatures do <em>not</em> provide confidentiality; for that, encrypt the message with the recipient's public key.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">provides</span>
+      <p class="card-name">Integrity</p>
+      <p class="card-desc">Hashing the message and comparing digests proves the content was not altered in transit.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">provides</span>
+      <p class="card-name">Authenticity</p>
+      <p class="card-desc">Only the sender's private key could have produced a signature their public key decrypts, proving who signed it.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">provides</span>
+      <p class="card-name">Non-Repudiation</p>
+      <p class="card-desc">Because only the sender holds their private key, they cannot later deny having signed.</p>
+    </div>
+  </div>
+
+  <h2>how a signature works</h2>
+
+  <p>Walk through Alice sending Bob a signed email (both have key pairs):</p>
+
+  <ol>
+    <li>Alice's client hashes her message (e.g. with SHA-256), producing a unique hash digest.</li>
+    <li>It encrypts that digest with <strong>Alice's private key</strong>; the result, appended to the email, is the digital signature. (The message body itself is not encrypted, signatures are about authenticity/integrity, not confidentiality.)</li>
+    <li>Bob's client decrypts the signature with <strong>Alice's public key</strong>, recovering the original hash digest.</li>
+    <li>Bob's client independently hashes the received message with the same algorithm and compares. If the two digests match, the message is unaltered (integrity) and could only have come from Alice (authenticity + non-repudiation).</li>
+  </ol>
+
+  <h2>non-repudiation</h2>
+
+  <p>Non-repudiation means the signer cannot later deny signing. Only Alice could have encrypted the digest with her private key, and Bob proves it by successfully decrypting with her public key, since in asymmetric crypto a public key only decrypts what its matching private key encrypted.</p>
+
+  <h2>adding confidentiality</h2>
+
+  <p>Signatures alone leave the message readable. To also keep it private, Alice encrypts the message with <strong>Bob's public key</strong>, so only Bob's private key can open it. Combine all three and you have <strong>encrypting and digitally signing</strong>:</p>
+
+  <ul>
+    <li><strong>Confidentiality</strong> → encrypt the message with the recipient's public key</li>
+    <li><strong>Integrity</strong> → hash the message</li>
+    <li><strong>Authenticity / non-repudiation</strong> → encrypt the hash with the sender's private key</li>
+  </ul>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>A digital signature = hash the message, then encrypt the hash with the SENDER'S PRIVATE key. Verify with the sender's public key.</li>
+      <li>Signatures provide integrity, authenticity, and non-repudiation, NOT confidentiality.</li>
+      <li>For confidentiality, encrypt the message with the RECIPIENT'S PUBLIC key.</li>
+      <li>Key-direction cheat: sign = sender's private key; confidentiality = recipient's public key.</li>
+      <li>Non-repudiation works because only the signer holds their private key.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs to prove who sent a message and that it's unchanged → <strong>digital signature</strong></li>
+        <li>Scenario asks which key signs → <strong>sender's private key</strong></li>
+        <li>Scenario asks which key makes a message confidential → <strong>recipient's public key</strong></li>
+        <li>Scenario stresses the sender can't deny sending → <strong>non-repudiation</strong></li>
+        <li>Scenario needs confidentiality AND proof of origin → <strong>encrypt and digitally sign</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_asymmetric_algorithms.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_asymmetric_algorithms</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_asymmetric_cryptography_use_cases.html">
+      <span><span class="lbl">next</span><span class="file">08_asymmetric_cryptography_use_cases</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / digital_signatures</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

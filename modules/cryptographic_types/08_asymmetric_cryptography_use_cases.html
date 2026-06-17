@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asymmetric Cryptography Use Cases / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/asymmetric_cryptography_use_cases</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 08 / cryptographic types / Asymmetric Cryptography Use Cases</span>
+  <h1 class="module-title">Asymmetric Cryptography Use Cases</h1>
+  <p class="subtitle">Where public/private key pairs show up in practice: proving identity with certificates, logging in without passwords, and locking down email end to end.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Three common asymmetric use cases: <strong>certificate-based authentication</strong> (digital certificates from a trusted CA validate identity), <strong>passwordless authentication</strong> (cryptographic keys and biometrics replace passwords), and <strong>secure email</strong> (asymmetric encryption keeps messages confidential end to end, via S/MIME).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">use case 01</span>
+      <p class="card-name">Certificate-Based Auth</p>
+      <p class="card-desc">Digital certificates from a trusted CA prove identity. Client auth (often via NAC), server auth (HTTPS), and SSO with smart cards.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">use case 02</span>
+      <p class="card-name">Passwordless Auth</p>
+      <p class="card-desc">Cryptographic keys plus ownership (token/phone) or biometric factors replace passwords. Strongest when combined with MFA.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">use case 03</span>
+      <p class="card-name">Secure Email</p>
+      <p class="card-desc">S/MIME signs and encrypts each message for confidentiality, integrity, authentication, and non-repudiation.</p>
+    </div>
+  </div>
+
+  <h2>certificate-based authentication</h2>
+
+  <p>Identities are verified using digital certificates issued by a trusted <strong>certificate authority (CA)</strong> within a PKI. In <strong>client authentication</strong>, a server confirms a connecting device/user is pre-authorized via its certificate, commonly managed through <strong>Network Access Control (NAC)</strong>. In <strong>server authentication</strong>, a client validates that a server is genuine, every HTTPS connection uses the server's certificate to confirm you're on the real site. In the enterprise, this is often woven into <strong>single sign-on (SSO)</strong>: a user authenticates once (e.g. a smart card holding a certificate) and reaches many resources without re-entering credentials.</p>
+
+  <h2>passwordless authentication</h2>
+
+  <p>Passwordless auth lets users in without a knowledge-based secret, using public-key cryptography (a private key on the user's device) plus two factor types: <strong>ownership</strong> (something you have, smartphone, smart card, hardware token) and <strong>biometric</strong> (something you are, fingerprint, face). Benefits: stronger security (no passwords to phish or brute-force), better UX, lower IT cost. Risks: higher setup cost, training, and single points of failure, including <strong>biometric impersonation</strong>. Apple's figures illustrate the strength gradient: a 4-digit PIN is ~1 in 10,000, Touch ID ~1 in 50,000, Face ID ~1 in 1,000,000, and combining factors with <strong>MFA</strong> is stronger than any single one.</p>
+
+  <h2>secure email</h2>
+
+  <p>Secure email delivers confidentiality, integrity, authentication, and non-repudiation: encrypt the message with the recipient's public key (confidentiality), hash it (integrity), and sign the hash with the sender's private key (authentication + non-repudiation). The dominant standard is <strong>S/MIME</strong> (Secure/Multipurpose Internet Mail Extensions), built on PKCS, which secures <em>individual messages</em> rather than just the connection. Each user has a CA-signed certificate (public key) and a private key; clients like Outlook, Apple Mail, and Gmail support it. A caveat: because contents are encrypted, email security filters can't inspect them, so S/MIME can be abused to smuggle malware past boundary defenses, requiring extra controls in corporate use.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Certificate-based auth uses CA-issued digital certificates. Server auth = HTTPS proving the site is real; client auth often via NAC; ties into SSO/smart cards.</li>
+      <li>Passwordless auth uses cryptographic keys plus ownership or biometric factors. Watch for biometric impersonation; MFA beats any single factor.</li>
+      <li>Apple strength gradient: PIN 1/10,000 → Touch ID 1/50,000 → Face ID 1/1,000,000.</li>
+      <li>S/MIME secures individual email messages (not just the connection) and provides confidentiality, integrity, authentication, and non-repudiation.</li>
+      <li>S/MIME downside: encrypted messages can hide malware from security filters.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario validates a user/device by a CA-issued certificate → <strong>certificate-based authentication</strong></li>
+        <li>Scenario logs users in with a hardware token or fingerprint, no password → <strong>passwordless authentication</strong></li>
+        <li>Scenario encrypts and signs individual emails → <strong>secure email (S/MIME)</strong></li>
+        <li>Scenario uses a smart-card certificate to reach many apps after one login → <strong>certificate-based auth with SSO</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_digital_signatures.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_digital_signatures</span></span>
+    </a>
+    <span class="counter">lesson 08 / 08</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">cryptographic_types/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / asymmetric_cryptography_use_cases</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

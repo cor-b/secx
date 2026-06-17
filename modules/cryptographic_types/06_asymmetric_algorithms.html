@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asymmetric Algorithms / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/asymmetric_algorithms</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 06 / cryptographic types / Asymmetric Algorithms</span>
+  <h1 class="module-title">Asymmetric Algorithms</h1>
+  <p class="subtitle">Four algorithms, four jobs: RSA for encryption and signatures, DSA for signatures, Diffie-Hellman for key exchange, and ECC for the same strength with far smaller keys.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The asymmetric algorithms differ by the hard math they rely on and the job they do. <strong>RSA</strong> (factoring large primes) handles encryption, key exchange, and signatures. <strong>DSA</strong> is signatures only. <strong>Diffie-Hellman</strong> is key exchange only. <strong>ECC</strong> uses elliptic curves to match RSA's security with much smaller keys, ideal for mobile and IoT.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">algorithm 01</span>
+      <p class="card-name">RSA</p>
+      <p class="card-desc">Based on factoring large primes. Encryption, key exchange, and signatures. Keys 1024–4096-bit. The workhorse of SSL/TLS.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">algorithm 02</span>
+      <p class="card-name">DSA</p>
+      <p class="card-desc">Digital Signature Algorithm. Signatures only (no encryption). Fast to sign, slower to verify than RSA.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">algorithm 03</span>
+      <p class="card-name">Diffie-Hellman</p>
+      <p class="card-desc">Key exchange only. Two parties derive a shared secret over an insecure channel. No authentication on its own.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">algorithm 04</span>
+      <p class="card-name">ECC</p>
+      <p class="card-desc">Elliptic Curve Cryptography. RSA-level security with much smaller keys. Efficient for mobile/IoT. Variants: ECDSA, ECDH.</p>
+    </div>
+  </div>
+
+  <h2>the algorithms</h2>
+
+  <dl class="def">
+    <dt>RSA (Rivest-Shamir-Adleman)</dt>
+    <dd>Security rests on the difficulty of factoring the product of two large primes.
+      <span class="detail">Multiplying primes is easy; factoring the result is infeasible at large sizes. Keys 1024–4096-bit (bigger = stronger but slower). Used for SSL/TLS, key exchange, and digital signatures.</span>
+    </dd>
+    <dt>DSA (Digital Signature Algorithm)</dt>
+    <dd>Built solely for digital signatures, proving authenticity and integrity, not encryption.
+      <span class="detail">Relies on the discrete logarithm problem. Faster signature generation than RSA but slower verification, a classic crypto trade-off.</span>
+    </dd>
+    <dt>Diffie-Hellman (DH)</dt>
+    <dd>Lets two parties derive the same shared secret over an insecure channel without ever sending the secret.
+      <span class="detail">Think of mixing paint colors: a shared public color plus each party's private color produces a common mix that an eavesdropper can't un-mix. But DH has no authentication, so it's vulnerable to on-path (man-in-the-middle) and logjam attacks; use 2048-bit+ keys or Elliptic-Curve Diffie-Hellman, and authenticate with digital certificates.</span>
+    </dd>
+    <dt>ECC (Elliptic Curve Cryptography)</dt>
+    <dd>Security from the elliptic curve discrete logarithm problem; easy one way, infeasible to reverse.
+      <span class="detail">Matches RSA security with far smaller keys: a 256-bit ECC key ≈ a 3072-bit RSA key. Low overhead suits mobile/IoT. ECDSA signs data; ECDH does key exchange.</span>
+    </dd>
+  </dl>
+
+  <h2>by job</h2>
+
+  <table>
+    <thead>
+      <tr><th>algorithm</th><th>primary job</th><th>based on</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>RSA</td><td>encryption, key exchange, signatures</td><td>factoring large primes</td></tr>
+      <tr><td>DSA</td><td>digital signatures only</td><td>discrete logarithm</td></tr>
+      <tr><td>Diffie-Hellman</td><td>key exchange only</td><td>discrete logarithm</td></tr>
+      <tr><td>ECC</td><td>signatures + key exchange, small keys</td><td>elliptic curve discrete log</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>RSA = factoring large primes; does encryption, key exchange, and signatures. DSA = signatures only. DH = key exchange only. ECC = small keys, big security.</li>
+      <li>ECC's headline fact: a 256-bit ECC key gives roughly the same security as a 3072-bit RSA key, hence its use on mobile/IoT.</li>
+      <li>Diffie-Hellman provides NO authentication by itself, so it's vulnerable to man-in-the-middle and logjam; pair it with certificates and use 2048-bit+ or ECDH.</li>
+      <li>DSA: faster to sign, slower to verify than RSA.</li>
+      <li>ECDSA = ECC signatures; ECDH = ECC key exchange.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs strong security with tiny keys on a mobile/IoT device → <strong>ECC</strong></li>
+        <li>Scenario is two parties agreeing a shared secret over an open channel → <strong>Diffie-Hellman</strong></li>
+        <li>Scenario needs encryption AND signatures from one widely-used algorithm → <strong>RSA</strong></li>
+        <li>Scenario is signatures only / authenticity and integrity → <strong>DSA</strong></li>
+        <li>Scenario warns of a man-in-the-middle during key agreement → <strong>unauthenticated Diffie-Hellman</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_asymmetric_cryptography.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_asymmetric_cryptography</span></span>
+    </a>
+    <span class="counter">lesson 06 / 08</span>
+    <a class="next" href="07_digital_signatures.html">
+      <span><span class="lbl">next</span><span class="file">07_digital_signatures</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / asymmetric_algorithms</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

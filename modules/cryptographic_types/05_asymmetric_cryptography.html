@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asymmetric Cryptography / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/cryptographic_types/asymmetric_cryptography</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /cryptographic_types</a>
+
+  <span class="module-tag">lesson 05 / cryptographic types / Asymmetric Cryptography</span>
+  <h1 class="module-title">Asymmetric Cryptography</h1>
+  <p class="subtitle">A public/private key pair removes the need to share a secret in advance, solving symmetric's key-distribution problem and enabling signatures and trust.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Asymmetric (public-key) cryptography uses a <strong>key pair</strong>: a widely-shared public key and a secret private key. One key encrypts, the other decrypts, and the same key can't do both. It powers secure communication, digital signatures, and key exchange. It is computationally heavier and suited only to small data, so in practice it is used to securely exchange a <strong>symmetric</strong> key, which then encrypts the bulk traffic (the basis of SSL/TLS). <strong>Code signing</strong> is a key application.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Key Pair</p>
+      <p class="card-desc">Public key shared freely, private key kept secret. One encrypts, the other decrypts. No pre-shared secret needed.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Hybrid Use</p>
+      <p class="card-desc">Asymmetric exchanges a symmetric key, then symmetric encrypts the bulk data. Combines asymmetric's trust with symmetric's speed (SSL/TLS).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Code Signing</p>
+      <p class="card-desc">Developer signs code with their private key; users verify with the public key, confirming the code is genuine and unaltered.</p>
+    </div>
+  </div>
+
+  <h2>how it works</h2>
+
+  <p>Two separate keys: a public key for encryption and a private key for decryption. Even if the public key is shared widely, data stays secure because only the matching private key can decrypt it. Common algorithms: <strong>RSA</strong>, <strong>DSA</strong>, <strong>Diffie-Hellman</strong>, <strong>ElGamal</strong>, and <strong>ECC</strong> (covered next lesson).</p>
+
+  <p>Trade-offs: asymmetric encryption is far more computationally intensive than symmetric, making it slower and suited only to small data like keys and signatures, and the security of the private key is everything, compromise it and the whole system falls.</p>
+
+  <h2>the hybrid approach</h2>
+
+  <p>The strengths of both families combine in real systems: asymmetric encryption securely delivers a symmetric session key, then symmetric encryption handles the bulk data efficiently. For example, a sender encrypts a freshly-created symmetric key with the recipient's <strong>public key</strong>; only the recipient's private key can unwrap it, so even if the exchange is intercepted, the session key stays safe. This is exactly the SSL/TLS key-exchange model.</p>
+
+  <h2>code signing</h2>
+
+  <p>Code signing uses asymmetric crypto to guarantee software authenticity and integrity. The developer signs the code with their <strong>private key</strong>, creating a digital signature, a seal showing the code is from a trusted source and unaltered. When a user downloads it, their system verifies the signature with the developer's <strong>public key</strong>: if it checks out, the software is genuine. Like a wax seal on a letter, it proves the code hasn't been tampered with, protecting both the developer's reputation and the user's security.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Asymmetric = public/private key pair. One key encrypts, the other decrypts; the same key cannot do both.</li>
+      <li>It solves symmetric's key-distribution problem (no pre-shared secret) but is slow and only for small data.</li>
+      <li>Hybrid model: asymmetric exchanges a symmetric key, symmetric encrypts the bulk. This is how SSL/TLS works.</li>
+      <li>To send a confidential message, encrypt with the recipient's PUBLIC key (only their private key decrypts).</li>
+      <li>Code signing: sign with the developer's PRIVATE key, verify with the PUBLIC key, confirms authenticity and integrity.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs to exchange a key securely with someone you've never met → <strong>asymmetric cryptography</strong></li>
+        <li>Scenario describes wrapping a session key in the recipient's public key, then bulk-encrypting → <strong>hybrid (SSL/TLS)</strong></li>
+        <li>Scenario verifies downloaded software is genuine and unaltered → <strong>code signing</strong></li>
+        <li>Scenario stresses slow performance limiting use to small data → <strong>asymmetric encryption</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_symmetric_cryptography_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_symmetric_cryptography_considerations</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_asymmetric_algorithms.html">
+      <span><span class="lbl">next</span><span class="file">06_asymmetric_algorithms</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>cryptographic_types / asymmetric_cryptography</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
