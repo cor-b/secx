@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Initial Access and Escalation Methods / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_considerations/initial_access_and_escalation_methods</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_considerations</a>
+
+  <span class="module-tag">lesson 07 / threat modeling considerations / Initial Access &amp; Escalation</span>
+  <h1 class="module-title">Initial Access and Escalation Methods</h1>
+  <p class="subtitle">The first half of the attack lifecycle: getting in (injection), grabbing credentials once inside (credential dumping), and climbing to higher privileges (escalation).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Initial access and escalation methods are the TTPs attackers use to first get into a system and then elevate privileges. Three methods: <strong>injections</strong> (insert malicious code for initial access), <strong>credential dumping</strong> (extract stored usernames/passwords), and <strong>privilege escalation</strong> (exploit vulnerabilities/misconfigs to gain higher access).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">method 01</span>
+      <p class="card-name">Injections</p>
+      <p class="card-desc">Insert malicious code for initial access (SQLi via sqlmap, command injection). Fix: parameterized queries, input validation, WAF, least privilege.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 02</span>
+      <p class="card-name">Credential Dumping</p>
+      <p class="card-desc">Extract stored credentials/hashes/tickets from memory (Mimikatz). Fix: disable LM/NTLM, MFA, limit memory reads.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 03</span>
+      <p class="card-name">Privilege Escalation</p>
+      <p class="card-desc">Climb to higher access (Metasploit). Vertical (to admin/root) or horizontal (peer accounts). Fix: patch, least privilege, monitor.</p>
+    </div>
+  </div>
+
+  <h2>injections</h2>
+
+  <p>Injections insert malicious code to gain access or run unauthorized actions, <strong>SQL injection</strong> (interacting with the backend database in unintended ways) and <strong>command injection</strong> (running arbitrary code on the server). Attackers automate SQLi with tools like <strong>sqlmap</strong> to find flaws and retrieve/modify/delete data. Prevent with parameterized queries, input validation, WAFs, and least-privilege database configuration.</p>
+
+  <h2>credential dumping</h2>
+
+  <p>Credential dumping extracts stored usernames and passwords from compromised systems so attackers can impersonate legitimate users and bypass security. The well-known tool is <strong>Mimikatz</strong>, which extracts plaintext passwords, hashes, and Kerberos tickets from memory in Windows environments, enabling lateral movement and escalation. Prevent by disabling outdated protocols (<strong>LM/NTLM</strong>) in favor of stronger encryption, implementing MFA, and limiting the ability to read from memory (fewer admin rights, secure password policies).</p>
+
+  <h2>privilege escalation</h2>
+
+  <p>Privilege escalation exploits vulnerabilities to increase access rights, a critical step for unauthorized high-privilege actions. It's <strong>vertical</strong> (gaining admin/root) or <strong>horizontal</strong> (gaining peer accounts with similar access). Attackers use <strong>Metasploit</strong> to exploit escalation flaws (outdated software, misconfigured permissions). Prevent by patching, applying least privilege, and monitoring for unusual behavior (accessing sensitive files, elevated-privilege commands).</p>
+
+  <h3>the demo: chained exploitation</h3>
+  <p>The lesson demoed chaining these methods against a Metasploitable 2 target: an Nmap scan found a vulnerable VSFTPD 2.3.4 service, a <strong>Metasploit</strong> exploit opened a root shell (upgraded to a Meterpreter shell), then the <code>/etc/passwd</code> and <code>/etc/shadow</code> files were downloaded, combined with <strong>unshadow</strong>, and cracked with <strong>John the Ripper</strong>, demonstrating credential dumping and password cracking after initial access.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three methods: injections (initial access), credential dumping (steal credentials), privilege escalation (climb).</li>
+      <li>Mimikatz dumps plaintext passwords, hashes, and Kerberos tickets from memory (Windows).</li>
+      <li>Privilege escalation is vertical (to admin/root) or horizontal (to peer accounts).</li>
+      <li>Tools: sqlmap (SQLi), Mimikatz (credential dumping), Metasploit (exploitation/escalation), John the Ripper (cracking).</li>
+      <li>Disable LM/NTLM and add MFA to defend against credential dumping.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses sqlmap to breach a database via input → <strong>injection</strong></li>
+        <li>Scenario runs Mimikatz to pull hashes from memory → <strong>credential dumping</strong></li>
+        <li>Scenario exploits a misconfig to gain root → <strong>vertical privilege escalation</strong></li>
+        <li>Scenario cracks /etc/shadow with John the Ripper → <strong>credential dumping/password cracking</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_threat_actor_methods.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_threat_actor_methods</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_post_exploitation_and_evasion_methods.html">
+      <span><span class="lbl">next</span><span class="file">08_post_exploitation_and_evasion_methods</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_considerations / initial_access_and_escalation_methods</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

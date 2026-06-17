@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Modeling Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_considerations/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_considerations</a>
+
+  <span class="module-tag">lesson 01 / threat modeling considerations / Overview</span>
+  <h1 class="module-title">Threat Modeling Considerations</h1>
+  <p class="subtitle">Knowing your adversary: who would target you and why, what they have to work with, how skilled they are, and the patterns and methods they use, from first access to covering their tracks.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 1 and 3, Objectives 1.4 (perform threat modeling activities) and 3.2 (analyze requirements to enhance endpoint/server security). Threat modeling identifies and evaluates potential threats by understanding who might attack, why, and how. The section covers threat actor motivation, resources, and capabilities, then attack patterns, threat actor methods, and the attack lifecycle: initial access/escalation and post-exploitation/evasion.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">The Adversary</p>
+      <p class="card-desc">Threat actor motivation (why), resources (time, money), and capabilities (skills, tools, supply-chain access).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">The Approach</p>
+      <p class="card-desc">Attack patterns (injection, auth, on-path) and threat actor methods (abuse cases, anti-patterns, attack trees).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">The Lifecycle</p>
+      <p class="card-desc">Initial access and escalation (injection, credential dumping, privilege escalation) and post-exploitation/evasion (lateral movement, execution, evasion).</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Threat Actor Motivation</td><td>geopolitical, espionage, financial, activism, notoriety</td></tr>
+      <tr><td>03</td><td>Threat Actor Resources</td><td>time, money</td></tr>
+      <tr><td>04</td><td>Threat Actor Capabilities</td><td>knowledge, vulnerability creation, exploit creation, supply chain access</td></tr>
+      <tr><td>05</td><td>Attack Patterns</td><td>injection, authentication/authorization, on-path</td></tr>
+      <tr><td>06</td><td>Threat Actor Methods</td><td>abuse cases, anti-patterns, attack trees/graphs</td></tr>
+      <tr><td>07</td><td>Initial Access &amp; Escalation</td><td>injections, credential dumping, privilege escalation</td></tr>
+      <tr><td>08</td><td>Post-exploitation &amp; Evasion</td><td>lateral movement, unauthorized execution, defensive evasion</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">threat_modeling_considerations/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 08</span>
+    <a class="next" href="02_threat_actor_motivation.html">
+      <span><span class="lbl">next</span><span class="file">02_threat_actor_motivation</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_considerations / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

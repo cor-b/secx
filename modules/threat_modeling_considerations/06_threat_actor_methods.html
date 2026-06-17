@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Actor Methods / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_considerations/threat_actor_methods</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_considerations</a>
+
+  <span class="module-tag">lesson 06 / threat modeling considerations / Threat Actor Methods</span>
+  <h1 class="module-title">Threat Actor Methods</h1>
+  <p class="subtitle">How threats get analyzed and mapped: misusing legitimate features, the deceptively-bad design choices that create risk, and the diagrams that lay out every path to a goal.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Threat actor methods are strategies attackers use to compromise systems. Three concepts: <strong>abuse cases</strong> (misusing legitimate features), <strong>anti-patterns</strong> (poor practices that appear effective but create risk), and <strong>attack trees/graphs</strong> (visual maps of the paths an attacker might take to a goal).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">method 01</span>
+      <p class="card-name">Abuse Cases</p>
+      <p class="card-desc">Misusing legitimate features to cause harm (fake reviews, bot upvotes, password-reset abuse). Fix: verification, CAPTCHAs, pattern monitoring.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 02</span>
+      <p class="card-name">Anti-patterns</p>
+      <p class="card-desc">Deceptively-bad practices that create risk (Base64 "hiding" passwords, hard-coded secrets). Fix: env variables, secure frameworks, code reviews.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 03</span>
+      <p class="card-name">Attack Trees/Graphs</p>
+      <p class="card-desc">Visual maps of attack paths from entry to goal. Help teams see where to defend. Mitigate with vuln assessments, patching, least privilege.</p>
+    </div>
+  </div>
+
+  <h2>abuse cases</h2>
+
+  <p>Abuse cases are scenarios where attackers manipulate <strong>legitimate features</strong> to cause harm or gain unauthorized access. Example: flooding a platform with <strong>fake reviews</strong> or using <strong>bots to upvote/downvote</strong> to manipulate ratings and rankings, damaging reputation and trust; password-reset misuse is another. Mitigate with review verification (verified purchases), CAPTCHAs to limit bots, monitoring for patterns (rapid submissions, repeated IPs), usage limits, and audits.</p>
+
+  <h2>anti-patterns</h2>
+
+  <p>Anti-patterns are poor practices or design choices that seem functional but create security risk, often from misconceptions about <strong>obscurity</strong>. Example: encoding a password in <strong>Base64</strong> to "hide" it, Base64 only changes the format and is trivially reversible (e.g. with CyberChef). Another is <strong>hard-coding</strong> passwords or API keys in source code, exposing them if the repo is cloned, shared, or breached. Mitigate by storing secrets in <strong>environment variables</strong> (outside the codebase), using secure frameworks (Django, Spring Security), and regular code reviews with encryption/hashing.</p>
+
+  <h2>attack trees/graphs</h2>
+
+  <p>Attack trees/graphs are visual diagrams mapping the different <strong>paths</strong> an attacker might take to a goal, breaking a main objective (e.g. unauthorized access) into components like entry points, privilege escalation, and lateral movement. Example: a tree starting from entry points (phishing, weak passwords, unpatched software) branching into escalation and lateral movement to reach a database. Each node is a potential attack phase, helping teams visualize where defenses must be strongest. Mitigate with regular vulnerability assessments, patching, and least-privilege policies along the mapped paths.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Abuse cases = misusing legitimate features (fake reviews, bot manipulation, password-reset abuse).</li>
+      <li>Anti-patterns = deceptively-bad practices: Base64 to "hide" passwords (reversible), hard-coded secrets.</li>
+      <li>Base64 is encoding, not encryption, it provides no protection.</li>
+      <li>Attack trees/graphs visually map attack paths from entry point to goal so defenders prioritize.</li>
+      <li>Fix anti-patterns with environment variables and secure frameworks; fix abuse cases with verification/monitoring.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario floods a site with fake reviews → <strong>abuse case</strong></li>
+        <li>Scenario "secures" a password with Base64 → <strong>anti-pattern</strong></li>
+        <li>Scenario hard-codes an API key in source → <strong>anti-pattern</strong></li>
+        <li>Scenario diagrams every path to a target → <strong>attack tree/graph</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_attack_patterns.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_attack_patterns</span></span>
+    </a>
+    <span class="counter">lesson 06 / 08</span>
+    <a class="next" href="07_initial_access_and_escalation_methods.html">
+      <span><span class="lbl">next</span><span class="file">07_initial_access_and_escalation_methods</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_considerations / threat_actor_methods</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

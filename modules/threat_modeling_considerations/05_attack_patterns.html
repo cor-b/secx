@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attack Patterns / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/threat_modeling_considerations/attack_patterns</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /threat_modeling_considerations</a>
+
+  <span class="module-tag">lesson 05 / threat modeling considerations / Attack Patterns</span>
+  <h1 class="module-title">Attack Patterns</h1>
+  <p class="subtitle">The tactics modeled in threat analysis: forcing malicious input into a system, breaking through access controls, and intercepting traffic in transit.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Attack patterns are tactics and techniques threat actors use to exploit vulnerabilities, modeled in threat analysis. Three patterns: <strong>injection</strong> (inserting malicious code via input points), <strong>authentication and authorization</strong> (targeting access controls), and <strong>on-path</strong> (intercepting/altering communications, formerly man-in-the-middle).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">pattern 01</span>
+      <p class="card-name">Injection</p>
+      <p class="card-desc">Insert malicious code via input points (SQLi, command, code, XSS). Fix: input validation, parameterized queries, WAF.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">pattern 02</span>
+      <p class="card-name">Auth &amp; Authz</p>
+      <p class="card-desc">Exploit access controls: weak password resets, session hijacking, broken RBAC. Fix: MFA (incl. resets), secure sessions.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">pattern 03</span>
+      <p class="card-name">On-Path</p>
+      <p class="card-desc">Intercept/alter traffic (formerly MITM): packet sniffing, session hijacking on weak Wi-Fi. Fix: TLS, certificates, monitoring.</p>
+    </div>
+  </div>
+
+  <h2>injection</h2>
+
+  <p>Injection attacks insert malicious code or commands via vulnerable input points. The most common is <strong>SQL injection</strong> (harmful SQL through input fields, e.g. <code>' OR 1=1;--</code> in a login form to bypass authentication), plus command injection, code injection, and cross-site scripting. They work when input isn't properly sanitized. Mitigate with rigorous <strong>input validation</strong>, <strong>parameterized queries (prepared statements)</strong> that separate code from data, and web application firewalls.</p>
+
+  <h2>authentication and authorization</h2>
+
+  <p>These attacks exploit weaknesses in access controls to bypass login or gain unauthorized permissions. Tactics include exploiting <strong>weak password reset</strong> mechanisms (using OSINT-discoverable info like email or knowledge-based questions), insecure access control lists, and broken authentication flows like <strong>session hijacking</strong>. Once in, an attacker may exploit flawed <strong>role-based access controls</strong> to escalate privileges. Mitigate with MFA, including for the password reset process, secure session management/strong session IDs, and properly configured RBAC.</p>
+
+  <h2>on-path</h2>
+
+  <p>On-path attacks (formerly <strong>man-in-the-middle</strong>) intercept communications between two parties, letting attackers eavesdrop on or alter data. Common types: <strong>packet sniffing</strong> (capturing traffic) and <strong>session hijacking</strong> (taking over an active session). A typical attack intercepts traffic on unprotected public Wi-Fi, capturing session tokens or credentials to hijack a banking session. Mitigate with encryption (<strong>TLS</strong>), <strong>certificates</strong> to verify party authenticity, and network monitoring/anomaly detection.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three modeled patterns: injection, authentication/authorization, on-path.</li>
+      <li>Injection (SQLi <code>' OR 1=1;--</code>) → fix with input validation and parameterized queries.</li>
+      <li>Auth/authz attacks target weak password resets, session hijacking, broken RBAC → fix with MFA and secure sessions.</li>
+      <li>On-path = formerly man-in-the-middle; intercept/alter traffic (packet sniffing, session hijacking) → fix with TLS and certificates.</li>
+      <li>Public Wi-Fi without encryption is the classic on-path scenario.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario submits <code>' OR 1=1;--</code> in a login field → <strong>injection (SQLi)</strong></li>
+        <li>Scenario abuses a weak password-reset flow → <strong>authentication/authorization attack</strong></li>
+        <li>Scenario intercepts session tokens on public Wi-Fi → <strong>on-path attack</strong></li>
+        <li>Scenario defends with parameterized queries → <strong>injection mitigation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_threat_actor_capabilities.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_threat_actor_capabilities</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_threat_actor_methods.html">
+      <span><span class="lbl">next</span><span class="file">06_threat_actor_methods</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>threat_modeling_considerations / attack_patterns</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
