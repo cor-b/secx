@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incident Response / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 01 / incident response / Overview</span>
+  <h1 class="module-title">Incident Response</h1>
+  <p class="subtitle">Preparing for incidents, acting fast when they hit, investigating what happened, and learning from it so it does not happen again.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>This section spans Domain 1 (Governance, Risk, Compliance, <strong>OBJ 1.2</strong>: perform risk management activities) and Domain 4 (Security Operations, <strong>OBJ 4.4</strong>: analyze data and artifacts in support of incident response). Effective IR minimizes the impact of a breach and speeds recovery: practice with preparedness exercises, take coordinated immediate action to contain a threat, investigate the event, attribute the source, and run root cause analysis to close the gap for good.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">phase 01</span>
+      <p class="card-name">Prepare</p>
+      <p class="card-desc">Preparedness exercises (tabletop, walkthrough, parallel, simulation) rehearse the plan before a real incident.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">phase 02</span>
+      <p class="card-name">Respond</p>
+      <p class="card-desc">Immediate response contains and mitigates: crisis management for communication, threat response for containment.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">phase 03</span>
+      <p class="card-name">Investigate</p>
+      <p class="card-desc">Event response reconstructs the timeline, recovers data, and runs breach response after containment.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">phase 04</span>
+      <p class="card-name">Learn</p>
+      <p class="card-desc">Attribution identifies who did it; root cause analysis finds why, feeding fixes back into planning.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>lesson</th>
+        <th>topic</th>
+        <th>key concepts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Preparedness Exercises</td><td>tabletop, walkthrough, parallel (staging), simulation (production, red/blue team)</td></tr>
+      <tr><td>03</td><td>Immediate Response</td><td>crisis management (comms, out-of-band, CISO first), threat response (CSIRT, NIST 800-61 steps)</td></tr>
+      <tr><td>04</td><td>Event Response</td><td>timeline reconstruction, data recovery/extraction, breach response (notification, GDPR/CCPA)</td></tr>
+      <tr><td>05</td><td>Attribution</td><td>insider threats, access logs, behavioral analytics, offboarding, intent (negligence vs malicious)</td></tr>
+      <tr><td>06</td><td>Root Cause Analysis</td><td>the 5 whys, beyond symptoms, feedback into planning, no blame</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">incident_response/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 06</span>
+    <a class="next" href="02_preparedness_exercises.html">
+      <span><span class="lbl">next</span><span class="file">02_preparedness_exercises</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

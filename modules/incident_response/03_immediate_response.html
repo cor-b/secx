@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immediate Response / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/immediate_response</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 03 / incident response / Immediate Response</span>
+  <h1 class="module-title">Immediate Response</h1>
+  <p class="subtitle">The first moments after detection: containing the threat technically while managing the communication around it.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Immediate response is the rapid action taken to contain and mitigate an incident the moment it is detected. It has two parallel tracks: <strong>crisis management</strong> (coordinating communication with stakeholders to maintain trust and protect reputation) and <strong>threat response</strong> (the structured, technical work of detecting, containing, and eradicating the threat, often led by a CSIRT following NIST SP 800-61).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">track 01</span>
+      <p class="card-name">Crisis Management</p>
+      <p class="card-desc">Coordinated communication with stakeholders. Pre-planned comms order, out-of-band channels, reputation and recovery focus.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">track 02</span>
+      <p class="card-name">Threat Response</p>
+      <p class="card-desc">Structured technical handling: detect, contain, eradicate, recover. Led by a CSIRT, following the NIST SP 800-61 lifecycle.</p>
+    </div>
+  </div>
+
+  <h2>crisis management</h2>
+
+  <p>Crisis management handles the organizational side of a significant incident, the impact on operations and reputation, whereas threat response handles the active threat itself. Its emphasis is broad communication and recovery to keep stakeholders informed and maintain trust.</p>
+
+  <ul>
+    <li><strong>Pre-established communication plan:</strong> who is notified, in what order, what they receive, and how it is delivered</li>
+    <li><strong>Order matters:</strong> in an IT incident the CISO or CIO is often the first call, not the CEO, so they can brief the executive level while the team handles the crisis</li>
+    <li><strong>Out-of-band communication:</strong> encrypted messaging apps or dedicated phone lines keep internal discussions away from an attacker who may be in the primary channels</li>
+    <li><strong>External messaging:</strong> coordinated statements to customers, partners, and media maintain transparency while avoiding panic</li>
+  </ul>
+
+  <p>For a DDoS outage, the crisis team first alerts the CIO/CISO to scope the disruption, then prepares a customer statement explaining the outage, all over secure channels.</p>
+
+  <h2>threat response</h2>
+
+  <p>Threat response is the structured approach to identifying, addressing, and managing a specific threat, from detection through recovery and review. A <strong>cybersecurity incident response team (CSIRT)</strong> typically leads it with specialized tools (threat intelligence platforms, monitoring systems). It follows the four phases of <strong>NIST SP 800-61</strong>:</p>
+
+  <ol>
+    <li><strong>Preparation</strong> — put tools, policies, and trained staff in place before an incident</li>
+    <li><strong>Detection &amp; analysis</strong> — identify suspicious activity, confirm it is an incident, and assess severity and scope</li>
+    <li><strong>Containment, eradication &amp; recovery</strong> — isolate affected systems, remove the threat, then restore from clean backups/patches</li>
+    <li><strong>Post-incident activity</strong> — root cause analysis, document lessons learned, update controls and training</li>
+  </ol>
+
+  <h2>crisis management vs threat response</h2>
+
+  <table>
+    <thead>
+      <tr><th></th><th>Crisis Management</th><th>Threat Response</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>focus</td><td>communication, trust, reputation</td><td>technical containment of the threat</td></tr>
+      <tr><td>audience</td><td>stakeholders, customers, media</td><td>the affected systems and the CSIRT</td></tr>
+      <tr><td>key tools</td><td>comms plan, out-of-band channels</td><td>monitoring, threat intel, NIST 800-61</td></tr>
+      <tr><td>goal</td><td>maintain trust, manage recovery</td><td>detect, contain, eradicate, recover</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Immediate response = contain + mitigate right after detection, on two tracks: crisis management (communication) and threat response (technical).</li>
+      <li>Crisis management uses a pre-planned comms order (CISO/CIO often first, not the CEO) and out-of-band channels so an attacker in your network can't read the response.</li>
+      <li>Threat response is led by a CSIRT and follows NIST SP 800-61's four phases.</li>
+      <li>NIST SP 800-61 phases: preparation → detection &amp; analysis → containment/eradication/recovery → post-incident activity.</li>
+      <li>Out-of-band communication is the term for keeping IR comms off potentially compromised primary channels.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves keeping customers and executives informed during a breach → <strong>crisis management</strong></li>
+        <li>Scenario involves using encrypted apps so attackers can't read response comms → <strong>out-of-band communication</strong></li>
+        <li>Scenario involves a CSIRT detecting, containing, and eradicating a threat → <strong>threat response</strong></li>
+        <li>Question references the four-phase incident handling lifecycle → <strong>NIST SP 800-61</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_preparedness_exercises.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_preparedness_exercises</span></span>
+    </a>
+    <span class="counter">lesson 03 / 06</span>
+    <a class="next" href="04_event_response.html">
+      <span><span class="lbl">next</span><span class="file">04_event_response</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / immediate_response</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

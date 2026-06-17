@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attribution / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/attribution</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 05 / incident response / Attribution</span>
+  <h1 class="module-title">Attribution</h1>
+  <p class="subtitle">Working out who was behind an incident — and, when it came from inside, whether it was malice, error, or negligence.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Attribution identifies the source or threat actor responsible for an incident. A common focus is the <strong>insider threat</strong>: someone inside the organization (employee, contractor, trusted partner) who compromises systems or data, intentionally or unintentionally. Attribution gathers evidence, access logs, behavioral analytics, physical records, to confirm the threat originated internally and to determine whether it stemmed from negligence, error, or malicious intent.</p>
+  </div>
+
+  <h2>attribution and insider threats</h2>
+
+  <p>Recognizing that a threat came from <em>within</em> is critical to tailoring the response. An insider threat ranges from accidental data exposure through negligence to a deliberate, malicious attack. Attribution gathers and analyzes evidence that demonstrates internal origin and helps distinguish intent. For example, access logs can reveal suspicious patterns, files accessed outside someone's normal role or at unusual hours. A finance employee opening R&amp;D files is a red flag, and the logs become key evidence both that the activity was internal and whether it was intentional.</p>
+
+  <h2>detection methods</h2>
+
+  <dl class="def">
+    <dt>Behavioral analytics</dt>
+    <dd>Software that baselines each user's normal activity and flags deviations.
+      <span class="detail">Tools like Splunk User Behavior Analytics or Exabeam flag anomalies such as accessing sensitive files after hours or copying large volumes of data.</span>
+    </dd>
+    <dt>Activity monitoring</dt>
+    <dd>Captures keystrokes, emails, and web activity for deeper insight.
+      <span class="detail">Tools like Teramind or ActivTrak; cross-referencing these data points builds a clearer picture of harmful activity.</span>
+    </dd>
+    <dt>Physical security</dt>
+    <dd>Cameras and access-control systems log physical movements.
+      <span class="detail">Badge systems track who entered which area and when; correlating these with digital logs strengthens attribution (e.g. frequent unexplained data-center entries).</span>
+    </dd>
+  </dl>
+
+  <h2>offboarding: closing the insider gap</h2>
+
+  <p>A critical, often-overlooked control: a secure, complete <strong>offboarding</strong> process. If offboarding is incomplete, a former employee can remain an insider threat by retaining access. Promptly deactivate credentials and revoke <em>all</em> access points, VPN, cloud services, email, remote desktop, MFA tokens, and physical badge access. A thorough offboarding closes the avenues a departed employee could use to reach sensitive data, intentionally or not.</p>
+
+  <h2>intent matters</h2>
+  <p>Once an insider threat is identified, the response depends on intent: negligence and error call for training and tighter controls; confirmed malicious intent may warrant restricting access, interviews, or legal action. Either way, attribution lets the organization adjust policies and monitoring to reduce future risk.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Attribution = identifying the source/threat actor behind an incident. Insider threat = the source is inside the organization.</li>
+      <li>Insider threats can be intentional (malicious) or unintentional (negligence/error); attribution determines which.</li>
+      <li>Access logs and behavioral analytics (Splunk UBA, Exabeam) are the primary evidence; activity monitors (Teramind, ActivTrak) and physical/badge logs add more.</li>
+      <li>Incomplete offboarding is a major insider-threat gap: revoke VPN, cloud, email, remote desktop, MFA tokens, and badge access promptly.</li>
+      <li>Behavioral analytics work by baselining normal activity and flagging deviations.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves determining who caused an incident → <strong>attribution</strong></li>
+        <li>Scenario involves an employee accessing files outside their role/hours → <strong>insider threat (via access logs)</strong></li>
+        <li>Scenario involves baselining users and flagging anomalies → <strong>behavioral analytics</strong></li>
+        <li>Scenario involves a former employee still having access → <strong>offboarding failure</strong></li>
+        <li>Scenario distinguishes accidental vs deliberate insider action → <strong>determining intent</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_event_response.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_event_response</span></span>
+    </a>
+    <span class="counter">lesson 05 / 06</span>
+    <a class="next" href="06_root_cause_analysis.html">
+      <span><span class="lbl">next</span><span class="file">06_root_cause_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / attribution</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

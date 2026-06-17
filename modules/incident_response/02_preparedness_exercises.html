@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparedness Exercises / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/preparedness_exercises</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 02 / incident response / Preparedness Exercises</span>
+  <h1 class="module-title">Preparedness Exercises</h1>
+  <p class="subtitle">Rehearsing the response plan before a real incident — from low-stakes discussion to full-scale drills on the live network.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Preparedness exercises evaluate and improve readiness to handle incidents. Four types rise in intensity: <strong>tabletop</strong> (discussion only), <strong>walkthrough</strong> (hands-on practice of procedures), <strong>parallel</strong> (simulated incident in a staging environment that mirrors production), and <strong>simulation</strong> (a realistic attack run on the live production network). The dividing line that matters most: parallel runs in staging, simulation runs in production.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">type 01</span>
+      <p class="card-name">Tabletop</p>
+      <p class="card-desc">Discussion-based. Team talks through a scenario and their roles, no actions taken, no time pressure, no system interaction.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 02</span>
+      <p class="card-name">Walkthrough</p>
+      <p class="card-desc">Hands-on but still off production. Members rehearse specific procedures (comms channels, access points). Good for training new staff.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 03</span>
+      <p class="card-name">Parallel</p>
+      <p class="card-desc">Runs a simulated incident in a staging environment that mirrors production. Realistic and hands-on without touching live operations.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 04</span>
+      <p class="card-name">Simulation</p>
+      <p class="card-desc">Realistic scenario on the live production network, often red team vs blue team in real time. Highest fidelity, needs careful safeguards.</p>
+    </div>
+  </div>
+
+  <h2>the four types</h2>
+
+  <dl class="def">
+    <dt>Tabletop</dt>
+    <dd>Discussion-based session where the team talks through roles and responses for a hypothetical scenario.
+      <span class="detail">No actions, no time pressure, no interaction with the production environment. Like a fire-drill assembly where everyone discusses exits without leaving the building. Best for clarifying roles and finding gaps.</span>
+    </dd>
+    <dt>Walkthrough</dt>
+    <dd>Step-by-step review where members actively practice parts of the IR plan.
+      <span class="detail">More hands-on than a tabletop (verifying comms channels, system access, escalation routes), but still does not touch production. Useful for training and refreshing the team.</span>
+    </dd>
+    <dt>Parallel</dt>
+    <dd>A simulated incident run in a staging environment that mirrors production.
+      <span class="detail">Actions are taken, but in a parallel environment so live operations are unaffected. Like rehearsing on a duplicate stage identical to the real one.</span>
+    </dd>
+    <dt>Simulation</dt>
+    <dd>A high-intensity, realistic scenario carried out on the live production network.
+      <span class="detail">Often a red team (attackers) vs blue team (defenders) running in real time. Closest to a real incident, so it requires monitoring and safeguards to avoid harming operations.</span>
+    </dd>
+  </dl>
+
+  <h2>how often</h2>
+  <p>A reasonable cadence: <strong>walkthroughs</strong> at least quarterly, <strong>tabletops</strong> at least twice a year, and <strong>simulations</strong> annually. If a yearly simulation is too costly, rotate between a simulation and a parallel test each year.</p>
+
+  <h2>comparison</h2>
+
+  <table>
+    <thead>
+      <tr><th>type</th><th>hands-on?</th><th>environment</th><th>intensity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tabletop</td><td>no (discussion)</td><td>none</td><td>lowest</td></tr>
+      <tr><td>Walkthrough</td><td>yes (rehearse steps)</td><td>none (off production)</td><td>low</td></tr>
+      <tr><td>Parallel</td><td>yes</td><td>staging (mirrors production)</td><td>medium</td></tr>
+      <tr><td>Simulation</td><td>yes</td><td>live production</td><td>highest</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Tabletop = discussion only, no actions, no time pressure. Walkthrough = hands-on rehearsal of procedures, still not on production.</li>
+      <li>Parallel = simulated incident in a STAGING environment that mirrors production. Simulation = realistic attack on the LIVE production network.</li>
+      <li>The key parallel-vs-simulation distinction: staging vs production.</li>
+      <li>Simulations often use a red team (attack) / blue team (defend) construct in real time.</li>
+      <li>Rough cadence: walkthrough quarterly, tabletop twice a year, simulation annually (or alternate simulation/parallel).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves the team talking through roles with no systems touched → <strong>tabletop</strong></li>
+        <li>Scenario involves rehearsing specific response steps off production → <strong>walkthrough</strong></li>
+        <li>Scenario involves a hands-on drill in a staging copy of production → <strong>parallel</strong></li>
+        <li>Scenario involves a live red-team/blue-team attack on production → <strong>simulation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_incident_response.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_incident_response</span></span>
+    </a>
+    <span class="counter">lesson 02 / 06</span>
+    <a class="next" href="03_immediate_response.html">
+      <span><span class="lbl">next</span><span class="file">03_immediate_response</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / preparedness_exercises</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

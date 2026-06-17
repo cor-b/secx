@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Root Cause Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/root_cause_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 06 / incident response / Root Cause Analysis</span>
+  <h1 class="module-title">Root Cause Analysis</h1>
+  <p class="subtitle">Going past the symptom to the real reason an incident happened — then feeding that lesson back so it can't happen the same way twice.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Root cause analysis (RCA) identifies the underlying reason for an incident so it can be prevented from recurring. It traces the issue back to its origin, technical failure, vulnerability, misconfiguration, unpatched software, or human/procedural error, rather than just fixing the symptom. The signature technique is <strong>asking "why" repeatedly</strong>, and the findings feed back into the organization's planning. RCA is about facts and prevention, never about assigning blame.</p>
+  </div>
+
+  <h2>beyond the symptom</h2>
+
+  <p>RCA goes deeper than patching the visible problem. A breach might look like it was caused by one weak password, but RCA asks how and why that weak password existed in the first place, surfacing the true root, whether a technical vulnerability, a policy gap, or a training need. Crucially, RCA is not about blaming individuals or departments; it is about uncovering facts and building a safer environment.</p>
+
+  <h2>the "5 whys"</h2>
+
+  <p>The core technique is to keep asking <strong>why</strong> for each part of the incident, breaking down the sequence of events until there are no more whys to ask, at which point the root cause has usually surfaced. For a breach involving unauthorized access, RCA might ask why access was possible → questions about access controls → questions about monitoring and alerts → revealing a missing layer of security training or a misconfiguration. Repeated "why" moves the team past surface symptoms to the true cause.</p>
+
+  <h2>the feedback loop</h2>
+
+  <p>The most important outcome of RCA is that findings feed back into planning, a loop that lets the organization adapt based on real incidents:</p>
+
+  <ul>
+    <li>If RCA finds a training gap → run targeted training or update recurring training</li>
+    <li>If RCA finds software vulnerabilities → prioritize updates and patches</li>
+    <li>Findings improve controls, update policies, and shape future planning, reducing the chance the same issue reappears</li>
+  </ul>
+
+  <h2>worked example</h2>
+
+  <p>A phishing attack compromises sensitive data. At first it looks like simple user error (someone clicked a link). Asking "why" repeatedly reveals several underlying factors: insufficient email filtering, inadequate phishing-awareness training, and security policies that are not regularly reviewed or communicated. Addressing those root causes, better filtering, more training, a real policy-review process, prevents recurrence in a way that "don't click links" never would.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>RCA finds the underlying cause to prevent recurrence, not just the symptom.</li>
+      <li>The signature method is the "5 whys": ask why repeatedly until the true root is reached.</li>
+      <li>RCA findings feed back into planning (training, patching, policy) — a continuous improvement loop.</li>
+      <li>RCA is blameless: it's about facts and prevention, not punishing individuals or departments.</li>
+      <li>It's the post-incident step that closes the loop (aligns with NIST SP 800-61 post-incident activity).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves finding the underlying reason an incident occurred → <strong>root cause analysis</strong></li>
+        <li>Scenario involves repeatedly asking why to trace a problem to its origin → <strong>the 5 whys</strong></li>
+        <li>Scenario involves feeding incident lessons into future training/patching/policy → <strong>RCA feedback loop</strong></li>
+        <li>Scenario stresses fixing the cause rather than the symptom → <strong>root cause analysis</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_attribution.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_attribution</span></span>
+    </a>
+    <span class="counter">lesson 06 / 06</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">incident_response/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / root_cause_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

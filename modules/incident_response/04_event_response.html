@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Response / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/incident_response/event_response</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /incident_response</a>
+
+  <span class="module-tag">lesson 04 / incident response / Event Response</span>
+  <h1 class="module-title">Event Response</h1>
+  <p class="subtitle">After containment: piecing together what happened, restoring what was lost, and meeting the legal obligations that follow a breach.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Event response is the work done to handle, investigate, and mitigate an incident after it has been detected and contained. Three concepts: <strong>timeline reconstruction</strong> (rebuilding the sequence of events from logs), <strong>data recovery and extraction</strong> (restoring lost data and pulling evidence), and <strong>breach response</strong> (mitigating damage, securing systems, and meeting legal/regulatory duties like notification).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Timeline Reconstruction</p>
+      <p class="card-desc">Builds a chronological account from logs to find the attack path and exploited vulnerabilities. SIEM + forensic tools; watch for log tampering.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Recovery &amp; Extraction</p>
+      <p class="card-desc">Restores lost/compromised data and extracts evidence (compromised credentials, exfiltrated files) for forensic analysis.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Breach Response</p>
+      <p class="card-desc">Mitigates damage, secures systems, and fulfills legal duties: stakeholder/regulator notification under GDPR/CCPA.</p>
+    </div>
+  </div>
+
+  <h2>timeline reconstruction</h2>
+
+  <p>Timeline reconstruction gathers data from logs, alerts, and monitoring tools into a chronological account of the attack, revealing the attack path, exploited vulnerabilities, and affected systems (NIST SP 800-61 guides this). Key tools: <strong>SIEM</strong> systems to centralize logs, and forensic tools like <strong>Autopsy</strong> or <strong>EnCase</strong> for device-level detail. Investigators look for anomalies, unusual login times, high-frequency access to sensitive files, atypical admin use.</p>
+
+  <p>Attackers may tamper with logs (false timestamps, deleted entries), so reconstruction often <strong>correlates logs across independent sources</strong> (network, application, endpoint). If a critical action appears in one log but not another that should record it, that suggests tampering. <strong>Log gaps</strong> (unexplained breaks with no entries) hint at deletions. Tools like <strong>Splunk</strong> and <strong>LogRhythm</strong> automate the cross-comparison.</p>
+
+  <h2>data recovery and extraction</h2>
+
+  <p>This restores compromised or lost data and extracts useful evidence. Guidance comes from NIST SP 800-61, NIST SP 800-184 (Cybersecurity Event Recovery), and the CISA Incident Response &amp; Recovery Playbook. Tools include <strong>Disk Drill</strong> and <strong>Stellar Data Recovery</strong> for damaged/encrypted drives, and <strong>Cellebrite</strong> for mobile devices. Recovery starts by securing backup copies before restoring; extraction isolates key data (compromised credentials, exfiltrated files) to give forensics clear targets and build an evidence trail.</p>
+
+  <h2>breach response</h2>
+
+  <p>Breach response covers mitigating damage, securing compromised systems, and fulfilling legal/regulatory obligations. Frameworks: NIST SP 800-61 and ISO 27035 (Information Security Incident Management). Tools: <strong>EDR</strong> like CrowdStrike or Carbon Black to isolate infected endpoints, and vulnerability scanners like <strong>Nessus</strong> to find the weakness that allowed the breach. The team contains and removes the attacker, resets credentials, and ensures secure backups, then <strong>notifies stakeholders and regulators</strong>, which is often legally required under GDPR or CCPA, to maintain transparency, ensure compliance, and reduce penalties.</p>
+
+  <h2>the three concepts</h2>
+
+  <table>
+    <thead>
+      <tr><th>concept</th><th>purpose</th><th>tools / frameworks</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Timeline reconstruction</td><td>rebuild the attack sequence</td><td>SIEM, Autopsy, EnCase, Splunk, LogRhythm</td></tr>
+      <tr><td>Data recovery &amp; extraction</td><td>restore data, pull evidence</td><td>Disk Drill, Stellar, Cellebrite; NIST 800-184, CISA</td></tr>
+      <tr><td>Breach response</td><td>mitigate, secure, notify</td><td>EDR (CrowdStrike/Carbon Black), Nessus; NIST 800-61, ISO 27035, GDPR/CCPA</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Event response happens AFTER detection and containment: reconstruct, recover, respond to the breach.</li>
+      <li>Timeline reconstruction correlates logs across independent sources to spot tampering; log gaps suggest deletions. SIEM + Autopsy/EnCase.</li>
+      <li>Data recovery secures backups first, then restores; extraction pulls evidence. Cellebrite = mobile device extraction.</li>
+      <li>Breach response includes legally-required notification under GDPR/CCPA. ISO 27035 and NIST SP 800-61 are the frameworks.</li>
+      <li>EDR (CrowdStrike, Carbon Black) isolates infected endpoints during breach response.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario involves building a chronological account of the attack from logs → <strong>timeline reconstruction</strong></li>
+        <li>Scenario involves detecting altered logs by comparing multiple sources → <strong>log correlation / tamper detection</strong></li>
+        <li>Scenario involves restoring lost files and pulling evidence from a phone → <strong>data recovery &amp; extraction (Cellebrite)</strong></li>
+        <li>Scenario involves notifying regulators within a required timeframe after a breach → <strong>breach response (GDPR/CCPA)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_immediate_response.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_immediate_response</span></span>
+    </a>
+    <span class="counter">lesson 04 / 06</span>
+    <a class="next" href="05_attribution.html">
+      <span><span class="lbl">next</span><span class="file">05_attribution</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>incident_response / event_response</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
