@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulnerabilities and Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 01 / vulnerabilities and attacks / Overview</span>
+  <h1 class="module-title">Vulnerabilities and Attacks</h1>
+  <p class="subtitle">How systems get broken: flaws in how software is written, configured, and access-managed, and the attacks that exploit them, from injected code to memory manipulation to physical hardware.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 3 and 4, Objectives 3.4 (implement hardware security technologies/techniques) and 4.2 (analyze vulnerabilities and attacks, recommend solutions to reduce the attack surface). Vulnerabilities arise from how software is built, configured, and access-managed; attackers inject code, manipulate memory, or target hardware. The section covers injection, memory-related, configuration, and authorization vulnerabilities, plus malicious code, hardware/firmware, memory-based, and electromagnetic attacks.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Vulnerabilities</p>
+      <p class="card-desc">Injection, memory-related, configuration, and authorization weaknesses, where flaws come from.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Software Attacks</p>
+      <p class="card-desc">Malicious code (implants, poisoning) and memory-based attacks (buffer overflow, shimming).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Physical Attacks</p>
+      <p class="card-desc">Hardware and firmware attacks (BIOS/UEFI, USB) and electromagnetic attacks (EMI, EMP).</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Injection Vulnerabilities</td><td>command, code, SQL, XSS, CSRF, SSRF, deserialization</td></tr>
+      <tr><td>03</td><td>Memory-related Vulnerabilities</td><td>deprecated functions, overflows, race conditions, TOCTOU</td></tr>
+      <tr><td>04</td><td>Configuration Vulnerabilities</td><td>directory misconfig, unsecure config, embedded secrets, EOL software</td></tr>
+      <tr><td>05</td><td>Authorization Vulnerabilities</td><td>confused deputy, weak ciphers, vulnerable third parties</td></tr>
+      <tr><td>06</td><td>Malicious Code Attacks</td><td>implants, poisoning</td></tr>
+      <tr><td>07</td><td>Hardware &amp; Firmware Attacks</td><td>firmware tampering, BIOS/UEFI, USB-based</td></tr>
+      <tr><td>08</td><td>Memory-based Attacks</td><td>memory attacks (buffer overflow, null pointer), shimming</td></tr>
+      <tr><td>09</td><td>Electromagnetic Attacks</td><td>EMI (disrupt), EMP (destroy)</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">vulnerabilities_and_attacks/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 09</span>
+    <a class="next" href="02_injection_vulnerabilities.html">
+      <span><span class="lbl">next</span><span class="file">02_injection_vulnerabilities</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

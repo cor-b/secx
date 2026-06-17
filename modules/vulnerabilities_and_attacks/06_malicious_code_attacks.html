@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malicious Code Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/malicious_code_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 06 / vulnerabilities and attacks / Malicious Code Attacks</span>
+  <h1 class="module-title">Malicious Code Attacks</h1>
+  <p class="subtitle">Harmful code inserted to disrupt, steal, or manipulate: a hidden persistent backdoor (implant), or corrupting the data a system depends on (poisoning).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Malicious code attacks insert harmful software or code into a system to disrupt, steal, or manipulate data and operations. Two concepts: <strong>implants</strong> (stealthy persistent backdoors in software/firmware/hardware) and <strong>poisoning</strong> (tampering with the data or environment a system relies on).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">Implants</p>
+      <p class="card-desc">A persistent, stealthy backdoor (software/firmware/hardware) giving ongoing remote access. Common in APT TTPs; can hide undetected for long periods.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">Poisoning</p>
+      <p class="card-desc">Tampering with data/environment to alter behavior (corrupting ML training data, malicious software updates). Degrades accuracy subtly.</p>
+    </div>
+  </div>
+
+  <h2>implants</h2>
+
+  <p>An implant is a persistent backdoor or unauthorized code inserted into a system for continuous, stealthy access, as software, firmware, or hardware hiding within the system. Implants are dangerous because they may remain undetected for long periods, giving attackers repeated access or control. They're common in <strong>advanced persistent threat (APT)</strong> tactics. Example: a malicious script hidden in a legitimate application that collects environment variables (including credentials) and exfiltrates them every time a function runs, hard to detect because it's embedded in the app's flow. Mitigate with rigorous code reviews (especially external code), endpoint monitoring (<strong>OSSEC</strong>, <strong>CrowdStrike</strong>, <strong>Carbon Black</strong>), and regular integrity checks on critical files.</p>
+
+  <h2>poisoning</h2>
+
+  <p>Poisoning manipulates the data or environment a system relies on to alter its behavior or produce incorrect outcomes, often targeting data-driven systems like machine-learning models or databases. Example: an attacker injects mislabeled spam emails (labeled <strong>ham</strong>, i.e. legitimate) into a spam filter's training set, degrading its accuracy so spam reaches inboxes. Such subtle manipulations accumulate into significant vulnerabilities. Mitigate by controlling access to training data (trusted sources only), employing data validation to detect abnormal patterns, monitoring model performance for sudden accuracy drops, and retraining with clean, validated data.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Implant = a persistent, stealthy backdoor (software/firmware/hardware) for ongoing access; hallmark of APTs.</li>
+      <li>Poisoning = tampering with data/environment (e.g. corrupting ML training data, malicious updates) to alter behavior.</li>
+      <li>Implants persist and hide; poisoning degrades accuracy/integrity subtly over time.</li>
+      <li>Detect implants with endpoint monitoring (OSSEC, CrowdStrike, Carbon Black) and integrity checks.</li>
+      <li>Defend poisoning by controlling training-data access, validation, and performance monitoring.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario hides a persistent backdoor for repeated access → <strong>implant</strong></li>
+        <li>Scenario corrupts an ML model's training data → <strong>poisoning</strong></li>
+        <li>Scenario injects malicious code into a software update → <strong>poisoning</strong></li>
+        <li>Scenario embeds exfiltration in a legitimate app's flow → <strong>implant</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_authorization_vulnerabilities.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_authorization_vulnerabilities</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_hardware_and_firmware_attacks.html">
+      <span><span class="lbl">next</span><span class="file">07_hardware_and_firmware_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / malicious_code_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware and Firmware Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/hardware_and_firmware_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 07 / vulnerabilities and attacks / Hardware &amp; Firmware Attacks</span>
+  <h1 class="module-title">Hardware and Firmware Attacks</h1>
+  <p class="subtitle">Attacks below the operating system, where antivirus can't see. Tampering with device firmware, hijacking the boot process, or smuggling code in through a USB port.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Hardware and firmware attacks exploit vulnerabilities in physical components or embedded software, granting deep, hard-to-detect access at a fundamental machine level. Three TTPs: <strong>firmware tampering</strong> (modifying embedded device software), <strong>BIOS/UEFI attacks</strong> (targeting boot firmware), and <strong>USB-based attacks</strong> (malicious USB devices delivering code).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">Firmware Tampering</p>
+      <p class="card-desc">Modify embedded firmware (hard drives, NICs) stored in EEPROM/flash. Persistent backdoor antivirus can't scan. Fix: signed updates, integrity checks.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">BIOS/UEFI Attacks</p>
+      <p class="card-desc">Target boot firmware, control the system before the OS loads, persists through reboots/reinstalls. Fix: Secure Boot, firmware patches.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 03</span>
+      <p class="card-name">USB-based Attacks</p>
+      <p class="card-desc">Malicious USB (Rubber Ducky, BadUSB) delivers code via direct physical connection, bypassing antivirus/firewalls. Fix: USB policy, disable autorun.</p>
+    </div>
+  </div>
+
+  <h2>firmware tampering</h2>
+
+  <p>Firmware is the low-level software running on hardware (hard drives, network cards, smart devices). Firmware tampering modifies it to control or alter device behavior, granting <strong>persistent control</strong> that's hard to detect because antivirus doesn't scan the hardware memory (<strong>EEPROM</strong>, flash) where firmware lives. Example: modifying a network card's firmware to intercept data packets. Tampered firmware acts as a low-level backdoor. Prevent with firmware updates from verified sources only, limited physical access, firmware integrity checks, and <strong>cryptographic signatures</strong> on updates.</p>
+
+  <h2>BIOS and UEFI attacks</h2>
+
+  <p>The <strong>BIOS</strong> (basic input/output system) or <strong>UEFI</strong> (unified extensible firmware interface) controls the boot process, initializing and loading the OS. Attacks here are especially dangerous because they take control <strong>before the OS loads</strong> and persist through reboots and OS reinstalls. Injecting malicious code into BIOS/UEFI firmware gives stealthy control to intercept data or disable security as soon as the device powers on. Prevent with <strong>Secure Boot</strong> (only signed/trusted firmware loads), regular BIOS/UEFI patches from manufacturers, and tamper-evident hardware/physical security.</p>
+
+  <h2>USB-based attacks</h2>
+
+  <p>USB-based attacks exploit the physical USB connection to introduce malicious code directly into hardware, bypassing antivirus, firewalls, and network IDS because they leverage direct physical access. Examples: a <strong>Rubber Ducky</strong> or <strong>BadUSB</strong>, devices that look like normal USB drives but contain hidden scripts executing on connection, used to install keyloggers, modify settings, or download malware. Prevent by prohibiting unauthorized USB devices, disabling autorun, using USB security software to authenticate devices, and in high-security environments using data-only USB cables and physically blocking unused ports.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>These attacks operate below the OS, antivirus often can't detect them.</li>
+      <li>Firmware tampering modifies device firmware (EEPROM/flash) for a persistent backdoor; fix with signed updates + integrity checks.</li>
+      <li>BIOS/UEFI attacks run before the OS loads and survive reinstalls; fix with Secure Boot and firmware patches.</li>
+      <li>USB-based attacks (Rubber Ducky, BadUSB) use direct physical access to bypass software defenses; disable autorun, restrict USB.</li>
+      <li>Secure Boot ensures only signed/trusted firmware loads at boot.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario modifies a NIC's firmware to sniff packets → <strong>firmware tampering</strong></li>
+        <li>Scenario controls a system before the OS loads → <strong>BIOS/UEFI attack</strong></li>
+        <li>Scenario uses a disguised USB to run hidden scripts → <strong>USB-based attack (BadUSB)</strong></li>
+        <li>Scenario enables Secure Boot to block untrusted firmware → <strong>BIOS/UEFI defense</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_malicious_code_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_malicious_code_attacks</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_memory_based_attacks.html">
+      <span><span class="lbl">next</span><span class="file">08_memory_based_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / hardware_and_firmware_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

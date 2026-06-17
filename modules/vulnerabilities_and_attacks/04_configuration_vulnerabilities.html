@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuration Vulnerabilities / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/configuration_vulnerabilities</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 04 / vulnerabilities and attacks / Configuration Vulnerabilities</span>
+  <h1 class="module-title">Configuration Vulnerabilities</h1>
+  <p class="subtitle">Weaknesses you create yourself: over-permissioned directories, insecure defaults, secrets baked into code, and software too old to be safe.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Configuration vulnerabilities occur when systems, apps, or networks are improperly configured. Five types: <strong>directory service misconfiguration</strong>, <strong>unsecure configuration</strong>, <strong>embedded secrets</strong>, <strong>outdated/unpatched software and libraries</strong>, and <strong>end-of-life software</strong>.</p>
+  </div>
+
+  <h2>directory service misconfiguration</h2>
+
+  <p>Improper setup of directory services like <strong>Active Directory</strong>, typically over-broad permissions or poor oversight, lets lower-privileged users reach sensitive/admin resources, enabling <strong>privilege escalation</strong>. Attackers use tools like <strong>BloodHound</strong> to map nested group memberships, trust paths, and permission inheritance, revealing hidden escalation paths. Mitigate with least-privilege access, routine directory audits, and monitoring for unusual access.</p>
+
+  <h2>unsecure configuration</h2>
+
+  <p>Improperly set parameters, often from default settings prioritizing usability over security (open services, management ports, weak default SSH credentials). The <strong>2019 Capital One breach</strong> is the example: misconfigured AWS settings and insufficiently defined firewall rules (a web application firewall) let an attacker access ~100 million customer records. Mitigate with configuration hardening, regular cloud-security audits, network isolation, and layered access controls.</p>
+
+  <h2>embedded secrets</h2>
+
+  <p>Hard-coded passwords, API keys, or credentials stored directly in source code or config files, easily accessible once the codebase is reached. The <strong>2021 Twilio</strong> incident is the example: developers pushed API keys to a public GitHub repo, and attackers used them to access infrastructure. Mitigate with secrets-management tools (<strong>HashiCorp Vault</strong>, <strong>AWS Secrets Manager</strong>) and automated repository scanning for secrets.</p>
+
+  <h2>outdated/unpatched and end-of-life software</h2>
+
+  <dl class="def">
+    <dt>Outdated/unpatched software and libraries</dt>
+    <dd>Contain known vulnerabilities attackers scan for with automated tools. Example: a 2021 file-transfer-appliance breach (Accellion-style) exposed millions of records at multiple clients. Mitigate with vulnerability management and automated patch management.</dd>
+    <dt>End-of-life (EOL) software</dt>
+    <dd>No longer receives vendor security updates, so new vulnerabilities stay unpatched (e.g. Windows 10 reaching EOL Oct 2025). Can also breach compliance (HIPAA, PCI DSS). Mitigate by planning timely migration and, for legacy systems that must remain, isolation, restricted access, and compensating controls.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Directory service misconfig (AD over-permissioning) enables privilege escalation; attackers map it with BloodHound.</li>
+      <li>Unsecure configuration = insecure defaults/open ports/weak credentials; Capital One 2019 is the cloud-misconfig example.</li>
+      <li>Embedded secrets = hard-coded credentials/API keys (Twilio 2021); fix with Vault / AWS Secrets Manager.</li>
+      <li>Outdated/unpatched software has known CVEs; EOL software gets no patches at all (Windows 10 EOL Oct 2025).</li>
+      <li>For EOL systems that can't be replaced: isolate, restrict access, apply compensating controls.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario maps AD escalation paths with a tool → <strong>directory service misconfiguration (BloodHound)</strong></li>
+        <li>Scenario leaves default/open settings exposed → <strong>unsecure configuration</strong></li>
+        <li>Scenario finds an API key in source code → <strong>embedded secrets</strong></li>
+        <li>Scenario runs software the vendor no longer patches → <strong>end-of-life software</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_memory_related_vulnerabilities.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_memory_related_vulnerabilities</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_authorization_vulnerabilities.html">
+      <span><span class="lbl">next</span><span class="file">05_authorization_vulnerabilities</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / configuration_vulnerabilities</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

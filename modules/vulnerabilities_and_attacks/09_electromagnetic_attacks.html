@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electromagnetic Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/electromagnetic_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 09 / vulnerabilities and attacks / Electromagnetic Attacks</span>
+  <h1 class="module-title">Electromagnetic Attacks</h1>
+  <p class="subtitle">Attacking electronics with energy itself: interference that disrupts operation, and pulses that destroy circuits outright.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Electromagnetic attacks use electromagnetic energy to disrupt, damage, or manipulate hardware and data. Two types: <strong>EMI (electromagnetic interference)</strong> attacks (emit signals that interfere with normal device operation, disrupt) and <strong>EMP (electromagnetic pulse)</strong> attacks (a powerful energy burst that permanently damages circuits, destroy).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">EMI</p>
+      <p class="card-desc">Deliberate electromagnetic signals that interfere with device operation: glitches, data errors, faults. Goal: disrupt. No physical access needed. Shield with copper/aluminum.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">EMP</p>
+      <p class="card-desc">A sudden powerful energy burst causing voltage surges that permanently damage circuits. Goal: destroy/disable (DoS). Protect with Faraday cages.</p>
+    </div>
+  </div>
+
+  <h2>electromagnetic interference (EMI)</h2>
+
+  <p>EMI attacks generate electromagnetic signals to disrupt or influence electronic devices, introducing external noise that interferes with circuits, causing temporary glitches, data errors, or induced faults. They're dangerous because they need no physical access or close proximity (like trying to be heard in a room of loud overlapping voices, the interference drowns out the signal). Examples: disrupting a medical device (pacemaker, insulin pump) or inducing CPU/memory faults causing corruption or crashes. Protect by <strong>shielding</strong> devices with copper/aluminum enclosures, using shielded rooms/zones, and testing EMI resilience against standards (e.g. FCC guidelines).</p>
+
+  <h2>electromagnetic pulse (EMP)</h2>
+
+  <p>An EMP is a sudden, powerful burst of electromagnetic energy causing voltage surges that overwhelm and <strong>permanently damage or destroy</strong> electronic circuits, brief and intense (like an electronic tidal wave). Unlike EMI (which disrupts operation), EMP aims to completely incapacitate devices, usable as a form of denial of service. Example: disabling a building's network infrastructure (servers, routers) with a high-energy EMP device, burning out components, especially damaging in critical infrastructure (hospitals, power plants). Protect with <strong>Faraday cages</strong> (conductive enclosures blocking/absorbing pulses), surge protectors and power conditioning, and EMP protection standards (e.g. MIL-STD-188-125).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>EMI = interference that disrupts operation (glitches, data errors); EMP = a powerful burst that destroys circuits.</li>
+      <li>Key distinction: EMI disrupts, EMP disables/destroys (often used as DoS).</li>
+      <li>EMI needs no physical access or proximity.</li>
+      <li>Defense: shielding (copper/aluminum) and shielded rooms for EMI; Faraday cages and surge protection for EMP.</li>
+      <li>Standards: FCC guidelines (EMI), MIL-STD-188-125 (EMP).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario causes glitches/data errors without destroying devices → <strong>EMI</strong></li>
+        <li>Scenario permanently burns out circuits with an energy burst → <strong>EMP</strong></li>
+        <li>Scenario protects critical systems with a conductive enclosure → <strong>Faraday cage (EMP)</strong></li>
+        <li>Scenario shields a device with a copper enclosure → <strong>EMI mitigation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_memory_based_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_memory_based_attacks</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">vulnerabilities_and_attacks/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / electromagnetic_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

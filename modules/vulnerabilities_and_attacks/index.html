@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vulnerabilities_and_attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p { font-family: var(--font-sans); }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .section-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.section-title { font-size: 42px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 620px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .prompt { margin: 0 0 20px; font-size: 13px; color: var(--ink-dim); padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .prompt .user { color: var(--cyan); }
+  .prompt .path { color: var(--violet); }
+  .prompt .cmd { color: var(--ink); }
+  .ls-list { list-style: none; margin: 0; padding: 0; }
+  .ls-item {
+    display: grid;
+    grid-template-columns: 90px 80px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s ease, border-color 0.2s ease;
+  }
+  .ls-item:hover { padding-left: 12px; border-bottom-color: var(--cyan); }
+  .ls-item:hover .filename { color: var(--cyan); }
+  .ls-item:hover .ls-arrow { color: var(--magenta); transform: translateX(4px); }
+  .perms { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .lesson-tag { color: var(--violet); font-size: 11px; letter-spacing: 0.06em; }
+  .filename-wrap { min-width: 0; }
+  .filename { color: var(--ink); font-size: 15px; font-weight: 500; display: block; transition: color 0.2s ease; }
+  .filename .ext { color: var(--magenta); }
+  .desc { display: block; color: var(--ink-dim); font-size: 13px; margin-top: 6px; line-height: 1.55; }
+  .ls-arrow { color: var(--ink-faint); font-size: 14px; transition: all 0.2s ease; }
+  .status-line { margin-top: 22px; padding-top: 16px; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .status-line .val { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.section-title { font-size: 32px; }
+    .ls-item { grid-template-columns: 70px 1fr auto; gap: 12px; }
+    .ls-item .lesson-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks</span>
+  </div>
+
+  <a class="back-link" href="../../index.html"><span class="arrow">←</span>back to /securityx</a>
+
+  <span class="section-tag">securityx / vulnerabilities and attacks</span>
+  <h1 class="section-title">Vulnerabilities and Attacks</h1>
+  <p class="subtitle">How systems get broken: injection, memory, configuration, and authorization vulnerabilities, plus malicious code, hardware/firmware, memory-based, and electromagnetic attacks.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 3 &amp; 4 <strong>OBJ 3.4 / OBJ 4.2</strong>: implement hardware security and analyze vulnerabilities/attacks to reduce the attack surface. Topics span injection vulnerabilities (command/code/SQL/XSS/CSRF/SSRF/deserialization), memory-related vulnerabilities (overflows, race conditions, TOCTOU), configuration vulnerabilities (directory misconfig, embedded secrets, EOL software), authorization vulnerabilities (confused deputy, weak ciphers, third parties), malicious code attacks (implants, poisoning), hardware/firmware attacks (BIOS/UEFI, USB), memory-based attacks (buffer overflow, shimming), and electromagnetic attacks (EMI, EMP).</p>
+  </div>
+
+  <div class="prompt">
+    <span class="user">cor</span>:<span class="path">~/securityx/vulnerabilities_and_attacks</span>$ <span class="cmd">ls lessons/</span>
+  </div>
+
+  <ul class="ls-list">
+
+    <li>
+      <a class="ls-item" href="01_vulnerabilities_and_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 01</span>
+        <span class="filename-wrap">
+          <span class="filename">vulnerabilities_and_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">Overview: the nine topics, from injection vulnerabilities to electromagnetic attacks</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="02_injection_vulnerabilities.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 02</span>
+        <span class="filename-wrap">
+          <span class="filename">injection_vulnerabilities<span class="ext">.lesson</span></span>
+          <span class="desc">Command vs code injection, SQL injection, XSS (reflected/stored/DOM), CSRF, SSRF, deserialization</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="03_memory_related_vulnerabilities.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 03</span>
+        <span class="filename-wrap">
+          <span class="filename">memory_related_vulnerabilities<span class="ext">.lesson</span></span>
+          <span class="desc">Deprecated functions, unsafe memory (ASLR/DEP), buffer/integer overflow, race conditions (Dirty COW), TOCTOU</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="04_configuration_vulnerabilities.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 04</span>
+        <span class="filename-wrap">
+          <span class="filename">configuration_vulnerabilities<span class="ext">.lesson</span></span>
+          <span class="desc">Directory misconfig (BloodHound), unsecure config (Capital One), embedded secrets (Twilio), outdated/unpatched, EOL software</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="05_authorization_vulnerabilities.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 05</span>
+        <span class="filename-wrap">
+          <span class="filename">authorization_vulnerabilities<span class="ext">.lesson</span></span>
+          <span class="desc">Confused deputy, weak ciphers (MD5/SHA1/DES/RC4 vs AES-256/SHA-256), vulnerable third parties</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="06_malicious_code_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 06</span>
+        <span class="filename-wrap">
+          <span class="filename">malicious_code_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">Implants (persistent backdoor, APT), poisoning (corrupt training data, malicious updates)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="07_hardware_and_firmware_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 07</span>
+        <span class="filename-wrap">
+          <span class="filename">hardware_and_firmware_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">Firmware tampering (EEPROM/flash), BIOS/UEFI attacks (Secure Boot), USB-based (Rubber Ducky, BadUSB)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="08_memory_based_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 08</span>
+        <span class="filename-wrap">
+          <span class="filename">memory_based_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">Memory attacks (buffer overflow, null pointer dereference), shimming (API hooking, reflective DLL injection)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="09_electromagnetic_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 09</span>
+        <span class="filename-wrap">
+          <span class="filename">electromagnetic_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">EMI (interference, disrupt, shielding) vs EMP (pulse, destroy, Faraday cage)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="status-line">
+    total <span class="val">9 lessons</span><span class="sep" style="color:var(--rule);margin:0 10px">·</span><span style="color:var(--ink-dim)">complete</span>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / eof</span>
+  </div>
+
+</div>
+
+</body>
+</html>

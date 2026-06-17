@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory-related Vulnerabilities / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/memory_related_vulnerabilities</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 03 / vulnerabilities and attacks / Memory-related Vulnerabilities</span>
+  <h1 class="module-title">Memory-related Vulnerabilities</h1>
+  <p class="subtitle">Flaws in how an app handles memory: outdated functions, sloppy allocation, overflowing buffers, and timing races, all of which can let attackers run code or crash a system.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Memory-related vulnerabilities are flaws in how an application handles memory, letting attackers execute code, crash systems, or leak data. Five concepts: <strong>deprecated functions</strong>, <strong>unsafe memory utilization</strong>, <strong>overflows</strong>, <strong>race conditions</strong>, and <strong>time-of-check to time-of-use (TOCTOU)</strong>.</p>
+  </div>
+
+  <h2>deprecated functions and unsafe memory</h2>
+
+  <dl class="def">
+    <dt>Deprecated functions</dt>
+    <dd>Older, insecure functions still in use that lack modern safety features. In C, <code>gets()</code> has no buffer-size check (overflow risk); the modern <code>fgets()</code> lets you specify a buffer size.</dd>
+    <dt>Unsafe memory utilization</dt>
+    <dd>Failing to manage memory correctly, causing buffer overflows or <strong>memory leaks</strong> (continuously allocating without releasing, eventually exhausting memory). Defend with memory checks, input validation, and protections like <strong>ASLR</strong> (randomizes memory addresses) and <strong>DEP</strong> (blocks code execution in data-only regions).</dd>
+  </dl>
+
+  <h2>overflows</h2>
+
+  <dl class="def">
+    <dt>Buffer overflow</dt>
+    <dd>Storing more data than a buffer holds, spilling into adjacent memory (like overfilling a cup). Attackers overwrite the stack's <strong>return address</strong> to point to malicious code, <strong>stack smashing</strong>, often using a <strong>NOP slide</strong> (no-operation instructions that "slide" execution into their code).</dd>
+    <dt>Integer overflow</dt>
+    <dd>A math result exceeds a variable's storage capacity, wrapping around (e.g. a positive value becoming negative). Can alter buffer boundaries and enable buffer overflows. Prevent with boundary checks and suitable variable sizes.</dd>
+  </dl>
+
+  <h2>race conditions and TOCTOU</h2>
+
+  <p>A <strong>race condition</strong> occurs when the outcome depends on the timing/order of events that don't execute as intended, often when multiple threads access shared resources without synchronization. The classic example is <strong>Dirty COW</strong> (2016), a Linux privilege-escalation flaw in the copy-on-write mechanism that turned read-only access into write access and left no log traces.</p>
+
+  <p><strong>Time-of-check to time-of-use (TOCTOU)</strong> is a specific race condition: an attacker changes a resource's state in the gap between when the system <strong>checks</strong> a condition (e.g. permissions) and when it <strong>uses</strong> the result, swapping in a sensitive file after the permission check but before access. Mitigate race conditions and TOCTOU with synchronization, <strong>locks and mutexes</strong> (mutual exclusion, so only one thread accesses a code section at a time), and database resource locking (e.g. SharePoint locking checked-out files).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Deprecated functions (C <code>gets()</code>) lack safety checks; use modern equivalents (<code>fgets()</code>).</li>
+      <li>Buffer overflow = spill into adjacent memory (stack smashing, NOP slide, overwrite return address); integer overflow = value wraps around.</li>
+      <li>ASLR randomizes memory addresses; DEP blocks execution in data regions, both defend against memory exploits.</li>
+      <li>Race condition = timing-dependent outcome (Dirty COW); TOCTOU = state changed between check and use.</li>
+      <li>Fix races/TOCTOU with locks and mutexes (mutual exclusion).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario overwrites a return address via too much input → <strong>buffer overflow (stack smashing)</strong></li>
+        <li>Scenario's value wraps from positive to negative → <strong>integer overflow</strong></li>
+        <li>Scenario swaps a file between permission check and access → <strong>TOCTOU</strong></li>
+        <li>Scenario fixes concurrent access with mutual exclusion → <strong>mutex/lock</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_injection_vulnerabilities.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_injection_vulnerabilities</span></span>
+    </a>
+    <span class="counter">lesson 03 / 09</span>
+    <a class="next" href="04_configuration_vulnerabilities.html">
+      <span><span class="lbl">next</span><span class="file">04_configuration_vulnerabilities</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / memory_related_vulnerabilities</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

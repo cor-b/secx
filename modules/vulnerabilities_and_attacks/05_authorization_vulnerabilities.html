@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authorization Vulnerabilities / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/authorization_vulnerabilities</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 05 / vulnerabilities and attacks / Authorization Vulnerabilities</span>
+  <h1 class="module-title">Authorization Vulnerabilities</h1>
+  <p class="subtitle">When access controls fail: a privileged program tricked into acting for an attacker, encryption too weak to protect data, and trusted partners turned into back doors.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Authorization vulnerabilities occur when a system improperly manages access controls, letting users or processes act beyond their permissions. Three types: <strong>confused deputy</strong> (a privileged program tricked into acting for an attacker), <strong>weak ciphers</strong> (outdated/insecure cryptographic algorithms), and <strong>vulnerable third parties</strong> (compromised external services becoming a back door).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">vuln 01</span>
+      <p class="card-name">Confused Deputy</p>
+      <p class="card-desc">A higher-privileged program (the "deputy") tricked into performing actions for an attacker, bypassing authorization. E.g. a proxy honoring a crafted request.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">vuln 02</span>
+      <p class="card-name">Weak Ciphers</p>
+      <p class="card-desc">Outdated algorithms: MD5/SHA1 (collisions), DES (short key/brute force), RC4 (predictable). Use AES-256, SHA-256, TLS.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">vuln 03</span>
+      <p class="card-name">Vulnerable Third Parties</p>
+      <p class="card-desc">A compromised external service/API/partner becomes a back door via the trust relationship. Vet vendors, limit permissions, audit.</p>
+    </div>
+  </div>
+
+  <h2>confused deputy</h2>
+
+  <p>The confused deputy vulnerability arises when an attacker exploits a higher-privileged program (the <strong>deputy</strong>) to perform actions they couldn't do themselves. The deputy has legitimate access to restricted resources; when manipulated, it executes the attacker's request without validating its origin, bypassing authorization. Example: a <strong>proxy server</strong> with high privileges that honors a crafted request for a restricted file, effectively bypassing the attacker's access checks. Prevent by validating every request against the user's <strong>original permissions</strong> at each stage (not relying on intermediaries), using tokens/certificates to verify permissions.</p>
+
+  <h2>weak ciphers</h2>
+
+  <p>Weak ciphers are outdated or insecure cryptographic algorithms that fail to protect data. Weak <strong>hashing</strong>: <strong>MD5</strong> and <strong>SHA-1</strong> (susceptible to collision attacks). Weak <strong>encryption</strong>: <strong>DES</strong> (short 56-bit key, brute-forceable) and <strong>RC4</strong> (structural flaws, predictable patterns). Example: a legacy banking app using DES, an attacker with the encrypted data uses cloud power and tools like <strong>Hashcat</strong>/<strong>John the Ripper</strong> to brute-force the key in hours. Fix: use strong algorithms (<strong>AES-256</strong> encryption, <strong>SHA-256</strong> hashing), secure transport (up-to-date <strong>TLS</strong>), and regular crypto audits.</p>
+
+  <h2>vulnerable third parties</h2>
+
+  <p>When an app relies on external services, APIs, or partners with granted permissions, a compromised third party becomes a <strong>back door</strong> via the trust relationship. Example: a compromised third-party <strong>payment processor</strong> lets attackers intercept/manipulate transaction data, redirect payments, steal card info, or inject malicious code. Mitigate by rigorously evaluating partners' security before integration, regular security audits and vendor due diligence, limiting access permissions per integration, using secure APIs with restricted permissions, and continuous compliance monitoring.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Confused deputy = a privileged program tricked into acting for an attacker (bypasses authorization); validate original permissions at each stage.</li>
+      <li>Weak hashing: MD5, SHA-1 (collisions). Weak encryption: DES (short key), RC4 (predictable). Replace with SHA-256, AES-256.</li>
+      <li>Brute-force tools: Hashcat, John the Ripper.</li>
+      <li>Vulnerable third parties become back doors via trust; vet vendors and limit permissions.</li>
+      <li>The common thread: trust extended without sufficient validation.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario tricks a privileged proxy into fetching a restricted file → <strong>confused deputy</strong></li>
+        <li>Scenario brute-forces DES-encrypted data → <strong>weak ciphers</strong></li>
+        <li>Scenario breaches via a compromised payment processor → <strong>vulnerable third party</strong></li>
+        <li>Scenario finds MD5 used for hashing → <strong>weak cipher (collision risk)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_configuration_vulnerabilities.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_configuration_vulnerabilities</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_malicious_code_attacks.html">
+      <span><span class="lbl">next</span><span class="file">06_malicious_code_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / authorization_vulnerabilities</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

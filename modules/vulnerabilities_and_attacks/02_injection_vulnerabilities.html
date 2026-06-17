@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Injection Vulnerabilities / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/injection_vulnerabilities</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 02 / vulnerabilities and attacks / Injection Vulnerabilities</span>
+  <h1 class="module-title">Injection Vulnerabilities</h1>
+  <p class="subtitle">When unvalidated input becomes executed instructions. Six injection flaws, distinguished by what gets injected and whose trust gets abused.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Injection vulnerabilities occur when an attacker injects malicious code through an input field or interface, leading to unintended command execution. Six types: <strong>command injection</strong>, <strong>code injection</strong>, <strong>cross-site scripting (XSS)</strong>, <strong>cross-site request forgery (CSRF)</strong>, <strong>server-side request forgery (SSRF)</strong>, and <strong>deserialization</strong>. The common root cause and fix: missing input validation and sanitization.</p>
+  </div>
+
+  <h2>command vs code injection</h2>
+
+  <dl class="def">
+    <dt>Command injection</dt>
+    <dd>Executes arbitrary commands on the host <strong>operating system</strong> via flaws in an app that passes user input into a system command. A ping field abused with <code>; rm -rf /path</code> can delete files or open a reverse shell. Highest impact (full OS access).</dd>
+    <dt>Code injection</dt>
+    <dd>Inserts malicious code executed by the <strong>application itself</strong> (in the app's language), affecting application behavior, not the OS directly. E.g. user input passed to <code>eval()</code> running <code>os.system('ls')</code>. Can bypass app-layer controls but doesn't give direct OS access.</dd>
+  </dl>
+
+  <h2>SQL injection and XSS</h2>
+
+  <p><strong>SQL injection</strong> inserts malicious SQL into a database query to alter/delete records or gain admin control over the database. <strong>Cross-site scripting (XSS)</strong> injects malicious scripts into web pages, three types:</p>
+  <ul>
+    <li><strong>Reflected XSS:</strong> script in a URL/form reflected back to the user without sanitization, delivered via phishing links; affects only the user who clicks.</li>
+    <li><strong>Stored XSS:</strong> script saved on the server (comment, post, profile) and executed for every visitor; persistent and high-reach.</li>
+    <li><strong>DOM-based XSS:</strong> script executes by modifying the client-side DOM (no server involvement); hard to detect. Avoid <code>innerHTML</code>/<code>document.write</code> with user data.</li>
+  </ul>
+  <p>Exam tip: <code>&lt;script&gt;</code> tags or JavaScript in a URL/log = XSS; anything with <code>document.</code> (e.g. <code>document.cookie</code>) = DOM-based XSS.</p>
+
+  <h2>CSRF vs SSRF and deserialization</h2>
+
+  <dl class="def">
+    <dt>Cross-site request forgery (CSRF)</dt>
+    <dd>Tricks an authenticated user into performing unintended actions, abusing the trust the <strong>server has for the client</strong> (e.g. an unwanted bank transfer). Defend with anti-CSRF tokens and re-authentication.</dd>
+    <dt>Server-side request forgery (SSRF)</dt>
+    <dd>Forces the <strong>server</strong> to make unauthorized requests to internal/external resources, abusing the trust between a front-end and back-end (e.g. retrieving cloud metadata). Defend by validating and limiting allowable destinations.</dd>
+    <dt>Deserialization</dt>
+    <dd>Injects malicious data into serialized content; when the app converts it back into an object, embedded code runs, leading to remote code execution, privilege escalation, or corruption. Avoid deserializing untrusted data; restrict allowed object types.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Command injection = OS commands (highest impact); code injection = runs in the app's language, affects the app.</li>
+      <li>XSS types: reflected (URL, one user), stored (server, all visitors), DOM-based (client-side, document.*).</li>
+      <li>CSRF abuses server-to-client trust (tricks the user); SSRF abuses front-end-to-back-end trust (tricks the server).</li>
+      <li>Deserialization runs embedded code when serialized data is rebuilt into an object.</li>
+      <li>Root cause/fix for all: missing input validation and sanitization.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario runs OS commands via a ping field → <strong>command injection</strong></li>
+        <li>Scenario stores a script that runs for every page visitor → <strong>stored XSS</strong></li>
+        <li>Scenario forces the server to fetch cloud metadata → <strong>SSRF</strong></li>
+        <li>Scenario tricks a logged-in user into an unwanted transfer → <strong>CSRF</strong></li>
+        <li>Scenario sees document.cookie in a payload → <strong>DOM-based XSS</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_vulnerabilities_and_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_vulnerabilities_and_attacks</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_memory_related_vulnerabilities.html">
+      <span><span class="lbl">next</span><span class="file">03_memory_related_vulnerabilities</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / injection_vulnerabilities</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

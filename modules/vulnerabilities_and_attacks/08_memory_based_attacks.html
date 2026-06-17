@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory-based Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/vulnerabilities_and_attacks/memory_based_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /vulnerabilities_and_attacks</a>
+
+  <span class="module-tag">lesson 08 / vulnerabilities and attacks / Memory-based Attacks</span>
+  <h1 class="module-title">Memory-based Attacks</h1>
+  <p class="subtitle">Exploiting how a program manages memory: overflowing buffers and dereferencing null pointers, or slipping a malicious layer between an app and the OS to intercept everything.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Memory-based attacks exploit a system's memory management to execute code, manipulate data, or crash systems. Two concepts: <strong>memory attacks</strong> (exploiting flaws like buffer overflows and null pointer dereferences) and <strong>shimming</strong> (placing a malicious layer between an app and the OS to intercept and manipulate system calls).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">Memory Attacks</p>
+      <p class="card-desc">Exploit memory management: buffer overflow (inject code into adjacent memory) and null pointer dereference (crash/DoS, sometimes escalation).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">Shimming</p>
+      <p class="card-desc">A malicious code layer between app and OS intercepting system calls. Low-level, stealthy; enables privilege escalation, data theft.</p>
+    </div>
+  </div>
+
+  <h2>memory attacks</h2>
+
+  <p>Memory attacks target memory management to exploit vulnerabilities and run harmful code, hard to detect because they leverage the system's own memory processes. Two examples:</p>
+  <dl class="def">
+    <dt>Buffer overflow</dt>
+    <dd>Inputting data beyond a buffer's capacity, overwriting adjacent memory; an attacker replaces legitimate code with malicious instructions that run with the vulnerable app's permissions.</dd>
+    <dt>Null pointer dereference</dt>
+    <dd>Accessing/modifying data through a pointer with a null (zero) value pointing to no valid memory. Causes a crash or abnormal termination, can be a <strong>denial of service</strong>, and combined with other flaws can escalate privileges or run code.</dd>
+  </dl>
+  <p>Mitigate with secure coding (input validation, bounds checking), memory-safe languages/libraries, and <strong>ASLR</strong> + <strong>DEP</strong> to make addresses unpredictable and block execution in data regions.</p>
+
+  <h2>shimming attacks</h2>
+
+  <p>A shimming attack places a malicious <strong>shim</strong> (a layer of code) between an application and the operating system to intercept and manipulate <strong>system calls</strong>, controlling inputs/outputs to achieve unauthorized actions. Shims are favored for <strong>persistence and stealth</strong> because they operate at a low level below standard applications, hard for antivirus to detect. Example: an attacker injects a shim that intercepts authentication system calls to capture credentials or redirect commands, using methods like <strong>API hooking</strong> or <strong>reflective DLL injection</strong>, escalating from standard user to administrator unnoticed. Prevent with code-integrity practices (only trusted/signed code loads), application allow-listing, Secure Boot, regular patching, and monitoring tools (EDR, SIEM) that detect unusual system-call or privilege activity.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Memory attacks exploit memory management: buffer overflow (overwrite adjacent memory) and null pointer dereference (crash/DoS).</li>
+      <li>Shimming inserts a malicious layer between an app and the OS to intercept system calls (API hooking, reflective DLL injection).</li>
+      <li>Shims are stealthy and persistent because they operate below normal applications.</li>
+      <li>Defenses: ASLR + DEP for memory attacks; code integrity, allow-listing, Secure Boot, EDR for shimming.</li>
+      <li>This lesson is the OBJ 3.4 attack counterpart to the OBJ 4.2 memory-related vulnerabilities.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario overflows a buffer to inject code → <strong>memory attack (buffer overflow)</strong></li>
+        <li>Scenario crashes an app via a null pointer → <strong>null pointer dereference</strong></li>
+        <li>Scenario intercepts system calls via an injected layer → <strong>shimming</strong></li>
+        <li>Scenario uses API hooking to capture credentials → <strong>shimming attack</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_hardware_and_firmware_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_hardware_and_firmware_attacks</span></span>
+    </a>
+    <span class="counter">lesson 08 / 09</span>
+    <a class="next" href="09_electromagnetic_attacks.html">
+      <span><span class="lbl">next</span><span class="file">09_electromagnetic_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>vulnerabilities_and_attacks / memory_based_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
