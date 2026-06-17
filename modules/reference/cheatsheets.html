@@ -97,6 +97,8 @@
     <li><a href="#endpoint">endpoint &amp; server</a></li>
     <li><a href="#datasec">data security</a></li>
     <li><a href="#crypto">crypto &amp; vendor</a></li>
+    <li><a href="#threatmodel">threat modeling &amp; hunting</a></li>
+    <li><a href="#monitoring">monitoring &amp; forensics</a></li>
   </ul>
 
   <h2 id="access">access &amp; identity</h2>
@@ -568,6 +570,154 @@
       <tr><td>NDA</td><td>Confidentiality obligations.</td></tr>
       <tr><td>BPA</td><td>Governs strategic partnerships (joint ventures, revenue share).</td></tr>
       <tr><td>ISA</td><td>Technical/security requirements for connecting two networks.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="threatmodel">threat modeling &amp; hunting</h2>
+
+  <h3>threat modeling frameworks</h3>
+  <table>
+    <thead><tr><th>framework</th><th>focus</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>Cyber Kill Chain</td><td>sequential attack phases</td><td>Lockheed Martin; 7 steps, break any link to stop the attack</td></tr>
+      <tr><td>MITRE ATT&amp;CK</td><td>adversary TTPs in matrices</td><td>Enterprise/Mobile/PRE/ICS; Navigator maps a threat actor to your defenses</td></tr>
+      <tr><td>Diamond Model</td><td>intrusion analysis</td><td>adversary, infrastructure, capability, victim (+ meta-features)</td></tr>
+      <tr><td>STRIDE</td><td>design-phase threat categories</td><td>Spoofing, Tampering, Repudiation, Info disclosure, DoS, Elevation of privilege</td></tr>
+      <tr><td>CAPEC</td><td>catalog of attack patterns</td><td>MITRE; prerequisites/steps/outcomes; used in the SDLC</td></tr>
+      <tr><td>OWASP</td><td>web application security</td><td>Top 10 (risk checklist), ASVS (requirements), ZAP (testing)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Cyber Kill Chain (7 stages)</h3>
+  <table>
+    <thead><tr><th>#</th><th>stage</th><th>what happens</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Reconnaissance</td><td>gather target info (OSINT, scanning)</td></tr>
+      <tr><td>2</td><td>Weaponization</td><td>build the payload/exploit</td></tr>
+      <tr><td>3</td><td>Delivery</td><td>transmit it (phishing, USB, web), first direct contact</td></tr>
+      <tr><td>4</td><td>Exploitation</td><td>payload executes, exploits a vulnerability</td></tr>
+      <tr><td>5</td><td>Installation</td><td>malware establishes persistence/backdoor</td></tr>
+      <tr><td>6</td><td>Command &amp; Control (C2)</td><td>remote channel to the compromised system</td></tr>
+      <tr><td>7</td><td>Actions on Objectives</td><td>steal data, ransomware, sabotage</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Six Ds of defense: detect, deny, disrupt, degrade, deceive, destroy.</p>
+
+  <h3>attack lifecycle TTPs</h3>
+  <table>
+    <thead><tr><th>stage</th><th>technique</th><th>detect / tool</th></tr></thead>
+    <tbody>
+      <tr><td>Initial access</td><td>phishing, stolen credentials, exploits</td><td>email filtering, MFA, SIEM</td></tr>
+      <tr><td>Privilege escalation</td><td>unpatched flaws, malicious scripts</td><td>suspicious PowerShell, EDR</td></tr>
+      <tr><td>Lateral movement</td><td>RDP, PsExec (same segment)</td><td>SIEM, network analyzers; pivoting crosses segments</td></tr>
+      <tr><td>Exfiltration</td><td>encrypted channels, cloud uploads</td><td>DLP, unusual outbound traffic</td></tr>
+      <tr><td>Command &amp; control</td><td>DNS tunneling, C2 servers</td><td>IDS, odd outbound/DNS queries</td></tr>
+      <tr><td>Persistence</td><td>new accounts, backdoors</td><td>EDR (Carbon Black, CrowdStrike)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>IoC sharing standards</h3>
+  <table>
+    <thead><tr><th>standard</th><th>role</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>STIX</td><td>the language/format</td><td>structured representation of threat data</td></tr>
+      <tr><td>TAXII</td><td>the protocol/transport</td><td>securely/automatically shares STIX data</td></tr>
+      <tr><td>AIS</td><td>the program</td><td>US DHS real-time public/private sharing at machine speed</td></tr>
+    </tbody>
+  </table>
+
+  <h3>rule-based detection languages</h3>
+  <table>
+    <thead><tr><th>language</th><th>domain</th><th>note</th></tr></thead>
+    <tbody>
+      <tr><td>Sigma</td><td>SIEM event patterns</td><td>generic/platform-agnostic (YAML); write once, use anywhere</td></tr>
+      <tr><td>YARA</td><td>files / malware</td><td>classify malware by strings/byte sequences</td></tr>
+      <tr><td>Rita</td><td>network anomalies</td><td>beaconing, DNS tunneling; integrates with Zeek</td></tr>
+      <tr><td>Snort</td><td>live network traffic</td><td>real-time IDS/IPS with rules/signatures</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="monitoring">monitoring &amp; forensics</h2>
+
+  <h3>IDS vs IPS</h3>
+  <table>
+    <thead><tr><th></th><th>IDS</th><th>IPS</th></tr></thead>
+    <tbody>
+      <tr><td>action</td><td>passive: monitor and alert</td><td>active: block/drop inline</td></tr>
+      <tr><td>placement</td><td>out of band (mirror/SPAN port)</td><td>in-line with traffic</td></tr>
+      <tr><td>risk</td><td>misses if poorly placed</td><td>can block legitimate traffic if too aggressive</td></tr>
+    </tbody>
+  </table>
+
+  <h3>email authentication</h3>
+  <table>
+    <thead><tr><th>mechanism</th><th>what it does</th><th>analogy</th></tr></thead>
+    <tbody>
+      <tr><td>SPF</td><td>lists authorized sending servers (DNS)</td><td>the guest list</td></tr>
+      <tr><td>DKIM</td><td>digital signature proving integrity/sender</td><td>the tamper-proof stamp</td></tr>
+      <tr><td>DMARC</td><td>policy + reporting on SPF/DKIM failure; aligns From</td><td>the rulebook</td></tr>
+      <tr><td>S/MIME</td><td>per-message encryption + signature</td><td>sealing the message itself</td></tr>
+    </tbody>
+  </table>
+
+  <h3>EAP types (WiFi 802.1X)</h3>
+  <table>
+    <thead><tr><th>type</th><th>auth method</th><th>security</th></tr></thead>
+    <tbody>
+      <tr><td>EAP-MD5</td><td>password (CHAP in EAP)</td><td>weakest; dictionary-attackable</td></tr>
+      <tr><td>EAP-TLS</td><td>certificates on both sides</td><td>strongest; mutual cert auth</td></tr>
+      <tr><td>PEAP</td><td>server cert + tunneled inner auth</td><td>strong; no client cert needed</td></tr>
+      <tr><td>EAP-TTLS</td><td>server cert + password inner auth</td><td>flexible; less than EAP-TLS</td></tr>
+      <tr><td>EAP-FAST</td><td>protected access credential (PAC)</td><td>fast; PAC distribution is the weak point</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SCAP components</h3>
+  <table>
+    <thead><tr><th>component</th><th>role</th></tr></thead>
+    <tbody>
+      <tr><td>CPE</td><td>identifies platforms (hardware, OS, apps)</td></tr>
+      <tr><td>CVE</td><td>unique ID per known vulnerability</td></tr>
+      <tr><td>CVSS</td><td>0–10 severity score for prioritization</td></tr>
+      <tr><td>OVAL</td><td>language for vulnerability/assessment checks</td></tr>
+      <tr><td>XCCDF</td><td>machine-readable compliance checklists</td></tr>
+    </tbody>
+  </table>
+
+  <h3>order of volatility (RFC 3227)</h3>
+  <table>
+    <thead><tr><th>#</th><th>collect</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>registers and CPU cache</td></tr>
+      <tr><td>2</td><td>routing/ARP/process tables, kernel stats, RAM</td></tr>
+      <tr><td>3</td><td>temporary file systems / swap space</td></tr>
+      <tr><td>4</td><td>disks</td></tr>
+      <tr><td>5</td><td>remote logging and monitoring data</td></tr>
+      <tr><td>6</td><td>physical configuration and network topology</td></tr>
+      <tr><td>7</td><td>archival media (backup tapes)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Most volatile first: capture RAM before powering off, since it is lost at shutdown. Forensic imaging uses a write blocker and hashing to preserve integrity.</p>
+
+  <h3>fail-secure vs fail-safe</h3>
+  <table>
+    <thead><tr><th></th><th>fail-secure</th><th>fail-safe</th></tr></thead>
+    <tbody>
+      <tr><td>priority</td><td>security</td><td>safety / continuity</td></tr>
+      <tr><td>on failure</td><td>lock down / shut off access</td><td>stay open / keep operating</td></tr>
+      <tr><td>door analogy</td><td>vault door locks on power loss</td><td>emergency exit unlocks on power loss</td></tr>
+      <tr><td>trade-off</td><td>may cause temporary denial of service</td><td>may relax some security</td></tr>
+    </tbody>
+  </table>
+
+  <h3>analysis: static vs dynamic</h3>
+  <table>
+    <thead><tr><th>approach</th><th>runs the code?</th><th>examples</th></tr></thead>
+    <tbody>
+      <tr><td>Static analysis</td><td>no</td><td>SAST, disassembly (IDA Pro, Ghidra), SCA</td></tr>
+      <tr><td>Dynamic analysis</td><td>yes (sandbox)</td><td>DAST, malware detonation (Cuckoo, Joe Sandbox)</td></tr>
+      <tr><td>Disassembly</td><td>converts binary → assembly</td><td>IDA Pro, Ghidra, OllyDbg</td></tr>
+      <tr><td>Decompilation</td><td>converts → high-level source</td><td>Java Decompiler, Uncompyle6, Ghidra</td></tr>
     </tbody>
   </table>
 
