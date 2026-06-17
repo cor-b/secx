@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditional Access / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/conditional_access</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 10 / troubleshooting iam / Conditional Access</span>
+  <h1 class="module-title">Conditional Access</h1>
+  <p class="subtitle">Access that depends on context. Grant or deny based on who you are, what device you're on, what time it is, and where you're connecting from.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Conditional access policies grant or deny access based on specific conditions. Four concepts: <strong>configuration</strong> (setting up policies to match security needs), <strong>user-to-device binding</strong> (linking an identity to an approved device), <strong>time-based conditions</strong> (restrict to certain hours), and <strong>geographic location conditions</strong> (restrict by physical location/IP).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">factor 01</span>
+      <p class="card-name">Configuration</p>
+      <p class="card-desc">Set up and customize policies (which users/devices/apps, what conditions). Ongoing, not one-time; includes exceptions for emergencies.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 02</span>
+      <p class="card-name">User-to-Device Binding</p>
+      <p class="card-desc">Link identity to an approved device, so stolen credentials alone can't get in. Enforced via MDM compliance.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 03</span>
+      <p class="card-name">Time-Based</p>
+      <p class="card-desc">Restrict access to business hours; deny off-hours logins when monitoring is lower.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 04</span>
+      <p class="card-name">Geographic Location</p>
+      <p class="card-desc">Allow/deny by physical location (IP). Block high-risk regions; supports regional compliance.</p>
+    </div>
+  </div>
+
+  <h2>configuration</h2>
+
+  <p>Configuration sets up and customizes conditional access policies to match the organization's security needs, defining the rules and parameters for when access is granted or denied. Teams identify which users, devices, and apps are subject to policies, based on factors like role, device compliance, and resource sensitivity, for example, allowing a financial app only if the user is in finance, on a company-managed device, and on the corporate network. It also includes exceptions (emergency access for key personnel) and is an ongoing process needing regular review as threats and needs change.</p>
+
+  <h2>user-to-device binding</h2>
+
+  <p>User-to-device binding links a user's identity to a specific approved device, so access is granted only from a device meeting security standards. This prevents unauthorized access from unknown or compromised devices, even if credentials are stolen, the attacker still lacks the bound device. It's enforced with tools like <strong>mobile device management (MDM)</strong>, ensuring devices are compliant (encryption on, updates installed, approved security software), and requires a clear inventory of authorized devices.</p>
+
+  <h2>time-based conditions</h2>
+
+  <p>Time-based conditions restrict access to specific times, aligning it with business hours (e.g. an internal dashboard available only 8 AM–6 PM). Off-hours logins are denied, reducing risk when monitoring is lower and unusual activity could go unnoticed. Policies can be tailored per group (allowing on-call IT staff after hours) and the access-time data helps spot unusual patterns suggesting compromised accounts.</p>
+
+  <h2>geographic location conditions</h2>
+
+  <p>Geographic location conditions restrict access based on the user's physical location, using data like IP addresses to allow or block by region, for instance, restricting sensitive data to users within the United States and blocking foreign attempts. They help with regional data privacy compliance and are valuable for remote workforces, providing a clear boundary on where data can be accessed and helping detect suspicious access trends.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Conditional access grants/denies based on context: identity, device status, time, location.</li>
+      <li>Configuration is ongoing (not one-time) and includes emergency exceptions.</li>
+      <li>User-to-device binding ties identity to an approved device (enforced via MDM); stolen credentials alone won't work.</li>
+      <li>Time-based conditions block off-hours access; geographic conditions block by region/IP.</li>
+      <li>These layers often combine (company device + business hours + approved region) for sensitive data.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario denies a login from a foreign country → <strong>geographic location condition</strong></li>
+        <li>Scenario blocks access outside 8–6 business hours → <strong>time-based condition</strong></li>
+        <li>Scenario requires a specific company laptop even with valid credentials → <strong>user-to-device binding</strong></li>
+        <li>Scenario defines which users/devices a policy applies to → <strong>configuration</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="09_access_control.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">09_access_control</span></span>
+    </a>
+    <span class="counter">lesson 10 / 11</span>
+    <a class="next" href="11_logging_and_monitoring.html">
+      <span><span class="lbl">next</span><span class="file">11_logging_and_monitoring</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / conditional_access</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

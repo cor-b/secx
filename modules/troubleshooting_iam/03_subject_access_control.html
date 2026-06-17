@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subject Access Control / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/subject_access_control</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 03 / troubleshooting iam / Subject Access Control</span>
+  <h1 class="module-title">Subject Access Control</h1>
+  <p class="subtitle">A subject isn't only a person. Users, processes, devices, and services all request access, and each must be controlled so it touches only what it needs.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Subject access control determines and enforces which <strong>subjects</strong> can reach specific resources. Subjects are four things: <strong>users</strong> (individuals), <strong>processes</strong> (running programs acting for a user/function), <strong>devices</strong> (physical or virtual hardware on the network), and <strong>services</strong> (background applications/functions). Each must be authenticated and scoped to least privilege.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">subject 01</span>
+      <p class="card-name">Users</p>
+      <p class="card-desc">Individuals needing access. Permissions match the role (accountant sees finance, developer doesn't), preventing over-access.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">subject 02</span>
+      <p class="card-name">Processes</p>
+      <p class="card-desc">Running program instances acting for a user/function. Granted only safe, necessary permissions; blocked if they exceed them (malware defense).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">subject 03</span>
+      <p class="card-name">Devices</p>
+      <p class="card-desc">Physical/virtual hardware on the network. Must authenticate and be compliant; unauthorized or compromised devices are blocked.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">subject 04</span>
+      <p class="card-name">Services</p>
+      <p class="card-desc">Background apps/functions interacting without a user. Access is scoped (email can send/receive, not read financial records).</p>
+    </div>
+  </div>
+
+  <h2>the four subject types</h2>
+
+  <p>Subject access control regulates each type so it can act only within its intended scope:</p>
+
+  <ul>
+    <li><strong>Users:</strong> individuals or entities needing resources. Access control gives each the correct permissions for their role, so an accountant can reach financial records and a developer cannot, keeping sensitive data on a need-to-know basis.</li>
+    <li><strong>Processes:</strong> instances of programs running for a user or system function (a web browser checking email). They need specific permissions (open a file, reach the internet); if a process tries an unauthorized action, access control blocks it, protecting against threats like malware.</li>
+    <li><strong>Devices:</strong> any physical or virtual hardware connecting to the network (laptops, phones, VMs). They must authenticate and may need to prove they're patched and compliant, so only approved devices connect and compromised ones are blocked.</li>
+    <li><strong>Services:</strong> system functions running continuously in the background (email, file sharing, databases), often interacting without direct user involvement. Access control defines what each can access and do, so an email service can send/receive but not reach financial records.</li>
+  </ul>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>The four subjects are users, processes, devices, and services, not just people.</li>
+      <li>Users get role-based permissions (least privilege, need-to-know).</li>
+      <li>Processes are running programs granted only necessary, safe permissions; blocking unauthorized actions defends against malware.</li>
+      <li>Devices must authenticate and prove compliance before connecting.</li>
+      <li>Services run in the background and must be scoped so they only access what their function requires.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario controls what a running program can touch → <strong>process subject</strong></li>
+        <li>Scenario blocks a non-compliant laptop from the network → <strong>device subject</strong></li>
+        <li>Scenario limits a background app to only its needed data → <strong>service subject</strong></li>
+        <li>Scenario gives an accountant finance access but not dev tools → <strong>user subject (role-based)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_management_frameworks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_management_frameworks</span></span>
+    </a>
+    <span class="counter">lesson 03 / 11</span>
+    <a class="next" href="04_user_identity_control.html">
+      <span><span class="lbl">next</span><span class="file">04_user_identity_control</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / subject_access_control</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

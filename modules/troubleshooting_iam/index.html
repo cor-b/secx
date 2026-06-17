@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>troubleshooting_iam / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p { font-family: var(--font-sans); }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .section-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.section-title { font-size: 42px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 620px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .prompt { margin: 0 0 20px; font-size: 13px; color: var(--ink-dim); padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .prompt .user { color: var(--cyan); }
+  .prompt .path { color: var(--violet); }
+  .prompt .cmd { color: var(--ink); }
+  .ls-list { list-style: none; margin: 0; padding: 0; }
+  .ls-item {
+    display: grid;
+    grid-template-columns: 90px 80px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s ease, border-color 0.2s ease;
+  }
+  .ls-item:hover { padding-left: 12px; border-bottom-color: var(--cyan); }
+  .ls-item:hover .filename { color: var(--cyan); }
+  .ls-item:hover .ls-arrow { color: var(--magenta); transform: translateX(4px); }
+  .perms { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .lesson-tag { color: var(--violet); font-size: 11px; letter-spacing: 0.06em; }
+  .filename-wrap { min-width: 0; }
+  .filename { color: var(--ink); font-size: 15px; font-weight: 500; display: block; transition: color 0.2s ease; }
+  .filename .ext { color: var(--magenta); }
+  .desc { display: block; color: var(--ink-dim); font-size: 13px; margin-top: 6px; line-height: 1.55; }
+  .ls-arrow { color: var(--ink-faint); font-size: 14px; transition: all 0.2s ease; }
+  .status-line { margin-top: 22px; padding-top: 16px; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .status-line .val { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.section-title { font-size: 32px; }
+    .ls-item { grid-template-columns: 70px 1fr auto; gap: 12px; }
+    .ls-item .lesson-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam</span>
+  </div>
+
+  <a class="back-link" href="../../index.html"><span class="arrow">←</span>back to /securityx</a>
+
+  <span class="section-tag">securityx / troubleshooting iam</span>
+  <h1 class="section-title">Troubleshooting IAM</h1>
+  <p class="subtitle">Right people, right access, right resources, right time: management frameworks, subject and user identity controls, secrets, auth protocols, cloud IAM, WiFi auth, access control, conditional access, and logging.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3 (Security Engineering) <strong>OBJ 3.1</strong>: troubleshoot common issues with identity and access management components. Topics span management frameworks (proofing, PIM), subject access control, user identity control (biometrics, MFA), secrets management, authentication and authorization (SAML, OpenID, OAuth, federation), cloud IAM access and trust policies, WiFi authentication (802.1X, EAP, SAE), access control (SSO, Kerberos, PAM), conditional access, and logging and monitoring.</p>
+  </div>
+
+  <div class="prompt">
+    <span class="user">cor</span>:<span class="path">~/securityx/troubleshooting_iam</span>$ <span class="cmd">ls lessons/</span>
+  </div>
+
+  <ul class="ls-list">
+
+    <li>
+      <a class="ls-item" href="01_troubleshooting_iam.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 01</span>
+        <span class="filename-wrap">
+          <span class="filename">troubleshooting_iam<span class="ext">.lesson</span></span>
+          <span class="desc">Overview: the eleven IAM topics, from management frameworks to logging and monitoring</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="02_management_frameworks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 02</span>
+        <span class="filename-wrap">
+          <span class="filename">management_frameworks<span class="ext">.lesson</span></span>
+          <span class="desc">Identity proofing (alternative persona, propagation, CredSSP), privileged identity management (just-in-time, audit)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="03_subject_access_control.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 03</span>
+        <span class="filename-wrap">
+          <span class="filename">subject_access_control<span class="ext">.lesson</span></span>
+          <span class="desc">The four subjects: users (role-based), processes (malware defense), devices (compliance), services (background, scoped)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="04_user_identity_control.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 04</span>
+        <span class="filename-wrap">
+          <span class="filename">user_identity_control<span class="ext">.lesson</span></span>
+          <span class="desc">Credentials (passwords/certs), biometrics (CER/FAR/FRR), MFA factors (know/have/are/where), TOTP/HOTP, in/out of band</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="05_secrets_management.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 05</span>
+        <span class="filename-wrap">
+          <span class="filename">secrets_management<span class="ext">.lesson</span></span>
+          <span class="desc">Tokens (JWT/OAuth), certificates, hashed passwords, keys (mismatch/embedded/rekeying), rotation, cryptographic shredding</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="06_authentication_and_authorization.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 06</span>
+        <span class="filename-wrap">
+          <span class="filename">authentication_and_authorization<span class="ext">.lesson</span></span>
+          <span class="desc">Attestation, SAML (XML SSO), OpenID (authn), OAuth (authz, tokens), federation across domains</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="07_cloud_iam_access_and_trust_policies.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 07</span>
+        <span class="filename-wrap">
+          <span class="filename">cloud_iam_access_and_trust_policies<span class="ext">.lesson</span></span>
+          <span class="desc">Access policies (AWS JSON, Azure RBAC, GCP), trust policies (cross-account role assumption, trust boundaries)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="08_wifi_authentication.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 08</span>
+        <span class="filename-wrap">
+          <span class="filename">wifi_authentication<span class="ext">.lesson</span></span>
+          <span class="desc">802.1X (supplicant/RADIUS), EAP types (MD5/TLS/PEAP/TTLS/FAST), SAE (WPA3, Dragonfly, forward secrecy)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="09_access_control.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 09</span>
+        <span class="filename-wrap">
+          <span class="filename">access_control<span class="ext">.lesson</span></span>
+          <span class="desc">Single sign-on, Kerberos (TGT/service tickets, mutual auth), privileged access management (sudoers demo)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="10_conditional_access.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 10</span>
+        <span class="filename-wrap">
+          <span class="filename">conditional_access<span class="ext">.lesson</span></span>
+          <span class="desc">Configuration, user-to-device binding (MDM), time-based conditions, geographic location conditions</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="11_logging_and_monitoring.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 11</span>
+        <span class="filename-wrap">
+          <span class="filename">logging_and_monitoring<span class="ext">.lesson</span></span>
+          <span class="desc">Logging (collectors/Fluentd, SIEM aggregation and normalization), monitoring (anomalies, alerts, IDS, Graylog/SolarWinds)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="status-line">
+    total <span class="val">11 lessons</span><span class="sep" style="color:var(--rule);margin:0 10px">·</span><span style="color:var(--ink-dim)">complete</span>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / eof</span>
+  </div>
+
+</div>
+
+</body>
+</html>

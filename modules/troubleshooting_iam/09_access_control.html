@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Control / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/access_control</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 09 / troubleshooting iam / Access Control</span>
+  <h1 class="module-title">Access Control</h1>
+  <p class="subtitle">Enforcing who reaches what: one login for many apps (SSO), ticket-based proof of identity (Kerberos), and tightly governed elevated access (PAM).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Access control manages and enforces who can access resources based on policies and roles. Three concepts: <strong>single sign-on (SSO)</strong> (one set of credentials for many services), <strong>Kerberos</strong> (ticket-based network authentication, common in Active Directory and SSO), and <strong>privileged access management (PAM)</strong> (controls and monitors elevated access, granting it just-in-time).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">SSO</p>
+      <p class="card-desc">One login for multiple apps within a domain. Fewer passwords to remember, easier to enforce policy, fewer password-related breaches.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Kerberos</p>
+      <p class="card-desc">Ticket-based authentication over non-secure networks (AD). TGT + service tickets, time-bound, supports mutual authentication.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">PAM</p>
+      <p class="card-desc">Controls/monitors elevated access; just-in-time privileges, password rotation, session management, auditing.</p>
+    </div>
+  </div>
+
+  <h2>single sign-on (SSO)</h2>
+
+  <p>SSO lets users access multiple applications with a single set of credentials within a domain or organization. It simplifies the user experience (one username/password) and improves security: users are less likely to write down or forget credentials, fewer password-related breaches occur, and the organization can enforce password policy more effectively with just one credential set to manage.</p>
+
+  <h2>Kerberos</h2>
+
+  <p>Kerberos is a network authentication protocol providing secure identity verification over non-secure networks, widely used in Microsoft Active Directory. It uses a <strong>ticket-based</strong> system: the password is used locally to encrypt the request (never sent in plain text). After authenticating, the user gets a <strong>ticket-granting ticket (TGT)</strong>, then receives <strong>service tickets</strong> to access specific resources. Each ticket is time-stamped with a limited lifespan, so access is time-bound and an intercepted ticket has limited use. Kerberos supports <strong>mutual authentication</strong> (both user and service verify each other) and is commonly integrated into SSO.</p>
+
+  <h2>privileged access management (PAM)</h2>
+
+  <p>PAM controls and monitors access to critical systems by managing user privileges, ensuring only authorized users gain elevated access, on a <strong>just-in-time</strong> basis (privileges given only when needed for a task). It enforces strict access policies and uses tools that automatically rotate passwords, manage sessions, and enforce MFA, while continuously monitoring privileged activity to detect suspicious behavior. PAM also provides detailed <strong>auditing and reporting</strong> of all privileged actions for accountability and compliance.</p>
+
+  <h3>PAM in practice: the Linux sudoers file</h3>
+  <p>Configuring the <code>sudoers</code> file is a concrete example of PAM. It controls which users can run commands with elevated privileges, enforcing least privilege. In the demo, a new user (Jeremiah) initially can't run <code>sudo apt update</code> or install packages ("not in the sudoers file"). After adding him to sudoers with permission for <code>apt update</code> and <code>apt install htop</code>, but deliberately <em>not</em> <code>apt remove</code>, he can run only the allowed commands; <code>apt remove htop</code> still fails. This shows elevated access restricted to exactly what the role requires.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>SSO = one credential set for many apps; improves UX and lets you enforce policy centrally.</li>
+      <li>Kerberos = ticket-based auth (TGT + service tickets), time-stamped/time-bound, never sends plain-text passwords, supports mutual auth, used in AD.</li>
+      <li>PAM grants elevated access just-in-time and audits/monitors privileged use; rotates passwords, manages sessions, enforces MFA.</li>
+      <li>The Linux sudoers file is a classic PAM example enforcing least privilege.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses time-stamped tickets in an AD environment → <strong>Kerberos</strong></li>
+        <li>Scenario grants admins elevated rights only when needed and audits them → <strong>PAM</strong></li>
+        <li>Scenario lets a user reach many apps with one login → <strong>SSO</strong></li>
+        <li>Scenario restricts which sudo commands a user may run → <strong>PAM (sudoers)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_wifi_authentication.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_wifi_authentication</span></span>
+    </a>
+    <span class="counter">lesson 09 / 11</span>
+    <a class="next" href="10_conditional_access.html">
+      <span><span class="lbl">next</span><span class="file">10_conditional_access</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / access_control</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

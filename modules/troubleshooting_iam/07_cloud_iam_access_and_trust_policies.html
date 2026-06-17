@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud IAM Access and Trust Policies / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/cloud_iam_access_and_trust_policies</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 07 / troubleshooting iam / Cloud IAM &amp; Trust Policies</span>
+  <h1 class="module-title">Cloud IAM Access and Trust Policies</h1>
+  <p class="subtitle">Two policy types working together: access policies say what a user or service can do, trust policies say which accounts and services are allowed to assume a role across boundaries.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cloud IAM manages who can access cloud resources and under what conditions. <strong>Access policies</strong> assign roles and permissions to users, groups, and services, defining what actions they can perform. <strong>Trust policies</strong> define relationships and trust boundaries between cloud accounts/services, specifying which entities may assume a role. Together: access policies define permissions, trust policies govern how those permissions are shared.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">policy 01</span>
+      <p class="card-name">Access Policies</p>
+      <p class="card-desc">Define permissions for users/groups/services: what they can do (e.g. read a bucket but not delete). AWS uses JSON, Azure uses RBAC, GCP assigns to users/groups.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">policy 02</span>
+      <p class="card-name">Trust Policies</p>
+      <p class="card-desc">Define trust boundaries between accounts/services: which entities may assume a role (e.g. one AWS account assuming a role in another).</p>
+    </div>
+  </div>
+
+  <h2>cloud IAM access policies</h2>
+
+  <p>Access policies manage who can access cloud resources and what actions they can perform, granting a user permission to read a storage bucket but not delete or modify it. They enforce least privilege across all major platforms:</p>
+
+  <ul>
+    <li><strong>AWS:</strong> policies defined as JSON documents attached to users, groups, or roles.</li>
+    <li><strong>Azure:</strong> uses role-based access control (RBAC).</li>
+    <li><strong>GCP:</strong> permissions assigned directly to users or groups.</li>
+  </ul>
+
+  <p>A typical example: a data analyst is granted read access to a data warehouse but not the ability to alter configurations or delete resources, letting them do their job without risking stability. Platforms also let admins audit access activity for oversight.</p>
+
+  <h2>cloud IAM trust policies</h2>
+
+  <p>Trust policies define relationships and trust boundaries between accounts, services, or external entities, specifying which are trusted to assume roles. In a multi-account AWS setup, a trust policy can let an admin in one account assume a role in another for cross-account operations. Separate dev/test/prod accounts can use trust policies to allow controlled interaction while keeping security boundaries intact. Platform mechanisms: AWS IAM roles use trust policies for cross-account role assumption; Azure uses service principals and managed identities; GCP configures trust between projects and services. Example: a Lambda function in one account assumes a role in a second account to access its resources.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Access policies = what an identity can do (permissions on resources); trust policies = which entities can assume a role (boundaries between accounts).</li>
+      <li>AWS access policies are JSON; Azure uses RBAC; GCP assigns permissions to users/groups.</li>
+      <li>Trust policies enable secure cross-account/cross-service operations (e.g. assuming a role in another account).</li>
+      <li>The two work together: access defines permissions, trust controls how they're shared.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario lets a user read but not delete a storage bucket → <strong>access policy</strong></li>
+        <li>Scenario lets account A assume a role in account B → <strong>trust policy</strong></li>
+        <li>Scenario uses JSON documents for AWS permissions → <strong>access policy</strong></li>
+        <li>Scenario isolates dev/test/prod but allows controlled interaction → <strong>trust policy</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_authentication_and_authorization.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_authentication_and_authorization</span></span>
+    </a>
+    <span class="counter">lesson 07 / 11</span>
+    <a class="next" href="08_wifi_authentication.html">
+      <span><span class="lbl">next</span><span class="file">08_wifi_authentication</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / cloud_iam_access_and_trust_policies</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

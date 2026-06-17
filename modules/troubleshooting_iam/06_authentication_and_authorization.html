@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Authentication and Authorization / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/authentication_and_authorization</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 06 / troubleshooting iam / Authentication and Authorization</span>
+  <h1 class="module-title">Authentication and Authorization</h1>
+  <p class="subtitle">The protocols that let you log in once and reach many services: SAML and OpenID prove who you are, OAuth controls what an app can do, and federation extends trust across domains.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Authentication verifies identity; authorization determines access rights. Five concepts: <strong>attestation</strong> (verify an entity meets security policy), <strong>SAML</strong> (XML-based auth data exchange for SSO), <strong>OpenID</strong> (authentication via a single identity provider), <strong>OAuth</strong> (authorization framework using tokens), and <strong>federation</strong> (asserting identities across domains). Remember: the "auth" in OAuth is <em>authorization</em>, not authentication.</p>
+  </div>
+
+  <h2>attestation</h2>
+
+  <p>Attestation verifies that a user, system, or device meets specific security standards and policies, proving it's legitimate and uncompromised before granting access. It often generates a unique digital signature or hash proving credentials are genuine and unaltered, then sends it to a verifying party (an access control system) that checks compliance. Used in cloud services, remote access, and secure boot.</p>
+
+  <h2>SAML (security assertion markup language)</h2>
+
+  <p>SAML is a standard for exchanging authentication and authorization data between an <strong>identity provider</strong> and a <strong>service provider</strong>, using XML-based tokens. It enables <strong>single sign-on</strong>: an employee logs in once to the company identity provider, and SAML passes their authentication to email, file storage, and HR systems, reducing password fatigue. It's popular for secure cross-domain SSO.</p>
+
+  <h2>OpenID</h2>
+
+  <p>OpenID is an authentication protocol that lets users log into multiple services with a single identity managed by an identity provider, logging into many sites with your Google account, where Google is the identity provider verifying your credentials. It standardizes authentication, improves user experience, and reduces reused/weak passwords by outsourcing authentication to a trusted provider.</p>
+
+  <h2>OAuth (open authorization)</h2>
+
+  <p>OAuth is an <strong>authorization</strong> framework letting third-party apps access a user's data without handling their credentials. It determines what data the third party can reach and what it can do. When you connect a third-party app to share photos, OAuth issues a <strong>token</strong> granting only the data you agreed to (revocable anytime), instead of revealing your password. By issuing tokens instead of credentials, it reduces the risk of sharing passwords. For authentication, OAuth may employ OpenID.</p>
+
+  <h2>federation</h2>
+
+  <p>Federation shares and manages user identities across multiple domains or organizations, so a user authenticated in one trusted domain can access resources in another without separate logins. A student authenticated by their home campus can access a second campus's resources. Federation often uses <strong>SAML</strong> to exchange auth data, and is common in businesses, universities, and government.</p>
+
+  <h3>how they work together</h3>
+  <p>In a federated university SSO: <strong>SAML</strong> authenticates the student via the university identity provider (or <strong>OpenID</strong> lets them log in with Google). Once authenticated, when they use a third-party tool, <strong>OAuth</strong> issues a scoped token granting only the data the app needs, no university credentials shared. SAML/OpenID handle authentication; OAuth handles authorization.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>SAML = XML-based, exchanges auth/authz data between IdP and SP, the classic enterprise SSO protocol.</li>
+      <li>OpenID = authentication (log in to many services via one identity provider).</li>
+      <li>OAuth = authorization (token-based access for third-party apps; never shares the password). The "auth" is authorization.</li>
+      <li>Attestation verifies an entity complies with security policy before access.</li>
+      <li>Federation asserts identities across domains/organizations, often using SAML.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario grants a third-party app scoped access via a revocable token → <strong>OAuth</strong></li>
+        <li>Scenario logs into many sites with a Google identity → <strong>OpenID</strong></li>
+        <li>Scenario exchanges XML SSO assertions between IdP and SP → <strong>SAML</strong></li>
+        <li>Scenario lets users in one org access another org's resources → <strong>federation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_secrets_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_secrets_management</span></span>
+    </a>
+    <span class="counter">lesson 06 / 11</span>
+    <a class="next" href="07_cloud_iam_access_and_trust_policies.html">
+      <span><span class="lbl">next</span><span class="file">07_cloud_iam_access_and_trust_policies</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / authentication_and_authorization</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

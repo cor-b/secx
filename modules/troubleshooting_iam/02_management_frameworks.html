@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Management Frameworks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/management_frameworks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 02 / troubleshooting iam / Management Frameworks</span>
+  <h1 class="module-title">Management Frameworks</h1>
+  <p class="subtitle">How identities and access controls are managed, monitored, and maintained: proving someone is who they claim, then handing out elevated power only when it's needed.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Management frameworks define how identities and access are managed within an organization. Core processes: <strong>authentication</strong> (verify identity) and <strong>authorization</strong> (determine access). Two key concepts: <strong>identity proofing</strong> (verifying a claimed identity is accurate, usually at account setup or password reset) and <strong>privileged identity management (PIM)</strong> (granting elevated permissions only when necessary and monitoring privileged accounts).</p>
+  </div>
+
+  <h2>identity proofing</h2>
+
+  <p>Identity proofing confirms a person's identity by asking for additional proof, at onboarding or during a password reset. Knowledge-based questions (where you went to high school, first pet) assume only you know the answer, but this is weak: the 2008 Sarah Palin Yahoo email hack succeeded because the attacker answered security questions using publicly available info. A defense is to use an <strong>alternative persona</strong>, answering with unique values not findable online. Larger orgs require stronger proof: presenting a photo ID or passport at the IT service desk. Higher security, but slower, so it's a trade-off.</p>
+
+  <p>Once verified, the identity is shared across systems through <strong>identity propagation</strong>. If a system handles its own authentication, only the identity is passed; with SSO, both identity and authentication details transfer. Microsoft Active Directory uses <strong>Kerberos</strong> ticketing for this. Bridging proprietary and third-party systems may need a centralized identity/authentication translation system handling tickets, SSO, or XML tokens. Protocols like <strong>CredSSP</strong> (Credential Security Support Provider) can transmit full user credentials and must run over SSL/TLS.</p>
+
+  <h2>privileged identity management (PIM)</h2>
+
+  <p>PIM manages and controls access to critical systems by granting elevated permissions <strong>only when necessary</strong>, the just-in-time principle. Instead of an admin holding powerful permissions permanently, they request temporary elevated access for a specific task; once finished, the permissions are removed, shrinking the window for misuse or accidental damage. PIM also closely monitors privileged accounts: every elevated action is logged and tracked, creating an audit trail that helps detect unauthorized changes and hold privileged users accountable.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Authentication verifies identity; authorization determines what resources you can access.</li>
+      <li>Identity proofing verifies a claimed identity is accurate, done at account setup or password reset.</li>
+      <li>Knowledge-based questions are weak (Sarah Palin hack); use an alternative persona with non-discoverable answers.</li>
+      <li>Identity propagation shares the verified identity across systems; SSO also shares authentication details (AD uses Kerberos).</li>
+      <li>PIM grants elevated permissions just-in-time and monitors/audits privileged accounts.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario verifies a new hire's claimed identity at onboarding → <strong>identity proofing</strong></li>
+        <li>Scenario grants an admin temporary elevated rights for one task → <strong>PIM (just-in-time)</strong></li>
+        <li>Scenario answers security questions with fake-but-memorable values → <strong>alternative persona</strong></li>
+        <li>Scenario transmits full credentials and must be encrypted → <strong>CredSSP over SSL/TLS</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_troubleshooting_iam.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_troubleshooting_iam</span></span>
+    </a>
+    <span class="counter">lesson 02 / 11</span>
+    <a class="next" href="03_subject_access_control.html">
+      <span><span class="lbl">next</span><span class="file">03_subject_access_control</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / management_frameworks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

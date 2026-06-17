@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WiFi Authentication / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/wifi_authentication</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 08 / troubleshooting iam / WiFi Authentication</span>
+  <h1 class="module-title">WiFi Authentication</h1>
+  <p class="subtitle">Securing access to wireless networks: 802.1X is the gatekeeper, EAP is the flexible framework of methods it runs, and SAE is WPA3's modern, forward-secret handshake.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>WiFi authentication secures access to wireless networks. Three concepts: <strong>IEEE 802.1X</strong> (network access control framework using an authentication server like RADIUS), <strong>EAP</strong> (Extensible Authentication Protocol, a flexible framework of authentication methods between supplicant and network), and <strong>SAE</strong> (Simultaneous Authentication of Equals, WPA3's secure password-based handshake with forward secrecy).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">802.1X</p>
+      <p class="card-desc">Network access control: gatekeeper that authenticates devices via a RADIUS server. Supplicant → RADIUS client (AP) → RADIUS server.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">EAP</p>
+      <p class="card-desc">Flexible framework of auth methods within 802.1X. Replaced PAP/CHAP. Variants range from weak (MD5) to strong (TLS).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">SAE</p>
+      <p class="card-desc">WPA3 handshake replacing the WPA2 four-way handshake. Password-based, uses Dragonfly + ECC, gives forward secrecy.</p>
+    </div>
+  </div>
+
+  <h2>IEEE 802.1X</h2>
+
+  <p>802.1X (from the Institute of Electrical and Electronics Engineers) is a network access control protocol that authenticates devices before granting access, working on both wireless and wired networks. The flow: a device (the <strong>supplicant</strong>) wants to join; <strong>EAP</strong> sets up a secure channel to pass credentials; the router/access point (the <strong>RADIUS client</strong>) forwards them to the <strong>RADIUS server</strong> (Remote Authentication Dial-In User Service), which is the final authority, validating against its database or a directory like Active Directory. If valid, the server approves and the client grants access.</p>
+
+  <h2>EAP (Extensible Authentication Protocol)</h2>
+
+  <p>EAP is not a single method but a framework supporting many authentication methods, developed to replace weaker <strong>PAP</strong> (sends credentials in plain text, insecure) and <strong>CHAP</strong> (challenge/response, never sends the password; MS-CHAP is Microsoft's variant with mutual auth). Five common EAP types:</p>
+
+  <dl class="def">
+    <dt>EAP-MD5 (CHAP)</dt>
+    <dd>Uses CHAP within EAP, password-based. Weakest, vulnerable to dictionary attacks with weak passwords.</dd>
+    <dt>EAP-TLS</dt>
+    <dd>Most secure: digital certificates on both supplicant and server, no passwords, mutual authentication.</dd>
+    <dt>PEAP</dt>
+    <dd>Protected EAP: server certificate forms an encrypted tunnel; user authenticates inside it (e.g. MSCHAPv2, OTP).</dd>
+    <dt>EAP-TTLS</dt>
+    <dd>Tunneled TLS: like PEAP but more flexible inner methods; server cert + password client auth. Less secure than EAP-TLS.</dd>
+    <dt>EAP-FAST</dt>
+    <dd>Uses a protected access credential (PAC) instead of a cert; faster but credential distribution is a challenge; least secure of these.</dd>
+  </dl>
+
+  <p>For the highest security, use <strong>EAP-TLS</strong> with mutual certificate authentication; if certificates are too costly, PEAP or EAP-TTLS are good alternatives.</p>
+
+  <h2>SAE (Simultaneous Authentication of Equals)</h2>
+
+  <p>SAE is WPA3's authentication feature, replacing the WPA/WPA2 <strong>four-way handshake</strong> (which relied on Diffie-Hellman pre-shared key exchange and was vulnerable to interception, cracking, and replay). SAE is a secure password-based method providing <strong>forward secrecy</strong> (also called perfect forward secrecy): even if long-term keys are compromised, each session's keys stay secure, so past communications can't be decrypted. It uses the <strong>Dragonfly</strong> password-authenticated key exchange with elliptic curve cryptography to derive a unique session key per session. A new key every session means a compromised key doesn't affect past or future sessions, making WPA3 far stronger than WPA2/WPA/WEP.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>802.1X = port/network access control using a RADIUS server; roles: supplicant, RADIUS client (AP), RADIUS server.</li>
+      <li>EAP is a framework, not one method. EAP-TLS (certs on both sides) is the most secure; EAP-MD5 the weakest.</li>
+      <li>PEAP and EAP-TTLS build an encrypted tunnel with a server certificate; EAP-FAST uses a PAC.</li>
+      <li>SAE (WPA3) replaces the WPA2 four-way handshake; password-based, uses Dragonfly + ECC, gives forward secrecy.</li>
+      <li>PAP sends plain text (insecure); CHAP/MS-CHAP use challenge/response.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs the most secure EAP with mutual certs → <strong>EAP-TLS</strong></li>
+        <li>Scenario authenticates WiFi devices via a RADIUS server → <strong>802.1X</strong></li>
+        <li>Scenario wants WPA3 forward secrecy in the handshake → <strong>SAE (Dragonfly)</strong></li>
+        <li>Scenario can't afford client certificates but wants a tunnel → <strong>PEAP / EAP-TTLS</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_cloud_iam_access_and_trust_policies.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_cloud_iam_access_and_trust_policies</span></span>
+    </a>
+    <span class="counter">lesson 08 / 11</span>
+    <a class="next" href="09_access_control.html">
+      <span><span class="lbl">next</span><span class="file">09_access_control</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / wifi_authentication</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

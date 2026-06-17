@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Identity Control / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/user_identity_control</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 04 / troubleshooting iam / User Identity Control</span>
+  <h1 class="module-title">User Identity Control</h1>
+  <p class="subtitle">Proving a user is who they say: what they know (credentials), what they are (biometrics), and stacking factors together with multi-factor authentication.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>User identity control manages, verifies, and secures user identities. Three concepts: <strong>credentials</strong> (info you provide, passwords/PINs/certificates), <strong>biometrics</strong> (unique physical/behavioral traits), and <strong>multi-factor authentication (MFA)</strong> (two or more independent factors). Authentication validates the presented credentials/biometrics; authorization then determines what the user may access.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">method 01</span>
+      <p class="card-name">Credentials</p>
+      <p class="card-desc">Something you know/have: passwords, PINs, digital certificates. Simple but vulnerable to guessing, theft, reuse; certificates are stronger (crypto).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 02</span>
+      <p class="card-name">Biometrics</p>
+      <p class="card-desc">Something you are: fingerprint, face, iris, voice. Hard to replicate; measured by CER, FAR, FRR.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">method 03</span>
+      <p class="card-name">MFA</p>
+      <p class="card-desc">Two or more factors: know, have, are, where. Far harder to defeat than single-factor.</p>
+    </div>
+  </div>
+
+  <h2>credentials</h2>
+
+  <p>Credentials are the info a user provides to prove identity. Passwords/PINs are the most basic and widely used, but their simplicity makes them vulnerable: weak passwords (123456, "password") are easily cracked, and even strong ones fail if reused or exposed in a breach. <strong>Digital certificates</strong> offer higher security, electronic documents that verify identity cryptographically, used for corporate network access and secure websites, authenticating users without relying on easily compromised secrets.</p>
+
+  <h2>biometrics</h2>
+
+  <p>Biometrics verify identity using unique physical or behavioral traits (fingerprint, face, iris, retina, voice), relying on something you <em>are</em>. They're convenient and hard to replicate, but imperfect, measured by three metrics:</p>
+
+  <dl class="def">
+    <dt>CER (crossover error rate)</dt>
+    <dd>The point where false acceptance and false rejection rates are equal. A lower CER means a more accurate system, the key metric for comparing systems.</dd>
+    <dt>FAR (false acceptance rate)</dt>
+    <dd>How often the system wrongly accepts an unauthorized person. High FAR = not secure enough (lets the wrong people in).</dd>
+    <dt>FRR (false rejection rate)</dt>
+    <dd>How often the system wrongly rejects an authorized user. High FRR = inconvenient (locks out the right people).</dd>
+  </dl>
+
+  <h2>multi-factor authentication (MFA)</h2>
+
+  <p>MFA requires two or more <strong>independent</strong> factors, layering security so a single compromised factor isn't enough. The factors:</p>
+
+  <ul>
+    <li><strong>Something you know:</strong> password, PIN, security questions.</li>
+    <li><strong>Something you have:</strong> smart card, key fob, smartphone receiving codes.</li>
+    <li><strong>Something you are:</strong> biometrics (fingerprint, face, voice).</li>
+    <li><strong>Somewhere you are:</strong> location data (GPS, IP address).</li>
+  </ul>
+
+  <p>One factor = single-factor authentication. Two different factors = two-factor (2FA). Combining two or more distinct factors = MFA. Evolving methods include <strong>TOTP</strong> (time-based one-time password) and <strong>HOTP</strong> (HMAC-based one-time password), which generate single-use codes. MFA can be <strong>in band</strong> (code on the same device used for access) or <strong>out of band</strong> (code on a different device), with out-of-band adding an extra layer.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Factors: something you know, have, are, and where you are. Two distinct factors = 2FA; two or more = MFA.</li>
+      <li>Biometric metrics: CER (lower is better, equal-error point), FAR (wrongly accepts), FRR (wrongly rejects).</li>
+      <li>Digital certificates are stronger credentials than passwords (cryptographic, not guessable).</li>
+      <li>TOTP = time-based one-time password; HOTP = HMAC/counter-based one-time password.</li>
+      <li>Out-of-band MFA (code on a separate device) is more secure than in-band.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario compares biometric accuracy with one number → <strong>CER (lower is better)</strong></li>
+        <li>Scenario lets an unauthorized person in → <strong>false acceptance (FAR)</strong></li>
+        <li>Scenario locks out a legitimate user → <strong>false rejection (FRR)</strong></li>
+        <li>Scenario uses password + smartphone code on a separate device → <strong>out-of-band MFA</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_subject_access_control.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_subject_access_control</span></span>
+    </a>
+    <span class="counter">lesson 04 / 11</span>
+    <a class="next" href="05_secrets_management.html">
+      <span><span class="lbl">next</span><span class="file">05_secrets_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / user_identity_control</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

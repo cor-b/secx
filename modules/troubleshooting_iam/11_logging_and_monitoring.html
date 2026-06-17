@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logging and Monitoring / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/logging_and_monitoring</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 11 / troubleshooting iam / Logging &amp; Monitoring</span>
+  <h1 class="module-title">Logging and Monitoring</h1>
+  <p class="subtitle">Two halves of oversight: logging records who did what and when, monitoring watches those records for the patterns that signal an attack.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Logging and monitoring record and analyze access events and user activity to detect, investigate, and respond to incidents. <strong>Logging</strong> is the collection of data on user actions, system changes, and access attempts. <strong>Monitoring</strong> is the real-time or periodic review of those logs to identify unusual or unauthorized activity. SIEM systems tie them together.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">half 01</span>
+      <p class="card-name">Logging</p>
+      <p class="card-desc">Capture and centralize records of actions, changes, and access attempts. Use log collectors (Fluentd) and SIEM aggregation + normalization.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">half 02</span>
+      <p class="card-name">Monitoring</p>
+      <p class="card-desc">Continuously review logs for anomalies (failed logins, odd locations). Automated tools and SIEM alerts drive fast response.</p>
+    </div>
+  </div>
+
+  <h2>logging</h2>
+
+  <p>Logging captures and records detailed information about actions, changes, and access attempts across a system or network. Enterprise environments generate millions of events daily from users, processes, applications, and network devices, an essential trail for investigations and audits. To manage the volume, organizations use <strong>log collectors</strong> (e.g. <strong>Fluentd</strong>, open-source) that centralize logs from many sources into one place for easier storage, search, and analysis.</p>
+
+  <p>Once collected, logs are processed by <strong>SIEM</strong> (security information and event management) systems. A SIEM <strong>aggregates</strong> logs from many sources, then <strong>normalizes</strong> them, converting varied formats, fields, and timestamps into a consistent structure so events can be correlated across systems. Logs must also be securely stored and retained to meet regulatory requirements and remain accessible for audits.</p>
+
+  <h2>monitoring</h2>
+
+  <p>Monitoring continuously reviews logs and events, in real time or at intervals, to detect unusual activity signaling threats. Where logging provides raw data, monitoring actively looks for indicators of attack or compromise: repeated failed login attempts, access from unusual locations, unauthorized system changes. Because no team can manually review all logs, automated tools use predefined rules and algorithms to flag abnormal patterns and generate <strong>alerts</strong> for investigation.</p>
+
+  <p><strong>SIEM</strong> systems are central to monitoring, providing real-time alerts, dashboards, and data correlation across sources, e.g. connecting multiple unauthorized access attempts across geographic locations into a single alert. Other tools include <strong>intrusion detection systems</strong> (monitor network traffic for suspicious behavior) and dedicated log monitoring solutions like <strong>Graylog</strong> and <strong>SolarWinds</strong>.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Logging = collecting records of actions/changes/access; monitoring = reviewing those logs to detect threats.</li>
+      <li>Log collectors (Fluentd) centralize logs; SIEMs aggregate and normalize them into a consistent format for correlation.</li>
+      <li>Normalization converts different log formats into one structure so events can be correlated across systems.</li>
+      <li>Monitoring flags anomalies (failed logins, unusual locations) and generates alerts; SIEM correlates across sources/regions.</li>
+      <li>Other tools: IDS, Graylog, SolarWinds. Logs must be retained for compliance.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario centralizes logs from many sources → <strong>log collector (Fluentd)</strong></li>
+        <li>Scenario converts varied log formats into one structure → <strong>normalization (SIEM)</strong></li>
+        <li>Scenario correlates access attempts across regions and alerts → <strong>SIEM monitoring</strong></li>
+        <li>Scenario records who accessed what and when → <strong>logging</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="10_conditional_access.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">10_conditional_access</span></span>
+    </a>
+    <span class="counter">lesson 11 / 11</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">troubleshooting_iam/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / logging_and_monitoring</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

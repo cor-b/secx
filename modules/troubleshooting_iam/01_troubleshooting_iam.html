@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troubleshooting IAM / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_iam/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_iam</a>
+
+  <span class="module-tag">lesson 01 / troubleshooting iam / Overview</span>
+  <h1 class="module-title">Troubleshooting IAM</h1>
+  <p class="subtitle">Right people, right access, right resources, right time. Managing identities and controlling who and what can reach enterprise resources, on-prem and in the cloud.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3 (Security Engineering), Objective 3.1: troubleshoot common issues with identity and access management components in an enterprise environment. IAM ensures the right people have the right access to the right resources at the right time, through management frameworks, subject and user identity controls, secrets management, authentication/authorization protocols, cloud IAM policies, WiFi auth, access control, conditional access, and logging/monitoring.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Identity &amp; Subjects</p>
+      <p class="card-desc">Management frameworks (proofing, PIM), subject access control (users/processes/devices/services), user identity control (credentials, biometrics, MFA), secrets management.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Auth Protocols</p>
+      <p class="card-desc">Authentication and authorization (SAML, OpenID, OAuth, federation), cloud IAM access and trust policies, WiFi authentication (802.1X, EAP, SAE).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Control &amp; Oversight</p>
+      <p class="card-desc">Access control (SSO, Kerberos, PAM), conditional access (binding, time, location), logging and monitoring.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Management Frameworks</td><td>identity proofing, privileged identity management (PIM)</td></tr>
+      <tr><td>03</td><td>Subject Access Control</td><td>users, processes, devices, services</td></tr>
+      <tr><td>04</td><td>User Identity Control</td><td>credentials, biometrics (CER/FAR/FRR), MFA factors</td></tr>
+      <tr><td>05</td><td>Secrets Management</td><td>tokens, certificates, passwords, keys, rotation, deletion</td></tr>
+      <tr><td>06</td><td>Authentication &amp; Authorization</td><td>attestation, SAML, OpenID, OAuth, federation</td></tr>
+      <tr><td>07</td><td>Cloud IAM &amp; Trust Policies</td><td>access policies, trust policies, cross-account roles</td></tr>
+      <tr><td>08</td><td>WiFi Authentication</td><td>802.1X, EAP types, SAE (WPA3)</td></tr>
+      <tr><td>09</td><td>Access Control</td><td>SSO, Kerberos, PAM (sudoers)</td></tr>
+      <tr><td>10</td><td>Conditional Access</td><td>configuration, user-to-device binding, time, geolocation</td></tr>
+      <tr><td>11</td><td>Logging &amp; Monitoring</td><td>log collectors, SIEM, normalization, alerting</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">troubleshooting_iam/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 11</span>
+    <a class="next" href="02_management_frameworks.html">
+      <span><span class="lbl">next</span><span class="file">02_management_frameworks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_iam / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
