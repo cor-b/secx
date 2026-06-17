@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptographic Blockers / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/cryptographic_blockers</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 02 / advanced cryptographic concepts / Cryptographic Blockers</span>
+  <h1 class="module-title">Cryptographic Blockers</h1>
+  <p class="subtitle">The constant tension in crypto: stronger algorithms cost more compute and add latency. The blocker is finding the right point on the performance-vs-security curve.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cryptographic blockers are obstacles that hinder or delay effective encryption, and the central one is the <strong>performance vs security</strong> trade-off. Stronger algorithms (longer keys, more rounds) give more protection but consume more compute and add latency. The art is matching cryptographic strength to acceptable risk, often using hardware acceleration to get strong security without crippling performance.</p>
+  </div>
+
+  <h2>performance vs security</h2>
+
+  <p>The trade-off pits computational speed against the strength of protection. Stronger algorithms cost more overhead, which slows the systems relying on them. The classic comparison:</p>
+
+  <dl class="def">
+    <dt>AES-256</dt>
+    <dd>One of the most secure standards, long key, many rounds of substitution/permutation/mixing.
+      <span class="detail">Highly resistant to brute force (and better against future threats), but resource-heavy, a bottleneck for systems needing rapid processing (high-frequency trading, large-scale services).</span>
+    </dd>
+    <dt>AES-128</dt>
+    <dd>Fewer rounds, shorter key, faster.
+      <span class="detail">Still secure against most attacks today, but less protection against future threats like quantum computing.</span>
+    </dd>
+  </dl>
+
+  <p>The choice between them hinges on the required security level and the acceptable performance impact, critical in domains like military comms or financial transactions.</p>
+
+  <h2>latency and bandwidth</h2>
+
+  <p>Heavy cryptographic computation introduces latency, slowing how fast data is processed and transmitted. For example, TLS can be configured with different cipher suites: more secure options (ECC with longer keys) raise security but can delay page loads and hurt user experience.</p>
+
+  <h2>mitigation: hardware acceleration</h2>
+
+  <p>Organizations soften the trade-off with <strong>hardware acceleration</strong>, dedicated cryptographic processors or hardware security modules that offload the heavy crypto work. This lets strong algorithms run fast, the best of both worlds, making robust encryption feasible even in high-performance environments. Ultimately the decision is about matching cryptographic strength to acceptable risk; for critical applications the emphasis stays on maximum security, even if it means more powerful hardware or slower processing.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>The core cryptographic blocker is performance vs security: stronger crypto = more compute and latency.</li>
+      <li>AES-256 is more secure but slower/heavier; AES-128 is faster but offers less future-proofing.</li>
+      <li>Heavy crypto adds latency/bandwidth cost; TLS cipher-suite choice trades security against page-load speed.</li>
+      <li>Hardware acceleration (dedicated crypto processors, HSMs) resolves the trade-off, strong encryption without the performance hit.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario weighs algorithm strength against processing speed → <strong>performance vs security trade-off</strong></li>
+        <li>Scenario needs maximum protection for sensitive data, accepts slower speed → <strong>AES-256</strong></li>
+        <li>Scenario needs strong crypto without the performance penalty → <strong>hardware acceleration</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_advanced_cryptographic_concepts.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_advanced_cryptographic_concepts</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_key_management.html">
+      <span><span class="lbl">next</span><span class="file">03_key_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / cryptographic_blockers</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

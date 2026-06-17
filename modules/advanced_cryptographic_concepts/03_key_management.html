@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/key_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 03 / advanced cryptographic concepts / Key Management</span>
+  <h1 class="module-title">Key Management</h1>
+  <p class="subtitle">Two techniques that harden keys: stretching slows down brute force on weak keys, and splitting means no single party (or breach) holds the whole key.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Key management is the lifecycle of generating, distributing, storing, and handling cryptographic keys. Two techniques: <strong>key stretching</strong> strengthens weak/short keys (like passwords) with thousands of hashing iterations to make brute force expensive, and <strong>key splitting</strong> divides a key into parts stored separately so no single point of compromise exposes it.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">technique 01</span>
+      <p class="card-name">Key Stretching</p>
+      <p class="card-desc">Iterative hashing/encryption of a weak key (PBKDF2, Bcrypt) plus salting, making each brute-force guess slow and rainbow tables useless.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">technique 02</span>
+      <p class="card-name">Key Splitting</p>
+      <p class="card-desc">Divide a key into parts stored separately; only combining all parts reconstructs it. No single breach exposes the key.</p>
+    </div>
+  </div>
+
+  <h2>key stretching</h2>
+
+  <p>Key stretching repeatedly runs a key through thousands of rounds of hashing/encryption, turning a simple key into a longer, more complex one (often extended to at least 128 bits). It doesn't make the key inherently stronger, but it makes every brute-force attempt go through the same expensive process, dramatically slowing an attacker. Two common methods:</p>
+
+  <dl class="def">
+    <dt>PBKDF2</dt>
+    <dd>Combines the password with a salt and runs HMAC many times.
+      <span class="detail">Originally ~1,000 iterations; modern guidance recommends 310,000+ with HMAC-SHA-256.</span>
+    </dd>
+    <dt>Bcrypt</dt>
+    <dd>Adaptive hashing + salting that can raise its iteration count over time as hardware improves.
+      <span class="detail">Stays resistant to brute force as computers get faster; used in OpenBSD and Linux distros to protect stored passwords.</span>
+    </dd>
+  </dl>
+
+  <p><strong>Salting</strong> adds random data to each password before hashing, so identical passwords produce different hashes. This defeats <strong>rainbow table attacks</strong> (precomputed hash-to-plaintext lookups) and prevents a cracked password on one system from being reused elsewhere.</p>
+
+  <h2>key splitting</h2>
+
+  <p>Key splitting divides a single cryptographic key into separate pieces, each stored independently; only by combining all parts can the key be reconstructed and used. Even if an attacker grabs one part, they can't decrypt anything, eliminating a single point of failure. It's used where multiple parties must cooperate to access sensitive data (finance, government, sensitive corporate info). Example: a banking system requires three parts, one on the bank's servers, one in an HSM, and a one-time code sent to the user, all three must combine to grant access.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Key stretching makes brute-forcing weak keys slow via thousands of iterations. PBKDF2 and Bcrypt are the named methods.</li>
+      <li>Salting adds random data per password so identical passwords hash differently, defeating rainbow tables.</li>
+      <li>Bcrypt is adaptive: it can increase iterations over time as hardware improves.</li>
+      <li>Key splitting divides a key into separately-stored parts; all parts are needed to reconstruct it, no single point of compromise.</li>
+      <li>Rainbow table = precomputed hash-to-plaintext lookups; salting is the countermeasure.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario slows password cracking with many hashing iterations → <strong>key stretching (PBKDF2/Bcrypt)</strong></li>
+        <li>Scenario adds random data so identical passwords differ → <strong>salting</strong></li>
+        <li>Scenario uses precomputed hash tables to crack passwords → <strong>rainbow table attack</strong></li>
+        <li>Scenario requires multiple stored parts to rebuild one key → <strong>key splitting</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_cryptographic_blockers.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_cryptographic_blockers</span></span>
+    </a>
+    <span class="counter">lesson 03 / 09</span>
+    <a class="next" href="04_encryption_techniques.html">
+      <span><span class="lbl">next</span><span class="file">04_encryption_techniques</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / key_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

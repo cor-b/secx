@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Properties / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/security_properties</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 05 / advanced cryptographic concepts / Security Properties</span>
+  <h1 class="module-title">Security Properties</h1>
+  <p class="subtitle">Two properties that strengthen sessions: mutual authentication makes both sides prove who they are, and forward secrecy keeps past sessions safe even if a key leaks later.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Two cryptographic security properties: <strong>mutual authentication</strong>, where both parties verify each other's identity before exchanging data (not just the client trusting the server), and <strong>forward secrecy</strong> (perfect forward secrecy), where unique per-session keys ensure that compromising one key can't decrypt past or future sessions.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">property 01</span>
+      <p class="card-name">Mutual Authentication</p>
+      <p class="card-desc">Both client and server prove their identity (via certificates/keys) before data flows. Two-way trust that blocks impostors and on-path attacks.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">property 02</span>
+      <p class="card-name">Forward Secrecy</p>
+      <p class="card-desc">Unique session keys per session, never reused. A compromised key exposes only that one session, not past or future ones.</p>
+    </div>
+  </div>
+
+  <h2>mutual authentication</h2>
+
+  <p>Mutual authentication has both parties verify each other before any data is exchanged: the client confirms the server, and the server confirms the client. It's like showing your ID to a security guard who must also show you their credentials, only when both are satisfied does interaction proceed. In practice it uses digital certificates or keys exchanged before sensitive data flows. Common in online banking and VPNs, it establishes two-way trust and blocks unauthorized access and on-path attacks.</p>
+
+  <h2>forward secrecy</h2>
+
+  <p>Forward secrecy (perfect forward secrecy) generates a unique encryption key for each session and never reuses it. So traffic captured today can't be decrypted later, and a key compromised today doesn't expose past or future sessions.</p>
+
+  <p>Older SSL/TLS used the server's long-term RSA key to protect sessions: the client encrypted a session key with the server's public key. The flaw, if that private key were ever stolen, an attacker could decrypt <em>all</em> previously captured traffic. The 2014 <strong>Heartbleed</strong> bug (an OpenSSL TLS heartbeat flaw leaking server memory, including private keys) showed exactly why this matters; forward secrecy would have prevented decryption of past sessions.</p>
+
+  <p>Forward secrecy avoids this by using ephemeral key agreement like <strong>Diffie-Hellman</strong>, which never exposes a long-term private key. It's standard in modern VPNs, <strong>TLS 1.3</strong>, and SSH, and is built into <strong>WPA3</strong> via Simultaneous Authentication of Equals (SAE).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Mutual authentication = BOTH parties verify each other (two-way), not just the client checking the server.</li>
+      <li>Forward secrecy (perfect forward secrecy) = unique per-session keys; a leaked key exposes only that session.</li>
+      <li>Heartbleed (2014) is the example: leaked private keys could decrypt past traffic, forward secrecy would have prevented it.</li>
+      <li>Forward secrecy relies on ephemeral Diffie-Hellman and is in TLS 1.3, VPNs, SSH, and WPA3 (SAE).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario has both client and server prove identity before data flows → <strong>mutual authentication</strong></li>
+        <li>Scenario keeps past sessions safe even after a key is compromised → <strong>forward secrecy</strong></li>
+        <li>Scenario references leaked private keys decrypting old captured traffic → <strong>lack of forward secrecy (Heartbleed)</strong></li>
+        <li>Scenario uses unique per-session ephemeral keys → <strong>perfect forward secrecy</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_encryption_techniques.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_encryption_techniques</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_collaborative_considerations.html">
+      <span><span class="lbl">next</span><span class="file">06_collaborative_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / security_properties</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collaborative Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/collaborative_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 06 / advanced cryptographic concepts / Collaborative Considerations</span>
+  <h1 class="module-title">Collaborative Considerations</h1>
+  <p class="subtitle">Two ways multiple parties can compute on private data without exposing it: process data while it stays encrypted, or jointly compute a result without sharing inputs.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Collaborative cryptography lets parties compute and share without giving up privacy. <strong>Homomorphic encryption</strong> performs computations on encrypted data without decrypting it. <strong>Secure multi-party computation (SMPC)</strong> lets several parties jointly compute a result from their private inputs without revealing those inputs to each other.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">technique 01</span>
+      <p class="card-name">Homomorphic Encryption</p>
+      <p class="card-desc">Compute on encrypted data without decrypting it; only the data owner's private key can reveal results. Great for outsourcing to the cloud.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">technique 02</span>
+      <p class="card-name">Secure Multi-Party Computation</p>
+      <p class="card-desc">Multiple parties jointly compute a result from private inputs; no one learns anyone else's input, only the final outcome.</p>
+    </div>
+  </div>
+
+  <h2>homomorphic encryption</h2>
+
+  <p>Homomorphic encryption allows computation on data <em>without</em> decrypting it first, so an organization can outsource processing to a cloud provider that operates on the encrypted data but can never read it (the private key is never shared). Three types by capability:</p>
+
+  <dl class="def">
+    <dt>Partially homomorphic</dt>
+    <dd>Supports one operation (e.g. addition or multiplication) on the encrypted data.</dd>
+    <dt>Somewhat homomorphic</dt>
+    <dd>Supports a limited set of operations a limited number of times.</dd>
+    <dt>Fully homomorphic</dt>
+    <dd>Supports any computation on the encrypted data while keeping it secure.</dd>
+  </dl>
+
+  <p>It's invaluable for finance and healthcare, but currently very slow; Microsoft and IBM are working to make it practical. Exam takeaway: homomorphic encryption processes encrypted data without decrypting it, and only the owner's private key can decrypt the results.</p>
+
+  <h2>secure multi-party computation (SMPC)</h2>
+
+  <p>SMPC lets multiple parties jointly compute a function over their private inputs without revealing those inputs to each other, protecting data even from the other participants. Example: several companies compute the average of their sales without exposing individual figures, each inputs its data, everyone sees only the average. It uses techniques like Secure Function Evaluation (jointly evaluate a known function without revealing inputs) and Private Function Evaluation (compute without revealing inputs <em>or</em> the function). It's ideal for joint data analysis, secure voting, and any case where data must stay confidential while still contributing to a shared result.</p>
+
+  <p>The difference: homomorphic encryption keeps data encrypted during computation; SMPC keeps each party's plaintext input private from the others.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Homomorphic encryption = compute on encrypted data without decrypting it; only the owner's private key reveals results.</li>
+      <li>Homomorphic types: partial (one operation), somewhat (limited ops), fully (any computation).</li>
+      <li>SMPC = multiple parties jointly compute a result from private inputs; no one sees the others' inputs, just the outcome.</li>
+      <li>Key distinction: homomorphic keeps DATA encrypted during processing; SMPC keeps each party's INPUT private from the others.</li>
+      <li>Homomorphic encryption's main drawback today is being very slow.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario has a cloud provider compute on data it can never read → <strong>homomorphic encryption</strong></li>
+        <li>Scenario has companies compute a shared average without revealing their numbers → <strong>secure multi-party computation</strong></li>
+        <li>Scenario needs any operation on data that stays encrypted throughout → <strong>fully homomorphic encryption</strong></li>
+        <li>Scenario protects inputs from the other participants, not just outsiders → <strong>SMPC</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_security_properties.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_security_properties</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_performance_considerations.html">
+      <span><span class="lbl">next</span><span class="file">07_performance_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / collaborative_considerations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

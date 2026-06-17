@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Cryptographic Concepts / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 01 / advanced cryptographic concepts / Overview</span>
+  <h1 class="module-title">Advanced Cryptographic Concepts</h1>
+  <p class="subtitle">Beyond the basics: managing keys, choosing techniques, balancing security against speed, computing on encrypted data, and preparing for the quantum era.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 3, Objective 3.7: explain the importance of advanced cryptographic concepts. As threats evolve, so do the trade-offs, between performance and security, the techniques that add integrity and authenticity, the properties that keep sessions safe, the methods that let parties collaborate on encrypted data, and the looming shift to <strong>post-quantum cryptography</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">theme 01</span>
+      <p class="card-name">Keys &amp; Techniques</p>
+      <p class="card-desc">Cryptographic blockers (performance vs security), key management (stretching, splitting), and encryption techniques (AEAD, envelope encryption).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 02</span>
+      <p class="card-name">Properties &amp; Collaboration</p>
+      <p class="card-desc">Security properties (mutual authentication, forward secrecy) and collaborative crypto (homomorphic encryption, secure multi-party computation).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 03</span>
+      <p class="card-name">Performance</p>
+      <p class="card-desc">Hardware acceleration (HSM, TPM, GPU, crypto NICs) to keep strong encryption fast.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">theme 04</span>
+      <p class="card-name">Post-Quantum</p>
+      <p class="card-desc">Quantum computing's threat to today's crypto and the quantum-resistant algorithms being built to survive it.</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Cryptographic Blockers</td><td>performance vs security, AES-256 vs AES-128, latency/bandwidth</td></tr>
+      <tr><td>03</td><td>Key Management</td><td>key stretching (PBKDF2, Bcrypt, salting, rainbow tables), key splitting</td></tr>
+      <tr><td>04</td><td>Encryption Techniques</td><td>AEAD (AES-GCM, nonce), envelope encryption (data key + master key)</td></tr>
+      <tr><td>05</td><td>Security Properties</td><td>mutual authentication, forward secrecy (Heartbleed, ephemeral keys)</td></tr>
+      <tr><td>06</td><td>Collaborative Considerations</td><td>homomorphic encryption, secure multi-party computation (SMPC)</td></tr>
+      <tr><td>07</td><td>Performance Considerations</td><td>hardware acceleration (HSM, TPM, GPU, Intel QuickAssist)</td></tr>
+      <tr><td>08</td><td>Post-Quantum Cryptography</td><td>qubits, superposition, Shor's algorithm, threat to DH/ECC, lattice-based</td></tr>
+      <tr><td>09</td><td>Post-Quantum Implications</td><td>lattice/hash/multivariate, code-based (McEliece), quantum key distribution</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">advanced_cryptographic_concepts/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 09</span>
+    <a class="next" href="02_cryptographic_blockers.html">
+      <span><span class="lbl">next</span><span class="file">02_cryptographic_blockers</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

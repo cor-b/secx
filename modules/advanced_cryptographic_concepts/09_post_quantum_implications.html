@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-Quantum Implications / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/post_quantum_implications</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 09 / advanced cryptographic concepts / Post-Quantum Implications</span>
+  <h1 class="module-title">Post-Quantum Implications</h1>
+  <p class="subtitle">The families of quantum-resistant algorithms being built, and emerging approaches like code-based crypto and quantum key distribution.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Preparing for quantum means two things: <strong>resistance to quantum decryption attacks</strong> (algorithms built on problems quantum computers struggle with, lattice-based, hash-based, multivariate polynomial) and <strong>emerging implementations</strong> (code-based cryptography and quantum key distribution) being tested for the quantum era.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Quantum-Resistant Algorithms</p>
+      <p class="card-desc">Lattice-based, hash-based, and multivariate polynomial cryptography, each posing math problems quantum computers can't solve efficiently.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Emerging Implementations</p>
+      <p class="card-desc">Code-based cryptography (McEliece) and quantum key distribution (QKD), gaining traction for quantum-era security.</p>
+    </div>
+  </div>
+
+  <h2>resistance to quantum decryption attacks</h2>
+
+  <dl class="def">
+    <dt>Lattice-based cryptography</dt>
+    <dd>Security from the difficulty of problems in high-dimensional grids (lattices).
+      <span class="detail">Imagine a grid extending across hundreds or thousands of dimensions, quantum algorithms don't reduce it to a form they solve well. The leading PQC approach; supports encryption, signatures, and key exchange.</span>
+    </dd>
+    <dt>Hash-based cryptography</dt>
+    <dd>Security from the difficulty of reversing cryptographic hash functions.
+      <span class="detail">Creating a hash is easy; reversing it or finding a collision is computationally intensive even for quantum computers. Used for quantum-resistant digital signatures.</span>
+    </dd>
+    <dt>Multivariate polynomial cryptography</dt>
+    <dd>Security from the difficulty of solving systems of nonlinear equations with many variables.
+      <span class="detail">Easy to create, extremely hard to reverse without the key, like a riddle where every answer depends on many others. A different problem class quantum computers don't align with well.</span>
+    </dd>
+  </dl>
+
+  <h2>emerging implementations</h2>
+
+  <dl class="def">
+    <dt>Code-based cryptography</dt>
+    <dd>Security from the difficulty of decoding random linear codes.
+      <span class="detail">The McEliece cryptosystem (decades old) is getting renewed attention for its quantum resistance, suited to large-scale systems like cloud storage. Drawback: it needs larger key sizes than traditional methods.</span>
+    </dd>
+    <dt>Quantum key distribution (QKD)</dt>
+    <dd>Uses quantum mechanics (qubits) rather than math to share a key securely.
+      <span class="detail">Qubits can't be observed or copied without altering their state, so any eavesdropping is detectable, making QKD theoretically immune to quantum attacks. Being tested in finance and government communications.</span>
+    </dd>
+  </dl>
+
+  <p>Note the contrast: the quantum-resistant algorithms are classical math designed to resist quantum attacks, while QKD uses quantum physics itself to secure the key exchange.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Quantum-resistant families: lattice-based (leading approach), hash-based (signatures), multivariate polynomial (nonlinear equations).</li>
+      <li>Lattice-based is the most prominent PQC approach for encryption, signatures, and key exchange.</li>
+      <li>Code-based cryptography = McEliece, strong resistance but large keys.</li>
+      <li>Quantum key distribution (QKD) uses qubits; eavesdropping alters their state and is detectable, theoretically immune to quantum attacks.</li>
+      <li>PQC algorithms are classical math resistant to quantum attacks; QKD uses quantum physics directly.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario adopts the leading quantum-resistant algorithm family → <strong>lattice-based cryptography</strong></li>
+        <li>Scenario builds quantum-safe signatures on hash difficulty → <strong>hash-based cryptography</strong></li>
+        <li>Scenario references the McEliece cryptosystem → <strong>code-based cryptography</strong></li>
+        <li>Scenario detects eavesdropping because observing qubits changes them → <strong>quantum key distribution</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_post_quantum_cryptography.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_post_quantum_cryptography</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">advanced_cryptographic_concepts/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / post_quantum_implications</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

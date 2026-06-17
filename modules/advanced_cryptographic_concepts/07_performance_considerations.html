@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/performance_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 07 / advanced cryptographic concepts / Performance Considerations</span>
+  <h1 class="module-title">Performance Considerations</h1>
+  <p class="subtitle">Strong encryption is expensive to compute. Hardware acceleration offloads that work to dedicated chips, like adding cashiers to a slow checkout line.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Performance considerations balance strong security with speed. The primary tool is <strong>hardware acceleration</strong>: dedicated cryptographic processors and chips that perform encryption/decryption far faster than software, offloading work from general-purpose CPUs. It's essential where both speed and security matter, high-frequency trading, VPNs, SSL/TLS.</p>
+  </div>
+
+  <h2>hardware acceleration</h2>
+
+  <p>Hardware acceleration uses specialized components to run cryptographic operations much faster than software. Like a busy grocery store adding staff so one person scans, another takes payment, and a third bags, dedicated hardware splits the crypto workload off the CPU. Common components:</p>
+
+  <ul>
+    <li><strong>Hardware Security Modules (HSM)</strong> — manage keys and perform encryption in dedicated hardware</li>
+    <li><strong>Trusted Platform Modules (TPM)</strong> — secure encryption, authentication, and key storage on a computer</li>
+    <li><strong>GPUs</strong> — exploit parallel processing for cryptographic tasks</li>
+    <li><strong>Crypto-accelerating network cards</strong> (e.g. Intel QuickAssist Technology) — accelerate crypto at the network level</li>
+  </ul>
+
+  <p>Each is optimized for specific algorithms, reducing CPU load and boosting overall performance. This matters most where every millisecond counts (trading platforms) and at scale (web servers, data centers, financial services), where it keeps encryption from becoming a bottleneck for VPNs and SSL/TLS.</p>
+
+  <p>An OpenSSL speed test makes the impact concrete: with AES-256 hardware acceleration enabled, throughput is in the millions of bytes/sec per block size; disable it and throughput drops to the hundreds of thousands, a dramatic slowdown that shows how much the dedicated hardware contributes.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Hardware acceleration offloads crypto to dedicated hardware so strong encryption stays fast, the answer to the performance-vs-security trade-off.</li>
+      <li>Components: HSM (key management + crypto), TPM (on-device keys/auth), GPUs (parallel processing), crypto NICs (Intel QuickAssist).</li>
+      <li>Used heavily in VPNs and SSL/TLS to keep secure connections fast at scale.</li>
+      <li>Removing hardware acceleration sharply cuts cryptographic throughput (millions → hundreds of thousands of bytes/sec).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs fast crypto without burdening the CPU → <strong>hardware acceleration</strong></li>
+        <li>Scenario uses a dedicated appliance to manage keys and do encryption → <strong>HSM</strong></li>
+        <li>Scenario accelerates encryption at the network card level → <strong>crypto NIC (Intel QuickAssist)</strong></li>
+        <li>Scenario needs fast SSL/TLS at high traffic volumes → <strong>hardware acceleration</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_collaborative_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_collaborative_considerations</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_post_quantum_cryptography.html">
+      <span><span class="lbl">next</span><span class="file">08_post_quantum_cryptography</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / performance_considerations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

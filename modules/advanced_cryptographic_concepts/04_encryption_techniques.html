@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encryption Techniques / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/encryption_techniques</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 04 / advanced cryptographic concepts / Encryption Techniques</span>
+  <h1 class="module-title">Encryption Techniques</h1>
+  <p class="subtitle">Two techniques that go beyond plain confidentiality: AEAD also guarantees integrity and authenticity, and envelope encryption protects the keys with more keys.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Two advanced techniques: <strong>AEAD</strong> (Authenticated Encryption with Associated Data) provides confidentiality, integrity, and authenticity at once, for both the encrypted message and unencrypted-but-protected associated data. <strong>Envelope encryption</strong> uses two layers: a data key encrypts the data, then a master key encrypts the data key.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">technique 01</span>
+      <p class="card-name">AEAD</p>
+      <p class="card-desc">Confidentiality + integrity + authenticity in one. Protects the encrypted message and the visible-but-protected associated data. Uses AES-GCM, a nonce, and an auth tag.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">technique 02</span>
+      <p class="card-name">Envelope Encryption</p>
+      <p class="card-desc">Data key encrypts the data; a master key encrypts the data key. Two layers, like a locked box inside a safe.</p>
+    </div>
+  </div>
+
+  <h2>authenticated encryption with associated data (AEAD)</h2>
+
+  <p>AEAD keeps data private <em>and</em> proves it wasn't tampered with and came from a legitimate source. It protects both the encrypted data and the <strong>associated data</strong> (additional authenticated data), information that stays unencrypted but must not be altered. Think of a sealed package (encrypted data) with a visible-but-protected label (associated data): tampering with either breaks the security seal (the authentication tag) and alerts the receiver.</p>
+
+  <p>AEAD is realized with modes like <strong>AES-GCM</strong> (Galois/Counter Mode). It takes four inputs: a secret key, a <strong>nonce/IV</strong> (a unique, single-use value ensuring identical plaintext produces different ciphertext), the plaintext, and optional associated data. It outputs ciphertext plus an <strong>authentication tag</strong> the receiver uses to verify integrity and authenticity.</p>
+
+  <h2>envelope encryption</h2>
+
+  <p>Envelope encryption uses two layers. A <strong>data key</strong> encrypts the data; that data key is then encrypted by a stronger <strong>master key</strong> (often managed separately with asymmetric crypto like RSA). The analogy: lock valuables in a box (data key), then put the box in a safe (master key). It's common in cloud services and secure apps because the data key can be rotated frequently without touching the master key, making key management flexible while keeping both data and keys protected.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>AEAD = confidentiality + integrity + authenticity together, including for the unencrypted associated data. AES-GCM is the classic AEAD mode.</li>
+      <li>AEAD inputs: key, nonce/IV (unique per use), plaintext, optional associated data → outputs ciphertext + authentication tag.</li>
+      <li>Envelope encryption = data key encrypts data; master key encrypts the data key (two layers).</li>
+      <li>Envelope encryption lets you rotate the data key often without changing the master key.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs encryption that also detects tampering and proves authenticity → <strong>AEAD</strong></li>
+        <li>Scenario protects a visible header/label alongside encrypted content → <strong>AEAD associated data</strong></li>
+        <li>Scenario encrypts a data key with a master key → <strong>envelope encryption</strong></li>
+        <li>Scenario names AES-GCM → <strong>AEAD mode</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_key_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_key_management</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_security_properties.html">
+      <span><span class="lbl">next</span><span class="file">05_security_properties</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / encryption_techniques</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-Quantum Cryptography / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/advanced_cryptographic_concepts/post_quantum_cryptography</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /advanced_cryptographic_concepts</a>
+
+  <span class="module-tag">lesson 08 / advanced cryptographic concepts / Post-Quantum Cryptography</span>
+  <h1 class="module-title">Post-Quantum Cryptography</h1>
+  <p class="subtitle">Quantum computers will break today's public-key crypto. Post-quantum cryptography is the new generation of algorithms built to survive them.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Post-quantum cryptography (PQC) is cryptographic algorithms designed to withstand quantum computers, whose immense power threatens current encryption. Quantum machines use <strong>qubits</strong> (which exploit <strong>superposition</strong> and <strong>entanglement</strong> to compute many possibilities at once), and <strong>Shor's algorithm</strong> can break the math behind <strong>Diffie-Hellman</strong> and <strong>ECC</strong>. The defenses: bigger keys for symmetric crypto and new quantum-resistant algorithms like lattice-based cryptography.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Quantum Computing</p>
+      <p class="card-desc">Qubits use superposition (many states at once) and entanglement to perform massive parallel computation, threatening today's crypto.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">The Threat</p>
+      <p class="card-desc">Shor's algorithm can solve the math behind Diffie-Hellman and ECC, rendering them breakable once quantum computers mature.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">The Defense</p>
+      <p class="card-desc">Increase key sizes (AES-128 → AES-256) and adopt quantum-resistant algorithms (lattice-based). NIST is standardizing PQC.</p>
+    </div>
+  </div>
+
+  <h2>how quantum computing works</h2>
+
+  <p>Classical computers use bits (0 or 1); quantum computers use <strong>qubits</strong>, which via <strong>superposition</strong> can be 0 and 1 at once, and via <strong>entanglement</strong> are interlinked so one qubit's state instantly affects another. This lets quantum machines evaluate many possibilities simultaneously, solving certain problems far faster than classical supercomputers. As of recent figures, processors run roughly 50–500 qubits (IBM's Osprey ~433, Google's Sycamore ~53), but most estimates say a machine needs around <strong>3,000+ qubits</strong> to threaten today's algorithms, with capable quantum computers possibly arriving by ~2030.</p>
+
+  <h2>the threat to Diffie-Hellman and ECC</h2>
+
+  <p>DH and ECC secure today's key exchanges and signatures through hard math problems (discrete logarithms, elliptic curves). <strong>Shor's algorithm</strong> on a quantum computer can solve those efficiently, so once quantum machines mature, DH and ECC become breakable, this is what drives PQC.</p>
+
+  <h2>two defensive strategies</h2>
+
+  <ul>
+    <li><strong>Increase key size</strong> — for symmetric algorithms, more key length means exponentially more combinations to brute force. Moving AES-128 → AES-256 doubles the key but exponentially extends crack time.</li>
+    <li><strong>Quantum-resistant algorithms</strong> — new algorithms built on problems quantum computers struggle with, notably <strong>lattice-based cryptography</strong> (e.g. Learning With Errors / Ring-LWE) and supersingular isogeny exchanges. NIST is running a competition to standardize PQC.</li>
+  </ul>
+
+  <p>Note the distinction: <em>quantum cryptography</em> uses quantum mechanics to secure communication (and detect eavesdropping); <em>post-quantum cryptography</em> is classical algorithms designed to resist quantum attacks.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Qubits use superposition (multiple states at once) and entanglement for massive parallelism, unlike classical 0/1 bits.</li>
+      <li>Shor's algorithm is the quantum threat: it breaks Diffie-Hellman and ECC by solving their underlying math.</li>
+      <li>Two defenses: increase key size (AES-256) for symmetric, and adopt quantum-resistant algorithms (lattice-based) for asymmetric.</li>
+      <li>A quantum computer needs roughly 3,000+ qubits to threaten current crypto; capable machines estimated ~2030. NIST is standardizing PQC.</li>
+      <li>Quantum cryptography (uses quantum physics) ≠ post-quantum cryptography (classical algorithms resistant to quantum attacks).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario names the algorithm that breaks DH/ECC on a quantum computer → <strong>Shor's algorithm</strong></li>
+        <li>Scenario hardens symmetric crypto against quantum brute force → <strong>increase key size (AES-256)</strong></li>
+        <li>Scenario adopts a quantum-resistant asymmetric algorithm → <strong>lattice-based cryptography</strong></li>
+        <li>Scenario describes qubits in multiple states at once → <strong>superposition</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_performance_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_performance_considerations</span></span>
+    </a>
+    <span class="counter">lesson 08 / 09</span>
+    <a class="next" href="09_post_quantum_implications.html">
+      <span><span class="lbl">next</span><span class="file">09_post_quantum_implications</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>advanced_cryptographic_concepts / post_quantum_cryptography</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
