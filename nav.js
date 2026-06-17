@@ -1,4 +1,24 @@
 (function () {
+  // Favicon: lessons live two levels under root, so the icon sits at ../../
+  if (!document.querySelector('link[rel="icon"]')) {
+    var fav = document.createElement('link');
+    fav.rel = 'icon';
+    fav.type = 'image/svg+xml';
+    fav.href = '../../favicon.svg';
+    document.head.appendChild(fav);
+  }
+
+  // Skip-to-content link for keyboard users.
+  var main = document.querySelector('.container');
+  if (main) {
+    if (!main.id) main.id = 'main';
+    var skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + main.id;
+    skip.textContent = 'skip to content';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
   var doc = document.documentElement;
   var fill = document.getElementById('progressFill');
   var toTop = document.getElementById('toTop');

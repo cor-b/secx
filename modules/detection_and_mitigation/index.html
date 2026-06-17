@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>detection_and_mitigation / study.notes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <style>
   :root {
     --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
@@ -18,7 +19,7 @@
     margin: 0; padding: 0;
     background: var(--bg); color: var(--ink);
     font-family: var(--font-mono);
-    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    font-size: 16px; line-height: 1.8; min-height: 100dvh; font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
   .subtitle, .overview p { font-family: var(--font-sans); }
@@ -72,11 +73,18 @@
     .ls-item { grid-template-columns: 70px 1fr auto; gap: 12px; }
     .ls-item .lesson-tag { display: none; }
   }
+  a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px; }
+  .skip-link { position: absolute; left: 12px; top: -52px; z-index: 100; background: var(--panel); color: var(--cyan); border: 1px solid var(--rule); padding: 9px 15px; font-size: 12px; letter-spacing: 0.06em; text-decoration: none; border-radius: 3px; transition: top 0.16s ease; }
+  .skip-link:focus { top: 12px; }
+  .ls-item:active { transform: translateY(1px); }
+  h1.section-title, .subtitle { text-wrap: balance; }
 </style>
 </head>
 <body>
 
-<div class="container">
+<a class="skip-link" href="#main">skip to content</a>
+
+<div class="container" id="main">
 
   <div class="meta-bar">
     <span class="left">cor@studynotes</span>

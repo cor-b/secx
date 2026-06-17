@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>study.notes / cor</title>
+<meta name="description" content="A personal study archive for CompTIA SecurityX: 30 sections and 264 lessons across governance, security architecture, engineering, and operations.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cor-b.github.io/secx/">
+<meta property="og:title" content="study.notes / cor">
+<meta property="og:description" content="A personal study archive for CompTIA SecurityX: 30 sections and 264 lessons across governance, architecture, engineering, and operations.">
+<meta name="twitter:card" content="summary">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -32,10 +39,22 @@
     font-family: var(--font-mono);
     font-size: 15px;
     line-height: 1.75;
-    min-height: 100vh;
+    min-height: 100dvh;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
+
+  a:focus-visible {
+    outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px;
+  }
+  .skip-link {
+    position: absolute; left: 12px; top: -52px; z-index: 100;
+    background: var(--panel); color: var(--cyan); border: 1px solid var(--rule);
+    padding: 9px 15px; font-size: 12px; letter-spacing: 0.06em;
+    text-decoration: none; border-radius: 3px; transition: top 0.16s ease;
+  }
+  .skip-link:focus { top: 12px; }
+  h1.title, .tagline { text-wrap: balance; }
 
   .container {
     max-width: 820px;
@@ -114,6 +133,7 @@
   }
   .ls-item:hover .filename { color: var(--cyan); }
   .ls-item:hover .arrow { color: var(--magenta); opacity: 1; transform: translateX(4px); }
+  .ls-item:active { transform: translateY(1px); }
 
   .perms {
     color: var(--ink-faint);
@@ -280,7 +300,9 @@
 </head>
 <body>
 
-<div class="container">
+<a class="skip-link" href="#main">skip to content</a>
+
+<div class="container" id="main">
 
   <div class="meta-bar">
     <span class="left">cor@studynotes</span>
