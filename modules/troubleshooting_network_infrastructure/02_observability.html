@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observability / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/observability</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 02 / troubleshooting network / Observability</span>
+  <h1 class="module-title">Observability</h1>
+  <p class="subtitle">More than monitoring. Understanding how a system behaves from the data it emits, so you can see a problem, grasp its cause, and pinpoint its source.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Observability is the ability to monitor, understand, and diagnose a system's internal state and performance from the data it produces. Unlike traditional monitoring (predefined metrics and alerts), it looks at the whole system and its interactions. Three concepts: <strong>monitoring</strong> (continuously collect data), <strong>understanding/analysis</strong> (build a baseline, spot anomalies), and <strong>diagnosis</strong> (find the root cause).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">step 01</span>
+      <p class="card-name">Monitoring</p>
+      <p class="card-desc">Continuously collect data: traffic patterns, error rates, system logs, response times, server load. The foundation.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">step 02</span>
+      <p class="card-name">Understanding</p>
+      <p class="card-desc">Analyze raw data to build a baseline of "normal" and highlight deviations (failed-login spikes, traffic surges).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">step 03</span>
+      <p class="card-name">Diagnosis</p>
+      <p class="card-desc">Locate the exact root cause (code, database, network, hardware, config, breach) for targeted, fast resolution.</p>
+    </div>
+  </div>
+
+  <h2>the three concepts</h2>
+
+  <p>Observability gives deep insight into a system's internal operations by observing the data it generates, going beyond monitoring to understanding behavior, detecting anomalies, and diagnosing root causes in real time. Tools like <strong>Datadog</strong> and <strong>New Relic</strong> unify metrics, logs, and traces in one platform for a full view of infrastructure and applications.</p>
+
+  <ul>
+    <li><strong>Monitoring:</strong> continuously collects data from many sources (network traffic, error rates, logs, response times, user activity, server load), giving a real-time picture so abnormal behavior is caught before it escalates.</li>
+    <li><strong>Understanding (analysis):</strong> processes raw data into insight. A spike in failed logins may signal a brute-force attack; an unexpected traffic increase may signal a DoS. Building a baseline of normal makes the abnormal visible.</li>
+    <li><strong>Diagnosis:</strong> finds the root cause, e.g. whether server downtime is a hardware failure, configuration error, or breach, enabling targeted troubleshooting and faster resolution.</li>
+  </ul>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Observability = monitor + understand + diagnose, broader than traditional monitoring (which is predefined metrics/alerts).</li>
+      <li>Monitoring collects data; analysis builds a baseline and spots deviations; diagnosis finds the root cause.</li>
+      <li>Datadog and New Relic unify metrics, logs, and traces for a full-system view.</li>
+      <li>The value is catching issues before they escalate and resolving them faster via accurate root-cause diagnosis.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs a unified view of metrics/logs/traces → <strong>observability tools (Datadog/New Relic)</strong></li>
+        <li>Scenario continuously collects traffic and log data → <strong>monitoring</strong></li>
+        <li>Scenario compares activity to a normal baseline → <strong>analysis/understanding</strong></li>
+        <li>Scenario pinpoints the exact root cause of an outage → <strong>diagnosis</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_troubleshooting_network_infrastructure.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_troubleshooting_network_infrastructure</span></span>
+    </a>
+    <span class="counter">lesson 02 / 11</span>
+    <a class="next" href="03_network_errors.html">
+      <span><span class="lbl">next</span><span class="file">03_network_errors</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / observability</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

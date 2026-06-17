@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Errors / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/network_errors</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 03 / troubleshooting network / Network Errors</span>
+  <h1 class="module-title">Network Errors</h1>
+  <p class="subtitle">When data stops flowing right: errors at the switch (layer 2), at the router (layer 3), and in the encrypted tunnels (VPN) that connect networks together.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Network errors disrupt the normal flow of data, usually from faults in configuration, hardware, or software. Three source types: <strong>switching errors</strong> (packets misdirected or dropped at a switch), <strong>routing errors</strong> (wrong or inefficient paths chosen), and <strong>VPN/tunnel errors</strong> (failures establishing or maintaining secure connections).</p>
+  </div>
+
+  <h2>switching errors</h2>
+
+  <p>Switching errors occur when packets are misdirected or dropped at a switch, from misconfiguration or hardware faults. Three common ones:</p>
+
+  <dl class="def">
+    <dt>Broadcast storm</dt>
+    <dd>A layer 2 loop, usually from disabled or misconfigured <strong>Spanning Tree Protocol (STP)</strong>. Broadcast packets are forwarded endlessly between switches, flooding the network and causing packet loss, crashes, and downtime.</dd>
+    <dt>VLAN mismatch</dt>
+    <dd>Two switches on a trunk are configured with different VLAN settings (building one uses VLAN 30, building two uses VLAN 40 for the same devices), so traffic is dropped or misrouted and shared resources become unreachable.</dd>
+    <dt>Duplex mismatch</dt>
+    <dd>One end set to full duplex, the other to half duplex. The mismatch causes collisions, packet loss, retransmissions, and slowdowns (e.g. a server NIC at full duplex on a half-duplex switch port).</dd>
+  </dl>
+
+  <h2>routing errors</h2>
+
+  <p>Routing errors occur when incorrect or inefficient paths are used, from misconfiguration, bad routing tables, or unstable conditions:</p>
+
+  <dl class="def">
+    <dt>Routing loop</dt>
+    <dd>A packet cycles endlessly between routers, never reaching its destination, often from outdated tables or slow convergence (a router keeps advertising a route to a downed segment). Common with protocols like RIP.</dd>
+    <dt>Incorrect subnet mask</dt>
+    <dd>A wrong mask misdefines the network/host split (a /24 device configured with /16), so routers forward traffic to the wrong subnet or not at all, isolating devices that should communicate.</dd>
+    <dt>Route flapping</dt>
+    <dd>A route repeatedly goes up and down (unstable link, faulty hardware), forcing constant table recalculation, latency, and dropped packets (e.g. an unstable link in OSPF).</dd>
+  </dl>
+
+  <h2>VPN and tunnel errors</h2>
+
+  <p>VPN and tunnel errors disrupt encrypted communication tunnels between networks/endpoints. Three causes:</p>
+
+  <ul>
+    <li><strong>Incorrect settings:</strong> wrong IP addresses, tunnel types, routing rules, or DNS config prevent the tunnel from establishing (a wrong remote-endpoint IP sends traffic to the wrong destination).</li>
+    <li><strong>Expired certificates:</strong> VPNs often use certificates for mutual authentication; an expired cert on a site-to-site VPN breaks authentication and the secure channel. Monitor expiration and automate renewal.</li>
+    <li><strong>Encryption protocol mismatch:</strong> if the two ends use incompatible algorithms (one AES, one DES) or keys, negotiation fails and the tunnel won't secure. Use strong, compatible protocols (IPsec, TLS) on both ends.</li>
+  </ul>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Switching (layer 2): broadcast storm (STP loop), VLAN mismatch, duplex mismatch.</li>
+      <li>Routing (layer 3): routing loop (slow convergence/RIP), incorrect subnet mask, route flapping.</li>
+      <li>Broadcast storms come from disabled/misconfigured STP; STP prevents loops by blocking redundant paths.</li>
+      <li>VPN/tunnel failures: wrong settings, expired certificates, or encryption/algorithm mismatch (AES vs DES).</li>
+      <li>Duplex mismatch = one full, one half → collisions and slowdowns.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario has endless layer-2 broadcast flooding → <strong>broadcast storm (STP)</strong></li>
+        <li>Scenario drops traffic between switches with different VLAN IDs → <strong>VLAN mismatch</strong></li>
+        <li>Scenario has a route oscillating up/down → <strong>route flapping</strong></li>
+        <li>Scenario's VPN fails after a cert lapses → <strong>expired certificate</strong></li>
+        <li>Scenario's tunnel won't negotiate due to AES vs DES → <strong>encryption protocol mismatch</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_observability.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_observability</span></span>
+    </a>
+    <span class="counter">lesson 03 / 11</span>
+    <a class="next" href="04_network_misconfigurations.html">
+      <span><span class="lbl">next</span><span class="file">04_network_misconfigurations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / network_errors</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

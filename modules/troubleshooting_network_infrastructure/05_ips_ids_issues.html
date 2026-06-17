@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPS/IDS Issues / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/ips_ids_issues</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 05 / troubleshooting network / IPS/IDS Issues</span>
+  <h1 class="module-title">IPS/IDS Issues</h1>
+  <p class="subtitle">A detection system is only as good as where you put it and how you tune it. The three failure modes: bad placement, missing rules, and misconfigured rules.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>IPS/IDS issues are challenges in deploying, configuring, and tuning these systems. Three problems: <strong>poor placement</strong> (wrong network location → missed threats or noise), <strong>lack of rules</strong> (no policies/signatures to identify threats), and <strong>rule misconfiguration</strong> (rules set wrong → too many or too few alerts). Key distinction: an <strong>IDS</strong> passively monitors (out of band, on a mirror/SPAN port); an <strong>IPS</strong> actively blocks (must be in-line).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">issue 01</span>
+      <p class="card-name">Placement</p>
+      <p class="card-desc">IDS = out of band (mirror/SPAN port, copies traffic). IPS = in-line (drops packets, ends connections). Wrong spot misses threats or floods alerts.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 02</span>
+      <p class="card-name">Lack of Rules</p>
+      <p class="card-desc">No/incomplete signatures and policies → threats go undetected, especially sophisticated APT tactics.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 03</span>
+      <p class="card-name">Rule Misconfiguration</p>
+      <p class="card-desc">Wrong thresholds, too broad/narrow, outdated signatures → false positive floods or missed threats; IPS may block legit apps.</p>
+    </div>
+  </div>
+
+  <h2>placement</h2>
+
+  <p>Placement determines effectiveness, and it differs by system type. An <strong>IDS</strong> passively monitors and only generates alerts, so it doesn't need to be in-line: it can sit on a switch <strong>mirror port (SPAN port)</strong> receiving a copy of traffic without affecting flow. An <strong>IPS</strong> actively blocks malicious traffic in real time, so it <strong>must be in-line</strong>, dropping packets or terminating connections; place it on high-traffic or sensitive paths (like the internal-to-external partner link). Wrong placement causes inefficiency or gaps: a misplaced IDS detects irrelevant traffic and floods the team with false positives, while a poorly placed IPS lets harmful traffic bypass it.</p>
+
+  <h2>lack of rules</h2>
+
+  <p>Both systems rely on predefined policies/signatures to identify malicious behavior (known malware signatures, suspicious flows, unusual logins). Without comprehensive, updated rules, an IDS may miss threats, and one with an incomplete rule set might catch common attacks but miss sophisticated ones (e.g. APT tactics, techniques, and procedures). An IPS lacking sufficient rules may let malicious traffic pass unblocked, allowing data exfiltration or exploitation. Keeping rule sets current ensures the latest threats are recognized.</p>
+
+  <h2>rule misconfiguration</h2>
+
+  <p>Misconfigured rules, wrong thresholds, overly broad or narrow rules, outdated signatures, cause two problems. Too aggressive → <strong>false positive</strong> floods (legitimate traffic flagged, overwhelming the team); too lenient → <strong>false negatives</strong> (real threats like exfiltration go unnoticed). For an IPS the stakes are higher because it actively blocks: overly aggressive rules can block business-critical apps (e.g. unusual-looking encrypted financial traffic), causing disruption. <strong>Signature updates</strong> matter, too: outdated signatures miss new malware variants. Regular audits, automated rule updates, and tuning to the network's traffic prevent these issues.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>IDS = passive, out of band (mirror/SPAN port), only alerts. IPS = active, in-line, can block/drop.</li>
+      <li>The "must be in-line" requirement is the IPS; IDS doesn't affect traffic so it can be off to the side.</li>
+      <li>Lack of rules → missed threats (especially sophisticated/APT). Keep signatures updated.</li>
+      <li>Misconfigured rules cause false positive floods (too aggressive) or false negatives (too lenient).</li>
+      <li>An overly aggressive IPS can block legitimate business-critical traffic.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs to block malicious traffic in real time → <strong>IPS, placed in-line</strong></li>
+        <li>Scenario monitors a copy of traffic without affecting it → <strong>IDS on a mirror/SPAN port</strong></li>
+        <li>Scenario floods the team with alerts on benign traffic → <strong>rule misconfiguration (too aggressive)</strong></li>
+        <li>Scenario misses a new malware variant → <strong>outdated signatures / lack of rules</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_network_misconfigurations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_network_misconfigurations</span></span>
+    </a>
+    <span class="counter">lesson 05 / 11</span>
+    <a class="next" href="06_alert_analysis.html">
+      <span><span class="lbl">next</span><span class="file">06_alert_analysis</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / ips_ids_issues</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

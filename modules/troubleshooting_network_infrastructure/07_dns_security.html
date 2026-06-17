@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/dns_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 07 / troubleshooting network / DNS Security</span>
+  <h1 class="module-title">DNS Security</h1>
+  <p class="subtitle">DNS was built in the 1980s with no security. These four concepts add it back: signing responses, securing replication, understanding the poisoning attack, and redirecting malicious traffic.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>DNS security protects name resolution from attacks and misconfigurations. Four concepts: <strong>DNSSEC</strong> (digitally signs DNS data for integrity/authenticity), <strong>zone transfers</strong> (legitimate replication between servers that must be secured), <strong>DNS poisoning</strong> (cache poisoning, injecting false records), and <strong>sinkholing</strong> (redirecting malicious traffic to a safe server).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">DNSSEC</p>
+      <p class="card-desc">Digitally signs DNS data with public/private keys so resolvers verify authenticity. Prevents cache poisoning. Both zone and resolver must support it.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Zone Transfers</p>
+      <p class="card-desc">Normal replication of zone data between servers (redundancy). If unsecured, attackers grab all records. Restrict + use TSIG.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">DNS Poisoning</p>
+      <p class="card-desc">Attack: inject false records into a resolver's cache, redirecting users to malicious sites. Defend with DNSSEC + patching.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 04</span>
+      <p class="card-name">Sinkholing</p>
+      <p class="card-desc">Defense: reroute malicious traffic (e.g. malware C2) to a controlled sinkhole server to drop or analyze it.</p>
+    </div>
+  </div>
+
+  <h2>DNSSEC (DNS Security Extensions)</h2>
+
+  <p>DNS translates domain names to IP addresses, but it was built in the 1980s without security, there's no built-in way to verify a response came from the correct source, which enables cache poisoning. <strong>DNSSEC</strong> adds digital signatures and public-key cryptography: each zone gets a public/private key pair, the owner signs DNS data with the private key, and resolvers verify it with the public key before accepting a response. This prevents attackers from poisoning the cache. Both the zone owner <em>and</em> the resolvers must be configured to support DNSSEC.</p>
+
+  <h2>zone transfers</h2>
+
+  <p>A DNS zone is a portion of the namespace a server manages; zone transfers are the normal process of synchronizing that data between servers for reliability and redundancy (if one authoritative server fails, another has the data). But if unsecured, an attacker can initiate an <strong>unauthorized zone transfer</strong> and obtain all records in a zone, revealing system names and IPs that make targeting easier. Secure transfers by limiting which servers may request them and using <strong>TSIG (transaction signatures)</strong> to authenticate. The lesson's demo: in Windows Server DNS, switching the Zone Transfers setting from "only to servers in the Name Servers tab" to "to any server" let a Parrot box pull every record via <code>dig axfr</code>, one radio button from a serious vulnerability.</p>
+
+  <h2>DNS poisoning</h2>
+
+  <p>DNS (cache) poisoning is when an attacker sends fake DNS responses that the resolver accepts and caches; anyone then querying that domain is sent to the attacker's IP, often a convincing fake site. Techniques include <strong>DNS response spoofing</strong> (flooding the server with fake responses hoping one matches a real request) and exploiting outdated/poorly-configured servers that don't verify authenticity. It's hard to detect because the fake site looks normal. Defenses: <strong>DNSSEC</strong> (verifies responses via signatures) and keeping DNS servers patched.</p>
+
+  <h2>sinkholing</h2>
+
+  <p>DNS sinkholing diverts malicious traffic to a controlled <strong>sinkhole server</strong> instead of letting it reach its destination (like an external command-and-control server). When the DNS server identifies a malicious domain/IP, it reroutes traffic there; infected-device requests to C2 are intercepted and sent to the sinkhole, which either drops the traffic or lets analysts safely observe the malware. It's effective for cutting off botnet communication after a threat is detected. The sinkhole needs current threat intelligence to know which domains are malicious, and must itself be secured.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>DNSSEC signs DNS data (public/private keys) so resolvers verify authenticity, prevents cache poisoning. Both zone and resolver must support it.</li>
+      <li>Zone transfers are legitimate replication; unsecured ones leak all records. Restrict requesters and use TSIG.</li>
+      <li>DNS poisoning = injecting false records into a resolver's cache to redirect users; defend with DNSSEC + patching.</li>
+      <li>Sinkholing is a defense, reroute malicious traffic (e.g. malware C2) to a safe sinkhole to drop or analyze.</li>
+      <li>DNS was designed in the 1980s with no security, hence these add-ons.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario verifies DNS responses with digital signatures → <strong>DNSSEC</strong></li>
+        <li>Scenario lets an unauthorized host pull all DNS records → <strong>insecure zone transfer</strong></li>
+        <li>Scenario redirects users to a fake site via cached false records → <strong>DNS poisoning</strong></li>
+        <li>Scenario redirects malware C2 traffic to a safe server → <strong>sinkholing</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_alert_analysis.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_alert_analysis</span></span>
+    </a>
+    <span class="counter">lesson 07 / 11</span>
+    <a class="next" href="08_email_security.html">
+      <span><span class="lbl">next</span><span class="file">08_email_security</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / dns_security</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

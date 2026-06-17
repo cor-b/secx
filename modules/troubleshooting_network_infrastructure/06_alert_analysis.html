@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alert Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/alert_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 06 / troubleshooting network / Alert Analysis</span>
+  <h1 class="module-title">Alert Analysis</h1>
+  <p class="subtitle">Telling real threats from noise. Two errors define the problem: crying wolf (false positive) and missing the wolf entirely (false negative).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Alert analysis is reviewing and interpreting security alerts to separate genuine threats from benign activity. Two concepts: <strong>false positives</strong> (harmless activity wrongly flagged as a threat, wasting resources) and <strong>false negatives</strong> (real threats the system fails to detect, the more dangerous error). A correct alert on a real issue is a <strong>true positive</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">error 01</span>
+      <p class="card-name">False Positive</p>
+      <p class="card-desc">Harmless activity flagged as a threat. Like a fire alarm on breakfast bacon. Wastes time, causes alert fatigue.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">error 02</span>
+      <p class="card-name">False Negative</p>
+      <p class="card-desc">Real threat missed entirely. Like an alarm silent during a real fire. More dangerous, creates false security.</p>
+    </div>
+  </div>
+
+  <h2>false positives</h2>
+
+  <p>A false positive is when an IPS/IDS flags harmless activity as a threat, like a fire alarm triggering on breakfast bacon every morning. An overly sensitive configuration misreads normal business traffic (e.g. an authorized internal scan) as malicious, wasting analyst time and causing <strong>alert fatigue</strong>. The impact is real: hours spent on non-issues divert resources from genuine threats, and in high-risk environments that delay gives attackers more time.</p>
+
+  <p>To manage false positives, fine-tune detection rules: create <strong>allow list</strong> entries for trusted IPs/ports (so traffic between, say, an internal server and a client machine isn't flagged), adjust <strong>alert thresholds</strong> so only genuinely abnormal patterns (unusually high data rates, odd protocols) trigger, and continuously monitor and tweak. Train staff to distinguish false positives from true positives.</p>
+
+  <h2>false negatives</h2>
+
+  <p>A false negative is when the system fails to detect a real threat, like a fire alarm staying silent during an actual fire. It's especially dangerous: a missed malware infection or ongoing attack lets an attacker move laterally, steal data, or disrupt operations unnoticed, while the team has a false sense of security.</p>
+
+  <p>Minimizing false negatives requires a <strong>multi-layered approach</strong> combining detection techniques:</p>
+  <ul>
+    <li><strong>Signature-based detection:</strong> compares activity to known threat patterns (but misses new/novel attacks).</li>
+    <li><strong>Behavioral analysis:</strong> flags deviations from normal behavior even with no known signature.</li>
+    <li><strong>Anomaly detection:</strong> uses machine learning to flag irregular patterns outside baselines.</li>
+  </ul>
+  <p>Combining these, plus additional tools (firewalls, antivirus, endpoint detection) and threat intelligence feeds, provides overlapping protection so that if one system misses a threat, another may catch it.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>False positive = benign flagged as threat (noise, alert fatigue); false negative = real threat missed (more dangerous).</li>
+      <li>True positive = a correct alert on an actual issue.</li>
+      <li>Reduce false positives with allow lists, threshold tuning, and rule refinement.</li>
+      <li>Reduce false negatives with a multi-layered approach: signature + behavioral + anomaly detection, plus overlapping tools.</li>
+      <li>Signature-based detection misses novel attacks; behavioral/anomaly methods catch them.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario floods analysts with alerts on routine traffic → <strong>false positives</strong></li>
+        <li>Scenario misses an active breach entirely → <strong>false negatives</strong></li>
+        <li>Scenario allow-lists a trusted server-to-client flow → <strong>false-positive tuning</strong></li>
+        <li>Scenario adds behavioral + anomaly detection to catch novel attacks → <strong>false-negative mitigation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_ips_ids_issues.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_ips_ids_issues</span></span>
+    </a>
+    <span class="counter">lesson 06 / 11</span>
+    <a class="next" href="07_dns_security.html">
+      <span><span class="lbl">next</span><span class="file">07_dns_security</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / alert_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

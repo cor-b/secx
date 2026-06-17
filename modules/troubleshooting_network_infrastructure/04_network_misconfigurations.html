@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Misconfigurations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/network_misconfigurations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 04 / troubleshooting network / Network Misconfigurations</span>
+  <h1 class="module-title">Network Misconfigurations</h1>
+  <p class="subtitle">Two slow-burning problems: routing left unsecured (open to hijacking), and configurations that quietly drift away from their intended state over time.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Network misconfigurations are incorrect settings on network devices that cause performance issues, security holes, or connectivity failures. Two concepts: <strong>insecure routing</strong> (routing protocols lacking authentication/encryption, open to hijacking and spoofing) and <strong>configuration drift</strong> (gradual, often undocumented changes that create inconsistencies and vulnerabilities).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">issue 01</span>
+      <p class="card-name">Insecure Routing</p>
+      <p class="card-desc">No authentication/encryption between routers → route hijacking, spoofing, route injection. Worst with weak protocols like RIP.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 02</span>
+      <p class="card-name">Configuration Drift</p>
+      <p class="card-desc">Gradual undocumented changes accumulate → inconsistent policies, instability, security gaps. Fix with automation and audits.</p>
+    </div>
+  </div>
+
+  <h2>insecure routing</h2>
+
+  <p>Insecure routing occurs when routing protocols or configurations lack proper security. The key weakness is <strong>no authentication between routers</strong>, letting attackers inject false routing information. This enables <strong>route hijacking</strong> (redirecting traffic to malicious servers) and <strong>route spoofing</strong> (fake routes disrupting traffic). For example, an unsecured <strong>BGP</strong> router can be tricked into accepting and propagating malicious routes, sending legitimate traffic through the attacker's infrastructure for interception.</p>
+
+  <p>Outdated/weak protocols make this worse: <strong>RIP</strong> lacks encryption and authentication and is easily manipulated. Remediation:</p>
+  <ul>
+    <li>Replace weak protocols (RIP) with secure ones that support authentication, like <strong>OSPF</strong>.</li>
+    <li>Enable authentication in OSPF/BGP so routers only accept routes from trusted sources.</li>
+    <li>Use encryption (<strong>IPsec</strong>) to protect routing updates over public/untrusted networks.</li>
+    <li>Regularly review router configs and disable outdated protocols.</li>
+  </ul>
+
+  <h2>configuration drift</h2>
+
+  <p>Configuration drift is the gradual change of device configurations over time, from updates, manual fixes, or environmental factors, creating inconsistencies. A common source is <strong>undocumented manual changes</strong>: small adjustments accumulate (an ACL changed on one router but not synced to others), producing inconsistent security policies. Drift also harms stability: a drifted load-balancing config can overburden some servers and idle others, risking outages.</p>
+
+  <p>To combat drift: use automated configuration management tools (<strong>Cisco Network Services Orchestrator</strong>, <strong>Ansible</strong>) that flag and correct unauthorized changes, keep regular config backups, and run periodic audits to catch drift early. The transcript's example: an insecure <strong>RIP</strong> protocol left active due to drift, exposing the network to route injection/spoofing; remediation is to deactivate it, switch to authenticated OSPF, and add automated config management.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Insecure routing = routing without authentication/encryption → route hijacking, spoofing, injection.</li>
+      <li>Replace weak protocols (RIP) with OSPF + authentication; protect updates with IPsec.</li>
+      <li>BGP without authentication is a classic insecure-routing target.</li>
+      <li>Configuration drift = gradual, often undocumented config changes causing inconsistency and security gaps.</li>
+      <li>Fix drift with automated config management (Ansible, Cisco NSO), backups, and periodic audits.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario injects false routes into an unauthenticated BGP/RIP setup → <strong>insecure routing</strong></li>
+        <li>Scenario finds settings slowly diverged from baseline over months → <strong>configuration drift</strong></li>
+        <li>Scenario replaces RIP with authenticated OSPF → <strong>insecure routing remediation</strong></li>
+        <li>Scenario deploys Ansible to flag unauthorized config changes → <strong>drift remediation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_network_errors.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_network_errors</span></span>
+    </a>
+    <span class="counter">lesson 04 / 11</span>
+    <a class="next" href="05_ips_ids_issues.html">
+      <span><span class="lbl">next</span><span class="file">05_ips_ids_issues</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / network_misconfigurations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

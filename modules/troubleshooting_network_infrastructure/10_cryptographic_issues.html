@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptographic Issues / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/cryptographic_issues</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 10 / troubleshooting network / Cryptographic Issues</span>
+  <h1 class="module-title">Cryptographic Issues</h1>
+  <p class="subtitle">When secure connections fail to form or form weakly: protocol-version errors, the two sides failing to agree on a cipher, and strong algorithms applied wrong.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cryptographic issues are problems in implementing and running the protocols that secure data. Three concepts: <strong>TLS errors</strong> (failures negotiating/establishing a secure connection, from protocol versions or certificates), <strong>cipher mismatch</strong> (client and server can't agree on a cipher suite), and <strong>cryptographic implementation issues</strong> (strong algorithms applied incorrectly, weak key management, deprecated algorithms).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">issue 01</span>
+      <p class="card-name">TLS Errors</p>
+      <p class="card-desc">Handshake fails: incompatible/outdated protocol versions (TLS 1.0 vs 1.2/1.3) or certificate problems (expired, wrong domain, broken chain).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 02</span>
+      <p class="card-name">Cipher Mismatch</p>
+      <p class="card-desc">No overlapping cipher suite between client and server. Protocol may agree, but the algorithms don't. "SSL version or cipher mismatch."</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 03</span>
+      <p class="card-name">Implementation Issues</p>
+      <p class="card-desc">Strong algorithm, wrong use: static keys, broken ephemeral key exchange (no forward secrecy), deprecated MD5.</p>
+    </div>
+  </div>
+
+  <h2>TLS errors</h2>
+
+  <p>TLS errors occur when the secure-connection handshake between client and server fails. Two main causes:</p>
+  <ul>
+    <li><strong>Incompatible/outdated protocol versions:</strong> if a server supports only TLS 1.2/1.3 but a client tries TLS 1.0, the handshake may fail, or worse, downgrade to insecure SSL 3.0, raising exposure risk.</li>
+    <li><strong>Certificate issues:</strong> expired certificates, invalid domain names, or broken trust chains cause the handshake to fail (an expired server cert means the client won't trust the connection). Misconfigured certs (cert doesn't match the domain) also trigger errors.</li>
+  </ul>
+  <p>Use vulnerability scanners to flag weak/outdated protocols (SSL, TLS 1.0), update to TLS 1.2/1.3, and manage certificate validity and chains.</p>
+
+  <h2>cipher mismatch</h2>
+
+  <p>A cipher mismatch is when client and server cannot agree on a <strong>cipher suite</strong>, the set of algorithms for key exchange, digital signature, bulk encryption, and hashing. If there's no overlap in supported suites, the handshake fails. This differs from a TLS <em>version</em> error: here the protocol version may be agreed, but the actual algorithms are incompatible. Example: a server supports strong <code>ECDHE-RSA-AES128-GCM-SHA256</code> but the client only offers weak <code>DES-CBC3-SHA</code>, producing an "SSL version or cipher mismatch" error, or a fallback to a weak cipher. Fix: configure servers to reject obsolete ciphers (3DES, RC4), prioritize strong ones (AES-GCM), and regularly review supported suites.</p>
+
+  <h2>cryptographic implementation issues</h2>
+
+  <p>These arise when algorithms strong in theory are applied incorrectly:</p>
+  <ul>
+    <li><strong>Weak key management:</strong> using static encryption keys that never change makes them easier to crack; use proper key rotation and strong random keys.</li>
+    <li><strong>Broken ephemeral key exchange:</strong> even with a good suite like <code>ECDHE-RSA-AES256-GCM-SHA384</code>, failing to generate fresh per-session keys loses <strong>forward secrecy</strong>, letting attackers decrypt past sessions.</li>
+    <li><strong>Deprecated algorithms:</strong> using <strong>MD5</strong> for hashing exposes systems to collision attacks (two inputs, same hash). Use strong functions like SHA-256.</li>
+  </ul>
+  <p>Prevent with regular audits of encryption practices, removing deprecated algorithms, and proper key management (unique session keys, secure storage, rotation).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>TLS error = handshake fails from protocol-version incompatibility or certificate problems (expired, wrong domain, broken chain).</li>
+      <li>Cipher mismatch = no shared cipher suite (algorithms incompatible), distinct from a TLS version mismatch.</li>
+      <li>A cipher suite = key exchange + signature + bulk encryption + hashing algorithms.</li>
+      <li>Implementation issues: static keys, broken ephemeral exchange (loses forward secrecy), deprecated MD5 (collisions).</li>
+      <li>Remediate by disabling SSL/TLS 1.0, 3DES, RC4, MD5 and using TLS 1.2/1.3, AES-GCM, SHA-256.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario fails the handshake because of an expired certificate → <strong>TLS error</strong></li>
+        <li>Scenario can't agree on algorithms despite same protocol → <strong>cipher mismatch</strong></li>
+        <li>Scenario reuses a static key that never rotates → <strong>implementation issue (key management)</strong></li>
+        <li>Scenario suffers a hash collision from MD5 → <strong>deprecated algorithm</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="09_network_issues.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">09_network_issues</span></span>
+    </a>
+    <span class="counter">lesson 10 / 11</span>
+    <a class="next" href="11_pki_issues.html">
+      <span><span class="lbl">next</span><span class="file">11_pki_issues</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / cryptographic_issues</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

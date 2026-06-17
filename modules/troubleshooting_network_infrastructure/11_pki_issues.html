@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKI Issues / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/pki_issues</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 11 / troubleshooting network / PKI Issues</span>
+  <h1 class="module-title">PKI Issues</h1>
+  <p class="subtitle">PKI is built on trust, and four things break it: a compromised or sloppy certificate authority, bad certificates, slow revocation, and mishandled keys.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>PKI issues are problems in managing, deploying, and running public key infrastructure that undermine trust in encrypted communications and digital certificates. Four concepts: <strong>CA misconfigurations</strong>, <strong>expired or improperly issued certificates</strong>, <strong>challenges in certificate revocation</strong>, and <strong>improper key management/distribution</strong>.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">issue 01</span>
+      <p class="card-name">CA Misconfiguration</p>
+      <p class="card-desc">CA issues certs improperly or its private key is exposed → attackers forge trusted certs, enabling on-path attacks. Protect with HSMs, MFA, audits.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 02</span>
+      <p class="card-name">Bad Certificates</p>
+      <p class="card-desc">Expired certs break connections; improperly issued ones enable impersonation, phishing, domain squatting (rnysecurebank vs mysecurebank).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 03</span>
+      <p class="card-name">Revocation Challenges</p>
+      <p class="card-desc">Delays propagating revocation; systems not checking CRL/OCSP keep trusting revoked certs. Use real-time OCSP.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">issue 04</span>
+      <p class="card-name">Key Management</p>
+      <p class="card-desc">Stolen/mis-distributed private keys → decryption or impersonation. Use HSMs, encrypted channels, rotation.</p>
+    </div>
+  </div>
+
+  <h2>certificate authority (CA) misconfigurations</h2>
+
+  <p>A CA issues the digital certificates that verify identity. If misconfigured, it may issue certificates improperly or to the wrong parties (letting an unauthorized user impersonate a legitimate one). The gravest case is an <strong>unsecured CA private key</strong> (root or intermediate): an attacker who obtains it can forge legitimate-looking certificates, undermining the entire PKI trust structure and enabling <strong>on-path attacks</strong>, even issuing themselves a cert for a trusted bank to steal credentials. Enterprises often run their own internal root CA, which makes securing it organizationally critical. Mitigate with proper CA configuration, securing private keys in <strong>hardware security modules (HSMs)</strong>, regular audits, MFA, and strict access controls.</p>
+
+  <h2>expired or improperly issued certificates</h2>
+
+  <p>Certificates have a validity period. An <strong>expired</strong> cert that isn't renewed breaks secure connections, visitors see "not secure" warnings, costing trust and business. <strong>Improperly issued</strong> certs are dangerous too: a cert issued without validating the requester's identity lets attackers impersonate a legitimate org for phishing/fraud. A notable variant is <strong>domain squatting</strong>: registering a look-alike domain (<code>rnysecurebank.com</code> where "rn" resembles "m") and getting a valid cert for it, so users trust the secure padlock and enter sensitive data. Prevent with strict validation before issuance, email validation, business registration checks, and direct contact, so certs go only to verified entities.</p>
+
+  <h2>challenges in certificate revocation</h2>
+
+  <p>Revocation is needed when a cert is compromised, expired, or tied to organizational change, but it's complicated. <strong>Propagation delay:</strong> after revoking a departing employee's cert, systems may not recognize it as invalid immediately, leaving a window of access. <strong>Inconsistent checking:</strong> systems that don't regularly check a <strong>certificate revocation list (CRL)</strong> or an <strong>OCSP responder</strong> keep accepting revoked certs. Address it with real-time status checking via <strong>OCSP</strong> and by regularly updating and distributing CRLs.</p>
+
+  <h2>improper key management</h2>
+
+  <p>Public and private keys must be securely stored and properly distributed. <strong>Improper storage:</strong> stolen private keys let attackers decrypt sensitive data or impersonate the organization. <strong>Improper distribution:</strong> sharing private keys over insecure channels (e.g. emailing a key unencrypted) lets attackers intercept them. Mitigate by storing keys in <strong>HSMs</strong> or secure key stores, distributing only through secure encrypted channels, and enforcing regular <strong>key rotation</strong>.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>A compromised CA private key is catastrophic, attackers forge trusted certs (on-path attacks). Protect with HSMs, MFA, audits.</li>
+      <li>Expired certs break connections (warnings); improperly issued certs enable impersonation/phishing.</li>
+      <li>Domain squatting uses look-alike domains (rn vs m) with valid certs to fool users.</li>
+      <li>Revocation challenges = propagation delay + systems not checking CRL/OCSP. Use real-time OCSP and updated CRLs.</li>
+      <li>Protect keys with HSMs, encrypted distribution channels, and rotation; never email an unencrypted private key.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario forges trusted certs after stealing a CA key → <strong>CA misconfiguration/compromise</strong></li>
+        <li>Scenario shows a "not secure" warning after a cert lapses → <strong>expired certificate</strong></li>
+        <li>Scenario keeps trusting a revoked cert because no OCSP/CRL check → <strong>revocation challenge</strong></li>
+        <li>Scenario intercepts a private key emailed in plain text → <strong>improper key management</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="10_cryptographic_issues.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">10_cryptographic_issues</span></span>
+    </a>
+    <span class="counter">lesson 11 / 11</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">troubleshooting_network_infrastructure/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / pki_issues</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

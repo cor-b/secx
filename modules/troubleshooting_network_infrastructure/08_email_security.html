@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/troubleshooting_network_infrastructure/email_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /troubleshooting_network_infrastructure</a>
+
+  <span class="module-tag">lesson 08 / troubleshooting network / Email Security</span>
+  <h1 class="module-title">Email Security</h1>
+  <p class="subtitle">Four controls, best understood as a fancy party: SPF is the guest list, DKIM is the tamper-proof stamp, DMARC sets the rules for handling gate-crashers, and S/MIME seals the message itself.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Email security protects against phishing, spoofing, and unauthorized access. Four concepts: <strong>SPF</strong> (lists which mail servers may send for a domain), <strong>DKIM</strong> (digital signature proving integrity and sender), <strong>DMARC</strong> (policy + reporting built on SPF/DKIM results), and <strong>S/MIME</strong> (encryption and signatures on individual messages). SPF, DKIM, and DMARC publish records in DNS.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">control 01</span>
+      <p class="card-name">SPF</p>
+      <p class="card-desc">The guest list: domain owner specifies authorized sending servers (DNS TXT record). Soft fail (~) or hard fail (-). Doesn't protect the From header.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 02</span>
+      <p class="card-name">DKIM</p>
+      <p class="card-desc">The tamper-proof stamp: digital signature (private key) verified via public key in DNS. Proves integrity and origin.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 03</span>
+      <p class="card-name">DMARC</p>
+      <p class="card-desc">The rulebook: policy (reject/quarantine/flag) when SPF/DKIM fail, aligns them with the From address, plus reporting.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 04</span>
+      <p class="card-name">S/MIME</p>
+      <p class="card-desc">Seals the message: per-message encryption + digital signature. Confidentiality, integrity, authentication, non-repudiation.</p>
+    </div>
+  </div>
+
+  <h2>SPF (Sender Policy Framework)</h2>
+
+  <p>SPF prevents spoofing by letting a domain owner specify which mail servers may send on the domain's behalf, like a guest list at a party. The receiving server checks the sender domain's SPF record (a DNS TXT record listing authorized domains/IP ranges); mail from a server not on the list is flagged or rejected. Policy symbols set strictness: <strong>tilde (~) = soft fail</strong>, <strong>dash (-) = hard fail</strong>. SPF's limit: it doesn't stop forging the <strong>From</strong> header, and legitimate third-party senders (surveys, etc.) can fail it, so it's combined with DKIM and DMARC.</p>
+
+  <h2>DKIM (DomainKeys Identified Mail)</h2>
+
+  <p>DKIM attaches a <strong>digital signature</strong> to every outgoing email using the domain's private key; the recipient verifies it with the domain's public key (a DNS TXT record). A valid signature confirms the message wasn't altered in transit and truly came from the claimed sender, like a special stamp verifying a party invitation is authentic and untampered. DKIM's limit: it protects integrity but doesn't authenticate the <strong>From</strong> address, so an attacker could still forge it, which is why DKIM is paired with DMARC.</p>
+
+  <h2>DMARC (Domain-based Message Authentication, Reporting and Conformance)</h2>
+
+  <p>DMARC builds on SPF and DKIM, letting a domain owner publish a policy telling receiving servers what to do when checks fail: <strong>reject</strong>, <strong>quarantine</strong>, or flag the email. Crucially, it ensures SPF and DKIM <strong>align with the From address</strong>, closing the forged-header gap. It's the party rulebook for handling gate-crashers, and it adds <strong>reporting</strong>: domain owners get feedback on how their mail is handled, helping detect spoofing attempts and tune policy.</p>
+
+  <h2>S/MIME (Secure/Multipurpose Internet Mail Extensions)</h2>
+
+  <p>S/MIME secures non-text email (graphics, video) and applies <strong>encryption and digital signatures at the message level</strong>, providing confidentiality, integrity, authentication, and non-repudiation, using public-key cryptography. Unlike SSL/TLS (which secures the connection but not the stored message), S/MIME protects the individual email. The flow: parties exchange and validate public keys (via a certificate authority), then a unique symmetric <strong>session key</strong> encrypts each message, and that session key is encrypted with the recipient's public key. The recipient uses their private key to decrypt the session key, then the message. A drawback: because S/MIME encrypts the whole email, malware inside it can slip past filters that can't decrypt and inspect content.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>SPF = authorized sending servers (DNS record); ~ soft fail, - hard fail. Doesn't protect the From header.</li>
+      <li>DKIM = digital signature (private key sign, public key verify in DNS) proving integrity + origin.</li>
+      <li>DMARC = policy (reject/quarantine/flag) + reporting built on SPF/DKIM, aligns them with the From address.</li>
+      <li>S/MIME = per-message encryption + signature (confidentiality, integrity, authentication, non-repudiation) via session keys.</li>
+      <li>S/MIME drawback: encrypted malware can bypass filters that can't inspect the content.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario lists which servers may send for a domain → <strong>SPF</strong></li>
+        <li>Scenario adds a signature proving the email wasn't altered → <strong>DKIM</strong></li>
+        <li>Scenario sets what to do when SPF/DKIM fail and reports on it → <strong>DMARC</strong></li>
+        <li>Scenario encrypts and signs an individual message end to end → <strong>S/MIME</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_dns_security.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_dns_security</span></span>
+    </a>
+    <span class="counter">lesson 08 / 11</span>
+    <a class="next" href="09_network_issues.html">
+      <span><span class="lbl">next</span><span class="file">09_network_issues</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>troubleshooting_network_infrastructure / email_security</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
