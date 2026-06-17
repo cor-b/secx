@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/data_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 06 / specialized system security / Data Management</span>
+  <h1 class="module-title">Data Management</h1>
+  <p class="subtitle">Pulling scattered data into one place (aggregation), then mining it for threats (analytics), through a SIEM pipeline, with database activity monitoring guarding the stored result.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Data management organizes, protects, and analyzes data to keep its integrity, confidentiality, and availability. Two concepts: <strong>aggregation</strong> (collecting and combining data from many sources into one comprehensive data set) and <strong>data analytics</strong> (examining aggregated data to find insights and detect threats). A SIEM drives the pipeline; database activity monitoring protects the stored data.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Aggregation</p>
+      <p class="card-desc">Collect + combine data from many sources into one normalized data set, so patterns are visible across the whole picture, not fragments.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Analytics</p>
+      <p class="card-desc">Analyze aggregated data (often via SIEM) for threats. Stream processing for near-real-time; indexing and log curation keep it efficient.</p>
+    </div>
+  </div>
+
+  <h2>aggregation</h2>
+
+  <p>Aggregation collects and combines data from multiple sources into one comprehensive data set, so it can be analyzed for patterns, trends, or anomalies. Without it, data is fragmented across systems and you can't see the full picture. For an e-commerce business, aggregating website purchases, app activity, social-media marketing data, and customer-service feedback into one set reveals patterns (customers who use the app more buy higher-value products after specific ads). Technically, aggregation needs a system that collects data in real time or at intervals, <strong>normalizes</strong> the differing formats, and combines it into a central repository.</p>
+
+  <h2>data analytics</h2>
+
+  <p>Data analytics processes aggregated data to detect security incidents and threats, using tools that sift large volumes from endpoints, IAM, network traffic, threat feeds, and cloud platforms. A common platform is the <strong>SIEM</strong>, which:</p>
+
+  <ul>
+    <li><strong>Normalizes</strong> data into a consistent format (different systems use different formats) so it can be searched, indexed, and analyzed centrally.</li>
+    <li>Runs data through a <strong>processing pipeline</strong>: older <strong>batch processing</strong> (collected over fixed periods, introduces delay) vs modern <strong>stream processing</strong> (near real-time, faster detection/response).</li>
+    <li><strong>Indexes</strong> data in the central repository to speed searches.</li>
+    <li>Applies <strong>log curation</strong> to prioritize and filter the most relevant data, collecting everything indiscriminately overwhelms the system and wastes resources.</li>
+  </ul>
+
+  <h3>database activity monitoring (DAM)</h3>
+  <p>Once data is stored, <strong>database activity monitoring</strong> tools secure it by detecting unauthorized access and suspicious activity and supporting compliance audits. Three methods:</p>
+  <dl class="def">
+    <dt>Interception-based</dt>
+    <dd>Monitors client-server communication. May miss some data.</dd>
+    <dt>Memory-based</dt>
+    <dd>A sensor on the database captures SQL statements as executed. Captures more, but can slow the system.</dd>
+    <dt>Log-based</dt>
+    <dd>Monitors transactions via database server logs. May miss some data.</dd>
+  </dl>
+  <p>DAM also supports data classification, DLP, and integrity, combining network sniffing, memory scraping, system tables, and log analysis for a full picture of who's accessing the database.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Aggregation = combine data from many sources into one normalized data set; you can't see patterns in fragments.</li>
+      <li>Data analytics = analyze the aggregated data for threats, usually via a SIEM.</li>
+      <li>SIEM pipeline: normalize → process (batch vs stream) → index → curate. Stream processing = near real-time.</li>
+      <li>Log curation filters to the most relevant data; collecting everything overwhelms the system.</li>
+      <li>DAM methods: interception-based, memory-based (most data, can slow system), log-based.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario combines many data sources into one set → <strong>aggregation</strong></li>
+        <li>Scenario needs near-real-time threat detection from logs → <strong>stream processing (SIEM)</strong></li>
+        <li>Scenario captures SQL as executed but may slow the DB → <strong>memory-based DAM</strong></li>
+        <li>Scenario filters to only the most relevant logs → <strong>log curation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_security_practices.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_security_practices</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_compliance_and_regulatory_considerations.html">
+      <span><span class="lbl">next</span><span class="file">07_compliance_and_regulatory_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / data_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

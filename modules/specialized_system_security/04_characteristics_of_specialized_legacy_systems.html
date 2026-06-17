@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Characteristics of Specialized and Legacy Systems / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/characteristics_of_specialized_legacy_systems</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 04 / specialized system security / Legacy Characteristics</span>
+  <h1 class="module-title">Characteristics of Specialized and Legacy Systems</h1>
+  <p class="subtitle">Why these systems are so hard to defend: four traits that put them out of reach of modern security, and why compensating controls become the only option.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Specialized and legacy systems are hard to protect because of four characteristics: <strong>obsolete</strong> (outdated, lacking modern features), <strong>unsupported</strong> (no more vendor updates/patches), <strong>unable to be secured</strong> (design/age prevents modern protection), and <strong>highly constrained</strong> (limited power, memory, connectivity). When these systems can't be patched or replaced, organizations fall back on <strong>compensating controls</strong> like network segmentation and specialized monitoring.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">trait 01</span>
+      <p class="card-name">Obsolete</p>
+      <p class="card-desc">Outdated, incompatible with modern tech, slower, and built before today's threats existed. Hard to integrate, lacks modern security.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">trait 02</span>
+      <p class="card-name">Unsupported</p>
+      <p class="card-desc">No vendor updates/patches/support. New vulnerabilities go unfixed; troubleshooting is costly; compliance risk.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">trait 03</span>
+      <p class="card-name">Unable to Secure</p>
+      <p class="card-desc">Design/age predates modern security (no encryption, MFA). Old SCADA/medical devices can't take firewalls without disruption.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">trait 04</span>
+      <p class="card-name">Highly Constrained</p>
+      <p class="card-desc">Limited CPU/memory/connectivity. No room for monitoring or encryption; upgrades mean replacing the whole device.</p>
+    </div>
+  </div>
+
+  <h2>obsolete</h2>
+
+  <p>Obsolete systems are no longer current with modern standards, their architecture is incompatible with today's tech (no cloud connectivity or real-time analytics), making integration hard. They're typically slower and less efficient, needing more manual intervention (an outdated hospital record system that can't talk to newer devices, forcing manual data transfer and errors). Critically, they were built before today's threats existed, so they lack modern protections, an old point-of-sale system still processes transactions but lacks current encryption, exposing customer data.</p>
+
+  <h2>unsupported</h2>
+
+  <p>Unsupported systems no longer receive updates, patches, or technical support from the vendor (it's not cost-effective to maintain old products). Any vulnerability found after end-of-support stays unaddressed. Beyond security, this brings operational challenges, organizations rely on in-house or third-party experts (costly, and experts in old tech are scarce), and spare parts may be unavailable. It also creates <strong>compliance risk</strong>: industries with regulations (e.g. HIPAA) may face fines for running unsupported systems.</p>
+
+  <h2>unable to be secured</h2>
+
+  <p>These systems, due to design or age, can't be adequately protected with modern measures, they predate practices like encryption, MFA, and secure access controls. An old SCADA system in an energy plant was built to manage physical processes, not to connect to the internet or resist cyberattack. They may rely on outdated protocols/OSes, so adding firewalls or secure connections isn't possible without disrupting operations. Because they're often integral to critical industries (a legacy medical device essential to patient care but un-updatable), they force <strong>compensating controls</strong> like network isolation, which are only partial solutions.</p>
+
+  <h2>highly constrained</h2>
+
+  <p>Highly constrained systems have severe limits in computing power, memory, or connectivity, designed for very specific tasks with minimal resources, so they can't handle modern security solutions. An old vehicle's engine-control embedded system may lack the power/memory for real-time monitoring or encryption. They often run where performance and reliability outrank security (a traffic-light controller prioritizing speed), leaving them vulnerable to tampering with no room to add protection. And they can't be easily upgraded, an old industrial robot would require replacing the entire machine, so organizations keep using them and isolate them from the network as a partial fix.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four traits: obsolete (outdated), unsupported (no patches), unable to be secured (design/age), highly constrained (limited resources).</li>
+      <li>Unsupported = vendor has ended updates; new vulnerabilities go unfixed and it can breach compliance (HIPAA).</li>
+      <li>Unable to be secured = predates modern security and can't accept it without disruption (old SCADA, legacy medical devices).</li>
+      <li>Highly constrained = not enough CPU/memory/connectivity for modern controls; upgrading means full replacement.</li>
+      <li>When you can't patch or replace, use compensating controls: network segmentation/isolation and specialized monitoring.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario's vendor no longer issues patches → <strong>unsupported</strong></li>
+        <li>Scenario can't add encryption/firewalls without breaking operations → <strong>unable to be secured</strong></li>
+        <li>Scenario lacks the CPU/memory to run security software → <strong>highly constrained</strong></li>
+        <li>Scenario isolates an un-patchable device on its own segment → <strong>compensating control</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_operational_technology.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_operational_technology</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_security_practices.html">
+      <span><span class="lbl">next</span><span class="file">05_security_practices</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / characteristics_of_specialized_legacy_systems</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

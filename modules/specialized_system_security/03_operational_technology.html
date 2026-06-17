@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operational Technology / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/operational_technology</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 03 / specialized system security / Operational Technology</span>
+  <h1 class="module-title">Operational Technology (OT)</h1>
+  <p class="subtitle">The hardware and software that runs the physical world: climate systems, factory machinery, and the geographically spread infrastructure of power and water. Availability comes first.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Operational technology is the hardware/software that monitors and controls physical processes in critical infrastructure, prioritizing <strong>availability and integrity</strong> over confidentiality. Three examples: <strong>HVAC</strong> (climate control for people and equipment), <strong>ICS</strong> (industrial control systems automating machinery), and <strong>SCADA</strong> (a subset of ICS for remote monitoring across wide areas).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">OT 01</span>
+      <p class="card-name">HVAC</p>
+      <p class="card-desc">Climate control (temp, airflow, air quality) via sensors + PLCs, run from an HMI. Protects people and servers (data center cooling).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">OT 02</span>
+      <p class="card-name">ICS</p>
+      <p class="card-desc">Automates machinery via PLCs (ladder logic) + sensors + HMI. Interconnected ICS = DCS. Logs to a data historian.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">OT 03</span>
+      <p class="card-name">SCADA</p>
+      <p class="card-desc">ICS subset for remote control across wide areas (power grids, water). Connects field devices over cellular/satellite/VPN. Smart meters.</p>
+    </div>
+  </div>
+
+  <h2>HVAC</h2>
+
+  <p>HVAC is OT that controls a building's climate, temperature, airflow, and air quality, important for people's comfort/safety and for protecting sensitive equipment like data-center servers from overheating. It uses embedded sensors and controllers to adjust automatically. A core component is the <strong>programmable logic controller (PLC)</strong>, programmed to act on sensor inputs (room too hot → activate AC). Operators monitor/control it via a <strong>human-machine interface (HMI)</strong>, a panel or touchscreen. Like other OT, HVAC prioritizes <strong>availability</strong>: it must run continuously.</p>
+
+  <h2>industrial control systems (ICS)</h2>
+
+  <p>ICS automates and manages machinery through embedded devices, controlling physical processes (opening valves, generating electricity) in power, water, healthcare, and telecom. ICS prioritizes <strong>availability and integrity</strong> over confidentiality, the goal is keeping processes running. Key elements:</p>
+  <ul>
+    <li><strong>PLCs</strong> programmed in <strong>ladder logic</strong>, automating tasks from sensor input.</li>
+    <li><strong>Fieldbus</strong> communication links PLCs with sensors and I/O devices.</li>
+    <li><strong>HMI</strong> for operator interaction.</li>
+    <li>Interconnected ICS form a <strong>distributed control system (DCS)</strong> for large-scale operations.</li>
+    <li>A <strong>data historian</strong> collects and catalogs data for monitoring, troubleshooting, and security.</li>
+  </ul>
+  <p>Example: on a US Navy warship, ICS manages power generation and water treatment so the ship runs as a self-contained city.</p>
+
+  <h2>SCADA (Supervisory Control and Data Acquisition)</h2>
+
+  <p>SCADA is a subset of ICS for <strong>remote monitoring and control across wide geographic areas</strong>, unlike standard ICS which controls a single location. It manages multiple ICS over distances (energy, water, telecom) using cellular, satellite, or VPN to connect remote field devices to a central control center. Embedded PLCs and sensors gather data and send it to a host computer for analysis, letting operators manage many sites and respond quickly. A common example: <strong>smart meters</strong> connecting to a central SCADA system via cellular to monitor energy usage, detect outages, and manage billing remotely.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>OT prioritizes availability and integrity over confidentiality (opposite of typical IT's CIA emphasis).</li>
+      <li>PLC = the controller acting on sensor inputs (ladder logic); HMI = the operator's control panel/screen.</li>
+      <li>ICS automates machinery in one facility; interconnected ICS = a DCS; a data historian logs ICS data.</li>
+      <li>SCADA = ICS subset for remote control across wide areas (power grids, water); smart meters are the classic example.</li>
+      <li>HVAC protects both people and equipment (data-center cooling) and must run continuously.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario remotely monitors a power grid across a region → <strong>SCADA</strong></li>
+        <li>Scenario automates factory machinery in one plant → <strong>ICS</strong></li>
+        <li>Scenario uses a control panel to run the system → <strong>HMI</strong></li>
+        <li>Scenario programs a controller to act on sensor data → <strong>PLC (ladder logic)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_specialized_systems.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_specialized_systems</span></span>
+    </a>
+    <span class="counter">lesson 03 / 09</span>
+    <a class="next" href="04_characteristics_of_specialized_legacy_systems.html">
+      <span><span class="lbl">next</span><span class="file">04_characteristics_of_specialized_legacy_systems</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / operational_technology</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

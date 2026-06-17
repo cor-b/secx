@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compliance and Regulatory Considerations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/compliance_and_regulatory_considerations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 07 / specialized system security / Compliance &amp; Regulatory</span>
+  <h1 class="module-title">Compliance and Regulatory Considerations</h1>
+  <p class="subtitle">Three lenses on staying within the rules: legal/industry regulations, the physical environment a system runs in, and the safety standards that protect people from harm.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Compliance and regulatory considerations mean adhering to laws, standards, and guidelines so systems operate safely, securely, and legally. Three areas: <strong>regulatory</strong> (legal/industry standards like GDPR, HIPAA), <strong>environmental</strong> (the physical conditions a system needs: temperature, humidity, EMI), and <strong>safety</strong> (designing/operating to protect people, e.g. ISO 26262, IEC 61508).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">Regulatory</p>
+      <p class="card-desc">Legal/industry standards (HIPAA, GDPR, FDA). Avoid fines, build trust, competitive advantage. Overseen by bodies like OCR, FDA.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Environmental</p>
+      <p class="card-desc">Physical conditions: temperature (64-81°F), humidity (40-60%), EMI. Data centers, clean rooms for semiconductors.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Safety</p>
+      <p class="card-desc">Protect users/public from harm via standards: IEC 61508 (functional safety), ISO 26262 (automotive).</p>
+    </div>
+  </div>
+
+  <h2>regulatory considerations</h2>
+
+  <p>Regulatory considerations ensure systems operate according to industry laws, standards, and guidelines, promoting legal, safe operations in healthcare, finance, and manufacturing. A healthcare company must comply with <strong>HIPAA</strong> to protect patient data; oversight comes from bodies like the <strong>Office for Civil Rights (OCR)</strong> (HIPAA privacy) and the <strong>FDA</strong> (medical devices). Compliance also builds trust, demonstrating commitment to privacy (e.g. <strong>GDPR</strong> in the EU) and supporting business continuity and risk management. Failure brings fines, legal battles, and reputational damage; compliance can become a competitive advantage attracting clients and partners.</p>
+
+  <h2>environmental considerations</h2>
+
+  <p>Environmental considerations ensure systems operate safely within their physical space. Data centers, sensitive to conditions, typically maintain temperatures of <strong>64-81°F</strong> and humidity of <strong>40-60%</strong> to prevent overheating, condensation, and electrostatic discharge. <strong>Electromagnetic interference (EMI)</strong> from nearby equipment or faulty wiring can disrupt data transmission. Neglecting these factors causes failures, downtime, data loss, and penalties. A strong example is <strong>clean rooms</strong> for semiconductor production, designed to limit dust and control humidity precisely because semiconductors are highly sensitive to particles and temperature.</p>
+
+  <h2>safety considerations</h2>
+
+  <p>Safety considerations ensure systems are designed and operated to protect operators, users, and the public. They follow standards like <strong>IEC 61508</strong> (functional safety in electronic systems, including fail-safes and risk reduction). The automotive industry is a key example: cars must meet <strong>ISO 26262</strong> (functional safety for automotive electrical/electronic systems), covering airbags and anti-lock braking so they perform reliably in emergencies. Meeting these standards prevents accidents, reduces liability, and maintains reliability.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three areas: regulatory (laws/standards), environmental (physical conditions), safety (protecting people).</li>
+      <li>Regulatory: HIPAA (healthcare, OCR enforces), GDPR (EU data), FDA (medical devices).</li>
+      <li>Environmental: data centers 64-81°F, 40-60% humidity, watch for EMI; clean rooms for semiconductors.</li>
+      <li>Safety standards: IEC 61508 (general functional safety), ISO 26262 (automotive functional safety).</li>
+      <li>Don't confuse the two safety standards: ISO 26262 = cars; IEC 61508 = general/industrial.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario protects patient data under law → <strong>regulatory (HIPAA)</strong></li>
+        <li>Scenario controls temperature/humidity for servers → <strong>environmental</strong></li>
+        <li>Scenario certifies a car's braking system → <strong>safety (ISO 26262)</strong></li>
+        <li>Scenario applies functional safety to an industrial system → <strong>safety (IEC 61508)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_data_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_data_management</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_critical_services_challenges.html">
+      <span><span class="lbl">next</span><span class="file">08_critical_services_challenges</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / compliance_and_regulatory_considerations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

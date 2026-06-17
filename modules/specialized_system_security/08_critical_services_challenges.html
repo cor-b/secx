@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Critical Services Challenges / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/critical_services_challenges</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 08 / specialized system security / Critical Services Challenges</span>
+  <h1 class="module-title">Critical Services Challenges</h1>
+  <p class="subtitle">When the systems under attack keep society running. Three sectors where a breach means outages, accidents, or lives at risk: utilities, transportation, and healthcare.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Critical services challenges involve protecting infrastructure whose disruption has major societal impact. Three sectors: <strong>utilities</strong> (power grids, water, gas), <strong>transportation</strong> (rail, air traffic control, transit, shipping), and <strong>healthcare</strong> (medical devices, patient data, hospital networks). Each is illustrated by a real attack.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">sector 01</span>
+      <p class="card-name">Utilities</p>
+      <p class="card-desc">Power grids, water, gas via ICS. Compromise → outages or contamination. 2015 Ukraine grid attack cut power to 230,000.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">sector 02</span>
+      <p class="card-name">Transportation</p>
+      <p class="card-desc">Rail, air traffic control, transit, shipping. 2017 NotPetya hit Maersk: ~$300M, 10 days, 76 ports.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">sector 03</span>
+      <p class="card-name">Healthcare</p>
+      <p class="card-desc">Medical devices, patient data, hospital networks. 2017 WannaCry hit the UK NHS: 19,000 appointments cancelled.</p>
+    </div>
+  </div>
+
+  <h2>utilities</h2>
+
+  <p>Utilities protect power grids, water systems, and gas pipelines, where disruption causes widespread outages or water contamination. They rely on <strong>industrial control systems</strong>; if compromised, attackers can manipulate the flow of electricity, water, or gas. The <strong>2015 Ukrainian power grid attack</strong> is the key example: hackers remotely hijacked operator workstations to shut down substations, cutting power to ~230,000 people, while also launching a DoS on the utilities' call centers to block outage reporting. Defenses: firewalls, encryption, regular software updates for ICS, plus security audits and employee training.</p>
+
+  <h2>transportation</h2>
+
+  <p>Transportation, rail, air traffic control, public transit, shipping, increasingly relies on digital systems; disruption causes delays, accidents, and risk to life. The <strong>2017 NotPetya ransomware</strong> attack on <strong>Maersk</strong> is the example: it shut down systems for nearly 10 days, impacted 76 ports, and cost ~$300 million. NotPetya spread rapidly by exploiting an <strong>unpatched Windows</strong> vulnerability, highlighting timely patching and network segmentation. Because Maersk handled ~15-18% of global container shipping, the disruption hit worldwide supply chains. Defenses: network segmentation, IDS, and strong access controls.</p>
+
+  <h2>healthcare</h2>
+
+  <p>Healthcare faces unique challenges from sensitive patient data and critical medical devices/networks; attacks can steal health information or disrupt life-saving care. The <strong>2017 WannaCry ransomware</strong> attack is the example: it exploited unpatched Windows systems, infecting over 230,000 computers in 150 countries, and hit the UK's <strong>NHS</strong>, affecting at least 81 trusts, cancelling ~19,000 appointments/procedures, and forcing surgeries to be cancelled and patients diverted. Defenses: securing medical devices, encrypting patient data, MFA for staff, and regular updates/patching.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three critical sectors: utilities, transportation, healthcare, disruption has societal impact.</li>
+      <li>Utilities: 2015 Ukraine power grid attack (substations shut down, 230,000 lost power, plus DoS on call centers).</li>
+      <li>Transportation: 2017 NotPetya hit Maersk (~$300M, 76 ports), spread via unpatched Windows.</li>
+      <li>Healthcare: 2017 WannaCry hit the NHS (19,000 appointments cancelled), also unpatched Windows.</li>
+      <li>Common thread: unpatched systems and weak segmentation enabled the worst impacts.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario manipulates electricity/water flow via ICS → <strong>utilities challenge</strong></li>
+        <li>Scenario halts global shipping via ransomware → <strong>transportation (NotPetya/Maersk)</strong></li>
+        <li>Scenario cancels surgeries after a ransomware outbreak → <strong>healthcare (WannaCry/NHS)</strong></li>
+        <li>Scenario spreads through an unpatched Windows flaw → <strong>patch management + segmentation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_compliance_and_regulatory_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_compliance_and_regulatory_considerations</span></span>
+    </a>
+    <span class="counter">lesson 08 / 09</span>
+    <a class="next" href="09_commercial_and_government_challenges.html">
+      <span><span class="lbl">next</span><span class="file">09_commercial_and_government_challenges</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / critical_services_challenges</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

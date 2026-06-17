@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Practices / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/security_practices</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 05 / specialized system security / Security Practices</span>
+  <h1 class="module-title">Security Practices</h1>
+  <p class="subtitle">Three layered defenses for systems you often can't patch: wall them off (segmentation), shrink their attack surface (hardening), and watch them constantly (monitoring).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Security practices protect specialized systems through three strategies: <strong>segmentation</strong> (divide the network into isolated sections to limit attack spread), <strong>hardening</strong> (reduce the attack surface by disabling unneeded services and patching), and <strong>monitoring</strong> (continuously watch activity to detect incidents in real time). Together they provide layered protection.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">practice 01</span>
+      <p class="card-name">Segmentation</p>
+      <p class="card-desc">Divide the network into isolated sections (VLANs + firewalls) so a breach in one area can't spread. Isolate ICS from corporate network.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">practice 02</span>
+      <p class="card-name">Hardening</p>
+      <p class="card-desc">Reduce the attack surface: disable unneeded services, apply patches, configure stronger settings. Fewer entry points.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">practice 03</span>
+      <p class="card-name">Monitoring</p>
+      <p class="card-desc">Continuously watch activity for anomalies; SIEM + IDS for real-time alerts on unauthorized access.</p>
+    </div>
+  </div>
+
+  <h2>segmentation</h2>
+
+  <p>Segmentation divides a larger network into smaller, isolated sections, so if an attacker compromises one area, they can't easily reach the rest. An office might keep employee devices on a separate network from sensitive financial/customer-data systems. A common tool is the <strong>VLAN</strong>, logically separating devices at layer 2. It's especially valuable for protecting specialized ICS: a factory isolates its operational systems controlling machinery from the broader corporate network (email, etc.), limiting damage if the corporate side is breached. <strong>Firewalls</strong> (Cisco ASA, Palo Alto Next-Generation Firewalls) combine with segmentation to enforce which segments may communicate and under what conditions.</p>
+
+  <h2>hardening</h2>
+
+  <p>Hardening minimizes a system's vulnerabilities by reducing its attack surface, disabling unnecessary services or features (a locally-accessed database shouldn't have remote login enabled) and applying security patches when vendors release them. For a web server, disable unneeded features/services (e.g. FTP if not required) so there are fewer entry points to exploit. Tools like the <strong>Microsoft Security Compliance Toolkit</strong> or open-source <strong>Lynis</strong> identify where systems can be hardened.</p>
+
+  <h2>monitoring</h2>
+
+  <p>Monitoring keeps a close watch on network and system activity to spot incidents as they happen, detecting unusual behavior like a traffic spike or unauthorized access attempts. <strong>SIEM</strong> systems collect and analyze data across the organization to surface issues. For a retailer handling credit cards, real-time monitoring of the payment system flags unauthorized access quickly. Tools: <strong>Splunk</strong> or <strong>Graylog</strong> for log collection/analysis and real-time alerts, plus IDS like <strong>Snort</strong> or <strong>Suricata</strong> for unusual patterns and unauthorized access.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Segmentation isolates network sections (VLANs + firewalls) to contain attacks; isolate ICS/OT from the corporate network.</li>
+      <li>Hardening reduces the attack surface: disable unnecessary services, apply patches (tools: MS Security Compliance Toolkit, Lynis).</li>
+      <li>Monitoring watches activity in real time for anomalies; SIEM (Splunk, Graylog) + IDS (Snort, Suricata).</li>
+      <li>These three are layered defense, especially important for systems that can't be patched directly.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario isolates factory machinery from the corporate LAN → <strong>segmentation</strong></li>
+        <li>Scenario disables FTP and unused services on a server → <strong>hardening</strong></li>
+        <li>Scenario uses a SIEM for real-time alerts on suspicious access → <strong>monitoring</strong></li>
+        <li>Scenario can't patch a legacy device, so it walls it off and watches it → <strong>segmentation + monitoring</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_characteristics_of_specialized_legacy_systems.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_characteristics_of_specialized_legacy_systems</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_data_management.html">
+      <span><span class="lbl">next</span><span class="file">06_data_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / security_practices</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

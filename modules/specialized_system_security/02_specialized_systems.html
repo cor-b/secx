@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Specialized Systems / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/specialized_systems</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 02 / specialized system security / Specialized Systems</span>
+  <h1 class="module-title">Specialized Systems</h1>
+  <p class="subtitle">Purpose-built technology with security baked in by design: an entire computer on one chip, dedicated embedded controllers, internet-connected devices, and the wireless that ties them together.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Specialized systems are unique, purpose-built technologies, each needing tailored security. Four types: <strong>system-on-a-chip (SoC)</strong> (a whole computer on one chip, secure at the hardware level), <strong>embedded systems</strong> (dedicated-function controllers in larger devices), <strong>IoT devices</strong> (internet-connected, sensor-driven), and <strong>wireless technologies/RF</strong> (the radio links connecting them).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">type 01</span>
+      <p class="card-name">System-on-a-Chip</p>
+      <p class="card-desc">Whole computer (CPU, memory, GPU, radios) on one chip. Small, low-power, powerful. Raspberry Pi, Fire TV Stick. Secure at hardware level.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 02</span>
+      <p class="card-name">Embedded Systems</p>
+      <p class="card-desc">Dedicated-function computing inside larger devices (thermostat, engine control). Limited resources, prioritize reliability.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 03</span>
+      <p class="card-name">IoT Devices</p>
+      <p class="card-desc">Internet-connected, sensor-driven devices (smart lights, cameras). Convenient but expanded attack surface.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">type 04</span>
+      <p class="card-name">Wireless / RF</p>
+      <p class="card-desc">Radio links (Wi-Fi, Bluetooth, Zigbee, Z-Wave) connecting devices. Need strong encryption.</p>
+    </div>
+  </div>
+
+  <h2>system-on-a-chip (SoC)</h2>
+
+  <p>An SoC is an integrated circuit holding all the components of a computer, processor, memory, storage, GPU, and peripherals like USB controllers, power management, and Wi-Fi/Bluetooth radios, on a single chip. SoCs deliver high performance in a small, low-power form factor (a Raspberry Pi, a Roku/Fire TV Stick). Because everything is on one chip, security must be embedded at the <strong>hardware level</strong> to protect against physical and cyber threats.</p>
+
+  <h2>embedded systems</h2>
+
+  <p>Embedded systems are computing systems built into larger devices to perform a specific function, found in washing machines, medical devices, car engine control, and smart thermostats. Unlike general-purpose computers, they're dedicated to one job and run on limited resources (often a microcontroller or SoC), prioritizing reliability and efficiency. They take input, process it by defined rules, and produce output (adjusting temperature, controlling engine performance), which makes them cheaper and more efficient than a full OS for the task.</p>
+
+  <h2>internet of things (IoT)</h2>
+
+  <p>IoT is the global network of internet-connected devices that collect, send, and receive data using sensors and software. They range from smart-home gear (lights, doorbells, cameras, thermostats controllable by phone or voice) to industrial and healthcare equipment. In industry, IoT sensors monitor machinery and predict maintenance, reducing downtime. Their defining trait, pervasive connectivity, also makes them a significant security challenge.</p>
+
+  <h2>wireless technologies (RF)</h2>
+
+  <p>Wireless tech lets devices communicate without physical connections, using radio waves. <strong>RF (radio frequency)</strong> transmits data via electromagnetic waves (Wi-Fi routers, Bluetooth headphones/smartwatches). Two home-automation protocols compared:</p>
+
+  <dl class="def">
+    <dt>Zigbee</dt>
+    <dd>Higher frequency (2.4 GHz): faster data transfer, supports more devices, good for bigger systems. But can face interference from other 2.4 GHz devices like Wi-Fi.</dd>
+    <dt>Z-Wave</dt>
+    <dd>Lower frequency (~900 MHz): better range, penetrates walls better, more reliable in larger homes. Less prone to 2.4 GHz interference.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>SoC = entire computer on one chip; secure at the hardware level (Raspberry Pi, streaming sticks).</li>
+      <li>Embedded systems = dedicated-function computing inside a larger device, limited resources, reliability-focused.</li>
+      <li>IoT = internet-connected sensor devices; pervasive connectivity expands the attack surface.</li>
+      <li>RF carries wireless data; Zigbee = 2.4 GHz (faster, more devices, more interference), Z-Wave = ~900 MHz (better range/wall penetration).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario puts a whole computer on one chip → <strong>system-on-a-chip</strong></li>
+        <li>Scenario controls one function inside a device with minimal resources → <strong>embedded system</strong></li>
+        <li>Scenario needs longer range and wall penetration at low power → <strong>Z-Wave</strong></li>
+        <li>Scenario supports many devices with faster transfer at 2.4 GHz → <strong>Zigbee</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_specialized_system_security.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_specialized_system_security</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_operational_technology.html">
+      <span><span class="lbl">next</span><span class="file">03_operational_technology</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / specialized_systems</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

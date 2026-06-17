@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial and Government Challenges / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/specialized_system_security/commercial_and_government_challenges</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /specialized_system_security</a>
+
+  <span class="module-tag">lesson 09 / specialized system security / Commercial &amp; Government Challenges</span>
+  <h1 class="module-title">Commercial and Government Challenges</h1>
+  <p class="subtitle">Where the targets are money, secrets, and intellectual property. Three sectors and their landmark attacks: manufacturing, finance, and government/defense.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Commercial and government challenges involve securing sensitive operations and data against sophisticated threats. Three sectors: <strong>manufacturing</strong> (ICS and intellectual property), <strong>finance</strong> (transaction systems, customer data, compliance), and <strong>government/defense</strong> (classified info, critical infrastructure, military operations, often facing state-sponsored attacks).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">sector 01</span>
+      <p class="card-name">Manufacturing</p>
+      <p class="card-desc">Protect ICS and intellectual property. 2019 Norsk Hydro (LockerGoga, $40M+); 2014 US Steel IP espionage; growing IoT attack surface.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">sector 02</span>
+      <p class="card-name">Finance</p>
+      <p class="card-desc">Secure transactions + customer data; comply (GDPR, PCI DSS). 2016 Bangladesh Bank SWIFT heist ($81M stolen).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">sector 03</span>
+      <p class="card-name">Government/Defense</p>
+      <p class="card-desc">Classified info, military comms vs state-sponsored attacks. 2020 SolarWinds supply chain; 2008 Agent.btz USB malware.</p>
+    </div>
+  </div>
+
+  <h2>manufacturing</h2>
+
+  <p>Manufacturing must protect <strong>ICS</strong> (controlling machines and robotics central to production) and <strong>intellectual property</strong> (designs, trade secrets, processes). The <strong>2019 Norsk Hydro</strong> attack (LockerGoga ransomware) forced manual operations, with employees using handwritten notes, costing over <strong>$40 million</strong>. IP theft is the other concern: in <strong>2014</strong>, <strong>US Steel</strong> was targeted by alleged Chinese state-sponsored espionage aiming to steal production secrets. The rise of <strong>IoT</strong> in factories also expands the attack surface, mitigated with updated firmware and traffic monitoring.</p>
+
+  <h2>finance</h2>
+
+  <p>Finance must secure transaction systems and customer data and ensure regulatory compliance. The <strong>2016 Bangladesh central bank</strong> attack is the example: hackers (believed to be North Korea's <strong>Lazarus group</strong>) exploited weaknesses in the <strong>SWIFT</strong> payment system, attempting nearly $1 billion and succeeding in transferring <strong>$81 million</strong> before a typo raised suspicion. Customer data (personal info, card numbers) is a prime target, so institutions must comply with <strong>GDPR</strong> and <strong>PCI DSS</strong>; failure brings fines and reputational damage.</p>
+
+  <h2>government and defense</h2>
+
+  <p>Government/defense must secure classified information and military operations against state-sponsored attacks. The <strong>2020 SolarWinds</strong> attack is the example: hackers inserted malicious code into updates for the SolarWinds Orion network-management platform, gaining undetected access to multiple federal agencies (Homeland Security, Energy, Treasury), a <strong>supply-chain</strong> compromise. Military communications are also critical: in <strong>2008</strong>, the <strong>Agent.btz</strong> malware infiltrated US military networks via infected <strong>USB drives</strong>, creating a backdoor; the cleanup led to a ban on USB drives across military networks and helped catalyze the creation of US Cyber Command in 2010.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three sectors: manufacturing (ICS + IP), finance (transactions + data + compliance), government/defense (classified info, state-sponsored).</li>
+      <li>Manufacturing: 2019 Norsk Hydro (LockerGoga, manual ops, $40M+); 2014 US Steel IP espionage.</li>
+      <li>Finance: 2016 Bangladesh Bank SWIFT heist ($81M); comply with GDPR and PCI DSS.</li>
+      <li>Government/defense: 2020 SolarWinds (supply-chain via Orion updates); 2008 Agent.btz (USB malware → USB ban, US Cyber Command).</li>
+      <li>SolarWinds is the canonical software supply-chain attack example.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario steals product designs/trade secrets → <strong>manufacturing IP theft</strong></li>
+        <li>Scenario abuses SWIFT to move funds fraudulently → <strong>finance (Bangladesh Bank)</strong></li>
+        <li>Scenario compromises trusted software updates → <strong>supply-chain (SolarWinds)</strong></li>
+        <li>Scenario spreads via infected USB into military networks → <strong>Agent.btz</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_critical_services_challenges.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_critical_services_challenges</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">specialized_system_security/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>specialized_system_security / commercial_and_government_challenges</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
