@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bash / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/automated_security_operations/bash</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /automated_security_operations</a>
+
+  <span class="module-tag">lesson 04 / automated security operations / Bash</span>
+  <h1 class="module-title">Bash</h1>
+  <p class="subtitle">The Bourne Again Shell: the scripting language for automating Unix and Linux security operations, with its own conventions for storing data and controlling flow.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>Bash</strong> (Bourne Again Shell) is a Unix shell and command language for writing scripts. It's tailored for <strong>Unix/Linux</strong> systems (unlike PowerShell for Windows or general-purpose Python), making it ideal for Linux security operations. Its <strong>data structures</strong> are variables, arrays, and strings; its <strong>control structures</strong> are conditionals (if/elif/else, case) and loops (for, while).</p>
+  </div>
+
+  <h2>bash data structures</h2>
+
+  <dl class="def">
+    <dt>Variables</dt>
+    <dd>Store single values. No keyword needed, assign with <code>=</code> and <strong>no spaces</strong> around it (<code>username=admin</code>). Everything is treated as a string unless specified. Access the value with <code>$</code> (<code>$username</code>), printed via <code>echo</code>.</dd>
+    <dt>Arrays</dt>
+    <dd>Store multiple values, created in quotes separated by spaces. Use <strong>zero-based indexing</strong>: the first element is position 0. <code>${servers[0]}</code> retrieves the first element.</dd>
+    <dt>Strings</dt>
+    <dd>Sequences of characters; can be concatenated and manipulated with special operators (<code>#</code>, <code>%</code>). <code>${#greeting}</code> gives the length of a string (e.g. "Hello, world!" → 13).</dd>
+  </dl>
+
+  <h2>bash control structures</h2>
+
+  <ul>
+    <li><strong>if / elif / else:</strong> the condition is in <strong>square brackets</strong>; the block opens with <code>then</code> and closes with <code>fi</code> ("if" backward). Checks like whether <code>user</code> equals <code>admin</code>.</li>
+    <li><strong>for loop:</strong> iterates over lists/arrays (<code>${servers[@]}</code> for all elements), with the block marked by <code>do</code> and <code>done</code>.</li>
+    <li><strong>while loop:</strong> runs as long as a condition (in square brackets) stays true; block marked with <code>do</code>/<code>done</code> (e.g. <code>((count++))</code> increments).</li>
+    <li><strong>case statement:</strong> matches a variable against several values, an alternative to many ifs. Each block ends with <code>;;</code> and the whole block closes with <code>esac</code> ("case" backward).</li>
+  </ul>
+
+  <p>Combining these, Bash handles complex decision-making and task automation, ideal for managing Unix-based systems (e.g. a script scanning log files using arrays to store results and loops to iterate over entries).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Bash = Bourne Again Shell, for Unix/Linux automation (PowerShell = Windows, Python = cross-platform).</li>
+      <li>Variables: assign with <code>=</code> and no spaces; access with <code>$</code>; everything is a string by default.</li>
+      <li>Arrays use zero-based indexing; <code>${arr[0]}</code> is the first element, <code>${arr[@]}</code> is all.</li>
+      <li>Blocks close with reversed keywords: <code>fi</code> (if), <code>esac</code> (case); loops use <code>do</code>/<code>done</code>.</li>
+      <li>Conditions go in square brackets; <code>${#string}</code> gives string length.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario automates tasks on a Linux server → <strong>Bash</strong></li>
+        <li>Scenario closes a conditional with "fi" → <strong>Bash if statement</strong></li>
+        <li>Scenario matches one variable against many values → <strong>case statement</strong></li>
+        <li>Scenario accesses the first array element at position 0 → <strong>zero-based indexing</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_scripting.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_scripting</span></span>
+    </a>
+    <span class="counter">lesson 04 / 08</span>
+    <a class="next" href="05_powershell.html">
+      <span><span class="lbl">next</span><span class="file">05_powershell</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>automated_security_operations / bash</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

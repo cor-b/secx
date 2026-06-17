@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/automated_security_operations/python</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /automated_security_operations</a>
+
+  <span class="module-tag">lesson 06 / automated security operations / Python</span>
+  <h1 class="module-title">Python</h1>
+  <p class="subtitle">The versatile, cross-platform language with a vast library ecosystem, ideal for the more complex and diverse security automation tasks like log analysis and threat assessment.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>Python</strong> is a versatile, cross-platform language widely used for scripting and automating complex tasks, security assessments, threat analysis. Unlike Windows-only PowerShell or Unix-only Bash, Python offers <strong>cross-platform compatibility</strong> and an extensive library ecosystem. Data structures: lists, tuples, dictionaries, sets (plus strings, arrays). Control structures: if/elif/else, for, while, with break and continue.</p>
+  </div>
+
+  <h2>python data structures</h2>
+
+  <dl class="def">
+    <dt>List</dt>
+    <dd>Ordered, mutable collection accessed by index; can mix data types (string, int, float, bool). Versatile for complex datasets. (Indexing starts at 0, so index 1 is the second item.)</dd>
+    <dt>Tuple</dt>
+    <dd>Like a list but <strong>immutable</strong>, values can't change once created. Delimited by parentheses. Ideal for constant data like coordinates.</dd>
+    <dt>Dictionary</dt>
+    <dd>Key-value pairs (like hash tables in other languages) for efficient lookup by key (e.g. name → John, age → 30). Requires proper indentation.</dd>
+    <dt>Set</dt>
+    <dd>Unordered collection of <strong>unique</strong> elements, no duplicates. Useful for filtering out duplicate log entries.</dd>
+  </dl>
+
+  <p>(Note: the transcript described tuples as parentheses-delimited and lists as curly-brackets; conventionally lists use square brackets <code>[]</code> and dicts/sets use curly braces <code>{}</code>, the exam emphasis is tuple = immutable/parentheses, set = unique values.)</p>
+
+  <h2>python control structures</h2>
+
+  <ul>
+    <li><strong>if / elif / else:</strong> create conditions; relies on proper <strong>indentation</strong> to define blocks (e.g. age ≥ 18 → "adult", else "minor").</li>
+    <li><strong>for loop:</strong> iterates over a sequence like a list or string (e.g. printing each fruit), essential for processing large data like network logs.</li>
+    <li><strong>while loop:</strong> runs while a condition stays true (e.g. count ≤ 5, incrementing each pass).</li>
+    <li><strong>break / continue:</strong> <code>break</code> exits a loop early when a condition is met; <code>continue</code> skips the rest of the current iteration and moves to the next.</li>
+  </ul>
+
+  <p>These make Python powerful for automating log analysis, network-traffic scanning, and security assessments, with cross-platform reach and rich libraries.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Python is cross-platform with an extensive library ecosystem, ideal for complex/diverse security automation.</li>
+      <li>List = ordered/mutable; tuple = immutable (parentheses); dictionary = key-value; set = unique values only.</li>
+      <li>Python relies on indentation to define code blocks (not braces/keywords).</li>
+      <li>break exits a loop early; continue skips to the next iteration.</li>
+      <li>Pick Python over Bash/PowerShell when you need cross-platform reach or rich libraries.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs cross-platform automation with libraries → <strong>Python</strong></li>
+        <li>Scenario needs constant, unchangeable data → <strong>tuple</strong></li>
+        <li>Scenario must remove duplicate entries automatically → <strong>set</strong></li>
+        <li>Scenario stops a loop when a value is found → <strong>break</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_powershell.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_powershell</span></span>
+    </a>
+    <span class="counter">lesson 06 / 08</span>
+    <a class="next" href="07_cron_scheduled_tasks.html">
+      <span><span class="lbl">next</span><span class="file">07_cron_scheduled_tasks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>automated_security_operations / python</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

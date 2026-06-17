@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scripting / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/automated_security_operations/scripting</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /automated_security_operations</a>
+
+  <span class="module-tag">lesson 03 / automated security operations / Scripting</span>
+  <h1 class="module-title">Scripting</h1>
+  <p class="subtitle">The building blocks shared by every scripting language: a plain-language plan (pseudocode), organized storage (data structures), and the logic that drives decisions and repetition (control structures).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Scripting writes code that automates repetitive tasks for efficiency and consistency. Three core concepts: <strong>pseudocode</strong> (a plain-language outline of logic before coding), <strong>data structures</strong> (arrays, lists, dictionaries to organize data), and <strong>control structures</strong> (loops and conditionals that direct flow). These apply across Bash, PowerShell, and Python.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Pseudocode</p>
+      <p class="card-desc">A plain-language blueprint of a script's logic and steps, no syntax. Like a rough house sketch. Plans the flow, eases team communication.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Structures</p>
+      <p class="card-desc">Organized storage: arrays/lists (ordered) and dictionaries (key-value). Like closets and shelves. Hold IPs, log entries, scan results.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Control Structures</p>
+      <p class="card-desc">Loops and conditionals direct flow. Like traffic signals. Repeat actions and make decisions based on conditions.</p>
+    </div>
+  </div>
+
+  <h2>pseudocode</h2>
+
+  <p>Pseudocode is a simplified, high-level outline of a script's logic and steps, without specific-language syntax, like a rough house sketch before construction: you map the structure and flow without exact measurements. It's a blueprint that breaks complex tasks into manageable steps, useful in the <strong>design phase</strong> (e.g. outlining the sequence to scan network traffic for anomalies). Its simplicity also makes it easy to communicate the process to team members unfamiliar with a given language, and it allows revisions before committing to code, reducing errors. It's not executable, it's a translator between human logic and machine execution.</p>
+
+  <h2>data structures</h2>
+
+  <p>Data structures organize and store information in a script, like the closets, shelves, and cabinets in a house. Common types:</p>
+  <ul>
+    <li><strong>Arrays/lists:</strong> ordered collections where each element is accessed by position, ideal when order matters (e.g. timestamped log files, IP addresses, scan results).</li>
+    <li><strong>Dictionaries:</strong> flexible <strong>key-value pairs</strong> where each unique key maps to a value, ideal for efficient retrieval by key (e.g. associating IP addresses with their statuses).</li>
+  </ul>
+  <p>The right data structure keeps scripts efficient and organized, essential for automated security processes.</p>
+
+  <h2>control structures</h2>
+
+  <p>Control structures define the logic and flow, like traffic signals directing cars. Two main types:</p>
+  <ul>
+    <li><strong>Loops</strong> (<code>for</code>, <code>while</code>): repeat actions, useful for large data sets or recurring tasks (e.g. scanning thousands of login attempts and flagging suspicious ones), saving time and reducing error.</li>
+    <li><strong>Conditional statements</strong> (<code>if</code>, <code>else</code>): make decisions based on data (e.g. if disk usage exceeds 90%, clear temp files or send an alert), adding automated decision-making.</li>
+  </ul>
+  <p>Together they let scripts adapt to varying conditions and handle scenarios without manual intervention.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Pseudocode = a plain-language plan of logic/steps with no syntax; used in the design phase and for communication.</li>
+      <li>Data structures organize data: arrays/lists are ordered (by index); dictionaries are key-value pairs for lookup.</li>
+      <li>Control structures direct flow: loops repeat actions; conditionals make decisions.</li>
+      <li>These three concepts are language-agnostic, they apply to Bash, PowerShell, and Python alike.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario outlines logic before coding, no syntax → <strong>pseudocode</strong></li>
+        <li>Scenario stores an ordered list of log entries → <strong>array/list</strong></li>
+        <li>Scenario maps IPs to statuses for lookup → <strong>dictionary (key-value)</strong></li>
+        <li>Scenario repeats an action over many entries → <strong>loop (control structure)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_vulnerability_scanning_and_reporting.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_vulnerability_scanning_and_reporting</span></span>
+    </a>
+    <span class="counter">lesson 03 / 08</span>
+    <a class="next" href="04_bash.html">
+      <span><span class="lbl">next</span><span class="file">04_bash</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>automated_security_operations / scripting</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

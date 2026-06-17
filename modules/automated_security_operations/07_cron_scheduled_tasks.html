@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cron and Scheduled Tasks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/automated_security_operations/cron_scheduled_tasks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /automated_security_operations</a>
+
+  <span class="module-tag">lesson 07 / automated security operations / Cron &amp; Scheduled Tasks</span>
+  <h1 class="module-title">Cron and Scheduled Tasks</h1>
+  <p class="subtitle">Making automation run on its own clock: Cron on Linux and Task Scheduler on Windows execute scripts at predefined times so critical security tasks never depend on someone remembering.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cron and Scheduled Tasks automate execution of scripts at predefined times. <strong>Cron</strong> (from Chronos, Greek for time) is the Linux time-based job scheduler, configured in the <strong>crontab</strong>. <strong>Scheduled Tasks</strong> is the Windows equivalent, managed via Task Scheduler. Both ensure critical processes (scans, backups, patches) run consistently without manual intervention.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">tool 01</span>
+      <p class="card-name">Cron (Linux)</p>
+      <p class="card-desc">Time-based job scheduler configured in the crontab. Five time fields: minute, hour, day-of-month, month, day-of-week. Pairs with Bash.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 02</span>
+      <p class="card-name">Scheduled Tasks (Windows)</p>
+      <p class="card-desc">Managed via Windows Task Scheduler; daily/weekly/monthly runs. Pairs with PowerShell scripts.</p>
+    </div>
+  </div>
+
+  <h2>cron</h2>
+
+  <p>Cron is a time-based job scheduler in Linux, useful for automating repetitive tasks like security scans or log updates. It's controlled by the <strong>crontab</strong> file, where each line defines a task with five time fields:</p>
+
+  <ol>
+    <li><strong>Minute</strong></li>
+    <li><strong>Hour</strong></li>
+    <li><strong>Day of the month</strong></li>
+    <li><strong>Month</strong></li>
+    <li><strong>Day of the week</strong> (day 1 = Monday)</li>
+  </ol>
+
+  <p>An asterisk (<code>*</code>) in a position means "every." Example: <code>20 20 * * 1-5 /scripts/backup-server</code> runs every weekday (days 1-5) at 8:20 PM (20th hour, 20th minute). Cron integrates with Bash scripts, e.g. comparing current file hashes against known-good hashes to detect unauthorized modifications and triggering an alert on mismatch. Manage it with <code>crontab -e</code> (edit) and <code>crontab -l</code> (list). It reduces human error and keeps updates, backups, and scans running on time.</p>
+
+  <h2>scheduled tasks</h2>
+
+  <p>Scheduled Tasks is the Windows time-based scheduler, managed through the <strong>Windows Task Scheduler</strong>, useful for maintenance scripts, backups, and software updates at set intervals (daily, weekly, monthly). It works alongside <strong>PowerShell scripts</strong>, e.g. scanning logs for errors, sending alerts, or backing up files, enabling automated workflows so admins don't manually trigger tasks. Like Cron, it reduces workload, human error, and keeps the system secure and maintained.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Cron = Linux time-based scheduler (from Chronos); Scheduled Tasks = Windows (Task Scheduler).</li>
+      <li>Crontab has five fields in order: minute, hour, day-of-month, month, day-of-week (Monday = 1).</li>
+      <li>An asterisk means "every" for that field; ranges like 1-5 mean weekdays.</li>
+      <li>Cron pairs with Bash; Scheduled Tasks pairs with PowerShell.</li>
+      <li>Both ensure consistent, unattended execution of scans, backups, and patches.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario schedules a nightly scan on Linux → <strong>Cron</strong></li>
+        <li>Scenario automates patch deployment on Windows → <strong>Scheduled Tasks</strong></li>
+        <li>Scenario reads "0 7 * * *" → <strong>runs daily at 7:00 AM</strong></li>
+        <li>Scenario edits then lists scheduled jobs on Linux → <strong>crontab -e / crontab -l</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_python.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_python</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_workflow_automation.html">
+      <span><span class="lbl">next</span><span class="file">08_workflow_automation</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>automated_security_operations / cron_scheduled_tasks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

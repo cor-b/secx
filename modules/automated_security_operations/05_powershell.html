@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerShell / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/automated_security_operations/powershell</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /automated_security_operations</a>
+
+  <span class="module-tag">lesson 05 / automated security operations / PowerShell</span>
+  <h1 class="module-title">PowerShell</h1>
+  <p class="subtitle">Windows' scripting language and command-line shell, built around cmdlets and .NET objects that flow through the pipeline, optimized for system administration.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>PowerShell</strong> is a scripting language and command-line shell for automating tasks and managing configurations in <strong>Windows</strong> (unlike Unix-based Bash or general-purpose Python). It uses <strong>cmdlets</strong> (verb-noun commands returning .NET objects) and a <strong>pipeline</strong>. Data structures: variables, arrays, hash tables, strings, objects. Control structures: if/else, for, foreach, while, switch.</p>
+  </div>
+
+  <h2>powershell data structures</h2>
+
+  <p>PowerShell handles data through <strong>cmdlets</strong>, lightweight verb-noun commands (e.g. <code>Get-EventLog</code>) that perform an action and typically return a <strong>.NET object</strong>. Objects are a powerful data structure: a log entry object carries properties like <code>TimeWritten</code> and <code>Message</code> that you can access and process directly. The <strong>pipe operator</strong> (<code>|</code>) sends the output of one command as input to the next, e.g. retrieving the five most recent security-log entries with instance ID 4625 (logon failures), selecting properties, and piping them into <code>Out-File</code> to write <code>logfail.txt</code>. PowerShell also uses <strong>arrays</strong> for lists (log entries, user accounts) and <strong>hash tables</strong> for key-value data. Its built-in object handling makes it well-suited to system administration.</p>
+
+  <h2>powershell control structures</h2>
+
+  <ul>
+    <li><strong>Write-Host:</strong> prints messages to the screen to show script progress.</li>
+    <li><strong>if / else:</strong> decision-making (e.g. check whether the user is an administrator and display a message).</li>
+    <li><strong>for / foreach:</strong> repeat tasks over a series; <code>foreach</code> iterates a collection like all log entries, checking each (e.g. for failed logons) and acting, working hand in hand with cmdlets like <code>Get-EventLog</code>.</li>
+    <li><strong>while:</strong> repeats while a condition holds.</li>
+    <li><strong>switch:</strong> efficiently handles multiple possible values of a variable (e.g. role = admin/user/guest), cleaner than many ifs.</li>
+  </ul>
+
+  <p>Combining control structures with cmdlets, PowerShell can dynamically retrieve, process, and act on system data, e.g. auditing Active Directory user accounts: arrays store user data, loops iterate, conditionals flag accounts needing attention.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>PowerShell is optimized for Windows administration (Bash = Unix/Linux, Python = cross-platform).</li>
+      <li>Cmdlets are verb-noun commands (Get-EventLog) returning .NET objects with properties.</li>
+      <li>The pipe operator (|) sends one command's output as the next command's input.</li>
+      <li>Data structures: variables, arrays, hash tables, strings, objects. Control: if/else, for, foreach, while, switch.</li>
+      <li>Objects (not plain text) are PowerShell's key data structure, distinguishing it from Bash.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario audits Active Directory accounts on Windows → <strong>PowerShell</strong></li>
+        <li>Scenario uses a verb-noun command returning objects → <strong>cmdlet</strong></li>
+        <li>Scenario chains command output into the next command → <strong>pipe operator</strong></li>
+        <li>Scenario matches a role variable against admin/user/guest → <strong>switch statement</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_bash.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_bash</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_python.html">
+      <span><span class="lbl">next</span><span class="file">06_python</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>automated_security_operations / powershell</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
