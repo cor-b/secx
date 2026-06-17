@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Manipulation Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/ai_manipulation_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 07 / artificial intelligence / AI Manipulation Attacks</span>
+  <h1 class="module-title">AI Manipulation Attacks</h1>
+  <p class="subtitle">AI weaponized to deceive people: hyper-personalized social engineering, and deepfakes so convincing they now work in real-time video calls.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>AI manipulation attacks intentionally deceive using AI to produce harmful or misleading outcomes, exploiting human trust and digital platforms. Two forms: <strong>social engineering</strong> (AI-driven personalized deception via chatbots/social media) and <strong>deepfakes</strong> (hyper-realistic fake video/audio, increasingly interactive and real-time).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">Social Engineering</p>
+      <p class="card-desc">AI impersonates contacts via chatbots/fake profiles, crafting personalized, natural-sounding messages to extract data or trust.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">Deepfakes</p>
+      <p class="card-desc">Hyper-realistic fake video/audio of real people. Now interactive: real-time face-swap and voice in live calls.</p>
+    </div>
+  </div>
+
+  <h2>social engineering</h2>
+
+  <p>AI-driven social engineering exploits human trust by creating deceptive situations that seem legitimate. An attacker might use a <strong>chatbot impersonating a known contact</strong>, with language and conversational patterns tailored to the victim, to extract personal data, passwords, or financial information. Advanced language models make these interactions feel natural and persuasive. On social media, AI creates fake accounts impersonating friends, family, or authority figures, analyzing user data to craft personalized messages, and even adapts phishing content based on user behavior. The defense is greater caution: verify authenticity and be wary of unsolicited requests.</p>
+
+  <h2>deepfakes</h2>
+
+  <p>Deepfake technology generates hyper-realistic fake video or audio mimicking real people (often public figures), making real and fake hard to distinguish. A fabricated video of an executive making damaging statements could spread via social media before being debunked, harming reputations and spreading misinformation. The <strong>interactive</strong> aspect is the new danger: deepfakes now work in <strong>live video calls and conferencing</strong> using real-time AI voice and face-swapping, so a person appears present and speaking, raising fraud risk in high-stakes settings like business meetings. (The lesson demoed creating a convincing AI voice clone in minutes with Descript, and noted AI voices will only get better.) Defenses: advanced verification methods and awareness programs.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>AI manipulation attacks deceive people (not just systems): social engineering and deepfakes.</li>
+      <li>AI social engineering = personalized, natural-sounding impersonation via chatbots and fake social profiles.</li>
+      <li>Deepfakes = hyper-realistic fake video/audio of real people, increasingly real-time and interactive (live calls).</li>
+      <li>Real-time face-swap/voice in video calls is the emerging high-stakes threat.</li>
+      <li>Defenses: verification methods, awareness/training, caution with unsolicited requests.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses an AI chatbot impersonating a colleague to extract data → <strong>AI social engineering</strong></li>
+        <li>Scenario fabricates a realistic video of an executive → <strong>deepfake</strong></li>
+        <li>Scenario face-swaps a person in a live video call → <strong>interactive deepfake</strong></li>
+        <li>Scenario clones a voice to impersonate someone → <strong>deepfake (audio)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_ai_enabled_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_ai_enabled_attacks</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_ai_usage_risks.html">
+      <span><span class="lbl">next</span><span class="file">08_ai_usage_risks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / ai_manipulation_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

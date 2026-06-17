@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Usage Risks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/ai_usage_risks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 08 / artificial intelligence / AI Usage Risks</span>
+  <h1 class="module-title">AI Usage Risks</h1>
+  <p class="subtitle">The dangers of using AI, even without an attacker: trusting it too much, feeding it secrets, letting it leak secrets, and handing it too much control.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>AI usage risks are dangers from implementing and relying on AI without proper controls. Four risks: <strong>overreliance</strong> (undervaluing human judgment), <strong>sensitive information disclosure to the model</strong> (feeding it private data without safeguards), <strong>sensitive information disclosure from the model</strong> (it leaking data it learned in training), and <strong>excessive agency</strong> (giving it too much autonomy).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">risk 01</span>
+      <p class="card-name">Overreliance</p>
+      <p class="card-desc">Trusting AI output without verification, undervaluing human judgment, context, and ethics. Can amplify training-data bias.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 02</span>
+      <p class="card-name">Disclosure TO Model</p>
+      <p class="card-desc">Inputting private/confidential data without encryption, anonymization, or access controls. Compliance/breach risk.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 03</span>
+      <p class="card-name">Disclosure FROM Model</p>
+      <p class="card-desc">Model unintentionally reveals data learned in training (a past customer's balance). Use differential privacy.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 04</span>
+      <p class="card-name">Excessive Agency</p>
+      <p class="card-desc">Too much autonomy/control without human oversight (self-driving car in an untrained situation). Use human-in-the-loop.</p>
+    </div>
+  </div>
+
+  <h2>overreliance</h2>
+
+  <p>Overreliance is placing too much trust in AI output without verifying accuracy or considering context, ethics, training-data limits, or external factors. An analyst over-depending on an AI investment recommendation may overlook economic context or market anomalies, leading to loss. Overreliance can also amplify <strong>pre-existing data biases</strong>, since models trained on historical data reflect past biases. The fix is combining AI insights with <strong>human expertise</strong>.</p>
+
+  <h2>sensitive information disclosure to the model</h2>
+
+  <p>This is feeding private, confidential, or proprietary data <em>into</em> the AI without robust privacy controls (no encryption, anonymization, or role-based access). The data becomes part of the model's accessible pool, risking improper storage, unauthorized access, or unintended use, e.g. a customer-service AI receiving financial/health data without safeguards, creating compliance risk under GDPR/HIPAA. Mitigate with data anonymization, secure access controls, and clear data-usage guidelines.</p>
+
+  <h2>sensitive information disclosure from the model</h2>
+
+  <p>This is the model unintentionally releasing private data it learned during training <em>from</em> the model. An AI assistant trained on historical chats might reveal a past customer's account balance or transactions to a new user; in healthcare/legal contexts it might expose protected health info or case details, breaching confidentiality (HIPAA, attorney-client privilege). Mitigate with <strong>differential privacy</strong> and strict data-handling protocols that anonymize sensitive details from responses.</p>
+
+  <h2>excessive agency</h2>
+
+  <p>Excessive agency is giving an AI too much autonomy to act without human supervision, so it may operate beyond its intended scope. A self-driving car allowed to make all decisions could act dangerously in a situation it wasn't trained for. The fix is <strong>controlled autonomy</strong>: human-in-the-loop systems, structured workflows, decision auditing, and limits on AI decision-making power so humans review critical decisions.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four usage risks: overreliance, disclosure TO the model, disclosure FROM the model, excessive agency.</li>
+      <li>Disclosure TO = you feed it secrets unsafely; disclosure FROM = it leaks what it learned in training. Watch the direction.</li>
+      <li>Overreliance undervalues human judgment and can amplify training-data bias; combine AI with human expertise.</li>
+      <li>Excessive agency = too much autonomy without oversight; fix with human-in-the-loop and decision auditing.</li>
+      <li>Differential privacy mitigates disclosure FROM the model.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario accepts AI output without verifying → <strong>overreliance</strong></li>
+        <li>Scenario pastes confidential data into an AI tool → <strong>disclosure to the model</strong></li>
+        <li>Scenario's model reveals another user's private data → <strong>disclosure from the model</strong></li>
+        <li>Scenario lets AI act critically with no human review → <strong>excessive agency</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_ai_manipulation_attacks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_ai_manipulation_attacks</span></span>
+    </a>
+    <span class="counter">lesson 08 / 09</span>
+    <a class="next" href="09_ai_bots.html">
+      <span><span class="lbl">next</span><span class="file">09_ai_bots</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / ai_usage_risks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generative AI / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/generative_ai</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 02 / artificial intelligence / Generative AI</span>
+  <h1 class="module-title">Generative AI</h1>
+  <p class="subtitle">AI that creates new content by learning patterns from data. Built on GPT models that break language into tokens and weigh context with attention, with two key security-relevant uses: code assist and documentation.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Generative AI creates new content (text, images, code, music) by learning patterns from existing data. Models like the <strong>GPT</strong> (generative pre-trained transformer) are trained on large data sets to understand language, context, and structure. Two baseline concepts: <strong>code assist</strong> (suggesting/completing code) and <strong>documentation</strong> (auto-generating technical docs).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Content Creation</p>
+      <p class="card-desc">GPT breaks language into tokens, converts them to numbers, and uses attention layers to weigh context (bank = river vs finance).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Code Assist</p>
+      <p class="card-desc">Real-time code suggestions/completion (GitHub Copilot, Tabnine). Faster, more consistent, fewer errors.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Documentation</p>
+      <p class="card-desc">Auto-generate user guides, release notes from the codebase (GitBook, Document360). Stays current with code changes.</p>
+    </div>
+  </div>
+
+  <h2>how generative AI works</h2>
+
+  <p>Generative AI studies patterns in existing data to produce outputs that mimic or extend it. A <strong>GPT</strong> trained on massive text data sets learns word use, relationships, and meanings. It breaks language into <strong>tokens</strong> (full words, parts of words, or characters), converts them to numerical representations, and processes them with <strong>attention mechanisms</strong>, layers that focus on specific parts of a passage, giving more weight to words that provide context. In "I went to the bank to fish," attention weights "fish" heavily to interpret "bank" as a riverbank, not a financial institution. This dynamic, context-aware interpretation lets it generate coherent, relevant content with consistency and style.</p>
+
+  <h2>code assist</h2>
+
+  <p>Code assist enhances software development by analyzing existing code and patterns to suggest improvements or auto-complete code as the developer types. Tools like <strong>GitHub Copilot</strong> and <strong>Tabnine</strong> reduce manual coding and error-correction time, offer everything from syntax fixes to complex snippets aligned with best practices, help less experienced developers learn, and enforce coding standards for consistency, all improving workflow efficiency and code quality.</p>
+
+  <h2>AI-generated documentation</h2>
+
+  <p>AI-generated documentation auto-creates technical documents from the codebase or system configuration. Tools like <strong>GitBook</strong> and <strong>Document360</strong> analyze code structure, functions, and dependencies to produce user guides and release notes. This relieves the time-consuming manual burden, keeps docs accurate and aligned with the latest code (auto-updating release notes when features change), and uses natural-language generation to explain functionality for technical and non-technical audiences.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Generative AI creates new content by learning patterns from existing data; GPT is the canonical model.</li>
+      <li>GPT breaks language into tokens, then uses attention mechanisms to weigh context-relevant words.</li>
+      <li>Code assist = real-time code suggestion/completion (GitHub Copilot, Tabnine).</li>
+      <li>AI-generated documentation auto-produces and updates technical docs (GitBook, Document360).</li>
+      <li>Both code assist and documentation are the two named baseline generative-AI concepts for the exam.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario suggests/completes code as you type → <strong>code assist</strong></li>
+        <li>Scenario auto-writes user guides from the codebase → <strong>AI-generated documentation</strong></li>
+        <li>Scenario weighs context to disambiguate a word → <strong>attention mechanism</strong></li>
+        <li>Scenario splits text into processable units → <strong>tokens</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_artificial_intelligence.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_artificial_intelligence</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_ethical_and_governance_considerations.html">
+      <span><span class="lbl">next</span><span class="file">03_ethical_and_governance_considerations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / generative_ai</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

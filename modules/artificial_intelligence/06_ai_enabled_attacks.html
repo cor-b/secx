@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-enabled Attacks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/ai_enabled_attacks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 06 / artificial intelligence / AI-enabled Attacks</span>
+  <h1 class="module-title">AI-enabled Attacks</h1>
+  <p class="subtitle">Attackers using AI to up their game: exploiting weak AI plugins, poisoning the model pipeline, and letting AI find and weaponize vulnerabilities automatically and at speed.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>AI-enabled attacks leverage AI to increase the sophistication, scale, and effectiveness of malicious activity. Three types: <strong>insecure plugin design</strong> (poorly secured AI extensions opening access), <strong>AI pipeline injectors</strong> (malicious data/code in the training or deployment pipeline), and <strong>automated exploit generation</strong> (AI rapidly discovering and crafting exploits).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">attack 01</span>
+      <p class="card-name">Insecure Plugin Design</p>
+      <p class="card-desc">Weak auth/validation/dependencies in AI plugins open unauthorized access. Scan with Burp Suite, ZAP; track deps with Snyk, Dependabot.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 02</span>
+      <p class="card-name">AI Pipeline Injectors</p>
+      <p class="card-desc">Inject malicious data/code into the training/deployment pipeline (label fraud as normal). Defend: data validation, anomaly detection, audits.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">attack 03</span>
+      <p class="card-name">Automated Exploit Generation</p>
+      <p class="card-desc">AI finds vulnerabilities and crafts exploits at speed (OSS-Fuzz, Deep Exploit). Defend: proactive patching (Tenable.io, Qualys).</p>
+    </div>
+  </div>
+
+  <h2>insecure plugin design</h2>
+
+  <p>An AI plugin is an add-on integrating AI capabilities into existing software (like a Swiss Army knife giving extra abilities). When poorly secured, it creates vulnerabilities, common weaknesses are <strong>weak authentication, insufficient validation checks, dependency issues, and insecure design</strong>, letting attackers inject harmful commands or embed malicious scripts. Defenses: scan plugins with <strong>Burp Suite</strong> and <strong>ZAP (Zed Attack Proxy)</strong>; detect dependency vulnerabilities with <strong>Snyk</strong> and <strong>GitHub Dependabot</strong>; and perform frequent scans and timely updates.</p>
+
+  <h2>AI pipeline injectors</h2>
+
+  <p>Pipeline injectors insert malicious data or code into an AI model's training or deployment pipeline (like harmful materials on a factory line damaging the product), causing biased predictions, incorrect results, or unauthorized access. In <strong>fraud detection</strong>, an attacker who injects manipulated data, labeling fraudulent transactions as normal, skews the model to miss real fraud. Defenses: anomaly detection, rigorous data validation, regular model audits, and tools like <strong>TensorFlow Privacy</strong>, <strong>Adversarial Robustness Toolbox (ART)</strong>, and <strong>Shield AI</strong> for continuous pipeline oversight.</p>
+
+  <h2>automated exploit generation</h2>
+
+  <p>Automated exploit generation is like a lock-picking robot, AI identifies weak spots and exploits them without a human, far faster than manual methods. It scans a network for unpatched software/open ports, uses ML trained on known exploit patterns to predict vulnerabilities, then generates custom attack code tuned in real time. Tools: Google's <strong>OSS-Fuzz</strong> (ML-driven fuzzing), Microsoft's neural-network fuzzing, and <strong>Deep Exploit</strong> (finds <em>and</em> exploits). Defense: stay proactive with patching and vulnerability testing (<strong>Tenable.io</strong>, <strong>Qualys</strong>).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three AI-enabled attacks: insecure plugin design, AI pipeline injectors, automated exploit generation.</li>
+      <li>Insecure plugins = weak auth/validation/dependencies → unauthorized access; scan with Burp Suite/ZAP, deps with Snyk/Dependabot.</li>
+      <li>Pipeline injectors corrupt the training/deployment pipeline (e.g. labeling fraud as normal).</li>
+      <li>Automated exploit generation uses AI to find and weaponize vulnerabilities at speed (OSS-Fuzz, Deep Exploit).</li>
+      <li>Defense against automated exploits = proactive patching/scanning (Tenable.io, Qualys).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario exploits a weakly-secured AI add-on → <strong>insecure plugin design</strong></li>
+        <li>Scenario poisons the model's training/deployment pipeline → <strong>AI pipeline injector</strong></li>
+        <li>Scenario uses AI to auto-find and craft exploits → <strong>automated exploit generation</strong></li>
+        <li>Scenario scans plugin code for dependency CVEs → <strong>Snyk / Dependabot</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_threats_to_the_model.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_threats_to_the_model</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_ai_manipulation_attacks.html">
+      <span><span class="lbl">next</span><span class="file">07_ai_manipulation_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / ai_enabled_attacks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

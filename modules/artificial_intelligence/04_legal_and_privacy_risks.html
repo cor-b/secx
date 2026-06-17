@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal and Privacy Risks / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/legal_and_privacy_risks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 04 / artificial intelligence / Legal &amp; Privacy Risks</span>
+  <h1 class="module-title">Legal and Privacy Risks</h1>
+  <p class="subtitle">Two intertwined risks: AI used in ways that discriminate or violate privacy, made worse when the model is a black box no one can explain or challenge.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Legal and privacy rules ensure AI complies with laws to protect individual rights and personal data. Two implications: <strong>potential misuse</strong> (AI used in ways that cause discrimination, privacy violations, or harm, often on biased data) and <strong>explainable vs non-explainable models</strong> (explainable models give clear reasons for decisions; non-explainable "black box" models can't be easily interpreted, raising legal challenges where transparency is required).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">risk 01</span>
+      <p class="card-name">Potential Misuse</p>
+      <p class="card-desc">AI on biased data causing discrimination/privacy harm: predictive policing over-targeting communities, healthcare misdiagnosis from non-diverse data.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 02</span>
+      <p class="card-name">Explainable AI</p>
+      <p class="card-desc">Clear, understandable reasons for decisions (e.g. a decision tree). Meets legal transparency, builds trust, allows recourse.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">risk 03</span>
+      <p class="card-name">Non-Explainable AI</p>
+      <p class="card-desc">"Black box" (deep learning): hard to interpret. Conflicts with transparency laws; can hide bias in high-stakes decisions.</p>
+    </div>
+  </div>
+
+  <h2>potential misuse</h2>
+
+  <p>Misuse arises when AI systems lead to discrimination, privacy breaches, or harm, often exacerbated by <strong>biased training data</strong>. In <strong>predictive policing</strong>, algorithms trained on biased historical crime data may disproportionately target certain communities, reinforcing bias and causing over-policing. In <strong>healthcare</strong>, a model trained on non-diverse data may perform poorly for under-represented demographics, risking misdiagnosis or inadequate care. These cases show the need for strict oversight and regulatory standards requiring diverse, representative data to protect rights and prevent harm.</p>
+
+  <h2>explainable vs non-explainable models</h2>
+
+  <dl class="def">
+    <dt>Explainable models</dt>
+    <dd>Provide clear, understandable reasons for decisions, you can follow the logic. A decision tree in loan approval can show how income or credit history influenced the outcome.
+      <span class="detail">Increases trust, helps meet legal fairness requirements, and gives affected people a way to understand and challenge decisions.</span>
+    </dd>
+    <dt>Non-explainable models (black box)</dt>
+    <dd>Complex models (many deep-learning algorithms) whose decision process is hard to interpret.
+      <span class="detail">Can hide unintended bias; in credit scoring, a black-box model might deny loans on patterns reflecting historical discrimination, with no way for the person to understand or contest, risking anti-discrimination legal issues.</span>
+    </dd>
+  </dl>
+
+  <p>The tension: non-explainable models can be more accurate but conflict with transparency requirements, so regulated sectors (hiring, healthcare, lending) often favor explainable AI. Balancing accuracy and interpretability is a central issue in AI governance.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>AI misuse often stems from biased training data → discrimination/privacy harm (predictive policing, healthcare).</li>
+      <li>Explainable models give clear reasons for decisions (decision trees); they meet transparency requirements and allow recourse.</li>
+      <li>Non-explainable = black box (deep learning): hard to interpret, can hide bias, conflicts with transparency laws.</li>
+      <li>Regulated high-stakes domains (lending, hiring, healthcare) favor explainable AI.</li>
+      <li>The accuracy-vs-transparency trade-off is the central governance tension.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario can't explain why a loan was denied → <strong>non-explainable (black box) model</strong></li>
+        <li>Scenario shows exactly which factors drove a decision → <strong>explainable model</strong></li>
+        <li>Scenario over-targets a community from biased data → <strong>potential misuse</strong></li>
+        <li>Scenario needs legal transparency for decisions → <strong>use explainable AI</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_ethical_and_governance_considerations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_ethical_and_governance_considerations</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_threats_to_the_model.html">
+      <span><span class="lbl">next</span><span class="file">05_threats_to_the_model</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / legal_and_privacy_risks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

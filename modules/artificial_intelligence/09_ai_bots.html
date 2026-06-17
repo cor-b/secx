@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Bots / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/ai_bots</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 09 / artificial intelligence / AI Bots</span>
+  <h1 class="module-title">AI Bots</h1>
+  <p class="subtitle">Keeping automated digital workers safe and honest: limit what they can touch, fence in what they can do, stop them leaking data, and tell users they're talking to a bot.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>AI bots are automated programs that interact with users or systems to perform tasks (assistants, digital workers). Four concepts keep them safe: <strong>access and permissions</strong> (limit what data/systems they reach), <strong>guardrails</strong> (boundaries on their actions), <strong>data loss prevention (DLP)</strong> (stop sensitive data leaking), and <strong>disclosure of AI usage</strong> (tell users they're talking to a bot).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">control 01</span>
+      <p class="card-name">Access &amp; Permissions</p>
+      <p class="card-desc">Limit what data/systems the bot can reach (a health bot sees general info, not patient records). Prevents overreach.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 02</span>
+      <p class="card-name">Guardrails</p>
+      <p class="card-desc">Boundaries on actions (a recommendation bot won't suggest out-of-stock items; a cleaning bot won't hit customers).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 03</span>
+      <p class="card-name">Data Loss Prevention</p>
+      <p class="card-desc">Encryption/restricted access so bots don't leak sensitive data (a banking bot won't share financials without verification).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 04</span>
+      <p class="card-name">Disclosure of AI Usage</p>
+      <p class="card-desc">Tell users they're interacting with a bot, not a human. Transparency and trust (especially in healthcare).</p>
+    </div>
+  </div>
+
+  <h2>access and permissions</h2>
+
+  <p>Access and permissions control what a bot can see or do, setting explicit limits so it only reaches the data and systems it needs. A healthcare patient-assistance bot may access general medical info but not specific patient records; a banking bot needs tightly controlled access to prevent unauthorized transactions. This keeps the bot "in its lane," protecting data integrity and privacy.</p>
+
+  <h2>guardrails</h2>
+
+  <p>Guardrails are predefined boundaries keeping a bot within intended limits, preventing it from veering into unintended territory or harmful autonomous decisions. An online-shopping recommendation bot has guardrails not to suggest out-of-stock products; a physical cleaning bot in a store has guardrails to avoid colliding with customers or merchandise and to reroute around obstacles. They keep bots helpful, accurate, and safe.</p>
+
+  <h2>data loss prevention (DLP)</h2>
+
+  <p>DLP measures (encryption, restricted-access policies) prevent bots from exposing sensitive data. A banking chatbot uses DLP to restrict sharing financial details without verification; an HR bot uses DLP so it can't share SSNs, salaries, or medical-leave records without identity verification. DLP keeps the bot within strict data-handling boundaries.</p>
+
+  <h2>disclosure of AI usage</h2>
+
+  <p>Disclosure means informing users they're interacting with a bot, not a human, essential for transparency and trust. A retail chatbot might open with "I am an AI assistant, here to help with product inquiries." In healthcare, patients should be clearly told they're talking to an AI, not a licensed professional, so they set appropriate expectations and approach responses with the right caution.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four AI-bot controls: access/permissions, guardrails, DLP, disclosure of AI usage.</li>
+      <li>Access/permissions = limit what the bot can reach; guardrails = limit what it can do.</li>
+      <li>DLP = prevent sensitive data leaks (encryption, restricted access, verification).</li>
+      <li>Disclosure = transparency: tell users they're talking to a bot, important in healthcare.</li>
+      <li>Distinguish access/permissions (data scope) from guardrails (action boundaries).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario restricts which records a bot can read → <strong>access and permissions</strong></li>
+        <li>Scenario stops a bot from suggesting out-of-stock items → <strong>guardrails</strong></li>
+        <li>Scenario blocks a bot from sharing SSNs without verification → <strong>DLP</strong></li>
+        <li>Scenario announces "I am an AI assistant" → <strong>disclosure of AI usage</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_ai_usage_risks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_ai_usage_risks</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">artificial_intelligence/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / ai_bots</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

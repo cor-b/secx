@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>artificial_intelligence / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1730; --panel: #221d3c; --rule: #423d60; --rule-soft: #2e2850;
+    --ink: #d8d4e8; --ink-dim: #b8b3d0; --ink-faint: #6e6888;
+    --cyan: #6ad4d4; --magenta: #d47aae; --amber: #d4a96a; --violet: #a78ad4;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 16px; line-height: 1.8; min-height: 100vh; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  .subtitle, .overview p { font-family: var(--font-sans); }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 40px 120px; }
+  .meta-bar { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: 50px; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .meta-bar .left { color: var(--cyan); }
+  .meta-bar .right { color: var(--ink-faint); }
+  .back-link { display: inline-block; color: var(--ink-dim); font-size: 12px; text-decoration: none; margin-bottom: 32px; transition: color 0.2s ease; }
+  .back-link:hover { color: var(--cyan); }
+  .back-link .arrow { color: var(--magenta); margin-right: 6px; }
+  .section-tag { display: block; color: var(--magenta); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 14px; }
+  h1.section-title { font-size: 42px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 16px; color: var(--ink); }
+  .subtitle { color: var(--ink-dim); font-size: 18px; margin: 0 0 50px; line-height: 1.55; max-width: 620px; }
+  .overview { border-left: 2px solid var(--magenta); padding: 4px 0 4px 22px; margin: 0 0 50px; }
+  .overview-label { display: block; color: var(--magenta); font-size: 12px; letter-spacing: 0.16em; margin-bottom: 12px; }
+  .overview p { margin: 0 0 10px; color: var(--ink); font-size: 16px; line-height: 1.75; }
+  .overview p:last-child { margin-bottom: 0; }
+  .overview strong { color: var(--cyan); font-weight: 500; }
+  .prompt { margin: 0 0 20px; font-size: 13px; color: var(--ink-dim); padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .prompt .user { color: var(--cyan); }
+  .prompt .path { color: var(--violet); }
+  .prompt .cmd { color: var(--ink); }
+  .ls-list { list-style: none; margin: 0; padding: 0; }
+  .ls-item {
+    display: grid;
+    grid-template-columns: 90px 80px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s ease, border-color 0.2s ease;
+  }
+  .ls-item:hover { padding-left: 12px; border-bottom-color: var(--cyan); }
+  .ls-item:hover .filename { color: var(--cyan); }
+  .ls-item:hover .ls-arrow { color: var(--magenta); transform: translateX(4px); }
+  .perms { color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .lesson-tag { color: var(--violet); font-size: 11px; letter-spacing: 0.06em; }
+  .filename-wrap { min-width: 0; }
+  .filename { color: var(--ink); font-size: 15px; font-weight: 500; display: block; transition: color 0.2s ease; }
+  .filename .ext { color: var(--magenta); }
+  .desc { display: block; color: var(--ink-dim); font-size: 13px; margin-top: 6px; line-height: 1.55; }
+  .ls-arrow { color: var(--ink-faint); font-size: 14px; transition: all 0.2s ease; }
+  .status-line { margin-top: 22px; padding-top: 16px; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.05em; }
+  .status-line .val { color: var(--ink-dim); }
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; }
+  @media (max-width: 640px) {
+    .container { padding: 30px 22px 80px; }
+    h1.section-title { font-size: 32px; }
+    .ls-item { grid-template-columns: 70px 1fr auto; gap: 12px; }
+    .ls-item .lesson-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence</span>
+  </div>
+
+  <a class="back-link" href="../../index.html"><span class="arrow">←</span>back to /securityx</a>
+
+  <span class="section-tag">securityx / artificial intelligence</span>
+  <h1 class="section-title">Artificial Intelligence</h1>
+  <p class="subtitle">The information security challenges of AI adoption: generative AI, governance and legal/privacy risks, threats to the model, AI-enabled and manipulation attacks, usage risks, and AI bots.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domains 1 and 3 <strong>OBJ 1.5 / OBJ 3.6</strong>: summarize the information security challenges of AI adoption and use automation to secure the enterprise. Topics span generative AI (GPT, code assist, documentation), ethical and governance considerations (EU AI Act, organizational policies), legal and privacy risks (misuse, explainable vs non-explainable), threats to the model (prompt injection, poisoning, model theft/inversion), AI-enabled attacks (plugins, pipeline injectors, automated exploits), AI manipulation attacks (social engineering, deepfakes), AI usage risks (overreliance, disclosure, excessive agency), and AI bots (access, guardrails, DLP, disclosure).</p>
+  </div>
+
+  <div class="prompt">
+    <span class="user">cor</span>:<span class="path">~/securityx/artificial_intelligence</span>$ <span class="cmd">ls lessons/</span>
+  </div>
+
+  <ul class="ls-list">
+
+    <li>
+      <a class="ls-item" href="01_artificial_intelligence.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 01</span>
+        <span class="filename-wrap">
+          <span class="filename">artificial_intelligence<span class="ext">.lesson</span></span>
+          <span class="desc">Overview: the nine topics, from generative AI to AI bots</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="02_generative_ai.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 02</span>
+        <span class="filename-wrap">
+          <span class="filename">generative_ai<span class="ext">.lesson</span></span>
+          <span class="desc">GPT (tokens, attention), content creation, code assist (Copilot/Tabnine), AI documentation</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="03_ethical_and_governance_considerations.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 03</span>
+        <span class="filename-wrap">
+          <span class="filename">ethical_and_governance_considerations<span class="ext">.lesson</span></span>
+          <span class="desc">Ethical governance (EU AI Act, COMPAS), organizational policies (Microsoft, Amazon hiring), transparency/accountability</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="04_legal_and_privacy_risks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 04</span>
+        <span class="filename-wrap">
+          <span class="filename">legal_and_privacy_risks<span class="ext">.lesson</span></span>
+          <span class="desc">Potential misuse (predictive policing, healthcare bias), explainable vs non-explainable (black box) models</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="05_threats_to_the_model.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 05</span>
+        <span class="filename-wrap">
+          <span class="filename">threats_to_the_model<span class="ext">.lesson</span></span>
+          <span class="desc">Prompt injection, unsecured output, training data poisoning, model DoS, supply chain, model theft, model inversion</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="06_ai_enabled_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 06</span>
+        <span class="filename-wrap">
+          <span class="filename">ai_enabled_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">Insecure plugin design (Burp/ZAP/Snyk), AI pipeline injectors (fraud detection), automated exploit generation (OSS-Fuzz, Deep Exploit)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="07_ai_manipulation_attacks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 07</span>
+        <span class="filename-wrap">
+          <span class="filename">ai_manipulation_attacks<span class="ext">.lesson</span></span>
+          <span class="desc">AI social engineering (personalized chatbots/fake profiles), deepfakes (real-time interactive video/voice)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="08_ai_usage_risks.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 08</span>
+        <span class="filename-wrap">
+          <span class="filename">ai_usage_risks<span class="ext">.lesson</span></span>
+          <span class="desc">Overreliance, sensitive disclosure TO vs FROM the model, excessive agency (human-in-the-loop)</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="ls-item" href="09_ai_bots.html">
+        <span class="perms">-r--r--r--</span>
+        <span class="lesson-tag">lesson 09</span>
+        <span class="filename-wrap">
+          <span class="filename">ai_bots<span class="ext">.lesson</span></span>
+          <span class="desc">Access/permissions, guardrails, data loss prevention, disclosure of AI usage</span>
+        </span>
+        <span class="ls-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="status-line">
+    total <span class="val">9 lessons</span><span class="sep" style="color:var(--rule);margin:0 10px">·</span><span style="color:var(--ink-dim)">complete</span>
+  </div>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / eof</span>
+  </div>
+
+</div>
+
+</body>
+</html>

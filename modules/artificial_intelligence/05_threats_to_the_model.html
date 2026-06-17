@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threats to the Model / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/artificial_intelligence/threats_to_the_model</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /artificial_intelligence</a>
+
+  <span class="module-tag">lesson 05 / artificial intelligence / Threats to the Model</span>
+  <h1 class="module-title">Threats to the Model</h1>
+  <p class="subtitle">Seven attack paths against an AI model itself: manipulating its inputs and outputs, poisoning its training, exhausting it, compromising its supply chain, stealing it, and reverse-engineering its data.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Threats to the model compromise the integrity, security, or confidentiality of AI systems. Seven threats: <strong>prompt injection</strong>, <strong>unsecured output handling</strong>, <strong>training data poisoning</strong>, <strong>model denial of service</strong>, <strong>supply chain vulnerabilities</strong>, <strong>model theft</strong>, and <strong>model inversion</strong>. (These mirror the OWASP Top 10 for LLMs.)</p>
+  </div>
+
+  <h2>the seven threats</h2>
+
+  <dl class="def">
+    <dt>Prompt injection</dt>
+    <dd>Manipulating input prompts to alter the model's behavior (tricking a chatbot into revealing confidential info or giving harmful advice). Defend with prompt filtering and model validation.</dd>
+    <dt>Unsecured output handling</dt>
+    <dd>Improper management of AI-generated outputs, leading to information leaks or execution of harmful commands (outputs exposing personal data). Defend with secure protocols and output monitoring.</dd>
+    <dt>Training data poisoning</dt>
+    <dd>Intentionally manipulating training data to skew predictions (biasing a content-moderation model to approve harmful content). Defend by auditing and securing training data.</dd>
+    <dt>Model denial of service</dt>
+    <dd>Overwhelming the AI with excessive requests so legitimate users can't access it (flooding an image-recognition tool). Defend with rate limiting and monitoring.</dd>
+    <dt>Supply chain vulnerabilities</dt>
+    <dd>Compromised third-party components/libraries or untrusted pre-trained models embedding malicious code. Defend by vetting and verifying third-party components.</dd>
+    <dt>Model theft</dt>
+    <dd>Unauthorized extraction of a model's intellectual property (repeatedly querying to replicate it). Defend with encryption and access controls.</dd>
+    <dt>Model inversion</dt>
+    <dd>Reconstructing sensitive training data by analyzing model outputs (reverse-engineering user demographics). Defend with differential privacy (adding calibrated noise).</dd>
+  </dl>
+
+  <h2>two confusables</h2>
+  <p>Watch the distinction between the two privacy threats: <strong>model theft</strong> extracts the <em>model itself</em> (its IP), while <strong>model inversion</strong> extracts the <em>training data</em> from the model's outputs. And <strong>prompt injection</strong> manipulates the input, while <strong>unsecured output handling</strong> mishandles the output.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Prompt injection = manipulate input; unsecured output handling = mishandle output.</li>
+      <li>Training data poisoning = corrupt the training set to skew predictions/bias.</li>
+      <li>Model theft = steal the model/IP (replicate it); model inversion = reconstruct training data from outputs.</li>
+      <li>Model DoS = flood with requests; supply chain = compromised third-party components/pre-trained models.</li>
+      <li>Differential privacy (calibrated noise) defends against model inversion.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario crafts an input to make a chatbot leak secrets → <strong>prompt injection</strong></li>
+        <li>Scenario poisons the training set to bias outputs → <strong>training data poisoning</strong></li>
+        <li>Scenario queries a model repeatedly to clone it → <strong>model theft</strong></li>
+        <li>Scenario reconstructs training data from outputs → <strong>model inversion</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_legal_and_privacy_risks.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_legal_and_privacy_risks</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_ai_enabled_attacks.html">
+      <span><span class="lbl">next</span><span class="file">06_ai_enabled_attacks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>artificial_intelligence / threats_to_the_model</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
