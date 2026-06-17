@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidentiality Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/confidentiality_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 07 / detection and mitigation / Confidentiality Management</span>
+  <h1 class="module-title">Confidentiality Management</h1>
+  <p class="subtitle">Keeping sensitive data private four ways: retrieve it without exposing it, rotate the keys that protect it, encrypt it, and sign the software that touches it.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Confidentiality management safeguards sensitive information against unauthorized access or disclosure. Four concepts: <strong>indexing</strong> (efficient retrieval without exposing content), <strong>key rotation</strong> (regularly updating keys/credentials), <strong>encryption</strong> (converting data to unreadable ciphertext), and <strong>code signing</strong> (verifying software authenticity and integrity).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Indexing</p>
+      <p class="card-desc">A separate layer of identifiers/metadata pointing to records, fast retrieval without exposing the sensitive content. Pairs well with encryption.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Key Rotation</p>
+      <p class="card-desc">Regularly update encryption keys/credentials to limit compromise. Automate via AWS KMS-style platforms.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Encryption</p>
+      <p class="card-desc">Convert data to unreadable ciphertext (AES-256). Protects data at rest and in transit. Manage keys securely.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 04</span>
+      <p class="card-name">Code Signing</p>
+      <p class="card-desc">Digital signature verifying software authenticity/integrity (untampered, genuine source). Validate the chain of trust.</p>
+    </div>
+  </div>
+
+  <h2>indexing</h2>
+
+  <p>Indexing organizes sensitive data so it can be retrieved efficiently <strong>without exposing the underlying content</strong>. An <strong>index structure</strong> (a separate layer of identifiers or metadata, e.g. customer IDs, keywords, timestamps, non-sensitive attributes) points to records in the main data set (using structures like B-trees or hash indexes). When an authorized user queries, the system searches the index first, then accesses the data, speeding retrieval while restricting search access to only the index layer. Combined with encryption, only users with decryption keys see the full records.</p>
+
+  <h2>key rotation</h2>
+
+  <p>Key rotation regularly updates encryption keys and credentials to prevent unauthorized access from a compromised or reused key, minimizing how long an exposed key is useful. Automate it with secrets-management platforms like <strong>AWS KMS</strong> and pair with strict key-handling policies.</p>
+
+  <h2>encryption</h2>
+
+  <p>Encryption converts information into unreadable <strong>ciphertext</strong> accessible only with the correct decryption key, so unauthorized parties can't interpret it even if they gain access. It protects <strong>data at rest</strong> and <strong>data in transit</strong>. Use strong standards like <strong>AES-256</strong> and manage keys securely through key management systems, applying encryption at both storage and transmission stages.</p>
+
+  <h2>code signing</h2>
+
+  <p>Code signing uses a <strong>digital signature</strong> to verify software authenticity and integrity, assuring users the code is genuine and untampered, especially important for updates, applications, and drivers. The signature confirms the software came from the stated publisher and wasn't altered. Implement with trusted code-signing certificates and store private signing keys securely (in HSMs/secure vaults). The demo verified Google Chrome's installer signature: checking the signing date falls within the certificate's validity window, that the certificate <strong>chain of trust</strong> up to the root CA shows "OK," and that the certificate's intended purpose is software publishing.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Indexing enables fast retrieval via a metadata layer without exposing the sensitive content; pairs with encryption.</li>
+      <li>Key rotation regularly updates keys to limit the impact of a compromised key (automate with KMS).</li>
+      <li>Encryption converts data to ciphertext (AES-256), protecting it at rest and in transit.</li>
+      <li>Code signing verifies software is authentic and untampered via a digital signature; validate the chain of trust and validity window.</li>
+      <li>Store private signing keys in HSMs/secure vaults.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario retrieves records fast without exposing content → <strong>indexing</strong></li>
+        <li>Scenario periodically replaces encryption keys → <strong>key rotation</strong></li>
+        <li>Scenario verifies an installer is genuine and untampered → <strong>code signing</strong></li>
+        <li>Scenario makes stolen data unreadable without a key → <strong>encryption</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_access_control_mitigations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_access_control_mitigations</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_update_management.html">
+      <span><span class="lbl">next</span><span class="file">08_update_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / confidentiality_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

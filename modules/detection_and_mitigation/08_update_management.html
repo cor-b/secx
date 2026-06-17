@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/update_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 08 / detection and mitigation / Update Management</span>
+  <h1 class="module-title">Update Management</h1>
+  <p class="subtitle">Keeping every layer patched, from the firmware in the hardware up through hypervisors, operating systems, and apps. The catch: firmware and software updates don't ride along with the OS.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Update management ensures all system components are regularly updated and patched. Five areas: <strong>firmware</strong>, <strong>system images</strong>, <strong>hypervisors</strong>, <strong>operating systems</strong>, and <strong>software</strong>. Key theme: firmware and software updates are managed <em>separately</em> from OS updates and are easily overlooked.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">layer 01</span>
+      <p class="card-name">Firmware &amp; Images</p>
+      <p class="card-desc">Firmware: embedded hardware software (often manual, separate; Dell Command Update). System images: secure baseline for deployments (SCCM, vSphere).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">layer 02</span>
+      <p class="card-name">Hypervisors</p>
+      <p class="card-desc">Patch the virtualization layer to prevent VM escape (vCenter, Hyper-V Manager). An unpatched hypervisor risks the whole virtual environment.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">layer 03</span>
+      <p class="card-name">OS &amp; Software</p>
+      <p class="card-desc">OS updates (Windows Update, YUM/APT, SCCM) and software updates (separate from OS/firmware) close known vulnerabilities.</p>
+    </div>
+  </div>
+
+  <h2>firmware and system images</h2>
+
+  <dl class="def">
+    <dt>Firmware</dt>
+    <dd>Embedded software controlling hardware-OS communication. Critical for network gear, storage, IoT. <strong>Often not automatic</strong>, it needs separate management (e.g. Dell Command Update) and is easily overlooked since it's not part of OS updates.</dd>
+    <dt>System images</dt>
+    <dd>Comprehensive backups of a fully configured OS/environment, providing a consistent baseline for deployments. Regularly patch them so each deployment includes the latest fixes (tools: <strong>SCCM</strong>, VMware vSphere templates). Outdated images multiply vulnerabilities across the network.</dd>
+  </dl>
+
+  <h2>hypervisors</h2>
+
+  <p>Hypervisors host VMs and manage virtual environments. They need frequent patching to address vulnerabilities, managed centrally with tools like <strong>VMware vCenter</strong> and <strong>Microsoft Hyper-V Manager</strong>. An unpatched hypervisor is a major risk: an attacker could perform a <strong>VM escape</strong>, breaking out of one VM to reach others or the host, severe in multi-tenant environments.</p>
+
+  <h2>operating systems and software</h2>
+
+  <p><strong>Operating systems</strong> need regular updates for vulnerabilities, stability, and compatibility, via Windows Update, <strong>YUM/APT</strong> (Linux), Apple Software Update, or centralized <strong>SCCM</strong>. Unpatched OSes are prime targets for malware/ransomware. <strong>Software</strong> (applications, utilities) also needs regular updates, but these don't come packaged with OS or firmware updates, so they must be handled <strong>separately</strong>. Outdated apps (browsers, productivity tools) provide entry points and cause compatibility issues.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Five update areas: firmware, system images, hypervisors, operating systems, software.</li>
+      <li>Firmware and software updates are SEPARATE from OS updates and easily overlooked, firmware is often not automatic.</li>
+      <li>Unpatched hypervisors risk VM escape (breaking out of one VM to others/the host).</li>
+      <li>Outdated system images spread vulnerabilities across every deployment made from them.</li>
+      <li>SCCM is a recurring centralized tool (patches, images, OS).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario patches embedded hardware software → <strong>firmware update (separate, often manual)</strong></li>
+        <li>Scenario prevents breaking out of a VM to the host → <strong>hypervisor patching (VM escape)</strong></li>
+        <li>Scenario deploys workstations from a secure baseline → <strong>system image management</strong></li>
+        <li>Scenario patches an app that isn't covered by OS updates → <strong>software update (handled separately)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_confidentiality_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_confidentiality_management</span></span>
+    </a>
+    <span class="counter">lesson 08 / 09</span>
+    <a class="next" href="09_fail_safe_mechanisms.html">
+      <span><span class="lbl">next</span><span class="file">09_fail_safe_mechanisms</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / update_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

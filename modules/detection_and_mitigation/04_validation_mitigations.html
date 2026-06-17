@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation Mitigations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/validation_mitigations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 04 / detection and mitigation / Validation Mitigations</span>
+  <h1 class="module-title">Validation Mitigations</h1>
+  <p class="subtitle">Two checkpoints on data: screen what comes in (input validation), and neutralize what goes out (output encoding), so malicious content never executes.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Validation mitigations ensure data entering or leaving a system is properly validated and encoded. Two concepts: <strong>input validation</strong> (checking and sanitizing incoming data to meet expected formats, the first line of defense) and <strong>output encoding</strong> (converting data into a safe format before display/processing so it can't be interpreted as executable code, the second line).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Input Validation</p>
+      <p class="card-desc">Screen incoming data (like airport security) against expected formats. Blocks SQLi, XSS, overflows. Do both client- AND server-side (server is authoritative).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Output Encoding</p>
+      <p class="card-desc">Convert special characters to safe text before display (backend). Catches what input validation missed; key XSS defense.</p>
+    </div>
+  </div>
+
+  <h2>input validation</h2>
+
+  <p>Input validation verifies and cleans user-provided or external data before processing, ensuring it matches expected patterns, formats, and types, like airport security screening passengers before boarding. Without it, attackers can inject harmful content causing <strong>SQL injection, XSS, and buffer overflows</strong>. Key practices:</p>
+  <ul>
+    <li>Do both <strong>client-side</strong> (better UX, catches errors early) and <strong>server-side</strong> validation, server-side is authoritative because client-side checks can be bypassed.</li>
+    <li>Prefer <strong>allowlisting</strong> acceptable inputs over denylisting forbidden ones (more secure).</li>
+    <li>Use validation libraries, regular expressions, data-type constraints, length checks, and OWASP validation resources.</li>
+  </ul>
+
+  <h2>output encoding</h2>
+
+  <p>Output encoding is applied to data before it's sent from a server or displayed, ensuring it can't be interpreted as executable code. Applied on the <strong>backend</strong>, it's an additional layer assuming input validation may have missed something. It converts dangerous characters (like <code>&lt;</code> and <code>&gt;</code>) into harmless text representations, so they render as plain text, not executable code. The classic example is a comment section: without encoding, a user could post a script that steals cookies from other viewers; encoding renders the script as visible text. Encode data as close to the point of display/use as possible, and use security libraries' built-in encoding functions. Output encoding is especially crucial for preventing XSS, and it complements (doesn't replace) input validation.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Input validation = screen incoming data against expected formats; the first line of defense.</li>
+      <li>Output encoding = convert special characters to safe text before display; the second line (catches what input validation missed).</li>
+      <li>Do input validation both client- and server-side; server-side is authoritative (client checks can be bypassed).</li>
+      <li>Allowlisting inputs is more secure than denylisting.</li>
+      <li>Both together defend against XSS; output encoding is the key XSS rendering defense.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario rejects malformed/unexpected input before processing → <strong>input validation</strong></li>
+        <li>Scenario renders user content as text instead of running it → <strong>output encoding</strong></li>
+        <li>Scenario trusts only server-side checks → <strong>server-side input validation</strong></li>
+        <li>Scenario allows only known-good input patterns → <strong>allowlisting</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_design_mitigations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_design_mitigations</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_safe_functions.html">
+      <span><span class="lbl">next</span><span class="file">05_safe_functions</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / validation_mitigations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

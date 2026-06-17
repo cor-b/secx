@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Mitigations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/design_mitigations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 03 / detection and mitigation / Design Mitigations</span>
+  <h1 class="module-title">Design Mitigations</h1>
+  <p class="subtitle">Building security in from the start: proven secure-architecture patterns, multiple redundant layers of defense, and disciplined management of the third-party code you depend on.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Design mitigations build security into the system design phase to prevent or reduce vulnerabilities. Three concepts: <strong>security design patterns</strong> (best practices like input validation, least privilege, secure defaults), <strong>defense-in-depth</strong> (layered, redundant protections), and <strong>dependency management</strong> (selecting, monitoring, updating third-party components).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Security Design Patterns</p>
+      <p class="card-desc">Best practices baked into architecture: input validation, least privilege, secure defaults, error handling/logging. Proactive, not reactive.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Defense-in-Depth</p>
+      <p class="card-desc">Layered, redundant protections around critical assets (not just the perimeter). If one layer fails, others hold.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Dependency Management</p>
+      <p class="card-desc">Select, monitor, and update third-party libraries to avoid inherited vulnerabilities. Like car maintenance for code.</p>
+    </div>
+  </div>
+
+  <h2>security design patterns</h2>
+
+  <p>Security design patterns are established practices that guide secure architecture, building security directly into application structure, including <strong>input validation</strong>, <strong>least privilege</strong>, <strong>secure defaults</strong>, and error handling/logging. Applied early and throughout development, they address vulnerabilities <strong>proactively rather than reactively</strong>. Example: input validation blocks SQL injection by filtering harmful input; secure defaults configure apps to the safest settings to avoid misconfiguration. They're most effective when consistently applied across the whole system.</p>
+
+  <h2>defense-in-depth</h2>
+
+  <p>Defense-in-depth builds <strong>multiple redundant layers</strong> of protection around critical assets, not just the network perimeter, so if an attacker breaches one layer, others still protect the asset. Each layer addresses different attack vectors (encryption, access controls, intrusion detection, network segmentation). Example: a banking database protected by firewalls, encryption, strict access controls, and continuous monitoring, even past the firewall, encrypted data stays unreadable and access controls limit manipulation. Implement by combining different security technologies, each tailored to specific threats, and regularly testing them.</p>
+
+  <h2>dependency management</h2>
+
+  <p>Dependency management monitors and maintains third-party libraries/components so they don't introduce security flaws, outdated or vulnerable dependencies become risks. Like a mechanic checking for worn parts, developers monitor dependencies to avoid vulnerabilities. Be proactive: regularly audit dependencies, check for updates/patches, assess each library's risk, and use <strong>automated vulnerability scanning</strong> integrated into the development pipeline to catch issues early.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Security design patterns = best practices (input validation, least privilege, secure defaults) baked into architecture; proactive.</li>
+      <li>Defense-in-depth = layered, redundant protections around critical assets (not just the perimeter).</li>
+      <li>Dependency management = vet, monitor, and update third-party libraries; use automated scanning in the pipeline.</li>
+      <li>All three are design-phase mitigations, security built in, not bolted on.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario applies input validation/secure defaults in architecture → <strong>security design patterns</strong></li>
+        <li>Scenario layers firewalls + encryption + access controls + monitoring → <strong>defense-in-depth</strong></li>
+        <li>Scenario audits and patches third-party libraries → <strong>dependency management</strong></li>
+        <li>Scenario protects critical assets, not just the perimeter → <strong>defense-in-depth</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_tamper_detection_and_countermeasures.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_tamper_detection_and_countermeasures</span></span>
+    </a>
+    <span class="counter">lesson 03 / 09</span>
+    <a class="next" href="04_validation_mitigations.html">
+      <span><span class="lbl">next</span><span class="file">04_validation_mitigations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / design_mitigations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

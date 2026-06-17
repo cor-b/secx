@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Control Mitigations / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/access_control_mitigations</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 06 / detection and mitigation / Access Control Mitigations</span>
+  <h1 class="module-title">Access Control Mitigations</h1>
+  <p class="subtitle">Shrinking the attack surface three ways: give users only the permissions they need, leave only the features they need running, and allow only what's explicitly approved.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Access control mitigations restrict access to system resources and functionality. Three concepts: <strong>least privilege</strong> (minimum permissions for a role), <strong>least functionality</strong> (only essential features/functions enabled), and <strong>allowlisting</strong> (only explicitly approved apps/IPs permitted, block everything else).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Least Privilege</p>
+      <p class="card-desc">Minimum permissions for a user/process role (limits user permissions). Payroll sees salaries; customer service doesn't. Contains breaches.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Least Functionality</p>
+      <p class="card-desc">Only essential features/services enabled (limits system features). Disable unused APIs, admin tools, default configs. Shrinks attack surface.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Allowlisting</p>
+      <p class="card-desc">Only explicitly approved apps/IPs allowed; block all else. More secure than blocklisting (which only blocks known-bad).</p>
+    </div>
+  </div>
+
+  <h2>least privilege</h2>
+
+  <p>Least privilege limits a user's or process's <strong>permissions</strong> to only what's necessary for their role, so a compromised account can't exceed its limited scope. Example: payroll can view/update salaries, customer service cannot, so a compromised customer-service account can't reach payroll data. Enforce with consistent access reviews, clear role definitions, prompt permission adjustments when roles change (including offboarding), and IAM/PAM tools that flag excessive permissions.</p>
+
+  <h2>least functionality</h2>
+
+  <p>Least functionality restricts available system <strong>features and functions</strong> to only those essential for operations, reducing the attack surface by removing unused features that could harbor vulnerabilities. Unlike least privilege (which limits user permissions), least functionality limits system features. Example: restrict an admin panel to admin accounts while standard users get only the standard interface. Apply by evaluating each feature, disabling/removing what's extraneous, unused APIs, unnecessary admin tools, debugging interfaces, default configs, inactive network services.</p>
+
+  <h2>allowlisting</h2>
+
+  <p>Allowlisting (formerly whitelisting) limits access to a specific list of <strong>approved applications, IP addresses, or entities</strong>, blocking anything not explicitly permitted, so only trusted, known resources interact with the system. It's more secure than <strong>blocklisting</strong> (formerly blacklisting), which only blocks known-bad items and is only as good as that known-bad list. Example: a corporate network allowing only trusted IPs/VPNs to reach sensitive resources, blocking unauthorized IPs automatically. Some orgs allowlist applications by <strong>hash value</strong> to permit only specific trusted versions. Apply at firewalls and application servers; manage with tools like Active Directory Group Policy, AppLocker, and Defender Application Control.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Least privilege limits user/process PERMISSIONS; least functionality limits system FEATURES. Don't confuse them.</li>
+      <li>Allowlisting permits only explicitly approved entities (block by default); more secure than blocklisting (which only blocks known-bad).</li>
+      <li>Least privilege contains breaches; least functionality shrinks the attack surface.</li>
+      <li>Allowlisting can use application hash values to permit only trusted versions.</li>
+      <li>Tools: IAM/PAM (least privilege), AppLocker/Defender Application Control (allowlisting).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario gives a user only the permissions their job needs → <strong>least privilege</strong></li>
+        <li>Scenario disables unused services/features → <strong>least functionality</strong></li>
+        <li>Scenario blocks everything except an approved list → <strong>allowlisting</strong></li>
+        <li>Scenario only blocks known-bad apps/IPs → <strong>blocklisting (less secure)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_safe_functions.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_safe_functions</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_confidentiality_management.html">
+      <span><span class="lbl">next</span><span class="file">07_confidentiality_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / access_control_mitigations</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamper Detection and Countermeasures / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/tamper_detection_and_countermeasures</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 02 / detection and mitigation / Tamper Detection &amp; Countermeasures</span>
+  <h1 class="module-title">Tamper Detection and Countermeasures</h1>
+  <p class="subtitle">Two halves of physical security: sensing that someone tried to interfere (detection), and stopping or limiting the damage when they do (countermeasures).</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Tamper detection and countermeasures identify and respond to unauthorized attempts to alter or manipulate a system. <strong>Tamper detection</strong> (seals, sensors, cryptographic checks) alerts when a system is compromised, the early-warning system. <strong>Countermeasures</strong> (physical barriers, encryption, shutdowns) prevent or minimize the damage, the response.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">half 01</span>
+      <p class="card-name">Tamper Detection</p>
+      <p class="card-desc">Sense unauthorized access/alteration: physical seals, sensors, cryptographic checks (digital signatures, hashes). Early warning, first line of defense.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">half 02</span>
+      <p class="card-name">Countermeasures</p>
+      <p class="card-desc">Prevent or limit damage: physical barriers (locks, biometrics, industrial camouflage), encryption, automatic shutdowns/lockdowns.</p>
+    </div>
+  </div>
+
+  <h2>tamper detection</h2>
+
+  <p>Tamper detection identifies unauthorized attempts to access or alter a system, using technologies that sense changes and raise alerts. Examples: <strong>physical seals</strong> (tamper-evident materials that show a visible mark when disturbed), <strong>sensors</strong>, and <strong>cryptographic methods</strong> (digital signatures or hash functions that verify data/firmware integrity). It's the first line of defense for systems handling sensitive info or high-value assets. Example: an <strong>ATM</strong> with tamper-evident seals and sensors that disable access to the cash vault and alert on unauthorized opening. Best practice is <strong>layered detection</strong>: sensors in sensitive areas, tamper-evident materials, real-time monitoring, regular audits, and cryptographic validation, so if one mechanism is bypassed, others remain.</p>
+
+  <h2>countermeasures</h2>
+
+  <p>Countermeasures prevent tampering attempts or minimize their impact, working alongside detection (detection alerts; countermeasures stop or reduce). Examples: <strong>physical barriers</strong> (locks, biometric access controls, <strong>industrial camouflage</strong> to disguise a facility), <strong>encryption</strong> (so data stays unreadable even if accessed), and automatic <strong>shutdowns/lockdowns</strong>. A secure data-storage facility might combine locked units, biometric access, and camouflage, triggering an alarm or lockdown on a tamper attempt. The best approach combines physical and digital strategies (reinforced locks + biometrics physically; encryption + MFA + access logging digitally) with routine audits.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Tamper detection = sensing/alerting on tampering (seals, sensors, crypto checks); the early-warning half.</li>
+      <li>Countermeasures = preventing or limiting damage (barriers, encryption, shutdowns); the response half.</li>
+      <li>Cryptographic checks (digital signatures, hashes) verify firmware/data integrity to detect unauthorized changes.</li>
+      <li>Use layered/multiple detection mechanisms so a bypass of one isn't fatal.</li>
+      <li>Industrial camouflage disguises a facility to deter tampering by hiding it.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario senses and alerts on unauthorized access → <strong>tamper detection</strong></li>
+        <li>Scenario locks down or shuts off to stop damage → <strong>countermeasure</strong></li>
+        <li>Scenario uses a hash to verify firmware integrity → <strong>cryptographic tamper detection</strong></li>
+        <li>Scenario disguises a facility's appearance → <strong>industrial camouflage (countermeasure)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_detection_and_mitigation.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_detection_and_mitigation</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_design_mitigations.html">
+      <span><span class="lbl">next</span><span class="file">03_design_mitigations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / tamper_detection_and_countermeasures</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

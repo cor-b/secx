@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fail-Safe Mechanisms / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/fail_safe_mechanisms</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 09 / detection and mitigation / Fail-Safe Mechanisms</span>
+  <h1 class="module-title">Fail-Safe Mechanisms</h1>
+  <p class="subtitle">When something breaks, what does the system default to? Fail-secure locks down to protect data; fail-safe stays open to protect people and keep running.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Fail-safe mechanisms default to a secure or safe state when a failure or breach occurs. Two opposing approaches: <strong>fail-secure</strong> (prioritizes security, locks down or shuts off access even at the cost of availability) and <strong>fail-safe</strong> (prioritizes safety/continuity, keeps operating or stays open even if it relaxes some security).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">approach 01</span>
+      <p class="card-name">Fail-Secure</p>
+      <p class="card-desc">Security first: lock down/shut off on failure. A vault door that locks on power loss. May cause temporary denial of service.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">approach 02</span>
+      <p class="card-name">Fail-Safe</p>
+      <p class="card-desc">Safety/continuity first: keep operating or stay open. An emergency exit that unlocks on power loss. May relax some security.</p>
+    </div>
+  </div>
+
+  <h2>fail-secure</h2>
+
+  <p>Fail-secure mechanisms prioritize <strong>security</strong>: when a failure occurs, the system shuts down or locks access to prevent unauthorized entry or data breaches, even if it temporarily disrupts availability. Example: a server with sensitive data that, on a critical error, cuts off all access until the issue is resolved; or a bank's core database that automatically <strong>locks down</strong> on an anomaly (an unusual data-request pattern), safeguarding records even though legitimate users are temporarily blocked. The physical analogy: a <strong>vault door that locks when power fails</strong>, keeping valuables protected.</p>
+
+  <h2>fail-safe</h2>
+
+  <p>Fail-safe mechanisms prioritize <strong>safety and continuity</strong>: the system keeps functioning in a way that prevents harm, even if that means relaxing some security. The physical analogy: an <strong>emergency exit that unlocks when power fails</strong>, so people can escape a fire, even though it slightly reduces security by allowing outside access. In IT, network switches/routers can be configured so that if the primary internet connection fails, traffic <strong>reroutes</strong> to a secondary ISP or VPN, even if that backup path has weaker firewall protection, prioritizing business continuity over strict security during failover.</p>
+
+  <h3>the door analogy</h3>
+  <p>Two doors during a power outage: the <strong>fail-secure</strong> vault door <em>locks</em> (security first, valuables stay protected); the <strong>fail-safe</strong> emergency exit <em>unlocks</em> (safety first, people get out). The right choice depends on whether protecting assets or protecting people/operations matters most for that system.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Fail-secure = security first: lock down/shut off on failure (may cause a temporary denial of service).</li>
+      <li>Fail-safe = safety/continuity first: keep operating or stay open (may relax some security).</li>
+      <li>Power-outage doors: fail-secure vault door LOCKS; fail-safe emergency exit UNLOCKS.</li>
+      <li>Choose fail-secure to protect data/assets; fail-safe to protect people and maintain operations.</li>
+      <li>Rerouting to a less-secure backup link to stay online is a fail-safe behavior.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario locks a database down on an anomaly, blocking even legit users → <strong>fail-secure</strong></li>
+        <li>Scenario unlocks doors during a fire so people exit → <strong>fail-safe</strong></li>
+        <li>Scenario reroutes to a weaker backup link to stay online → <strong>fail-safe</strong></li>
+        <li>Scenario cuts all access to protect data until fixed → <strong>fail-secure</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_update_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_update_management</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">detection_and_mitigation/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / fail_safe_mechanisms</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

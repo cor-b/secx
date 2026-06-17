@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Functions / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/detection_and_mitigation/safe_functions</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /detection_and_mitigation</a>
+
+  <span class="module-tag">lesson 05 / detection and mitigation / Safe Functions</span>
+  <h1 class="module-title">Safe Functions</h1>
+  <p class="subtitle">Writing code that behaves reliably under pressure: operations that complete all-or-nothing, that respect memory boundaries, and that survive multiple threads at once.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Safe functions operate securely and reliably. Three concepts: <strong>atomic functions</strong> (complete in a single indivisible step, all-or-nothing), <strong>memory-safe functions</strong> (prevent buffer overflows/leaks by respecting memory boundaries), and <strong>thread-safe functions</strong> (operate correctly under concurrent threads without race conditions).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Atomic Functions</p>
+      <p class="card-desc">All-or-nothing: an operation fully completes or doesn't run at all. Prevents partial states (no half-finished bank transfer). Uses atomic ops / mutex locks.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Memory-safe Functions</p>
+      <p class="card-desc">Respect memory boundaries, free unused memory: prevent buffer overflows, leaks, segfaults. Rust/Java (auto), smart pointers in C/C++.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Thread-safe Functions</p>
+      <p class="card-desc">Operate correctly with concurrent threads, no race conditions or data corruption (shared shopping cart). Uses locks/mutexes.</p>
+    </div>
+  </div>
+
+  <h2>atomic functions</h2>
+
+  <p>Atomic functions complete an operation as a single <strong>indivisible</strong> action, all-or-nothing, with no in-between state, critical in concurrent environments to prevent partial completion leaving data inconsistent and to avoid <strong>race conditions</strong>. Example: a bank transfer that either moves the full amount or nothing, never debiting one account without crediting the other. Implemented with built-in atomic operations, atomic variables, or <strong>mutex locks</strong> (only one thread accesses a resource at a time).</p>
+
+  <h2>memory-safe functions</h2>
+
+  <p>Memory-safe functions manage memory to avoid common vulnerabilities, <strong>buffer overflows, memory leaks, segmentation faults</strong>, by ensuring allocated memory doesn't exceed what's available, respecting memory boundaries, and automatically freeing unused memory. Example: an app handling large files that keeps each chunk within available memory. Use memory-safe languages like <strong>Rust</strong> or <strong>Java</strong> (garbage collection, compile-time checks); for C/C++, use libraries and <strong>smart pointers</strong> (objects that automatically manage allocation/deallocation to prevent leaks).</p>
+
+  <h2>thread-safe functions</h2>
+
+  <p>Thread-safe functions operate reliably when multiple threads access shared data simultaneously, preventing race conditions and data corruption. Unlike atomic functions (single indivisible step) or memory-safe functions (memory protection), thread-safe functions specifically manage <strong>execution concurrency</strong>. Example: an online shopping cart where multiple users add items at once, thread-safety prevents one user's changes overwriting another's, keeping cart totals accurate. Achieved with locking mechanisms (mutexes), atomic functions, or thread-safe data structures.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Atomic = all-or-nothing single step (bank transfer); prevents partial states and race conditions.</li>
+      <li>Memory-safe = respects memory boundaries and frees memory; prevents overflows/leaks (Rust, Java, smart pointers).</li>
+      <li>Thread-safe = correct under concurrent threads (shared cart); prevents race conditions/data corruption.</li>
+      <li>Distinguish: atomic (indivisibility), memory-safe (memory protection), thread-safe (concurrency).</li>
+      <li>Mutex locks support both atomicity and thread-safety (one thread at a time).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario needs an operation to fully complete or not at all → <strong>atomic function</strong></li>
+        <li>Scenario prevents buffer overflows/leaks via boundary checks → <strong>memory-safe function</strong></li>
+        <li>Scenario keeps concurrent threads from corrupting shared data → <strong>thread-safe function</strong></li>
+        <li>Scenario uses smart pointers in C++ → <strong>memory-safe function</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_validation_mitigations.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_validation_mitigations</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_access_control_mitigations.html">
+      <span><span class="lbl">next</span><span class="file">06_access_control_mitigations</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>detection_and_mitigation / safe_functions</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
