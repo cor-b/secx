@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Orchestration, Automation, and Response (SOAR) / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/soar</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 05 / integrated security and automation / SOAR</span>
+  <h1 class="module-title">Security Orchestration, Automation, and Response (SOAR)</h1>
+  <p class="subtitle">The platform that turns incident response from manual checklists into automated workflows: a playbook is the plan, a runbook is the plan running itself, pausing only when a human is needed.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p><strong>SOAR</strong> platforms streamline and automate security operations to detect, respond to, and mitigate threats efficiently, often integrating with <strong>SIEM</strong>. Two key concepts: <strong>playbooks</strong> (predefined workflows/checklists detailing the steps for a type of incident) and <strong>runbooks</strong> (the automated execution of a playbook, step by step, with pauses for human input). Modern SOAR adds machine learning/AI.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Playbook</p>
+      <p class="card-desc">The plan: a predefined workflow/checklist of steps for a specific incident type (phishing, DDoS, malware). Human-readable procedure.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Runbook</p>
+      <p class="card-desc">The plan executing itself: automation of a playbook, partially or fully, with checkpoints that pause for analyst confirmation.</p>
+    </div>
+  </div>
+
+  <h2>playbooks</h2>
+
+  <p>Playbooks outline the specific actions to take for different incident types, acting as a <strong>checklist</strong> guiding teams through detection and response. Prepared in advance as part of incident response documentation, they ensure a clear, standardized approach for emergencies. An analyst categorizes something suspicious as an incident, assigns it to a handler, who follows the appropriate playbook. Common dedicated playbooks: <strong>DDoS, malware, phishing, data exfiltration</strong>. Pre-made templates exist (e.g. the Incident Response Consortium's phishing playbook, based on the NIST process, with flowcharts for prepare/detect/analyze/contain/eradicate/recover); Microsoft also provides technical playbooks.</p>
+
+  <h2>runbooks</h2>
+
+  <p>A <strong>runbook</strong> is the automation of a playbook, executing the steps via a SOAR platform, partially or fully, with periodic checkpoints for human intervention. Example phishing response: a runbook automatically deletes the email from inboxes, checks who else received it, isolates workstations that opened it, runs virus and registry scans, and backs up data, then <strong>pauses</strong> for the analyst to confirm before re-imaging, then resumes to reconnect the workstation. Doing this manually would be slow and error-prone; runbooks increase efficiency and let one analyst handle far more work, freeing them for complex tasks. SOAR orchestrates playbooks and enriches data from SIEM, and modern platforms use ML/AI to refine detection and responses over time.</p>
+
+  <h3>common playbooks/runbooks to implement</h3>
+  <dl class="def">
+    <dt>Ransomware</dt>
+    <dd>Determine impacted systems, infection method, isolate affected systems quickly; keep systems powered on to retain encryption keys in RAM for forensics.</dd>
+    <dt>Data exfiltration</dt>
+    <dd>Notification requirements, system and forensic analysis to determine what was accessed/exfiltrated (via SQL injection, password compromise, lateral movement); protect key data stores.</dd>
+    <dt>Social engineering (phishing)</dt>
+    <dd>Identify phishing emails and who interacted, reset passwords, re-image workstations, analyze the email in a sandbox for IOCs (IPs, URLs).</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Playbook = the human-readable plan/checklist for an incident type; runbook = the automated execution of that playbook.</li>
+      <li>Runbooks pause at checkpoints for human confirmation (e.g. before re-imaging), then resume.</li>
+      <li>SOAR integrates with SIEM and increasingly uses ML/AI for detection and response.</li>
+      <li>Ransomware: isolate fast but keep systems powered on to preserve encryption keys in RAM.</li>
+      <li>Three common playbooks: ransomware, data exfiltration, social engineering/phishing.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario describes the documented steps for an incident type → <strong>playbook</strong></li>
+        <li>Scenario auto-executes those steps with a pause for approval → <strong>runbook</strong></li>
+        <li>Scenario keeps an infected machine powered on for key recovery → <strong>ransomware playbook</strong></li>
+        <li>Scenario sandboxes a suspicious email to extract IOCs → <strong>phishing playbook</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_dynamic_security_controls.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_dynamic_security_controls</span></span>
+    </a>
+    <span class="counter">lesson 05 / 09</span>
+    <a class="next" href="06_cloud_automation.html">
+      <span><span class="lbl">next</span><span class="file">06_cloud_automation</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / soar</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

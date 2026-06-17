@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Security Controls / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/dynamic_security_controls</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 04 / integrated security and automation / Dynamic Security Controls</span>
+  <h1 class="module-title">Dynamic Security Controls</h1>
+  <p class="subtitle">Security that reacts on its own. Conditions fire triggers, triggers fire responses, and dangerous things get quarantined before they spread, all without waiting for a human.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Dynamic security controls are adaptive measures that automatically adjust security settings in response to changing conditions or detected threats. Two concepts: <strong>event-based triggers</strong> (specific conditions/incidents that activate automated responses) and <strong>auto-containment</strong> (automatically isolating suspicious entities to stop the spread of infection).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">control 01</span>
+      <p class="card-name">Event-Based Triggers</p>
+      <p class="card-desc">Alarm bells: a condition (malware signature, anomaly, impossible-travel login) fires an automated response. Monitored by IDS/SIEM.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">control 02</span>
+      <p class="card-name">Auto-Containment</p>
+      <p class="card-desc">Quarantine: automatically isolate a suspicious device/file (like a hospital quarantine) to stop spread, then investigate.</p>
+    </div>
+  </div>
+
+  <h2>event-based triggers</h2>
+
+  <p>Event-based triggers act as a security system's alarm bells, like a smart home reacting to breaking glass. They monitor specific conditions or indicators (a new malware signature, an unexpected network anomaly, unauthorized login attempts, unusual data transfers) and automatically initiate responses when detected. Tools like <strong>IDS</strong> and <strong>SIEM</strong> monitor and alert on such activity. Example: if a user's login location jumps countries within minutes (<strong>impossible travel</strong>), the trigger can activate MFA re-authentication or temporarily block access. Triggers also adapt to new threat intelligence, updating malware signature databases so new threats are recognized as they appear, providing continuous protection without relying solely on human intervention.</p>
+
+  <h2>auto-containment</h2>
+
+  <p>Auto-containment isolates potentially harmful entities from the rest of the network, like a hospital quarantine for a contagious patient. When activity or a file is deemed suspicious, it's isolated to prevent interaction with other components, so security teams can analyze it without risking network-wide infection. Example: a device suddenly sending large amounts of data to an unknown external location is immediately isolated, limiting its communication while it's examined; if it's a false positive, it's restored to production, otherwise further remediation follows. Auto-containment is especially valuable in high-traffic environments, enabling rapid isolation without interrupting other users' productivity, balancing security and operations.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Dynamic controls adapt automatically to detected threats/conditions in real time.</li>
+      <li>Event-based triggers = conditions (malware signature, anomaly, impossible-travel login) that fire automated responses; monitored via IDS/SIEM.</li>
+      <li>Auto-containment = automatically isolating a suspicious device/file to stop the spread, then investigate.</li>
+      <li>Containment keeps systems powered/isolated for analysis; false positives can be restored to production.</li>
+      <li>Both reduce reliance on human intervention and free analysts for decision-making.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario fires a response when a malware signature is seen → <strong>event-based trigger</strong></li>
+        <li>Scenario isolates a device exfiltrating data → <strong>auto-containment</strong></li>
+        <li>Scenario forces MFA after an impossible-travel login → <strong>event-based trigger</strong></li>
+        <li>Scenario quarantines a suspicious file for analysis → <strong>auto-containment</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_automated_patching.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_automated_patching</span></span>
+    </a>
+    <span class="counter">lesson 04 / 09</span>
+    <a class="next" href="05_security_orchestration_automation_and_response.html">
+      <span><span class="lbl">next</span><span class="file">05_security_orchestration_automation_and_response</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / dynamic_security_controls</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

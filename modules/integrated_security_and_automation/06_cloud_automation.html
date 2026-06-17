@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Automation / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/cloud_automation</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 06 / integrated security and automation / Cloud Automation</span>
+  <h1 class="module-title">Cloud Automation</h1>
+  <p class="subtitle">Two pillars of automating the cloud: packaging apps into lightweight isolated containers, and defining infrastructure itself as version-controlled code.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cloud automation manages, deploys, and secures cloud resources efficiently. Two concepts: <strong>containerization</strong> (packaging apps with their dependencies into isolated containers for consistency across environments) and <strong>infrastructure as code (IaC)</strong> (defining infrastructure through version-controlled code for repeatable, consistent deployments).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Containerization</p>
+      <p class="card-desc">OS-level virtualization: containers share the host OS, isolating only the app + its dependencies. Lightweight. Docker, Kubernetes.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Infrastructure as Code</p>
+      <p class="card-desc">Define infrastructure in code (YAML/JSON) via Terraform, CloudFormation, Ansible. Consistent, repeatable, version-controlled.</p>
+    </div>
+  </div>
+
+  <h2>containerization</h2>
+
+  <p>Containerization is OS-level virtualization: the host OS creates separate environments, packaging each application with its dependencies into an isolated <strong>container</strong> that runs consistently across environments. Unlike traditional (Type 1/Type 2) virtualization, which isolates at the <strong>hardware</strong> level with each VM running a full guest OS, containers isolate at the <strong>operating-system</strong> level, sharing the host OS and isolating only the app, making them lightweight and resource-efficient. They use a <strong>containerization engine</strong> instead of a hypervisor (e.g. <strong>Docker</strong>, <strong>Kubernetes</strong>, Parallels Virtuozzo, OpenVZ). Containers are isolated by default (must use a virtual network to communicate) and bundle all their own dependencies, so they run the same on any host. The demo deployed an Nginx web server as a Docker container (<code>docker pull nginx</code>, <code>docker run -d -p 8080:80</code>).</p>
+
+  <h2>infrastructure as code (IaC)</h2>
+
+  <p>IaC configures and provisions infrastructure (networks, servers, storage) using <strong>code</strong> instead of manual setup, often written in JSON or YAML and implemented with tools like <strong>Terraform</strong> (multi-cloud), <strong>AWS CloudFormation</strong> (AWS), and <strong>Ansible</strong> (config management). It treats infrastructure as software: rather than logging into each server to configure it manually (slow, error-prone), you define the setup once in code and deploy it across many environments in seconds, consistently and repeatably. IaC also enables <strong>version control</strong>: every change is tracked and can be rolled back, so updates are as simple as modifying and reapplying the code, reducing human error and configuration drift.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Containers isolate at the OS level (share the host OS); VMs isolate at the hardware level (full guest OS each).</li>
+      <li>Containers use a containerization engine (Docker), not a hypervisor; they're lightweight and bundle their dependencies.</li>
+      <li>IaC defines infrastructure in code (YAML/JSON) via Terraform, CloudFormation, or Ansible.</li>
+      <li>IaC gives consistent, repeatable deployments + version control + rollback, reducing drift and human error.</li>
+      <li>Terraform = multi-cloud, CloudFormation = AWS, Ansible = configuration management.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario packages an app with dependencies to run anywhere → <strong>containerization</strong></li>
+        <li>Scenario provisions cloud infra from version-controlled code → <strong>infrastructure as code</strong></li>
+        <li>Scenario needs lightweight isolation sharing the host OS → <strong>containers (vs VMs)</strong></li>
+        <li>Scenario rolls back infrastructure to a prior config → <strong>IaC version control</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_security_orchestration_automation_and_response.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_security_orchestration_automation_and_response</span></span>
+    </a>
+    <span class="counter">lesson 06 / 09</span>
+    <a class="next" href="07_cloud_apis_and_sdks.html">
+      <span><span class="lbl">next</span><span class="file">07_cloud_apis_and_sdks</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / cloud_automation</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

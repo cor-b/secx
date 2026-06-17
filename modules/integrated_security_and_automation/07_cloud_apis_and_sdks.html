@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud APIs and SDKs / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/cloud_apis_and_sdks</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 07 / integrated security and automation / Cloud APIs &amp; SDKs</span>
+  <h1 class="module-title">Cloud APIs and SDKs</h1>
+  <p class="subtitle">Talking to the cloud in code. APIs expose the services, SDKs make them easy to use, and webhooks let the cloud call you the instant something happens.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Cloud <strong>APIs</strong> and <strong>SDKs</strong> let developers interact with cloud services programmatically, automating and integrating security controls. A key mechanism is <strong>webhooks</strong>, user-defined callbacks that trigger automated workflows in real time when specific events occur. APIs let you register webhook URLs directly; SDKs simplify registering and managing them with built-in functions.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">tool 01</span>
+      <p class="card-name">Cloud APIs</p>
+      <p class="card-desc">HTTP-based programmatic access to cloud services (create VMs, manage DBs). Register webhook URLs to receive event notifications (POST).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 02</span>
+      <p class="card-name">SDKs</p>
+      <p class="card-desc">Libraries that wrap API calls in simple, language-specific functions. Include helpers to register and manage webhooks easily.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">mechanism</span>
+      <p class="card-name">Webhooks</p>
+      <p class="card-desc">User-defined callbacks: the cloud notifies a URL the instant an event occurs (digital dispatcher). Real-time, no polling.</p>
+    </div>
+  </div>
+
+  <h2>cloud APIs</h2>
+
+  <p>Cloud APIs let developers interact with cloud services through HTTP-based requests, creating VMs, managing databases, automating workflows, all programmatically. A key feature is setting up <strong>webhooks</strong>: developers register a URL that the cloud service calls when a predefined event occurs. For example, a cloud storage API can be configured to send a <strong>POST request</strong> to a registered URL whenever a file is uploaded or modified, including event details (file name, modification time). Think of webhooks as a digital dispatcher, like a fire alarm alerting responders the moment it detects smoke, no manual input. A security use case: trigger a security scan each time a new cloud resource is deployed.</p>
+
+  <h2>software development kits (SDKs)</h2>
+
+  <p>An SDK is a collection of tools and libraries that let developers integrate functionality with minimal setup, handling the complex parts of API calls and offering simple, language-specific functions. SDKs are especially useful for webhooks because they include predefined functions to <strong>register</strong> and manage them (register = configuring a webhook with a URL/endpoint so it's ready to receive event data). Rather than crafting raw HTTP requests, developers use built-in SDK functions, which also handle error checking. Example: an e-commerce app uses SDK webhook functions to monitor order status, sending a confirmation email when an order ships. SDKs make event-based communication simple, encouraging adoption and improving automation.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Cloud APIs = HTTP-based programmatic access to cloud services; SDKs = libraries that simplify those API calls.</li>
+      <li>Webhooks are user-defined callbacks: the cloud sends a POST to a registered URL the instant an event occurs (real-time, no polling).</li>
+      <li>APIs require manually registering webhook URLs; SDKs provide built-in functions to register/manage them.</li>
+      <li>Security use case: a webhook triggers a scan whenever a new resource is deployed.</li>
+      <li>Webhooks enable real-time automation: alerts, provisioning, incident response.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario triggers an action the instant a cloud event fires → <strong>webhook</strong></li>
+        <li>Scenario accesses cloud services via raw HTTP requests → <strong>cloud API</strong></li>
+        <li>Scenario simplifies API/webhook setup with built-in functions → <strong>SDK</strong></li>
+        <li>Scenario auto-scans every newly deployed resource → <strong>webhook-triggered security scan</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_cloud_automation.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_cloud_automation</span></span>
+    </a>
+    <span class="counter">lesson 07 / 09</span>
+    <a class="next" href="08_vulnerability_management.html">
+      <span><span class="lbl">next</span><span class="file">08_vulnerability_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / cloud_apis_and_sdks</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

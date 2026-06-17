@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Patching / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/automated_patching</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 03 / integrated security and automation / Automated Patching</span>
+  <h1 class="module-title">Automated Patching</h1>
+  <p class="subtitle">Applying fixes without waiting for a human. The faster you patch, the less time attackers have to reverse-engineer the fix and exploit what it closed.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Automated patching applies software updates and security patches without manual intervention, scheduled or triggered by criteria like vulnerability severity or a maintenance window. <strong>Updates</strong> add features/functionality; <strong>patches</strong> fix security vulnerabilities or bugs. A structured <strong>patch management program</strong> with prioritization and testing is far better than handling patches one at a time.</p>
+  </div>
+
+  <h2>why speed matters</h2>
+
+  <p>When vendors release patches, attackers <strong>reverse-engineer</strong> them within days to find and exploit the very vulnerabilities they fix, so a slow or delayed patch process directly incurs risk, and many breaches stem from missed patches. Automated patching ensures systems are consistently updated, e.g. deploying critical updates across a server fleet overnight (within 24 hours of receipt) so vulnerabilities are closed without manual approval or business-hours downtime. Tools like <strong>Microsoft SCCM (System Center Configuration Manager)</strong> automatically check endpoints for needed patches and deploy them. Some admins still manually patch sensitive/high-value systems to avoid unexpected disruption.</p>
+
+  <h2>patch terminology</h2>
+
+  <dl class="def">
+    <dt>Update</dt>
+    <dd>Adds new features or functionality; doesn't directly address security (and can even introduce new vulnerabilities needing hotfixes).</dd>
+    <dt>Patch</dt>
+    <dd>Fixes a security vulnerability or bug.</dd>
+    <dt>Hotfix / critical update</dt>
+    <dd>A patch for a critical security flaw, often one actively exploited in the wild.</dd>
+    <dt>Service pack</dt>
+    <dd>A cumulative bundle of all updates and fixes in one installation. Microsoft has shifted to a continuous/cumulative update model (monthly cumulative updates, twice-yearly feature updates) instead of traditional service packs.</dd>
+  </dl>
+
+  <h2>building a patch management program</h2>
+
+  <p>An effective program includes:</p>
+  <ol>
+    <li><strong>Ownership:</strong> designate an individual/team to track vendor patches, releases, and firmware updates.</li>
+    <li><strong>Consistent mechanism:</strong> all systems (including cloud) have a patching method, automation preferred, manual where automation isn't possible.</li>
+    <li><strong>Prioritization:</strong> categorize patches as urgent, important, or non-critical, allocating resources accordingly.</li>
+    <li><strong>Testing:</strong> test all patches in a staging/non-production environment before production to avoid functionality issues. Urgent patches may be fast-tracked via an emergency change.</li>
+    <li><strong>Scheduling:</strong> roll out non-critical patches periodically (e.g. every two weeks) to balance resources with security.</li>
+  </ol>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Updates add features; patches fix security/bugs. Hotfix = patch for a critical (often actively exploited) flaw.</li>
+      <li>Service pack = cumulative bundle; Microsoft moved to continuous cumulative + feature updates.</li>
+      <li>Patch fast: attackers reverse-engineer patches within days to exploit the fixed flaw.</li>
+      <li>SCCM automates checking and deploying patches across enterprise endpoints.</li>
+      <li>Patch management = ownership + consistent mechanism + prioritization + staging tests + scheduling.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario fixes an actively exploited critical flaw immediately → <strong>hotfix/critical update</strong></li>
+        <li>Scenario bundles all fixes into one install → <strong>service pack</strong></li>
+        <li>Scenario auto-deploys patches across endpoints → <strong>SCCM / automated patching</strong></li>
+        <li>Scenario tests patches before production rollout → <strong>staging environment (patch management)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_configuration_files.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_configuration_files</span></span>
+    </a>
+    <span class="counter">lesson 03 / 09</span>
+    <a class="next" href="04_dynamic_security_controls.html">
+      <span><span class="lbl">next</span><span class="file">04_dynamic_security_controls</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / automated_patching</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

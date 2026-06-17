@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Content Automation Protocol (SCAP) / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/scap</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 09 / integrated security and automation / SCAP</span>
+  <h1 class="module-title">Security Content Automation Protocol (SCAP)</h1>
+  <p class="subtitle">The framework that lets different security tools speak one language. Two components do the heavy lifting: one describes vulnerabilities, the other defines compliance checklists, both machine-readable.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The <strong>SCAP</strong> framework standardizes the format and automated exchange of information about security vulnerabilities, configurations, and compliance, enabling consistent, automated security management. Two key components: <strong>OVAL</strong> (Open Vulnerability and Assessment Language, encodes security advisories for automated assessment) and <strong>XCCDF</strong> (Extensible Configuration Checklist Description Format, defines machine-readable security checklists for automated compliance).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">component 01</span>
+      <p class="card-name">OVAL</p>
+      <p class="card-desc">A standardized XML language describing system security states and vulnerability info, so different tools interpret it consistently. Powers automated vulnerability assessment.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">component 02</span>
+      <p class="card-name">XCCDF</p>
+      <p class="card-desc">An XML format defining security checklists and configuration policies in machine-readable form. Powers automated compliance checks and policy enforcement.</p>
+    </div>
+  </div>
+
+  <h2>OVAL (Open Vulnerability and Assessment Language)</h2>
+
+  <p>OVAL is a standardized, XML-based language for describing system security states and querying for vulnerability information, a universal language for security tools, like traffic signs that any driver understands. By encoding configuration, software versions, and security status in a uniform format, OVAL lets different tools interpret vulnerability data consistently, so advisories can be universally read. When a vulnerability is identified, it's encoded in OVAL to specify exactly what makes a system vulnerable (like the conditions that trigger a car's dashboard warning light), and SCAP-compliant tools (Tenable.io, Qualys) scan to detect matches. OVAL also supports automated <strong>compliance checking</strong> against predefined standards.</p>
+
+  <h2>XCCDF (Extensible Configuration Checklist Description Format)</h2>
+
+  <p>XCCDF is an XML-based format for creating, defining, and auditing <strong>security checklists and configuration policies</strong>. Unlike lengthy manual-review guides, XCCDF represents best-practice configurations in machine-readable form for efficient policy enforcement with SCAP-compliant tools. Checklists describe specific configuration requirements aligned to security policy or regulation (e.g. secure password policies), like a recipe listing each required ingredient. Tools scan systems against the checklist and <strong>flag non-compliant settings</strong> for remediation. Its flexibility lets organizations adapt quickly to evolving requirements, integrating new policies into checklists and distributing them for continuous compliance monitoring.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>SCAP standardizes the automated exchange of vulnerability, configuration, and compliance info so tools interoperate.</li>
+      <li>OVAL = standardized XML language describing system states/vulnerabilities → automated vulnerability assessment.</li>
+      <li>XCCDF = XML format for security checklists/configuration policies → automated compliance checking.</li>
+      <li>Memory hook: OVAL = vulnerabilities/assessment; XCCDF = checklists/configuration/compliance.</li>
+      <li>SCAP also encompasses CPE, CVE, and CVSS (from vulnerability management).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario encodes a vulnerability definition for automated scanning → <strong>OVAL</strong></li>
+        <li>Scenario defines a machine-readable compliance checklist → <strong>XCCDF</strong></li>
+        <li>Scenario standardizes security data exchange across tools → <strong>SCAP framework</strong></li>
+        <li>Scenario flags non-compliant configuration settings → <strong>XCCDF check</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_vulnerability_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_vulnerability_management</span></span>
+    </a>
+    <span class="counter">lesson 09 / 09</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">integrated_security_and_automation/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / scap</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

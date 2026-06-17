@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuration Files / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/integrated_security_and_automation/configuration_files</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /integrated_security_and_automation</a>
+
+  <span class="module-tag">lesson 02 / integrated security and automation / Configuration Files</span>
+  <h1 class="module-title">Configuration Files</h1>
+  <p class="subtitle">The four formats that drive automated processes and security controls, each with a sweet spot: readable hierarchies, strict structure, lightweight data exchange, or simple readability.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Configuration files define the settings and parameters guiding automated processes and security controls. Four formats: <strong>YAML</strong> (readable, indentation-based, complex configs), <strong>XML</strong> (strict tag-based hierarchy), <strong>JSON</strong> (lightweight key-value, data exchange/APIs), and <strong>TOML</strong> (simple, INI-like, small configs).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">format 01</span>
+      <p class="card-name">YAML</p>
+      <p class="card-desc">Yet Another Markup Language. Indentation-based, highly readable. DevOps and cloud infrastructure configs.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">format 02</span>
+      <p class="card-name">XML</p>
+      <p class="card-desc">Extensible Markup Language. Strict tag-based hierarchy, verbose. Web services, security policies, enterprise systems.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">format 03</span>
+      <p class="card-name">JSON</p>
+      <p class="card-desc">JavaScript Object Notation. Lightweight key-value pairs and arrays. API responses, data interchange.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">format 04</span>
+      <p class="card-name">TOML</p>
+      <p class="card-desc">Tom's Obvious Minimal Language. INI-like, simple, readable. Small configs like monitoring tools.</p>
+    </div>
+  </div>
+
+  <h2>the four formats</h2>
+
+  <dl class="def">
+    <dt>YAML (Yet Another Markup Language)</dt>
+    <dd>Known for readability; uses <strong>indentation</strong> rather than brackets to define structure, ideal for complex, hierarchical configs.
+      <span class="detail">Common in cloud deployment and DevOps (resources, services, security groups), e.g. defining a web app's environments with nested database and security settings.</span>
+    </dd>
+    <dt>XML (Extensible Markup Language)</dt>
+    <dd>Highly structured, uses <strong>tags</strong> to denote hierarchy; verbose but strict, good where rigorous organization is needed.
+      <span class="detail">Used for web services and enterprise systems: security policies, authentication methods (e.g. OAuth2), access controls.</span>
+    </dd>
+    <dt>JSON (JavaScript Object Notation)</dt>
+    <dd>Lightweight, uses <strong>key-value pairs</strong> and arrays; compact and fast to parse.
+      <span class="detail">The default for API configs and data interchange (endpoints, encryption settings, session timeouts), readable by humans and machines.</span>
+    </dd>
+    <dt>TOML (Tom's Obvious Minimal Language)</dt>
+    <dd>Designed for readability and ease of writing; <strong>INI-like</strong> with bracketed sections and key-value pairs.
+      <span class="detail">Ideal for small/medium configs like monitoring tools (log file paths, alert thresholds, report intervals).</span>
+    </dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>YAML = indentation-based, readable, complex cloud/DevOps configs.</li>
+      <li>XML = strict tag-based hierarchy, verbose, web services and enterprise security policies.</li>
+      <li>JSON = lightweight key-value, the default for APIs and data interchange.</li>
+      <li>TOML = simple INI-like format for small configs (monitoring tools).</li>
+      <li>Match the format to the need: readability (YAML), strictness (XML), exchange (JSON), simplicity (TOML).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses indentation for a complex cloud deployment → <strong>YAML</strong></li>
+        <li>Scenario needs strict tag hierarchy for security policies → <strong>XML</strong></li>
+        <li>Scenario exchanges lightweight data between APIs → <strong>JSON</strong></li>
+        <li>Scenario configures a small monitoring tool simply → <strong>TOML</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_integrated_security_and_automation.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_integrated_security_and_automation</span></span>
+    </a>
+    <span class="counter">lesson 02 / 09</span>
+    <a class="next" href="03_automated_patching.html">
+      <span><span class="lbl">next</span><span class="file">03_automated_patching</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>integrated_security_and_automation / configuration_files</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
