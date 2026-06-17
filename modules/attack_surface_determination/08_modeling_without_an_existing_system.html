@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modeling without an Existing System / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/modeling_without_an_existing_system</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 08 / attack surface determination / Modeling without an Existing System</span>
+  <h1 class="module-title">Modeling without an Existing System</h1>
+  <p class="subtitle">Threat modeling something that doesn't exist yet: envision the design, anticipate the risks, and build security in from the ground up rather than retrofitting it later.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Modeling without an existing system assesses threats for systems not yet developed or deployed, to identify risks and build in controls preemptively. It requires <strong>envisioning</strong> how the system will function, what data it handles, how users interact, and its integration points, then selecting controls (encryption, access management, network segmentation) before production. The advantage: building security in from the ground up rather than retrofitting.</p>
+  </div>
+
+  <h2>what to anticipate</h2>
+
+  <ol>
+    <li><strong>Architecture:</strong> cloud, on-premise, or hybrid? Will it interact with third parties? A cloud-based system raises concerns like unauthorized cloud access or insecure APIs.</li>
+    <li><strong>Data types:</strong> what data will it process/store? Sensitive data (credit cards, medical records) needs prioritized protection, encryption at rest and in transit.</li>
+    <li><strong>User interactions:</strong> who needs access (employees, customers, third parties) and at what levels? Multiple user types call for <strong>role-based access control</strong>.</li>
+    <li><strong>Integration points:</strong> integrations expand the attack surface. Third-party API integration risks <strong>API abuse</strong>; plan strong API security (authentication, rate limits, monitoring).</li>
+  </ol>
+
+  <h2>selecting controls before launch</h2>
+
+  <p>With risks identified, select controls and <strong>embed them in the design</strong>:</p>
+  <ul>
+    <li><strong>MFA:</strong> require two or more verification methods to block unauthorized access.</li>
+    <li><strong>Encryption:</strong> protect sensitive data at rest and in transit, unreadable without keys.</li>
+    <li><strong>Network segmentation:</strong> divide the network into isolated segments so a compromise in one part can't spread, planned early so it's built in rather than added later.</li>
+  </ul>
+  <p>This proactive approach (e.g. modeling a new cloud-based CRM by analyzing common cloud threats, then adding MFA, encryption, and strict API access controls) prevents issues and ensures the system is secure at launch.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Modeling without an existing system = anticipate risks before development/deployment and build security in from the start.</li>
+      <li>Anticipate: architecture (cloud/on-prem/hybrid), data types, user interactions, integration points.</li>
+      <li>Integrations (especially third-party APIs) expand the attack surface, risk of API abuse.</li>
+      <li>Controls to embed early: MFA, encryption (at rest + in transit), RBAC, network segmentation.</li>
+      <li>Building security in from the ground up beats retrofitting it after launch.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario models threats for a system not yet built → <strong>modeling without an existing system</strong></li>
+        <li>Scenario plans API authentication and rate limits pre-launch → <strong>integration-point mitigation</strong></li>
+        <li>Scenario designs network segmentation into a new system → <strong>build security in from the start</strong></li>
+        <li>Scenario assigns access by role for a planned system → <strong>RBAC</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_modeling_with_an_existing_system.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_modeling_with_an_existing_system</span></span>
+    </a>
+    <span class="counter">lesson 08 / 08</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">attack_surface_determination/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / modeling_without_an_existing_system</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

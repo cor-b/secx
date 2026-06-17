@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Attack Surface / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/cloud_attack_surface</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 05 / attack surface determination / Cloud Attack Surface</span>
+  <h1 class="module-title">Cloud Attack Surface</h1>
+  <p class="subtitle">Entry points in the cloud: the assets meant to stay internal, the ones deliberately public, every service you're running, and the malicious background processes hiding among them.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The cloud attack surface is the vulnerabilities and entry points in cloud infrastructure. Four concepts: <strong>internally facing assets</strong> (cloud resources accessible only within the network), <strong>externally facing assets</strong> (publicly accessible cloud resources), <strong>cloud services discovery</strong> (cataloging all services to find misconfigs), and <strong>malicious cloud services/daemons</strong> (harmful background processes).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Internally Facing</p>
+      <p class="card-desc">Internal-only resources (databases, VMs, internal APIs). Misconfig can expose them (2023 No-Fly List leak). Fix: AWS Config, Azure Policy.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Externally Facing</p>
+      <p class="card-desc">Public resources (web apps, public APIs, storage buckets, CDNs, DNS). Prime targets. Scan with Shodan/Censys/AWS Inspector.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Cloud Services Discovery</p>
+      <p class="card-desc">Catalog all cloud services to find misconfigs across multi-cloud. Tools: Prisma Cloud, Lacework, CloudTrail (CSPM).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 04</span>
+      <p class="card-name">Malicious Services/Daemons</p>
+      <p class="card-desc">Harmful background processes (backdoors, exfiltration) masquerading as legit. Detect with CrowdStrike, GuardDuty, Azure Security Center.</p>
+    </div>
+  </div>
+
+  <h2>internally vs externally facing assets</h2>
+
+  <p><strong>Internally facing assets</strong> are cloud resources accessible only within the network (databases, VMs, app servers, internal APIs); if <strong>misconfigured</strong>, they can unintentionally become public. The <strong>2023 US No-Fly List leak</strong> exemplifies this, a CommuteAir internal server left unprotected exposed a copy of the list. Fix with config-compliance tools (AWS Config, Azure Policy) and audits. <strong>Externally facing assets</strong> are intentionally public (web apps, public APIs, storage buckets, CDNs, DNS servers); they're prime targets, e.g. a misconfigured public API with weak auth exposing customer data. Scan with Shodan, Censys, AWS Inspector, Google Cloud Security Scanner; enforce strict access controls (OAuth) and patching.</p>
+
+  <h2>cloud services discovery and malicious daemons</h2>
+
+  <p><strong>Cloud services discovery</strong> catalogs all cloud services in use (storage, compute, networking, software) across multi-cloud to find vulnerabilities and misconfigurations, undiscovered services can expose data. Use <strong>cloud security posture management (CSPM)</strong> tools (Prisma Cloud, Lacework, AWS CloudTrail) to automate inventory and monitor configs. <strong>Malicious cloud services and daemons</strong> are unauthorized background processes enabling unauthorized access, persistent backdoors, or harmful actions, often masquerading as legitimate processes and evading standard monitoring (e.g. a malicious daemon periodically exfiltrating data). Detect with advanced threat detection (CrowdStrike, AWS GuardDuty, Azure Security Center), forensic investigations, and EDR.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four cloud concepts: internally facing assets, externally facing assets, cloud services discovery, malicious services/daemons.</li>
+      <li>Misconfigured internal assets can leak publicly (2023 US No-Fly List); fix with AWS Config / Azure Policy.</li>
+      <li>External assets (web apps, public APIs, buckets, CDNs, DNS) are prime targets; scan with Shodan/Censys/Inspector.</li>
+      <li>Cloud services discovery = CSPM tools (Prisma Cloud, Lacework, CloudTrail) catalog services and find misconfigs.</li>
+      <li>Malicious daemons masquerade as legitimate; detect with CrowdStrike, GuardDuty, Azure Security Center.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario leaks an internal-only database publicly via misconfig → <strong>internally facing asset exposure</strong></li>
+        <li>Scenario exposes a public API with weak auth → <strong>externally facing asset</strong></li>
+        <li>Scenario catalogs all multi-cloud services for misconfigs → <strong>cloud services discovery (CSPM)</strong></li>
+        <li>Scenario finds a hidden process exfiltrating data → <strong>malicious cloud daemon</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_organizational_attack_surface.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_organizational_attack_surface</span></span>
+    </a>
+    <span class="counter">lesson 05 / 08</span>
+    <a class="next" href="06_organizational_change_attack_surface.html">
+      <span><span class="lbl">next</span><span class="file">06_organizational_change_attack_surface</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / cloud_attack_surface</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

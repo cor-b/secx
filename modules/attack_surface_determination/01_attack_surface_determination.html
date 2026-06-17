@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attack Surface Determination / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/overview</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 01 / attack surface determination / Overview</span>
+  <h1 class="module-title">Attack Surface Determination</h1>
+  <p class="subtitle">Mapping every way in. The attack surface spans technical, operational, organizational, and cloud dimensions, shifts during change, and is modeled differently for systems that exist versus ones still on the drawing board.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Domain 1 (Governance, Risk, and Compliance), Objective 1.4: perform threat modeling activities. Assessing the attack surface, all potential entry points, lets you protect key assets. It spans technical, operational, organizational, and cloud dimensions, shifts during organizational change, and can be modeled both with and without an existing system. The section covers each of these.</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">area 01</span>
+      <p class="card-name">The Dimensions</p>
+      <p class="card-desc">Technical (infrastructure), operational (people/processes), organizational (external relationships), and cloud attack surfaces.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 02</span>
+      <p class="card-name">Change</p>
+      <p class="card-desc">Organizational change attack surface: staffing changes, mergers, acquisitions, divestitures.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">area 03</span>
+      <p class="card-name">Modeling</p>
+      <p class="card-desc">Modeling with an existing system vs modeling without one (building security in from the ground up).</p>
+    </div>
+  </div>
+
+  <h2>section map</h2>
+
+  <table>
+    <thead>
+      <tr><th>lesson</th><th>topic</th><th>key concepts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>02</td><td>Technical Attack Surface</td><td>architecture reviews, data flows, trust boundaries, code reviews</td></tr>
+      <tr><td>03</td><td>Operational Attack Surface</td><td>user factors, unsanctioned assets, unsanctioned accounts</td></tr>
+      <tr><td>04</td><td>Organizational Attack Surface</td><td>third-party connections, public digital presence</td></tr>
+      <tr><td>05</td><td>Cloud Attack Surface</td><td>internal/external assets, cloud services discovery, malicious daemons</td></tr>
+      <tr><td>06</td><td>Organizational Change Attack Surface</td><td>staffing changes, mergers, acquisitions, divestitures</td></tr>
+      <tr><td>07</td><td>Modeling with an Existing System</td><td>map architecture, identify relevant threats, pick controls</td></tr>
+      <tr><td>08</td><td>Modeling without an Existing System</td><td>anticipate design, build security in from the start</td></tr>
+    </tbody>
+  </table>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="index.html">
+      <span class="dir">↑</span>
+      <span><span class="lbl">section</span><span class="file">attack_surface_determination/</span></span>
+    </a>
+    <span class="counter">lesson 01 / 08</span>
+    <a class="next" href="02_technical_attack_surface.html">
+      <span><span class="lbl">next</span><span class="file">02_technical_attack_surface</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / overview</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

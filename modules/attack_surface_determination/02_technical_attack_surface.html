@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Attack Surface / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/technical_attack_surface</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 02 / attack surface determination / Technical Attack Surface</span>
+  <h1 class="module-title">Technical Attack Surface</h1>
+  <p class="subtitle">The entry points in your technology itself. Reviewing the design, tracing how data moves, guarding the boundaries between trust zones, and examining the source code.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The technical attack surface is the sum of all potential entry points in an organization's technology infrastructure. Four concepts: <strong>architecture reviews</strong> (evaluate design for weaknesses), <strong>data flows</strong> (how information moves), <strong>trust boundaries</strong> (where data crosses between trust levels), and <strong>code reviews</strong> (examine source code for vulnerabilities).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Architecture Reviews</p>
+      <p class="card-desc">Evaluate system design for weaknesses/misconfigs early. Tools: Microsoft Threat Modeling Tool, OWASP Threat Dragon.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Flows</p>
+      <p class="card-desc">Map how data moves; ensure sensitive data isn't sent in plain text or over insecure channels. Tools: Visio, Lucidchart.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Trust Boundaries</p>
+      <p class="card-desc">Points where data crosses between trust zones (internet ↔ internal). Secure with firewalls and segmentation.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 04</span>
+      <p class="card-name">Code Reviews</p>
+      <p class="card-desc">Examine source for vulnerabilities: static, dynamic, side-channel, reverse engineering, SCA, fuzzing.</p>
+    </div>
+  </div>
+
+  <h2>architecture reviews, data flows, and trust boundaries</h2>
+
+  <p><strong>Architecture reviews</strong> evaluate system design for weaknesses or misconfigurations, ideally early, catching issues like centrally stored sensitive data accessible from multiple networks or insecure third-party dependencies (tools: Microsoft Threat Modeling Tool, OWASP Threat Dragon). <strong>Data flow analysis</strong> maps how data moves to find exposure (e.g. sensitive data sent in plain text), prompting encryption; it also verifies access controls (tools: Visio, Lucidchart). <strong>Trust boundaries</strong> are points where data crosses between zones of different trust (internet ↔ internal, web server ↔ database); secure them with firewalls and network segmentation.</p>
+
+  <h2>code reviews</h2>
+
+  <p>Code reviews find vulnerabilities in source code before deployment using several techniques:</p>
+  <dl class="def">
+    <dt>Static analysis</dt>
+    <dd>Inspects code <strong>without executing</strong> it, manually or with tools (SonarQube, Checkmarx). Use both.</dd>
+    <dt>Dynamic analysis</dt>
+    <dd>Tests code <strong>while executing</strong> in a controlled environment/sandbox (Burp Suite as a proxy). <strong>Side-channel analysis</strong> (a subset) observes indirect outputs like network traffic (Wireshark).</dd>
+    <dt>Reverse engineering</dt>
+    <dd>Pulls apart compiled/obfuscated code (decompiler IDA Pro → assembly; debugger OllyDbg → step-by-step).</dd>
+    <dt>Software composition analysis (SCA)</dt>
+    <dd>Identifies vulnerable third-party/open-source dependencies (Snyk, WhiteSource).</dd>
+    <dt>Fuzz testing (fuzzing)</dt>
+    <dd>Injects randomized data to find input-handling weaknesses (Peach Fuzzer, WSFuzzer).</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four technical concepts: architecture reviews, data flows, trust boundaries, code reviews.</li>
+      <li>Trust boundaries = where data crosses between different trust levels; protect with firewalls/segmentation.</li>
+      <li>Static analysis = code not executed; dynamic analysis = code executed in a sandbox; side-channel observes indirect outputs.</li>
+      <li>SCA finds vulnerable third-party libraries; fuzzing injects random data to find input flaws.</li>
+      <li>Reverse engineering uses a decompiler (IDA Pro) and debugger (OllyDbg) for obfuscated code/malware.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario examines code without running it → <strong>static analysis</strong></li>
+        <li>Scenario runs code in a sandbox to watch behavior → <strong>dynamic analysis</strong></li>
+        <li>Scenario flags a vulnerable open-source library → <strong>software composition analysis</strong></li>
+        <li>Scenario secures where data crosses from internet to internal → <strong>trust boundary</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_attack_surface_determination.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_attack_surface_determination</span></span>
+    </a>
+    <span class="counter">lesson 02 / 08</span>
+    <a class="next" href="03_operational_attack_surface.html">
+      <span><span class="lbl">next</span><span class="file">03_operational_attack_surface</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / technical_attack_surface</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizational Attack Surface / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/organizational_attack_surface</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 04 / attack surface determination / Organizational Attack Surface</span>
+  <h1 class="module-title">Organizational Attack Surface</h1>
+  <p class="subtitle">The risks that live outside your walls: every external partner with access to your systems, and everything about you that's visible on the public internet.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The organizational attack surface covers vulnerabilities from external relationships and the public-facing digital footprint. Two concepts: <strong>third-party connections</strong> (external entities, vendors, partners, providers, with access to systems/data) and <strong>public digital presence</strong> (websites, social media, publicly accessible systems).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Third-Party Connections</p>
+      <p class="card-desc">External entities with access (vendors, partners). Each extends the attack surface. 2013 Target breach via HVAC vendor. Fix: audits, segmentation, zero trust.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Public Digital Presence</p>
+      <p class="card-desc">Websites, social media, public systems, the frontline facing external threats. Map and secure (Shodan, Censys).</p>
+    </div>
+  </div>
+
+  <h2>third-party connections</h2>
+
+  <p>Third-party connections are external entities (vendors, partners, service providers) with access to an organization's systems or data, each extending the attack surface with an external access point. Because their security practices differ, a breach in one of them can grant attackers access to your assets. The canonical example is the <strong>2013 Target breach</strong>: attackers compromised a third-party <strong>HVAC vendor</strong> that had network access, then pivoted to Target's point-of-sale systems, stealing millions of customers' card details. Mitigate with regular audits of these relationships, vendor security/risk management software, <strong>network segmentation and zero trust</strong> for third-party access, and automated access revocation (Okta Lifecycle Management, CyberArk).</p>
+
+  <h2>public digital presence</h2>
+
+  <p>Public digital presence is the organization's online footprint, websites, social media profiles, publicly accessible systems, the <strong>frontline facing external threats</strong>. Outdated or misconfigured assets and neglected accounts are prime targets, risking brand damage, data theft, or unauthorized access. Mitigate with regular digital asset inventories and security audits, internet-scanning tools (<strong>Shodan, Censys</strong>) to find publicly accessible devices/services, automated alerts for brand misuse, keeping profiles/systems updated, and regular vulnerability scans and penetration tests on public-facing applications.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Two concepts: third-party connections and public digital presence.</li>
+      <li>Third-party connections extend the attack surface; the 2013 Target breach (HVAC vendor) is the classic example.</li>
+      <li>Mitigate third-party risk with audits, network segmentation, zero trust, and timely access revocation.</li>
+      <li>Public digital presence = websites/social media/public systems; map and scan with Shodan and Censys.</li>
+      <li>Public-facing assets are the frontline, keep them updated, scanned, and pen-tested.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario breaches via a vendor's network access → <strong>third-party connection</strong></li>
+        <li>Scenario finds a neglected public-facing web app → <strong>public digital presence</strong></li>
+        <li>Scenario scans the internet for exposed services → <strong>Shodan/Censys (public presence discovery)</strong></li>
+        <li>Scenario applies zero trust to vendor access → <strong>third-party connection mitigation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_operational_attack_surface.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_operational_attack_surface</span></span>
+    </a>
+    <span class="counter">lesson 04 / 08</span>
+    <a class="next" href="05_cloud_attack_surface.html">
+      <span><span class="lbl">next</span><span class="file">05_cloud_attack_surface</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / organizational_attack_surface</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

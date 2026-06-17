@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modeling with an Existing System / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/modeling_with_an_existing_system</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 07 / attack surface determination / Modeling with an Existing System</span>
+  <h1 class="module-title">Modeling with an Existing System</h1>
+  <p class="subtitle">Threat modeling what you already run: map the architecture, identify the threats relevant to it, and choose controls, with extra layers for legacy systems that can't be patched.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Modeling with an existing system evaluates threats and vulnerabilities specific to the current environment to determine what can be exploited and which controls are needed. The process: <strong>understand the current architecture/operations</strong>, <strong>identify relevant threats</strong>, then <strong>select mitigating controls</strong> (MFA, encryption, IDS/IPS). Legacy systems often need extra controls.</p>
+  </div>
+
+  <h2>the process</h2>
+
+  <ol>
+    <li><strong>Map the architecture and operations:</strong> understand how the current system works (software, hardware config, interactions). A web platform has a different risk profile than internal apps.</li>
+    <li><strong>Identify relevant threats:</strong> a database-heavy system worries about <strong>SQL injection</strong>; an external-facing e-commerce site worries about <strong>XSS</strong> and <strong>DDoS</strong>.</li>
+    <li><strong>Select mitigating controls:</strong> match controls to the threats.</li>
+  </ol>
+
+  <h2>mitigating controls</h2>
+
+  <dl class="def">
+    <dt>Multi-factor authentication (MFA)</dt>
+    <dd>Protects against unauthorized access, especially for remote access.</dd>
+    <dt>Encryption</dt>
+    <dd>Protects sensitive data at rest and in transit; even if stolen, it's unusable without the decryption keys.</dd>
+    <dt>Intrusion detection/prevention (IDS/IPS)</dt>
+    <dd>IDS monitors and alerts; <strong>IPS</strong> goes further, actively blocking malicious traffic in real time before it reaches the system.</dd>
+  </dl>
+
+  <h2>legacy systems</h2>
+
+  <p>Legacy systems often lack modern security features (unpatched vulnerabilities, weak authentication), so they need <strong>extra controls</strong>: deploy MFA to strengthen access, use <strong>network segmentation</strong> to mitigate the lack of available patches, and apply encryption for data at rest and in transit, layered defense around outdated systems. Regular assessments of architecture and operations keep controls current with emerging threats.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Process: understand the existing architecture → identify relevant threats → select controls.</li>
+      <li>Match threats to the system: database-heavy → SQL injection; external-facing → XSS/DDoS.</li>
+      <li>Controls: MFA (access), encryption (data), IDS (alert) vs IPS (actively block).</li>
+      <li>Legacy systems need extra layers, especially network segmentation, when patches aren't available.</li>
+      <li>Regular reassessment keeps controls effective against emerging threats.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario models threats to a system already in production → <strong>modeling with an existing system</strong></li>
+        <li>Scenario can't patch a legacy system → <strong>network segmentation + compensating controls</strong></li>
+        <li>Scenario actively blocks malicious traffic (not just alerts) → <strong>IPS</strong></li>
+        <li>Scenario protects a database-heavy app → <strong>defend against SQL injection</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_organizational_change_attack_surface.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_organizational_change_attack_surface</span></span>
+    </a>
+    <span class="counter">lesson 07 / 08</span>
+    <a class="next" href="08_modeling_without_an_existing_system.html">
+      <span><span class="lbl">next</span><span class="file">08_modeling_without_an_existing_system</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / modeling_with_an_existing_system</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

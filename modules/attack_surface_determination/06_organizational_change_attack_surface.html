@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizational Change Attack Surface / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/organizational_change_attack_surface</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 06 / attack surface determination / Organizational Change Attack Surface</span>
+  <h1 class="module-title">Organizational Change Attack Surface</h1>
+  <p class="subtitle">Transitions create gaps. New and departing staff, two companies becoming one, one company absorbing another, and a business splitting apart, each opens vulnerabilities if not carefully managed.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The organizational change attack surface is vulnerabilities introduced during transition. Four concepts: <strong>staffing changes</strong> (onboarding/offboarding gaps), <strong>mergers</strong> (integrating two networks), <strong>acquisitions</strong> (taking control of another org), and <strong>divestitures</strong> (selling/separating a business unit).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">change 01</span>
+      <p class="card-name">Staffing Changes</p>
+      <p class="card-desc">Onboarding/offboarding gaps: orphaned accounts, excessive permissions. Fix: automated IAM (Okta, Azure AD).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">change 02</span>
+      <p class="card-name">Mergers</p>
+      <p class="card-desc">Integrating two networks; misaligned security protocols create gaps. Fix: security audit, segmentation, SIEM monitoring.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">change 03</span>
+      <p class="card-name">Acquisitions</p>
+      <p class="card-desc">One org takes over another; acquired infra may have hidden vulns/differing standards. Fix: assess (Rapid7, Nessus), review access.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">change 04</span>
+      <p class="card-name">Divestitures</p>
+      <p class="card-desc">Selling/separating a unit; exposed data or improperly decommissioned assets. Fix: DLP, decommission audits.</p>
+    </div>
+  </div>
+
+  <h2>staffing changes and mergers</h2>
+
+  <p><strong>Staffing changes</strong> (onboarding/offboarding) create access-control gaps, <strong>orphaned accounts</strong> retaining access after departure, or new employees granted excessive permissions. Mitigate with automated IAM (Okta, Azure AD) to streamline provisioning and quickly deactivate accounts. <strong>Mergers</strong> integrate two companies' networks/systems; rushing to consolidate without aligning security protocols leaves resources vulnerable (employees from one company gaining access to the other's confidential data). Mitigate with a comprehensive security audit, network segmentation (Cisco ISE, firewalls), and SIEM monitoring for abnormal activity (unusual logins, excessive transfers).</p>
+
+  <h2>acquisitions and divestitures</h2>
+
+  <p><strong>Acquisitions</strong> (one org taking control of another) carry the risk that the acquired infrastructure has vulnerabilities or differing security standards, e.g. outdated services now exposed to the combined network. Mitigate with a security assessment of acquired systems (Rapid7, Nessus) before integration and careful access-control review. <strong>Divestitures</strong> (selling or separating a business unit) can expose sensitive data or leave assets insufficiently protected; e.g. failing to decommission shared servers leaves the separated entity with access. Mitigate with data loss prevention tools (Symantec DLP, McAfee Total Protection) and a security audit confirming all shared resources are reconfigured or decommissioned.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four change types: staffing changes, mergers, acquisitions, divestitures.</li>
+      <li>Staffing changes → orphaned accounts/excessive permissions; fix with automated IAM and offboarding.</li>
+      <li>Mergers integrate two networks (align protocols, segment, monitor); acquisitions inherit the other org's vulnerabilities (assess first).</li>
+      <li>Divestitures risk exposed data and un-decommissioned assets; fix with DLP and decommission audits.</li>
+      <li>Tools by phase: IAM (staffing), SIEM/segmentation (mergers), Rapid7/Nessus (acquisitions), DLP (divestitures).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario leaves an ex-employee's account active → <strong>staffing change</strong></li>
+        <li>Scenario integrates two companies' networks with misaligned security → <strong>merger</strong></li>
+        <li>Scenario inherits an acquired company's outdated, exposed services → <strong>acquisition</strong></li>
+        <li>Scenario fails to decommission shared servers when splitting off a unit → <strong>divestiture</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_cloud_attack_surface.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_cloud_attack_surface</span></span>
+    </a>
+    <span class="counter">lesson 06 / 08</span>
+    <a class="next" href="07_modeling_with_an_existing_system.html">
+      <span><span class="lbl">next</span><span class="file">07_modeling_with_an_existing_system</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / organizational_change_attack_surface</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

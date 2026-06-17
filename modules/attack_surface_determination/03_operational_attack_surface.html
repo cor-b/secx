@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operational Attack Surface / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/attack_surface_determination/operational_attack_surface</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /attack_surface_determination</a>
+
+  <span class="module-tag">lesson 03 / attack surface determination / Operational Attack Surface</span>
+  <h1 class="module-title">Operational Attack Surface</h1>
+  <p class="subtitle">The vulnerabilities of day-to-day operations and people: risky user behavior, devices nobody approved, and accounts nobody is watching.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>The operational attack surface covers vulnerabilities from day-to-day operations and human factors. Three concepts: <strong>user factors</strong> (risks from users, weak passwords, phishing, privilege misuse), <strong>unsanctioned assets</strong> (unauthorized/unmanaged devices), and <strong>unsanctioned accounts</strong> (unauthorized or orphaned accounts).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">User Factors</p>
+      <p class="card-desc">Human risks: weak passwords, phishing susceptibility, privilege misuse. The weakest link. Fix: MFA, training, RBAC, activity monitoring.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Unsanctioned Assets</p>
+      <p class="card-desc">Unauthorized/unmanaged devices lacking patches/AV. Discover with Nmap/Nessus/SolarWinds; enforce NAC.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Unsanctioned Accounts</p>
+      <p class="card-desc">Orphaned/unauthorized accounts (ex-employees, temp projects). Audit and deactivate (Azure AD, Okta, SailPoint).</p>
+    </div>
+  </div>
+
+  <h2>user factors</h2>
+
+  <p>User factors are risks introduced by people: weak passwords, phishing susceptibility, and privilege misuse. Users are often the <strong>weakest link</strong> because behavior is unpredictable, a single phishing victim can lead to a breach, and privileged users (admins, executives) can misuse access (e.g. accidentally weakening firewall settings). Mitigate with MFA, strong password policies, security-awareness training (at onboarding and at least annually), <strong>phishing simulators</strong>, user-activity monitoring (login locations, unusual times), and role-based access control.</p>
+
+  <h2>unsanctioned assets</h2>
+
+  <p>Unsanctioned assets are unauthorized or unmanaged devices on the network (forgotten laptops, personal devices) that lack standardized security, updates, patches, or antivirus, becoming easy entry points. Example: an employee connecting an infected personal laptop to corporate Wi-Fi bypasses defenses. Discover them with network discovery/inventory tools (<strong>Nmap, Nessus, SolarWinds</strong>), enforce <strong>network access control (NAC)</strong> requiring devices to meet security standards, and keep asset inventories updated.</p>
+
+  <h2>unsanctioned accounts</h2>
+
+  <p>Unsanctioned accounts are unauthorized, orphaned, or unmanaged user accounts (left by departed employees, temporary projects, or created without approval). They retain access without monitoring, an active ex-employee account is a prime target, and they rarely get stronger security, providing a backdoor. Mitigate with periodic account audits, deactivating inactive accounts (<strong>Azure AD, Okta</strong>), identity governance (<strong>SailPoint, Oracle Identity Governance</strong>), and standardized onboarding/offboarding.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Three operational concepts: user factors, unsanctioned assets, unsanctioned accounts.</li>
+      <li>User factors (humans) are often the weakest link; fix with MFA, training, RBAC, and phishing simulators.</li>
+      <li>Unsanctioned assets = unmanaged devices; discover with Nmap/Nessus/SolarWinds, enforce NAC.</li>
+      <li>Unsanctioned accounts = orphaned/unauthorized accounts; fix with audits, deactivation, and identity governance.</li>
+      <li>Standardized onboarding/offboarding reduces both unsanctioned assets and accounts.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario blames a breach on a phished employee → <strong>user factors</strong></li>
+        <li>Scenario finds an unmanaged personal laptop on the network → <strong>unsanctioned asset</strong></li>
+        <li>Scenario finds an active ex-employee account → <strong>unsanctioned account</strong></li>
+        <li>Scenario runs Nmap to inventory connected devices → <strong>asset enumeration/discovery</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="02_technical_attack_surface.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">02_technical_attack_surface</span></span>
+    </a>
+    <span class="counter">lesson 03 / 08</span>
+    <a class="next" href="04_organizational_attack_surface.html">
+      <span><span class="lbl">next</span><span class="file">04_organizational_attack_surface</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>attack_surface_determination / operational_attack_surface</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
