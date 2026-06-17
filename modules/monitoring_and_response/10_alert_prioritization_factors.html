@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alert Prioritization Factors / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/alert_prioritization_factors</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 10 / monitoring and response / Alert Prioritization Factors</span>
+  <h1 class="module-title">Alert Prioritization Factors</h1>
+  <p class="subtitle">With thousands of alerts a day, which do you handle first? Five factors decide: how severe, how damaging, how valuable the asset, how much risk remains, and how sensitive the data.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Alert prioritization factors determine the urgency of alerts so the most critical threats are handled first. Five factors: <strong>criticality</strong> (severity level), <strong>impact</strong> (potential damage), <strong>asset type</strong> (value of the affected system), <strong>residual risk</strong> (risk remaining after controls), and <strong>data classification</strong> (sensitivity of the data).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">factor 01</span>
+      <p class="card-name">Criticality</p>
+      <p class="card-desc">Severity level (warning → low → medium → high → critical). SIEMs rank by predefined rules/thresholds.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 02</span>
+      <p class="card-name">Impact</p>
+      <p class="card-desc">Potential damage if unmitigated (data exfiltration &gt; minor misconfig). Assessed via IDS/DLP.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 03</span>
+      <p class="card-name">Asset Type</p>
+      <p class="card-desc">Value of the affected system (production server/critical DB &gt; minor internal system).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">factor 04</span>
+      <p class="card-name">Residual Risk &amp; Data Classification</p>
+      <p class="card-desc">Risk left after controls (bypassed MFA = high); sensitivity of data (PHI/financial = higher priority).</p>
+    </div>
+  </div>
+
+  <h2>the five factors</h2>
+
+  <dl class="def">
+    <dt>Alert criticality</dt>
+    <dd>The severity level (warning, low, medium, high, critical). A low alert (failed login) vs a critical one (ransomware encrypting a database). SIEMs (Splunk, QRadar) rank alerts using predefined rules/thresholds.</dd>
+    <dt>Alert impact</dt>
+    <dd>The potential damage if not addressed. An attempted data exfiltration from a customer database has far higher impact than a noncritical misconfiguration. Assessed via IDS and DLP monitoring scope/consequences.</dd>
+    <dt>Asset type</dt>
+    <dd>The value of the affected system. Alerts on high-value assets (production servers, critical databases, cloud infrastructure) outrank those on less important systems.</dd>
+    <dt>Residual risk</dt>
+    <dd>The risk remaining after controls are applied. If an alert shows an attacker bypassed MFA via phishing, residual risk is high because a key control was defeated. Assess with frameworks like NIST or ISO 27001.</dd>
+    <dt>Data classification</dt>
+    <dd>The sensitivity of the data involved. Alerts touching classified/confidential data (PHI, financial records) get higher priority because a breach carries legal/financial/reputational damage. SIEMs correlate alerts with data sensitivity to raise priority.</dd>
+  </dl>
+
+  <p>These combine: an alert on a critical financial server storing classified data is prioritized over one on a low-impact system, because criticality, impact, and data sensitivity all stack.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Five factors: criticality (severity), impact (damage), asset type (value), residual risk (after controls), data classification (sensitivity).</li>
+      <li>Criticality = severity level; impact = potential damage, distinct but related.</li>
+      <li>Residual risk = risk left after controls; a bypassed control (MFA) raises it.</li>
+      <li>Data classification raises priority for PHI/financial/classified data.</li>
+      <li>Factors stack: a critical, high-impact alert on a high-value asset with sensitive data is top priority.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario ranks alerts by severity level → <strong>criticality</strong></li>
+        <li>Scenario weighs potential damage of the threat → <strong>impact</strong></li>
+        <li>Scenario prioritizes an alert on a production database → <strong>asset type</strong></li>
+        <li>Scenario notes MFA was bypassed, leaving exposure → <strong>residual risk</strong></li>
+        <li>Scenario prioritizes an alert touching PHI → <strong>data classification</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="09_alerting.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">09_alerting</span></span>
+    </a>
+    <span class="counter">lesson 10 / 11</span>
+    <a class="next" href="11_reporting_and_metrics.html">
+      <span><span class="lbl">next</span><span class="file">11_reporting_and_metrics</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / alert_prioritization_factors</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

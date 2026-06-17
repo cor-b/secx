@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIEM Event Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/siem_event_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 07 / monitoring and response / SIEM Event Management</span>
+  <h1 class="module-title">SIEM Event Management</h1>
+  <p class="subtitle">How a SIEM turns raw event chaos into signal: normalizing data into structured fields, filtering out duplicate noise, and tuning to balance false positives against false negatives.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>A <strong>SIEM</strong> collects, analyzes, and correlates security event data to detect threats in real time. SIEM event management has three concepts: <strong>event parsing</strong> (break raw data into structured fields), <strong>event duplication</strong> (filter repeated alerts to reduce noise), and managing <strong>false positives/false negatives</strong> (tuning detection accuracy).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Event Parsing</p>
+      <p class="card-desc">Normalize raw data from varied sources into consistent fields (IP, port, timestamp) using rules/templates. Enables correlation.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Event Duplication</p>
+      <p class="card-desc">Filter/group repeated alerts (many login failures → one event) to reduce noise and prevent alert fatigue.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">False Positives/Negatives</p>
+      <p class="card-desc">FP = benign flagged as threat; FN = real threat missed. Tune rules, context, ML, and thresholds.</p>
+    </div>
+  </div>
+
+  <h2>event parsing</h2>
+
+  <p>Event parsing breaks raw event data into a <strong>structured format</strong> the SIEM can analyze. Because data arrives from varied sources (firewalls, IDS, servers) in different formats, the SIEM uses predefined <strong>rules and templates</strong> to normalize it into consistent fields like source IP, port, timestamp, event type, and severity. This consistency makes filtering, searching, correlating, and alerting possible, and lets large volumes of data be processed meaningfully.</p>
+
+  <h2>event duplication</h2>
+
+  <p>Event duplication filters and eliminates repeated alerts to avoid noise. Events like repetitive login attempts or frequent traffic spikes can trigger many alerts; the SIEM uses <strong>correlation rules</strong> to identify repeated occurrences within a timeframe and group or filter them (e.g. many login failures from one user grouped into a single event). This prevents <strong>alert fatigue</strong>, where analysts are so overwhelmed they miss real incidents, and lets teams focus on unique events.</p>
+
+  <h2>false positives and false negatives</h2>
+
+  <p>A <strong>false positive</strong> flags benign activity as a threat; a <strong>false negative</strong> misses a real threat (the more dangerous error). SIEMs minimize both with correlation rules, machine learning, and fine-tuned thresholds. Analysts reduce false positives by adjusting rules and adding context (e.g. recognizing a known employee's login from abroad), and reduce false negatives by loosening overly restrictive rules so real events (like a malware download) are caught. The goal: focus on real threats while not missing actual ones.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Event parsing normalizes raw, varied-format data into consistent structured fields (enables correlation).</li>
+      <li>Event duplication filters/groups repeated alerts to reduce noise and prevent alert fatigue.</li>
+      <li>False positive = benign flagged as threat; false negative = real threat missed (more dangerous).</li>
+      <li>Tune rules, context, ML, and thresholds to reduce both FPs and FNs.</li>
+      <li>SIEM event management = parsing + duplication + FP/FN handling (the analysis side).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario normalizes firewall logs into IP/port/timestamp fields → <strong>event parsing</strong></li>
+        <li>Scenario groups many identical login failures into one alert → <strong>event duplication</strong></li>
+        <li>Scenario flags a legitimate employee's travel login as a threat → <strong>false positive</strong></li>
+        <li>Scenario misses an actual malware download → <strong>false negative</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="06_behavior_baselines_and_analytics.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">06_behavior_baselines_and_analytics</span></span>
+    </a>
+    <span class="counter">lesson 07 / 11</span>
+    <a class="next" href="08_siem_data_management.html">
+      <span><span class="lbl">next</span><span class="file">08_siem_data_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / siem_event_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

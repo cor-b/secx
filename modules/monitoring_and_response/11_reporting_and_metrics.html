@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporting and Metrics / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/reporting_and_metrics</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 11 / monitoring and response / Reporting &amp; Metrics</span>
+  <h1 class="module-title">Reporting and Metrics</h1>
+  <p class="subtitle">Making security data understandable and actionable: charts and graphs that reveal trends, and real-time dashboards that put everything on a single pane of glass.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Reporting and metrics collect and present security data to measure performance, identify trends, and guide decisions. Two concepts: <strong>visualization</strong> (charts, graphs, heat maps that simplify complex data) and <strong>dashboards</strong> (real-time centralized views aggregating key metrics).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Visualization</p>
+      <p class="card-desc">Charts, graphs, heat maps turn complex data into clear insight; reveal trends and anomalies. Tools: Tableau, Grafana.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Dashboards</p>
+      <p class="card-desc">Real-time centralized views aggregating metrics from many tools, a single pane of glass. Tools: Splunk, Kibana, Microsoft Sentinel.</p>
+    </div>
+  </div>
+
+  <h2>visualization</h2>
+
+  <p>Visualization uses charts, graphs, heat maps, and pie charts to transform large volumes of logs, alerts, and metrics into a clear, digestible format, so both security teams and executives can quickly grasp the security landscape and make informed decisions. A line graph of network intrusions over time reveals whether incidents are rising or falling; a bar chart of response times by alert type highlights where the team needs to improve. Visualization enables rapid communication of performance and helps spot trends or anomalies hidden in raw data (tools: <strong>Tableau</strong>, <strong>Grafana</strong>).</p>
+
+  <h2>dashboards</h2>
+
+  <p>Dashboards provide a centralized, real-time view of key security metrics, aggregating data from multiple tools (SIEM, antivirus, firewalls) into one place, a <strong>single pane of glass</strong>. They display metrics like active threats, endpoint protection status, and network traffic anomalies, enabling teams to identify threats, monitor incidents, and assess overall security health at a glance. Dashboards enhance decision-making by prioritizing the most critical data and reducing the risk of overlooked alerts, supporting a proactive, timely response (tools: <strong>Splunk</strong>, <strong>Kibana</strong>, <strong>Microsoft Sentinel</strong>).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Two concepts: visualization (charts/graphs) and dashboards (real-time centralized views).</li>
+      <li>Visualization simplifies complex data and reveals trends/anomalies; tools: Tableau, Grafana.</li>
+      <li>Dashboards aggregate metrics from many tools into a single pane of glass; tools: Splunk, Kibana, Microsoft Sentinel.</li>
+      <li>"Single pane of glass" = one consolidated view of security operations.</li>
+      <li>Both help measure performance, spot trends, and guide decisions.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario uses a line graph to show intrusions over time → <strong>visualization</strong></li>
+        <li>Scenario aggregates metrics from many tools into one real-time view → <strong>dashboard</strong></li>
+        <li>Scenario describes a single pane of glass → <strong>dashboard</strong></li>
+        <li>Scenario builds charts/heat maps with Tableau or Grafana → <strong>visualization</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="10_alert_prioritization_factors.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">10_alert_prioritization_factors</span></span>
+    </a>
+    <span class="counter">lesson 11 / 11</span>
+    <a class="next" href="index.html">
+      <span><span class="lbl">section</span><span class="file">monitoring_and_response/</span></span>
+      <span class="dir">↑</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / reporting_and_metrics</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

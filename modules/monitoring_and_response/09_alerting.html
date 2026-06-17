@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alerting / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/alerting</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 09 / monitoring and response / Alerting</span>
+  <h1 class="module-title">Alerting</h1>
+  <p class="subtitle">Notifying the team when something's wrong, and the ways alerting goes wrong: false alarms, missed threats, and alerts that never fire at all.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Alerting notifies security teams about potential threats based on predefined rules and triggers. Concepts: alerts associated with <strong>vulnerabilities</strong> (detected weaknesses, true positives), <strong>false positives</strong> (benign flagged as threat), <strong>false negatives</strong> (real threat undetected), <strong>malware</strong> (infection alerts), and <strong>alert failures</strong> (missed/delayed notifications).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Vulnerability Alerts</p>
+      <p class="card-desc">Fire when weaknesses are detected (true positives). FIM and SIEMs (Splunk, QRadar) help. Patch before exploitation.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">False Positives/Negatives</p>
+      <p class="card-desc">FP = benign flagged (alert fatigue); FN = real threat missed (more dangerous). Tune and update detection.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Malware &amp; Alert Failures</p>
+      <p class="card-desc">Malware alerts (signature/heuristic/behavioral). Failures from misconfig, poor prioritization, overload.</p>
+    </div>
+  </div>
+
+  <h2>vulnerability alerts and false positives/negatives</h2>
+
+  <p><strong>Vulnerability alerts</strong> fire when a potential weakness is detected (a detected actual vulnerability is a <strong>true positive</strong>), letting teams patch before exploitation. <strong>File integrity monitoring (FIM)</strong> alerts on unexpected changes to critical files; SIEMs (Splunk, QRadar) monitor for abnormal behavior. <strong>False positives</strong> wrongly flag normal behavior, causing <strong>alert fatigue</strong>, reduced by fine-tuning FIM databases and DLP filters. <strong>False negatives</strong> are more dangerous, a real threat goes undetected (e.g. an IDS missing a signatureless attack), reduced with continuous IDS/IPS updates and anomaly detection.</p>
+
+  <h2>malware and alert failures</h2>
+
+  <p><strong>Malware alerts</strong> notify teams of malicious software using <strong>signature-based detection</strong> (matching known signatures), <strong>heuristic analysis</strong> (suspicious code patterns), and <strong>behavioral monitoring</strong> (unusual activity), plus real-time scanning and sandboxing (e.g. quarantining a system found encrypting files via ransomware).</p>
+
+  <p><strong>Alert failures</strong> happen when an alert is delayed, not generated, or missed, from three causes: <strong>misconfiguration</strong> (a firewall allowing blocked traffic, outdated SIEM rules), <strong>poor prioritization</strong> (critical alerts buried among routine ones), and <strong>overloaded tools</strong> (a SIEM processing millions of events/sec, delaying or crashing). Mitigate with proper configuration, updated rules, robust prioritization, scalable/cloud SIEMs, event filtering, and IPS that takes automatic action when alerts are missed.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Detected actual vulnerability = true positive; false positive = benign flagged; false negative = real threat missed (most dangerous).</li>
+      <li>FIM alerts on unexpected changes to critical files.</li>
+      <li>Malware detection: signature-based, heuristic analysis, behavioral monitoring (+ sandboxing).</li>
+      <li>Alert failure causes: misconfiguration, poor prioritization, overloaded tools.</li>
+      <li>Mitigate failures with updated rules, prioritization, scalable SIEMs, and IPS auto-action.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario alerts on an unexpected change to a critical file → <strong>FIM vulnerability alert</strong></li>
+        <li>Scenario floods analysts with benign alerts → <strong>false positives (alert fatigue)</strong></li>
+        <li>Scenario misses a signatureless attack → <strong>false negative</strong></li>
+        <li>Scenario's SIEM crashes under event volume and misses alerts → <strong>alert failure (overload)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="08_siem_data_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">08_siem_data_management</span></span>
+    </a>
+    <span class="counter">lesson 09 / 11</span>
+    <a class="next" href="10_alert_prioritization_factors.html">
+      <span><span class="lbl">next</span><span class="file">10_alert_prioritization_factors</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / alerting</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

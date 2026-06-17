@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Log Sources / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/system_log_sources</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 04 / monitoring and response / System Log Sources</span>
+  <h1 class="module-title">System Log Sources</h1>
+  <p class="subtitle">Where the records live: the network gear, the endpoints (Windows event logs and Linux /var/log), the applications, and the cloud posture tools, each a window into a different layer.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>System log sources are logs from network infrastructure and devices. Four types: <strong>infrastructure device logs</strong> (routers, firewalls, switches), <strong>endpoint logs</strong> (Windows event logs, Linux /var/log), <strong>application logs</strong> (software events), and <strong>CSPM tools</strong> (cloud posture monitoring). A log policy ensures all necessary data is captured (defaults often omit detail).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">source 01</span>
+      <p class="card-name">Infrastructure Device Logs</p>
+      <p class="card-desc">Routers, firewalls, switches: network anomalies, malicious traffic. Defaults may omit detail, so set a log policy (on-prem + cloud).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 02</span>
+      <p class="card-name">Endpoint Logs</p>
+      <p class="card-desc">Windows: Security, Application, System, Setup, Forwarded Events. Linux: /var/log (auth.log, messages, cron.log, dpkg/yum).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 03</span>
+      <p class="card-name">Application Logs</p>
+      <p class="card-desc">Software events by severity (info/warning/error/critical). Web/database logs detect SQLi attempts, crashes, suspicious behavior.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">source 04</span>
+      <p class="card-name">CSPM Tools</p>
+      <p class="card-desc">Monitor cloud for misconfigs/compliance (AWS Security Hub). Catch open S3 buckets, overly permissive IAM.</p>
+    </div>
+  </div>
+
+  <h2>infrastructure and endpoint logs</h2>
+
+  <p><strong>Infrastructure device logs</strong> record activity from routers, firewalls, and switches, revealing traffic patterns and security issues (e.g. firewall logs showing repeated access attempts from suspicious IPs). Defaults may omit detail (dropped packets, certain access logs), so a <strong>log policy</strong> spanning both on-prem and cloud (AWS, Azure) ensures comprehensive coverage.</p>
+
+  <p><strong>Endpoint logs</strong> differ by OS. <strong>Windows</strong> has five notable logs: <strong>Security</strong> (authentication events, logins), <strong>Application</strong> (app errors/warnings), <strong>System</strong> (hardware/software/driver events), <strong>Setup</strong> (OS installation), and <strong>Forwarded Events</strong> (aggregated remote logs). <strong>Linux</strong> stores logs in <code>/var/log</code>: <code>auth.log</code> (authentication, like Windows Security), <code>/var/log/messages</code> (system-wide events), app logs (e.g. <code>/var/log/httpd</code> for Apache), <code>cron.log</code>/<code>daemon.log</code> (background tasks), and package-manager logs (<code>dpkg.log</code> for Debian, <code>yum.log</code> for Red Hat).</p>
+
+  <h2>application logs and CSPM tools</h2>
+
+  <p><strong>Application logs</strong> capture software events, organized by severity (information, warning, error, critical) on Windows (Event Viewer) and stored in <code>/var/log</code> on Linux. They track HTTP requests, detect SQL injection attempts, identify slow page loads, and surface failed logins or suspicious behavior, with alerts set by severity. <strong>CSPM (Cloud Security Posture Management) tools</strong> monitor cloud environments for misconfigurations, vulnerabilities, and compliance violations; <strong>AWS Security Hub</strong> is a prevalent example, detecting issues like open S3 buckets or overly permissive IAM roles and supporting compliance reporting (GDPR, HIPAA).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four log sources: infrastructure device, endpoint, application, CSPM tools.</li>
+      <li>Windows endpoint logs: Security, Application, System, Setup, Forwarded Events. The Security log = authentication events.</li>
+      <li>Linux logs live in /var/log: auth.log (authentication), messages (system), cron.log (tasks), dpkg.log/yum.log (packages).</li>
+      <li>CSPM (AWS Security Hub) monitors cloud for misconfigs (open S3 buckets, permissive IAM) and compliance.</li>
+      <li>Default configs often omit detail, set a log policy covering on-prem and cloud.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario reviews firewall/router records for odd traffic → <strong>infrastructure device logs</strong></li>
+        <li>Scenario checks Windows logon events → <strong>Security log (endpoint)</strong></li>
+        <li>Scenario inspects Linux authentication attempts → <strong>/var/log/auth.log</strong></li>
+        <li>Scenario detects an open S3 bucket misconfiguration → <strong>CSPM tool</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="03_threat_intelligence_sources.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">03_threat_intelligence_sources</span></span>
+    </a>
+    <span class="counter">lesson 04 / 11</span>
+    <a class="next" href="05_vulnerabilities_and_data_security.html">
+      <span><span class="lbl">next</span><span class="file">05_vulnerabilities_and_data_security</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / system_log_sources</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

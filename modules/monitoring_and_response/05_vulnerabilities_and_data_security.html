@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulnerabilities and Data Security / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/vulnerabilities_and_data_security</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 05 / monitoring and response / Vulnerabilities &amp; Data Security</span>
+  <h1 class="module-title">Vulnerabilities and Data Security</h1>
+  <p class="subtitle">Two complementary tools: scanners that hunt for weaknesses before attackers do, and data loss prevention that stops sensitive information from leaving.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Vulnerabilities and data security involve finding system weaknesses and protecting sensitive data. Two concepts: <strong>vulnerability scans</strong> (automated detection of flaws, misconfigs, unpatched software) and <strong>data loss prevention (DLP)</strong> (monitor and prevent unauthorized transmission of sensitive data).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">tool 01</span>
+      <p class="card-name">Vulnerability Scans</p>
+      <p class="card-desc">Automated detection of flaws/misconfigs/unpatched software. Scheduled regularly + after changes. Tools: OpenVAS, Nessus, Qualys.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">tool 02</span>
+      <p class="card-name">Data Loss Prevention</p>
+      <p class="card-desc">Monitor data at rest/in transit/in use. Actions: alert, block, quarantine, tombstone. Tools: Symantec DLP, Microsoft Purview.</p>
+    </div>
+  </div>
+
+  <h2>vulnerability scans</h2>
+
+  <p>Vulnerability scans identify potential security flaws, unpatched software, misconfigurations, exploitable weaknesses, before attackers do. They should be <strong>scheduled and automated</strong> (often weekly or daily) and run after significant changes (upgrades, config changes) to catch newly introduced weaknesses; automation reduces human error. Review scan reports to prioritize fixes by severity. Common tools:</p>
+  <ul>
+    <li><strong>OpenVAS:</strong> open-source network vulnerability scanner.</li>
+    <li><strong>Nessus:</strong> commercial, large vulnerability database, customizable <strong>plugins</strong> (e.g. checking PCI DSS compliance).</li>
+    <li><strong>Qualys:</strong> cloud-based, continuous scanning integrated with asset management.</li>
+  </ul>
+
+  <h2>data loss prevention (DLP)</h2>
+
+  <p>DLP prevents sensitive data (customer records, IP, financials) from being shared with unauthorized parties, monitoring data <strong>at rest, in transit, and in use</strong> across channels like email, cloud storage, and internal apps. It enforces policies with several possible actions:</p>
+  <dl class="def">
+    <dt>Alert</dt>
+    <dd>Notify the security team of a violation.</dd>
+    <dt>Block</dt>
+    <dd>Stop the transmission entirely (e.g. an email with credit card numbers never leaves).</dd>
+    <dt>Quarantine</dt>
+    <dd>Hold the data in a secure queue for review before release.</dd>
+    <dt>Tombstoning</dt>
+    <dd>Replace sensitive content with a placeholder (e.g. "redacted") plus information on the policy violation and remediation, so workflows continue without exposing data.</dd>
+  </dl>
+  <p>Tools: <strong>Symantec DLP</strong> (multi-channel: endpoints, email, cloud) and <strong>Microsoft Purview</strong> (integrated into SharePoint, Teams, Outlook).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Vulnerability scans find flaws/misconfigs/unpatched software; schedule them regularly and after changes.</li>
+      <li>Scan tools: OpenVAS (open-source), Nessus (commercial, plugins), Qualys (cloud, continuous).</li>
+      <li>DLP monitors data at rest, in transit, and in use; actions: alert, block, quarantine, tombstone.</li>
+      <li>Tombstoning replaces sensitive content with a placeholder + remediation info so workflows continue.</li>
+      <li>DLP tools: Symantec DLP, Microsoft Purview (integrated into Microsoft apps).</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario automatically scans for unpatched software weekly → <strong>vulnerability scan</strong></li>
+        <li>Scenario blocks an email containing credit card numbers → <strong>DLP (block)</strong></li>
+        <li>Scenario replaces sensitive data with "redacted" and a policy notice → <strong>tombstoning</strong></li>
+        <li>Scenario holds a flagged email for review before release → <strong>DLP (quarantine)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="04_system_log_sources.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">04_system_log_sources</span></span>
+    </a>
+    <span class="counter">lesson 05 / 11</span>
+    <a class="next" href="06_behavior_baselines_and_analytics.html">
+      <span><span class="lbl">next</span><span class="file">06_behavior_baselines_and_analytics</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / vulnerabilities_and_data_security</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

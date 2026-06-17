@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavior Baselines and Analytics / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/behavior_baselines_and_analytics</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 06 / monitoring and response / Behavior Baselines &amp; Analytics</span>
+  <h1 class="module-title">Behavior Baselines and Analytics</h1>
+  <p class="subtitle">You can't spot the abnormal until you know the normal. Baselines for the network, the system, the user, and the application define "normal" so anomalies stand out.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Behavior baselines establish normal patterns of activity so anomalies indicating threats can be recognized. Four baseline types: <strong>network</strong> (traffic patterns), <strong>system</strong> (resource usage), <strong>user</strong> (login/access habits), and <strong>application/service</strong> (usage and performance metrics).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">baseline 01</span>
+      <p class="card-name">Network</p>
+      <p class="card-desc">Normal traffic patterns/connections. Snort (IDS), Suricata (IDS/IPS). Spot data exfiltration, C2, DDoS.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">baseline 02</span>
+      <p class="card-name">System</p>
+      <p class="card-desc">Normal CPU/memory/disk usage. Windows PerfMon to build; Datadog/Prometheus to monitor. Spot malware, memory leaks.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">baseline 03</span>
+      <p class="card-name">User (UBA)</p>
+      <p class="card-desc">Normal login times, file access, devices. Splunk UBA. Spot compromised credentials, insider threats.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">baseline 04</span>
+      <p class="card-name">Application/Service</p>
+      <p class="card-desc">Normal response times, users, error rates. AppDynamics. Spot performance issues, DoS, exploited services.</p>
+    </div>
+  </div>
+
+  <h2>the four baselines</h2>
+
+  <dl class="def">
+    <dt>Network baseline</dt>
+    <dd>Typical traffic patterns, connections, and peak/low times. Monitored against real-time traffic by <strong>Snort</strong> (IDS) and <strong>Suricata</strong> (IDS/IPS). A spike to an unknown external IP may signal data exfiltration or C2; a traffic surge may signal DDoS.</dd>
+    <dt>System baseline</dt>
+    <dd>Normal CPU, memory, and disk I/O usage. Built with tools like <strong>Windows PerfMon</strong>, monitored with <strong>Datadog</strong>/<strong>Prometheus</strong>. A CPU spike to 100% may mean malware; sustained high memory may mean a memory leak.</dd>
+    <dt>User behavior analytics (UBA)</dt>
+    <dd>Normal login times, file/system access, and devices. Tracked with <strong>Splunk User Behavior Analytics</strong>. A late-night login from a foreign IP or sudden access to sensitive files may signal compromised credentials or an insider threat.</dd>
+    <dt>Application/service baseline</dt>
+    <dd>Normal response times, active users, error rates, resource use. Monitored with <strong>AppDynamics</strong>. A slowdown or error-rate spike may mean performance issues or a DoS; excessive resource use may mean an exploited service.</dd>
+  </dl>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Establish "normal" first, anomalies are deviations from the baseline.</li>
+      <li>Four baselines: network (traffic), system (CPU/memory/disk), user (UBA: logins/access), application/service (response/errors).</li>
+      <li>Network: Snort (IDS) vs Suricata (IDS/IPS). System: PerfMon (build), Datadog/Prometheus (monitor).</li>
+      <li>UBA (Splunk UBA) detects compromised credentials and insider threats via odd login times/locations.</li>
+      <li>A CPU spike to 100% suggests malware; sustained high memory suggests a leak.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario sees a traffic spike to an unknown external IP → <strong>network baseline anomaly</strong></li>
+        <li>Scenario sees CPU jump to 100% with no reason → <strong>system baseline anomaly (malware)</strong></li>
+        <li>Scenario sees a user log in at 3am from abroad → <strong>user behavior anomaly (UBA)</strong></li>
+        <li>Scenario sees an app's error rate spike → <strong>application/service baseline anomaly</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="05_vulnerabilities_and_data_security.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">05_vulnerabilities_and_data_security</span></span>
+    </a>
+    <span class="counter">lesson 06 / 11</span>
+    <a class="next" href="07_siem_event_management.html">
+      <span><span class="lbl">next</span><span class="file">07_siem_event_management</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / behavior_baselines_and_analytics</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

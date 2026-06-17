@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aggregate Data Analysis / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/aggregate_data_analysis</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 02 / monitoring and response / Aggregate Data Analysis</span>
+  <h1 class="module-title">Aggregate Data Analysis</h1>
+  <p class="subtitle">Turning billions of logs into a few thousand that matter: cut the noise, link related events, rank by impact, and watch for patterns over time.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>Aggregate data analysis combines and examines large volumes of data from multiple sources to find patterns, trends, and threats. Four concepts: <strong>audit log reduction</strong> (filter out low-priority logs), <strong>correlation</strong> (link related events across sources), <strong>prioritization</strong> (rank by impact), and <strong>trends</strong> (spot recurring patterns over time).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Audit Log Reduction</p>
+      <p class="card-desc">Filter routine logs to focus on critical events. A tuned SIEM can cut billions of logs to thousands. Watch for false positives.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Correlation</p>
+      <p class="card-desc">Link related events across sources to see the full picture (failed logins + traffic spike = brute force). IBM QRadar, ArcSight.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 03</span>
+      <p class="card-name">Prioritization</p>
+      <p class="card-desc">Rank issues by potential impact so the biggest threats get attention first (sensitive-data system over a noncritical one).</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 04</span>
+      <p class="card-name">Trends</p>
+      <p class="card-desc">Identify recurring patterns over time to find weak spots and act proactively. Splunk, Elasticsearch.</p>
+    </div>
+  </div>
+
+  <h2>the four concepts</h2>
+
+  <p><strong>Audit log reduction</strong> filters out routine, low-priority logs (successful logins, regular file access) so teams focus on anomalies like repeated login failures. A properly tuned <strong>SIEM</strong> (e.g. Splunk) can take billions of logs per quarter down to thousands of high-priority ones; the challenge is minimizing <strong>false positives</strong>.</p>
+
+  <p><strong>Correlation</strong> links related events across independent sources to reveal context, e.g. repeated failed logins plus an unusual traffic spike from an unfamiliar IP together indicating a brute-force attack (tools: IBM QRadar, ArcSight). <strong>Prioritization</strong> ranks events by impact: a failed login on a noncritical system can wait, but repeated failures on a system with sensitive customer data take precedence. <strong>Trends</strong> identify recurring patterns over time (e.g. unauthorized access attempts at certain hours), letting teams strengthen defenses proactively (tools: Splunk, Elasticsearch).</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Four concepts: audit log reduction, correlation, prioritization, trends.</li>
+      <li>Log reduction filters routine logs (billions → thousands via a tuned SIEM); watch for false positives.</li>
+      <li>Correlation links events across sources to detect coordinated attacks (failed logins + traffic spike = brute force).</li>
+      <li>Prioritization ranks by impact; trends spot recurring patterns for proactive defense.</li>
+      <li>SIEMs (Splunk, QRadar, ArcSight) provide reduction, correlation, and prioritization together.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario filters out routine logs to focus on critical events → <strong>audit log reduction</strong></li>
+        <li>Scenario links failed logins to a traffic spike → <strong>correlation</strong></li>
+        <li>Scenario addresses the highest-impact threat first → <strong>prioritization</strong></li>
+        <li>Scenario notices recurring attacks at a certain time → <strong>trends</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="01_monitoring_and_response.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">01_monitoring_and_response</span></span>
+    </a>
+    <span class="counter">lesson 02 / 11</span>
+    <a class="next" href="03_threat_intelligence_sources.html">
+      <span><span class="lbl">next</span><span class="file">03_threat_intelligence_sources</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / aggregate_data_analysis</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>

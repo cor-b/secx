@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIEM Data Management / study.notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="toc">
+  <div class="toc-title">on this page</div>
+  <div class="toc-links" id="tocLinks"></div>
+</aside>
+
+<a class="to-top" id="toTop" href="#" aria-label="Back to top">↑</a>
+
+
+<div class="container">
+
+  <div class="meta-bar">
+    <span class="left">cor@studynotes</span>
+    <span class="right">~/securityx/monitoring_and_response/siem_data_management</span>
+  </div>
+
+  <a class="back-link" href="index.html"><span class="arrow">←</span>back to /monitoring_and_response</a>
+
+  <span class="module-tag">lesson 08 / monitoring and response / SIEM Data Management</span>
+  <h1 class="module-title">SIEM Data Management</h1>
+  <p class="subtitle">Keeping the SIEM's data trustworthy and useful: catching the devices that stop reporting (blind spots), and deciding how long to keep what you collect.</p>
+
+  <div class="overview">
+    <span class="overview-label">overview</span>
+    <p>SIEM data management organizes and maintains security event data for analysis, detection, and long-term storage. Two concepts: <strong>data from non-reporting devices</strong> (systems that stop sending logs, creating blind spots) and <strong>data retention</strong> (how long event data is stored for compliance and forensics).</p>
+  </div>
+
+  <div class="three-elements">
+    <div class="elem-card">
+      <span class="card-label">concept 01</span>
+      <p class="card-name">Non-reporting Devices</p>
+      <p class="card-desc">Devices that stop sending logs (misconfig, connectivity, hardware) create blind spots. SIEM uses heartbeat checks and alerts on gaps.</p>
+    </div>
+    <div class="elem-card">
+      <span class="card-label">concept 02</span>
+      <p class="card-name">Data Retention</p>
+      <p class="card-desc">How long to store logs, balancing compliance (HIPAA 7yr, PCI DSS 5yr) and storage. Auto-archive/delete by type.</p>
+    </div>
+  </div>
+
+  <h2>data from non-reporting devices</h2>
+
+  <p>Non-reporting devices are systems or endpoints that fail to send logs to the SIEM, due to misconfiguration, connectivity issues, or hardware failure, creating a <strong>blind spot</strong> where threats can go unnoticed (e.g. a firewall that silently stops logging). The SIEM addresses this by monitoring incoming data flow and raising an alert when a device stops reporting after a set period, and by using <strong>heartbeat checks</strong> to regularly confirm devices are connected and sending data. This ensures continuous visibility so teams can resolve issues before gaps become vulnerabilities.</p>
+
+  <h2>data retention</h2>
+
+  <p>Data retention is how long the SIEM stores collected event data, balancing compliance, forensics, and storage cost (retaining too long wastes storage and creates compliance risk). The SIEM implements retention policies based on regulation: e.g. healthcare logs kept <strong>7 years for HIPAA</strong>, financial-transaction logs kept <strong>5 years for PCI DSS</strong>, while less-critical logs (routine app performance) may be kept only 90 days or one year. SIEMs (Splunk, IBM QRadar) can set different retention periods per data type and <strong>automatically archive or delete</strong> logs at the end of their period, keeping critical data available for investigations/audits while managing storage efficiently.</p>
+
+  <div class="exam-tips">
+    <span class="exam-tips-label">EXAM TIPS</span>
+    <h2>what to know for the exam</h2>
+    <ul>
+      <li>Two concepts: data from non-reporting devices and data retention.</li>
+      <li>Non-reporting devices create blind spots; the SIEM alerts on stopped reporting and uses heartbeat checks.</li>
+      <li>Data retention balances compliance and storage; set different periods per data type.</li>
+      <li>Retention examples: HIPAA ~7 years, PCI DSS ~5 years; routine logs much shorter.</li>
+      <li>SIEMs auto-archive or delete logs at the end of their retention period.</li>
+    </ul>
+    <div class="decision-rules">
+      <span class="decision-rules-title">decision rules</span>
+      <ul>
+        <li>Scenario's firewall silently stops sending logs → <strong>non-reporting device (blind spot)</strong></li>
+        <li>Scenario uses heartbeat checks to confirm devices are reporting → <strong>non-reporting device monitoring</strong></li>
+        <li>Scenario keeps healthcare logs for seven years → <strong>data retention (HIPAA)</strong></li>
+        <li>Scenario auto-deletes routine logs after 90 days → <strong>data retention policy</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <nav class="lesson-nav">
+    <a class="prev" href="07_siem_event_management.html">
+      <span class="dir">←</span>
+      <span><span class="lbl">prev</span><span class="file">07_siem_event_management</span></span>
+    </a>
+    <span class="counter">lesson 08 / 11</span>
+    <a class="next" href="09_alerting.html">
+      <span><span class="lbl">next</span><span class="file">09_alerting</span></span>
+      <span class="dir">→</span>
+    </a>
+  </nav>
+
+  <div class="footer">
+    <span>study.notes / cor</span>
+    <span>monitoring_and_response / siem_data_management</span>
+  </div>
+
+</div>
+<script src="../../nav.js"></script>
+</body>
+</html>
